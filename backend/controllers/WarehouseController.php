@@ -8,14 +8,17 @@ use backend\models\WarehouseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 
 /**
  * WarehouseController implements the CRUD actions for Warehouse model.
  */
 class WarehouseController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -26,6 +29,51 @@ class WarehouseController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access'=>[
+                'class'=>AccessControl::className(),
+                'denyCallback' => function ($rule, $action) {
+                    throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+                },
+                'rules'=>[
+                    [
+                        'allow'=>true,
+                        'roles'=>['@'],
+                        'matchCallback'=>function($rule,$action){
+                            $currentRoute = Yii::$app->controller->getRoute();
+                            if(Yii::$app->user->can($currentRoute)){
+                                return true;
+                            }
+                        }
+                    ]
+                ]
+            ]
+//            'access'=>[
+//
+//                'class'=>AccessControl::className(),
+//                'rules'=>[
+//                        [
+//                            'allow'=>true,
+//                            'actions'=>['delete'],
+//                            'roles'=>['SystemAdmin']
+//                        ],
+//                        [
+//                            'allow'=>true,
+//                            'actions'=>['index','view'],
+//                            'roles'=>['ManageInventory']
+//                        ],
+//                        [
+//                            'allow'=>true,
+//                            'actions'=>['create','update'],
+//                            'roles'=>['ManageInventory'],
+//                            // 'matchCallback'=> function($rule,$action){
+//                            //     $model = $this->findModel(Yii::$app->request->get('id'));
+//                            //     if(\Yii::$app->user->can('UpdateOwner',['model'=>$model])){
+//                            //         return true;
+//                            //     }
+//                            // }
+//                        ]
+//                    ]
+//                ]
         ];
     }
 
@@ -33,14 +81,18 @@ class WarehouseController extends Controller
      * Lists all Warehouse models.
      * @return mixed
      */
+
     public function actionIndex()
     {
+        $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new WarehouseSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = $pageSize;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+             'perpage' => $pageSize,
         ]);
     }
 
@@ -48,12 +100,26 @@ class WarehouseController extends Controller
      * Displays a single Warehouse model.
      * @param integer $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
+        $movementSearch = new \backend\models\MovementSearch();
+        $movementDp = $movementSearch->search(Yii::$app->request->queryParams);
+        $movementDp->pagination->pageSize = 10;
+        $movementDp->query->andFilterWhere(['to_wh'=>$id])
+                          ->andFilterWhere(['trans_type'=>\backend\helpers\RunnoTitle::RUNN0_PDR]);
+
+        $allqty =0;
+        $model = $movementDp->getModels();
+        foreach($model as $val){
+            $allqty = $allqty + $val->qty;
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'movementSearch'=>$movementSearch,
+            'movementDp' => $movementDp,
+            'allqty' => $allqty,
         ]);
     }
 
@@ -66,10 +132,13 @@ class WarehouseController extends Controller
     {
         $model = new Warehouse();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -80,19 +149,23 @@ class WarehouseController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                $this->setDefault($id);
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return $this->render('update', ['model' => $model,]);
+       
+  
     }
 
     /**
@@ -100,13 +173,15 @@ class WarehouseController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            $session = Yii::$app->session;
+            $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+            return $this->redirect(['index']);
+
     }
 
     /**
@@ -122,6 +197,20 @@ class WarehouseController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    public function setDefault($id){
+        $model = Warehouse::find()->all();
+        if($model){
+            foreach($model as $data){
+                $modelupdate = Warehouse::find()->where(['id'=>$data->id])->one();
+                $modelupdate->is_primary = 0;
+                $modelupdate->save(false);
+            }
+            $modelupdate = Warehouse::find()->where(['id'=>$id])->one();
+            $modelupdate->is_primary = 1;
+            $modelupdate->save(false);
+        }
+        return true;
     }
 }

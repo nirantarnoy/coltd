@@ -6,13 +6,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Usergroup */
 
-$this->title = 'Create Usergroup';
-$this->params['breadcrumbs'][] = ['label' => 'Usergroups', 'url' => ['index']];
+$this->title = Yii::t('app', 'สร้างกลุ่มผู้ใช้งาน');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'กลุ่มผู้ใช้งาน'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usergroup-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
