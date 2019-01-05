@@ -164,7 +164,7 @@ class PlantController extends Controller
         $model = $this->findModel($id);
         $model_address = new AddressBook();
         $model_address_plant = AddressBook::find()->where(['party_id'=>$id,'party_type_id'=>1])->one();
-        $model_bankdata = \backend\models\Bankaccount::find()->where(['party_id'=>$id,'party_type_id'=>1])->all();
+        //$model_bankdata = \backend\models\Bankaccount::find()->where(['party_id'=>$id,'party_type_id'=>1])->all();
 
         if ($model->load(Yii::$app->request->post()) && $model_address->load(Yii::$app->request->post())) {
 
@@ -245,7 +245,7 @@ class PlantController extends Controller
             'model' => $model,
             'model_address' => $model_address,
             'model_address_plant' => $model_address_plant,
-            'model_bankdata' => $model_bankdata,
+           // 'model_bankdata' => $model_bankdata,
         ]);
     }
 

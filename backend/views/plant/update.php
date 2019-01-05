@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'แก้ไข');
         'model' => $model,
         'model_address' => $model_address,
         'model_address_plant' => $model_address_plant,
-        'model_bankdata' => $model_bankdata,
+       // 'model_bankdata' => $model_bankdata,
     ]) ?>
 
 </div>
