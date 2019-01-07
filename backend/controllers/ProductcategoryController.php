@@ -8,14 +8,16 @@ use backend\models\ProductcategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
- * ProductcategoryController implements the CRUD actions for Productcategory model.
+ * ProductcatController implements the CRUD actions for Productcat model.
  */
 class ProductcategoryController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -23,32 +25,44 @@ class ProductcategoryController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
+            'access'=>[
+                'class'=>AccessControl::className(),
+                'rules'=>[
+                    [
+                        'allow'=>true,
+                        'actions'=>['index','create','update','delete','view'],
+                        'roles'=>['@'],
+                    ]
+                ]
+            ]
         ];
     }
 
     /**
-     * Lists all Productcategory models.
+     * Lists all Productcat models.
      * @return mixed
      */
     public function actionIndex()
     {
+        $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new ProductcategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = $pageSize;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'perpage' => $pageSize,
         ]);
     }
 
     /**
-     * Displays a single Productcategory model.
+     * Displays a single Productcat model.
      * @param integer $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
@@ -58,7 +72,7 @@ class ProductcategoryController extends Controller
     }
 
     /**
-     * Creates a new Productcategory model.
+     * Creates a new Productcat model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -66,8 +80,12 @@ class ProductcategoryController extends Controller
     {
         $model = new Productcategory();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('create', [
@@ -76,18 +94,21 @@ class ProductcategoryController extends Controller
     }
 
     /**
-     * Updates an existing Productcategory model.
+     * Updates an existing Productcat model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
@@ -96,24 +117,25 @@ class ProductcategoryController extends Controller
     }
 
     /**
-     * Deletes an existing Productcategory model.
+     * Deletes an existing Productcat model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        $session = Yii::$app->session;
+        $session->setFlash('msg','บันทึกรายการเรียบร้อย');
         return $this->redirect(['index']);
+
     }
 
     /**
-     * Finds the Productcategory model based on its primary key value.
+     * Finds the Productcat model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Productcategory the loaded model
+     * @return Productcat the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
@@ -122,6 +144,6 @@ class ProductcategoryController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }

@@ -3,16 +3,16 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Productcategory */
+/* @var $model backend\models\Productcat */
 
-$this->title = 'Update Productcategory: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Productcategories', 'url' => ['index']];
+$this->title = Yii::t('app', 'แก้ไขกลุ่มสินค้า: {nameAttribute}', [
+    'nameAttribute' => $model->name,
+]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'กลุ่มสินค้า'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<div class="productcategory-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="productcat-update">
 
     <?= $this->render('_form', [
         'model' => $model,

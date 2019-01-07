@@ -4,16 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Productcategory */
+/* @var $model backend\models\Productcat */
 
-$this->title = 'Create Productcategory';
-$this->params['breadcrumbs'][] = ['label' => 'Productcategories', 'url' => ['index']];
+$this->title = Yii::t('app', 'สร้างกลุ่มสินค้า');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'กลุ่มสินค้า'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="productcategory-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<div class="productcat-create">
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

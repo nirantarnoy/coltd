@@ -162,7 +162,7 @@ $(function(){
                         <a href="#subProduct" data-toggle="collapse" class="collapsed"><i class="fa fa-cubes"></i> <span>ข้อมูลสินค้า</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="subProduct" class="collapse ">
                             <ul class="nav">
-                                <li><a href="index.php?r=productcat/index" class="productcat">กลุ่มสินค้า</a></li>
+                                <li><a href="index.php?r=productcategory/index" class="productcategory">กลุ่มสินค้า</a></li>
                                 <li><a href="index.php?r=product/index" class="product">สินค้า</a></li>
                                 <li><a href="index.php?r=unit/index" class="unit">หน่วยนับ</a></li>
                                 <li><a href="index.php?r=warehouse/index" class="warehouse">คลังสินค้า</a></li>
