@@ -44,4 +44,8 @@ class Productcategory extends \common\models\ProductCategory{
             ],
         ];
     }
+    public function findName($id){
+        $model = \backend\models\Productcategory::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model->name:'';
+    }
 }

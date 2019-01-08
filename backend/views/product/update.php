@@ -5,14 +5,14 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Product */
 
-$this->title = 'Update Product: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = Yii::t('app', 'แก้ไขรหัสสินค้า: {nameAttribute}', [
+    'nameAttribute' => $model->product_code,
+]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'รหัสสินค้า'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->product_code, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="product-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

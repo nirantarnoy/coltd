@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Product;
@@ -11,8 +12,9 @@ use backend\models\Product;
  */
 class ProductSearch extends Product
 {
+    public $globalSearch;
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
@@ -20,11 +22,12 @@ class ProductSearch extends Product
             [['id', 'category_id', 'product_type_id', 'unit_id', 'is_hold', 'has_variant', 'bom_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['product_code', 'name', 'description', 'barcode', 'photo'], 'safe'],
             [['min_stock', 'max_stock', 'cost', 'price'], 'number'],
+             [['globalSearch'],'string'],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function scenarios()
     {
@@ -77,11 +80,11 @@ class ProductSearch extends Product
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'product_code', $this->product_code])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'barcode', $this->barcode])
-            ->andFilterWhere(['like', 'photo', $this->photo]);
+        if($this->globalSearch != ''){
+            $query->orFilterWhere(['like','product_code',$this->globalSearch])
+                  ->orFilterWhere(['like','name',$this->globalSearch])
+                  ->orFilterWhere(['like','description',$this->globalSearch]);
+        }
 
         return $dataProvider;
     }
