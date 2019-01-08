@@ -879,17 +879,17 @@ $this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\
         var url = e.attr("data-url");
         //var url ="'.Url::to(['product/delete','id'=>10],true).'" ;
         alert(url);
-        swal({
-              title: "ต้องการลบรายการนี้ใช่หรือไม่",
-              text: "",
-              type: "warning",
-              showCancelButton: true,
-              closeOnConfirm: false,
-              showLoaderOnConfirm: true
-            }, function () {
-              e.attr("href",url); 
-              e.trigger("click");        
-        });
+//        swal({
+//              title: "ต้องการลบรายการนี้ใช่หรือไม่",
+//              text: "",
+//              type: "warning",
+//              showCancelButton: true,
+//              closeOnConfirm: false,
+//              showLoaderOnConfirm: true
+//            }, function () {
+//              e.attr("href",url); 
+//              e.trigger("click");        
+//        });
     }
    
     function removeline(e){

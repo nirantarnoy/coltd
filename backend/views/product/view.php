@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
           <div class="pull-right">
               <a href="<?=Url::to(['product/index'],true)?>"><div class="btn btn-default">กลับ <i class="fa fa-arrow-right"></i> </div></a>
           </div>
-            
+
       </div>
      </div>
 <div class="row" style="margin-top: 5px;">
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="clearfix"></div>
         </div>
         <div class="panel-body">
-           
+
            <div class="row">
                <div class="col-lg-4">
                    <?= DetailView::widget([
@@ -68,17 +68,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                           'contentOptions' => ['style' => 'vertical-align: middle'],
                                           'value'=> function($data){
                                             return \backend\models\Unit::findUnitname($data->unit_id);
-                                          }  
+                                          }
                                      ],
                                      [
                                           'attribute'=>'category_id',
                                           'headerOptions' => ['style' => 'text-align: left'],
-                                          'contentOptions' => ['style' => 'vertical-align: middle'], 
+                                          'contentOptions' => ['style' => 'vertical-align: middle'],
                                            'value'=> function($data){
-                                            return \backend\models\Productcat::findGroupname($data->category_id);
-                                          }   
+                                            return \backend\models\Productcategory::findName($data->category_id);
+                                          }
                                       ],
-                            
+
                         ],
                     ]) ?>
                      <!-- <div class="btn btn-default" style="margin-top: 5px;"> ดูตามที่จัดเก็บ</div> -->
@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
                           </span>
                         </div>
                 </div>
-                      
+
 <!--                    <i class="fa fa-warning"></i> <small class="text-danger"> คลิกดูรายการจำนวนสินค้าที่ตัวเลขจำนวน</small> -->
                </div>
            </div>
