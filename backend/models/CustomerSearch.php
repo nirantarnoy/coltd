@@ -11,6 +11,7 @@ use backend\models\Customer;
  */
 class CustomerSearch extends Customer
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
@@ -19,6 +20,7 @@ class CustomerSearch extends Customer
         return [
             [['id', 'customer_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['code', 'first_name', 'last_name', 'card_id', 'description'], 'safe'],
+            [['globalSearch'],'string']
         ];
     }
 
@@ -67,12 +69,13 @@ class CustomerSearch extends Customer
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'first_name', $this->first_name])
-            ->andFilterWhere(['like', 'last_name', $this->last_name])
-            ->andFilterWhere(['like', 'card_id', $this->card_id])
-            ->andFilterWhere(['like', 'description', $this->description]);
-
+        if($this->globalSearch !='') {
+            $query->orFilterWhere(['like', 'code', $this->globalSearch])
+                ->orFilterWhere(['like', 'first_name', $this->globalSearch])
+                ->orFilterWhere(['like', 'last_name', $this->globalSearch])
+                ->orFilterWhere(['like', 'card_id', $this->globalSearch])
+                ->orFilterWhere(['like', 'description', $this->globalSearch]);
+        }
         return $dataProvider;
     }
 }

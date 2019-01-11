@@ -41,12 +41,15 @@ class CustomerController extends Controller
      */
     public function actionIndex()
     {
+        $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new CustomerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = $pageSize;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'perpage' => $pageSize,
         ]);
     }
 
@@ -255,7 +258,7 @@ class CustomerController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Custumer::findOne($id)) !== null) {
+        if (($model = Customer::findOne($id)) !== null) {
             return $model;
         }
 

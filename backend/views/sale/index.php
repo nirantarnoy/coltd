@@ -97,7 +97,53 @@ $this->params['breadcrumbs'][] = $this->title;
             //'created_by',
             //'updated_by',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+
+                'header' => '',
+                'headerOptions' => ['style' => 'text-align:center;','class' => 'activity-view-link',],
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['style' => 'text-align: right'],
+                'buttons' => [
+                    'view' => function($url, $data, $index) {
+                        $options = [
+                            'title' => Yii::t('yii', 'View'),
+                            'aria-label' => Yii::t('yii', 'View'),
+                            'data-pjax' => '0',
+                        ];
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-eye-open btn btn-xs btn-default"></span>', $url, $options);
+                    },
+                    'update' => function($url, $data, $index) {
+                        $options = array_merge([
+                            'title' => Yii::t('yii', 'Update'),
+                            'aria-label' => Yii::t('yii', 'Update'),
+                            'data-pjax' => '0',
+                            'id'=>'modaledit',
+                        ]);
+                        return $data->status == 1? Html::a(
+                            '<span class="glyphicon glyphicon-pencil btn btn-xs btn-default"></span>', $url, [
+                            'id' => 'activity-view-link',
+                            //'data-toggle' => 'modal',
+                            // 'data-target' => '#modal',
+                            'data-id' => $index,
+                            'data-pjax' => '0',
+                            // 'style'=>['float'=>'rigth'],
+                        ]):'';
+                    },
+                    'delete' => function($url, $data, $index) {
+                        $options = array_merge([
+                            'title' => Yii::t('yii', 'Delete'),
+                            'aria-label' => Yii::t('yii', 'Delete'),
+                            //'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                            //'data-method' => 'post',
+                            //'data-pjax' => '0',
+                            'data-url'=>$url,
+                            'onclick'=>'recDelete($(this));'
+                        ]);
+                        return Html::a('<span class="glyphicon glyphicon-trash btn btn-xs btn-default"></span>', 'javascript:void(0)', $options);
+                    }
+                ]
+            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>

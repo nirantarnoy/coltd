@@ -35,12 +35,15 @@ class CustomergroupController extends Controller
      */
     public function actionIndex()
     {
+        $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new CustomergroupSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = $pageSize;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'perpage' => $pageSize,
         ]);
     }
 

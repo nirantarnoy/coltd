@@ -4,10 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use toxor88\switchery\Switchery;
 use yii\helpers\Url;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 
 use common\models\Province;
 use common\models\Amphur;
 use common\models\District;
+use common\models\Countries;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Custumer */
 /* @var $form yii\widgets\ActiveForm */
@@ -20,6 +23,7 @@ $add_amp = $model_address_plant?$model_address_plant->city_id:0;
 $prov = Province::find()->all();
 $amp = Amphur::find()->where(['PROVINCE_ID'=>$add_prov])->all();
 $dist = District::find()->where(['AMPHUR_ID'=> $add_amp])->all();
+$country = Countries::find()->all();
 
 $l = 1;
 $old_item = '';
@@ -89,6 +93,17 @@ $this->registerJs($js,static::POS_END);
                     <?= $form->field($model, 'code')->textInput(['maxlength' => true,'data-validation-required-message'=>'กรุณาป้อนข้อมูลรหัสลูกค้า']) ?>
                 </div>
                 <div class="col-lg-3">
+                    <?= $form->field($model, 'customer_type')->widget(Select2::className(),[
+                            'data'=> ArrayHelper::map(\backend\helpers\CustomerType::asArrayObject(),'id','name')
+                    ]) ?>
+                </div>
+                <div class="col-lg-6">
+                    <?= $form->field($model, 'name')->textInput(['maxlength' => true,'data-validation-required-message'=>'กรุณาป้อนข้อมูลรหัสลูกค้า']) ?>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
                     <label for="">คำนำหน้า</label>
                     <select name="prefix" class="form-control" id="">
                         <?php
@@ -105,25 +120,13 @@ $this->registerJs($js,static::POS_END);
                 <div class="col-lg-3">
                     <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-lg-3">
                     <?= $form->field($model, 'card_id')->textInput(['maxlength' => true]) ?>
                 </div>
-                <div class="col-lg-3">
-                    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="col-lg-3">
-                    <?= $form->field($model, 'mobile')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="col-lg-3">
-                    <?= $form->field($model, 'line')->textInput(['maxlength' => true]) ?>
-                </div>
             </div>
+            <hr />
             <div class="row">
-                <div class="col-lg-3">
-                    <?= $form->field($model, 'facebook')->textInput(['maxlength' => true]) ?>
-                </div>
+
                 <div class="col-lg-3">
                     <label>กลุ่มลูกค้า</label>
                     <select name="customer_group" class="form-control" id="">
@@ -153,11 +156,34 @@ $this->registerJs($js,static::POS_END);
                     </select>
                 </div>
                 <div class="col-lg-3">
+                    <?= $form->field($model, 'currency_id')->widget(Select2::className(),[
+                            'data'=>ArrayHelper::map(\backend\helpers\Currency::asArrayObject(),'id','name'),
+                            'options' => [
+
+                            ]
+                    ]) ?>
+                </div>
+                <div class="col-lg-3">
                     <?= $form->field($model, 'description')->textarea(['maxlength' => true]) ?>
                 </div>
             </div>
+            <hr />
             <div class="row">
 
+                <div class="col-lg-3">
+                    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-lg-3">
+                    <?= $form->field($model, 'mobile')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-lg-3">
+                    <?= $form->field($model, 'line')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-lg-3">
+                    <?= $form->field($model, 'facebook')->textInput(['maxlength' => true]) ?>
+                </div>
+            </div>
+            <div class="row">
 
                 <div class="col-lg-3">
                     <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label('สถานะ') ?>
@@ -166,6 +192,30 @@ $this->registerJs($js,static::POS_END);
             </div>
 
             <hr />
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group" style="margin-top: -10px">
+                        <label class="control-label col-lg-12" for="first-name"><?=Yii::t('app','ประเทศ')?>
+                        </label>
+                        <div class="col-lg-12">
+                            <select name="select_district" class="form-control" id="district" >
+
+                                    <?php foreach ($country as $value):?>
+                                        <?php
+                                        $select = '';
+                                        $dis_id = $model_address_plant?$model_address_plant->district_id:0;
+                                        if($value->id ==  $dis_id){$select = 'selected';}
+                                        ?>
+                                        <option value="<?=$value->id?>" <?=$select;?>><?=$value->country_code." ".$value->country_name?></option>
+                                    <?php endforeach;?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
             <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group" style="margin-top: -10px">

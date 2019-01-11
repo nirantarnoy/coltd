@@ -18,35 +18,9 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'code') ?>
-
-    <?= $form->field($model, 'first_name') ?>
-
-    <?= $form->field($model, 'last_name') ?>
-
-    <?= $form->field($model, 'card_id') ?>
-
-    <?php // echo $form->field($model, 'customer_group_id') ?>
-
-    <?php // echo $form->field($model, 'customer_type_id') ?>
-
-    <?php // echo $form->field($model, 'description') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+    <div class="input-group">
+        <!--         <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>-->
+        <?= $form->field($model, 'globalSearch')->textInput(['placeholder'=>'ค้นหา','class'=>'form-control','aria-describedby'=>'basic-addon1'])->label(false) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

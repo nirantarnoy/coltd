@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\CustumerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -23,19 +24,47 @@ $completed = '';
 </div>
 <div class="custumer-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <div class="card">
-        <div class="card-body">
-            <?php Pjax::begin(); ?>
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-            <p>
-                <?= Html::a('Create Customer', ['create'], ['class' => 'btn btn-success']) ?>
-            </p>
-
+    <?php Pjax::begin();?>
+    <div class="panel panel-headline">
+        <div class="panel-heading">
+            <div class="btn-group">
+                <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างลูกค้า'), ['create'], ['class' => 'btn btn-success']) ?>
+            </div>
+            <h4 class="pull-right"><?=$this->title?> <i class="fa fa-user"></i><small></small></h4>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="form-inline">
+                        <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="pull-right">
+                        <form id="form-perpage" class="form-inline" action="<?=Url::to(['customer/index'],true)?>" method="post">
+                            <div class="form-group">
+                                <label>แสดง </label>
+                                <select class="form-control" name="perpage" id="perpage">
+                                    <option value="20" <?=$perpage=='20'?'selected':''?>>20</option>
+                                    <option value="50" <?=$perpage=='50'?'selected':''?> >50</option>
+                                    <option value="100" <?=$perpage=='100'?'selected':''?>>100</option>
+                                </select>
+                                <label> รายการ</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
+                'emptyCell'=>'-',
+                'layout'=>'{items}{summary}{pager}',
+                'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
+                'showOnEmpty'=>false,
+                'tableOptions' => ['class' => 'table table-hover'],
+                'emptyText' => '<br /><div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 
@@ -70,9 +99,9 @@ $completed = '';
                     [
 
                         'header' => '',
-                        'headerOptions' => ['style' => 'width:160px;text-align:center;','class' => 'activity-view-link',],
+                        'headerOptions' => ['style' => 'text-align:center;','class' => 'activity-view-link',],
                         'class' => 'yii\grid\ActionColumn',
-                        'contentOptions' => ['style' => 'text-align: center'],
+                        'contentOptions' => ['style' => 'text-align: right'],
                         'buttons' => [
                             'view' => function($url, $data, $index) {
                                 $options = [
@@ -81,7 +110,7 @@ $completed = '';
                                     'data-pjax' => '0',
                                 ];
                                 return Html::a(
-                                    '<span class="fa fa-eye btn btn-secondary"></span>', $url, $options);
+                                    '<span class="glyphicon glyphicon-eye-open btn btn-xs btn-default"></span>', $url, $options);
                             },
                             'update' => function($url, $data, $index) {
                                 $options = array_merge([
@@ -90,28 +119,27 @@ $completed = '';
                                     'data-pjax' => '0',
                                     'id'=>'modaledit',
                                 ]);
-                                return Html::a(
-                                    '<span class="fa fa-edit btn btn-secondary"></span>', $url, [
+                                return $data->status == 1? Html::a(
+                                    '<span class="glyphicon glyphicon-pencil btn btn-xs btn-default"></span>', $url, [
                                     'id' => 'activity-view-link',
                                     //'data-toggle' => 'modal',
                                     // 'data-target' => '#modal',
                                     'data-id' => $index,
                                     'data-pjax' => '0',
                                     // 'style'=>['float'=>'rigth'],
-                                ]);
+                                ]):'';
                             },
                             'delete' => function($url, $data, $index) {
                                 $options = array_merge([
                                     'title' => Yii::t('yii', 'Delete'),
                                     'aria-label' => Yii::t('yii', 'Delete'),
-//                                    'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-//                                    'data-method' => 'post',
-//                                    'data-pjax' => '0',
-                                     'data-url'=>$url,
+                                    //'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                                    //'data-method' => 'post',
+                                    //'data-pjax' => '0',
+                                    'data-url'=>$url,
                                     'onclick'=>'recDelete($(this));'
                                 ]);
-                                return Html::a('<span class="fa fa-trash btn btn-secondary"></span>', 'javascript:void(0)', $options);
-                             //   return Html::a('<span class="fa fa-trash btn btn-secondary"></span>', $url, $options);
+                                return Html::a('<span class="glyphicon glyphicon-trash btn btn-xs btn-default"></span>', 'javascript:void(0)', $options);
                             }
                         ]
                     ],
@@ -120,18 +148,7 @@ $completed = '';
             <?php Pjax::end(); ?>
         </div>
     </div>
-<!--    <div class="card">-->
-<!--        <div class="card-body">-->
-<!--            <h4 class="card-title">Warning message <small>(Click on image)</small></h4>-->
-<!--            <img src="../assets/images/alert/alert4.png" alt="alert" class="img-responsive model_img" id="sa-warning1">-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="button-box">-->
-<!--        <button class="tst1 btn btn-info">Info Message</button>-->
-<!--        <button class="tst2 btn btn-warning">Warning Message</button>-->
-<!--        <button class="tst3 btn btn-success">Success Message</button>-->
-<!--        <button class="tst4 btn btn-danger">Danger Message</button>-->
-<!--    </div>-->
+</div>
 </div>
 <?php
 $js=<<<JS
