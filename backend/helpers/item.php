@@ -2,22 +2,24 @@
 
 namespace backend\helpers;
 
-class DeliveryType
+class item
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
 
     private static $data = [
-        1 => 'ต้องการให้จัดส่ง',
-        2 => 'มารับเองที่โรงงาน',
-
+        1 => 'หลอดใหญ่ 20 กก.',
+        2 => 'หลอดเล็ก 20 กก.',
+        3 => 'บด 20 กก.',
+        4 => 'แพ็ค 1.25 กก.'
 
     ];
 
     private static $dataobj = [
-        ['id'=>1,'name' => 'ต้องการให้จัดส่ง'],
-        ['id'=>2,'name' => 'มารับเองที่โรงงาน'],
-
+        ['id'=>1,'name' => 'หลอดใหญ่ 20 กก.'],
+        ['id'=>2,'name' => 'หลอดเล็ก 20 กก.'],
+        ['id'=>3,'name' => 'บด 20 กก.'],
+        ['id'=>4,'name' => 'แพ็ค 1.25 กก.'],
 
     ];
     public static function asArray()

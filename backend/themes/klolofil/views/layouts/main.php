@@ -167,6 +167,19 @@ $(function(){
                                 <li><a href="index.php?r=unit/index" class="unit">หน่วยนับ</a></li>
                                 <li><a href="index.php?r=warehouse/index" class="warehouse">คลังสินค้า</a></li>
                                 <li><a href="index.php?r=location/index" class="location">ล๊อก</a></li>
+                                <li><a href="index.php?r=stockbalance/index" class="stockbalance">สินค้าคงคลัง</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="has-sub">
+                        <a href="#subSale" data-toggle="collapse" class="collapsed"><i class="fa fa-shopping-cart"></i> <span>ขายสินค้า</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subSale" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="index.php?r=customergroup/index" class="customergroup">กลุ่มลูกค้า</a></li>
+                                <li><a href="index.php?r=customer/index" class="customer">ลูกค้า</a></li>
+                                <li><a href="index.php?r=quotation/index" class="quotation">เสนอราคา</a></li>
+                                <li><a href="index.php?r=sale/index" class="sale">ขาย</a></li>
+                                <li><a href="index.php?r=invoice/index" class="invoice">เรียกเก็บเงิน</a></li>
                             </ul>
                         </div>
                     </li>

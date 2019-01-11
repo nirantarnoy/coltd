@@ -2,21 +2,21 @@
 
 namespace backend\helpers;
 
-class DeliveryType
+class CustomerStatus
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
 
     private static $data = [
-        1 => 'ต้องการให้จัดส่ง',
-        2 => 'มารับเองที่โรงงาน',
+        1 => 'Open',
+        2 => 'Closed',
 
 
     ];
 
     private static $dataobj = [
-        ['id'=>1,'name' => 'ต้องการให้จัดส่ง'],
-        ['id'=>2,'name' => 'มารับเองที่โรงงาน'],
+        ['id'=>1,'name' => 'Open'],
+        ['id'=>2,'name' => 'Open'],
 
 
     ];
