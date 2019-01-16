@@ -167,7 +167,7 @@ $this->registerCss('
                                     </td>
                                     <td>
                                         <input type="hidden" class="productid" name="productid[]" value="<?=$value->product_id?>">
-                                       <?=\backend\models\Product::findCode($value->product_id)?>
+                                       <?=\backend\models\Product::findEng($value->product_id)?>
                                     </td>
                                     <td>
                                        <?=\backend\models\Product::findName($value->product_id)?>
