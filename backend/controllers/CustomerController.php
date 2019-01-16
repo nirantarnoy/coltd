@@ -86,10 +86,9 @@ class CustomerController extends Controller
         $model = new Customer();
         $model_address = new \backend\models\AddressBook();
 
-        if ($model->load(Yii::$app->request->post()) && $model_address->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) || $model_address->load(Yii::$app->request->post())) {
 
             $model->customer_group_id = Yii::$app->request->post('customer_group');
-            $model->zone_id = Yii::$app->request->post('zone_id');
 
             $district = Yii::$app->request->post('select_district');
             $city = Yii::$app->request->post('select_city');
@@ -98,37 +97,36 @@ class CustomerController extends Controller
             $delivery = Yii::$app->request->post('delivery_type');
 
 
-            $item_check = substr(Yii::$app->request->post('select_item'),0,1);
-            $item_last = '';
-            if($item_check == ","){
-                $item_last= substr(Yii::$app->request->post('select_item'),1,strlen(Yii::$app->request->post('select_item')));
-            }else{
-                $item_last = Yii::$app->request->post('select_item');
-            }
-            $item_list = explode(',',$item_last) ;
-            $item_qty = Yii::$app->request->post('item_qty');
+//            $item_check = substr(Yii::$app->request->post('select_item'),0,1);
+//            $item_last = '';
+//            if($item_check == ","){
+//                $item_last= substr(Yii::$app->request->post('select_item'),1,strlen(Yii::$app->request->post('select_item')));
+//            }else{
+//                $item_last = Yii::$app->request->post('select_item');
+//            }
+//            $item_list = explode(',',$item_last) ;
+//            $item_qty = Yii::$app->request->post('item_qty');
+//
+//            $bucket_check = substr(Yii::$app->request->post('select_bucket'),0,1);
+//            $bucket_last = '';
+//
+//            if($bucket_check == ","){
+//                $bucket_last= substr(Yii::$app->request->post('select_bucket'),1,strlen(Yii::$app->request->post('select_bucket')));
+//            }else{
+//                $bucket_last = Yii::$app->request->post('select_bucket');
+//            }
+//
+//            $bucket_list = explode(',',$bucket_last) ;
+//            $bucket_qty = Yii::$app->request->post('bucket_qty');
 
-            $bucket_check = substr(Yii::$app->request->post('select_bucket'),0,1);
-            $bucket_last = '';
-
-            if($bucket_check == ","){
-                $bucket_last= substr(Yii::$app->request->post('select_bucket'),1,strlen(Yii::$app->request->post('select_bucket')));
-            }else{
-                $bucket_last = Yii::$app->request->post('select_bucket');
-            }
-
-            $bucket_list = explode(',',$bucket_last) ;
-            $bucket_qty = Yii::$app->request->post('bucket_qty');
-
-            $uploadimage = UploadedFile::getInstancesByName('imagefile');
-            $uploaddoc = UploadedFile::getInstancesByName('docfile');
+         //   $uploadimage = UploadedFile::getInstancesByName('imagefile');
+         //   $uploaddoc = UploadedFile::getInstancesByName('docfile');
 
 
             //print_r($bucket_list);return;
             $model->customer_group_id = Yii::$app->request->post('customer_group');
-            $model->zone_id = Yii::$app->request->post('zone_id');
             $model->delivery_type = $delivery;
-            if ($model->save()) {
+            if ($model->save(false)) {
                 // insert address
                 $model_address->status = 1;
                 $model_address->party_id = $model->id;
@@ -138,61 +136,38 @@ class CustomerController extends Controller
                 $model_address->party_type_id = 2;
                 $model_address->save(false);
 
-                if (!empty($uploadimage)) {
-                    foreach ($uploadimage as $file) {
-                        $file->saveAs(Yii::getAlias('@backend') . '/web/uploads/images/' . $file);
-                        Image::thumbnail(Yii::getAlias('@backend') . '/web/uploads/images/' . $file, 100, 70)
-                            ->rotate(0)
-                            ->save(Yii::getAlias('@backend') . '/web/uploads/thumbnail/' . $file, ['jpeg_quality' => 100]);
+//                if (!empty($uploadimage)) {
+//                    foreach ($uploadimage as $file) {
+//                        $file->saveAs(Yii::getAlias('@backend') . '/web/uploads/images/' . $file);
+//                        Image::thumbnail(Yii::getAlias('@backend') . '/web/uploads/images/' . $file, 100, 70)
+//                            ->rotate(0)
+//                            ->save(Yii::getAlias('@backend') . '/web/uploads/thumbnail/' . $file, ['jpeg_quality' => 100]);
+//
+//
+//                        $modelfile = new \common\models\CustomerFile();
+//                        $modelfile->party_id = $model->id;
+//                        $modelfile->party_type = 2; //1 = คัดกรอง 2 = ลูกค้า
+//                        $modelfile->file_type = 2; // 2 = รูปภาพ
+//                        $modelfile->name = $file;
+//                        $modelfile->save(false);
+//                    }
+//
+//
+//                }
+//                if(!empty($uploaddoc)){
+//                    foreach($uploaddoc as $file){
+//
+//                        $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/documents/'.$file);
+//
+//                        $modelfile = new \common\models\CustomerFile();
+//                        $modelfile->party_id = $model->id;
+//                        $modelfile->party_type = 2; //2 = คูกค้า
+//                        $modelfile->file_type = 3; // 2 = รูปภาพ 3 = เอกสาร
+//                        $modelfile->name = $file;
+//                        $modelfile->save(false);
+//                    }
+//                }
 
-
-                        $modelfile = new \common\models\CustomerFile();
-                        $modelfile->party_id = $model->id;
-                        $modelfile->party_type = 2; //1 = คัดกรอง 2 = ลูกค้า
-                        $modelfile->file_type = 2; // 2 = รูปภาพ
-                        $modelfile->name = $file;
-                        $modelfile->save(false);
-                    }
-
-
-                }
-                if(!empty($uploaddoc)){
-                    foreach($uploaddoc as $file){
-
-                        $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/documents/'.$file);
-
-                        $modelfile = new \common\models\CustomerFile();
-                        $modelfile->party_id = $model->id;
-                        $modelfile->party_type = 2; //2 = คูกค้า
-                        $modelfile->file_type = 3; // 2 = รูปภาพ 3 = เอกสาร
-                        $modelfile->name = $file;
-                        $modelfile->save(false);
-                    }
-                }
-                if(count($item_list)>0 && count($item_qty)>0){
-                    for($i=0;$i<=count($item_list)-1;$i++){
-                        $detail = new \backend\models\Customerdetail();
-                        $detail->customer_id = $model->id;
-                        $detail->itemid = $item_list[$i];
-                        $detail->qty = $item_qty[$i];
-                        $detail->line_type = 1;
-                        $detail->status = 1;
-                        $detail->save();
-                    }
-
-                }
-                if(count($bucket_list)>0 && count($bucket_qty)>0){
-                    for($i=0;$i<=count($bucket_list)-1;$i++){
-
-                        $detail = new \backend\models\Customerdetail();
-                        $detail->customer_id = $model->id;
-                        $detail->itemid = $bucket_list[$i];
-                        $detail->qty = $bucket_qty[$i];
-                        $detail->line_type = 2;
-                        $detail->status = 1;
-                        $detail->save();
-                    }
-                }
 
                 $session = Yii::$app->session;
                 $session->setFlash('msg', 'บันทึกรายการเรียบร้อย');
