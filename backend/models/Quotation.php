@@ -64,4 +64,8 @@ class Quotation extends \common\models\Quotation {
             return $prefix.'000001';
         }
     }
+    public function findNum($id){
+        $model = Quotation::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model->quotation_no:'';
+    }
 }

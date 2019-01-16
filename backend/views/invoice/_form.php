@@ -9,30 +9,33 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="invoice-form">
+    <div class="panel panel-headline">
+        <div class="panel-heading">
+        </div>
+        <div class="panel-body">
+            <?php $form = ActiveForm::begin(); ?>
 
-    <?php $form = ActiveForm::begin(); ?>
+            <?= $form->field($model, 'invoice_no')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'invoice_no')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'sale_id')->textInput() ?>
 
-    <?= $form->field($model, 'sale_id')->textInput() ?>
+            <?= $form->field($model, 'disc_amount')->textInput() ?>
 
-    <?= $form->field($model, 'disc_amount')->textInput() ?>
+            <?= $form->field($model, 'disc_percent')->textInput() ?>
 
-    <?= $form->field($model, 'disc_percent')->textInput() ?>
+            <?= $form->field($model, 'total_amount')->textInput() ?>
 
-    <?= $form->field($model, 'total_amount')->textInput() ?>
+            <?= $form->field($model, 'note')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'note')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'status')->textInput() ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+            <?= $form->field($model, 'created_at')->textInput() ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+            <?= $form->field($model, 'updated_at')->textInput() ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+            <?= $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+            <?= $form->field($model, 'updated_by')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
@@ -40,4 +43,6 @@ use yii\widgets\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
+</div>
+    </div>
 </div>

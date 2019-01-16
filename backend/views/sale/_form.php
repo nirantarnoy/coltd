@@ -32,9 +32,11 @@ $this->registerCss('
 
 <div class="sale-form">
     <div class="panel panel-headline">
-        <div class="panel-heading">
-        </div>
         <div class="panel-body">
+            <div class="form-group pull-right">
+                <?= Html::Button("<i class='fa fa-list-alt'></i> picking list", ['class' => 'btn btn-info btn-gen-packing']) ?>
+                <?= Html::Button("<i class='fa fa-check-circle'></i> สร้างเอกสารเรียกเก็บเงิน", ['class' => 'btn btn-danger btn-gen-invoice']) ?>
+            </div>
             <?php $form = ActiveForm::begin(); ?>
             <input type="hidden" class="remove-list" name="removelist" value="">
             <div class="row">
@@ -212,15 +214,11 @@ $this->registerCss('
                 </div>
             </div>
 
-
             <hr />
-
 
             <div class="form-group pull-right">
                 <?= Html::submitButton("<i class='fa fa-save'></i> บันทึก", ['class' => 'btn btn-success']) ?>
-                <?= Html::Button("<i class='fa fa-list-alt'></i> ออกเอกสาร picking list", ['class' => 'btn btn-info btn-firm-sale']) ?>
-                <?= Html::Button("<i class='fa fa-check-circle'></i> สร้างเอกสารเรียกเก็บเงิน", ['class' => 'btn btn-danger btn-firm-sale']) ?>
-            </div>
+               </div>
 
             <?php ActiveForm::end(); ?>
         </div>
@@ -274,7 +272,7 @@ $this->registerCss('
 </div>
 <?php
 $url_to_find = Url::to(['quotation/finditem'],true);
-$url_to_firm = Url::to(['quotation/geninvoice'],true);
+$url_to_createinvoice = Url::to(['sale/createinvoice'],true);
 $js =<<<JS
  var currow = 0;
  var  removelist = [];
@@ -286,8 +284,8 @@ $js =<<<JS
             $.ajax({
               'type':'post',
               'dataType': 'json',
-              'url': "$url_to_firm",
-              'data': {'quotation_id': quote },
+              'url': "$url_to_createinvoice",
+              'data': {'sale_id': quote },
               'success': function(data) {
                   
               }

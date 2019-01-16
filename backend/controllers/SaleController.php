@@ -55,8 +55,10 @@ class SaleController extends Controller
      */
     public function actionView($id)
     {
+        $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'modelline' => $modelline
         ]);
     }
 
@@ -159,5 +161,38 @@ class SaleController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionCreateinvoice(){
+        if(Yii::$app->request->isPost){
+            $id = Yii::$app->request->post('sale_id');
+            if($id){
+                $model = \backend\models\Sale::find()->where(['id'=>$id])->one();
+                $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
+
+                if($model){
+                    $order = new \backend\models\Invoice();
+                    $order->sale_id = $model->id;
+                    $order->invoice_no = "INV0001";
+                    $order->status = 1;
+                    $order->note = $model->note;
+                    if($order->save()){
+                        if(count($modelline)>0){
+                            foreach($modelline as $value){
+                                $orderline = new \backend\models\Invoiceline();
+                                $orderline->invoice_id = $order->id;
+                                $orderline->product_id = $value->product_id;
+                                $orderline->qty = $value->qty;
+                                $orderline->price = $value->price;
+                                $orderline->disc_amount = $value->disc_amount;
+                                $orderline->line_amount = $value->line_amount;
+                                $orderline->save();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $this->redirect(['invoice/index']);
     }
 }

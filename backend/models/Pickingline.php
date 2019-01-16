@@ -4,7 +4,7 @@ use Yii;
 use yii\db\ActiveRecord;
 date_default_timezone_set('Asia/Bangkok');
 
-class Customer extends \common\models\Customer
+class Pickingline extends \common\models\PickingLine
 {
     public function behaviors()
     {
@@ -47,13 +47,9 @@ class Customer extends \common\models\Customer
         ];
     }
 
-    public function findName($id){
-        $model = Customer::find()->where(['id'=>$id])->one();
-        return count($model)>0?$model->name:'';
-    }
-    public function findFullName($id){
-        $model = Customer::find()->where(['id'=>$id])->one();
-        return count($model)>0?$model->code." ".$model->name:'';
-    }
+//    public function findName($id){
+//        $model = Customer::find()->where(['id'=>$id])->one();
+//        return count($model)>0?$model->name:'';
+//    }
 
 }
