@@ -242,12 +242,12 @@ table.table-vendor td{
 
                          //   'id',
                              [
-                                  'attribute'=>'product_code',
+                                  'attribute'=>'engname',
                                   'format'=>'html',
                                   'headerOptions' => ['style' => 'text-align: left'],
                                   'contentOptions' => ['style' => 'vertical-align: middle'],
                                   'value'=>function($data){
-                                    return '<a href="'.Url::to(['product/view/'.$data->id],true).'">'.$data->product_code.'</a>';
+                                      return Html::a($data->engname, ['product/view', 'id' => $data->id]);
                                   }
                              ],
                              [
@@ -385,7 +385,7 @@ table.table-vendor td{
                 <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายการสินค้า <small id="items"> </small></h4>
             </div>
             <div class="modal-body">
-                <?php $form_upload = ActiveForm::begin(['action'=>'importupdate','options'=>['enctype' => 'multipart/form-data']]); ?>
+                <?php $form_upload = ActiveForm::begin(['action'=>'index.php?r=product/importproduct','options'=>['enctype' => 'multipart/form-data']]); ?>
                 <div class="row">
                     <div class="col-lg-12">
                         <small class="text-info"> สามารถดาวน์โหลด template สำหรับการนำเข้าสินค้าโดยคลิก </small><a href="<?=Url::to(['product/exporttemplate'],true)?>" style="text-decoration-style: dashed;text-decoration: underline;">ที่นี่</a>

@@ -145,7 +145,7 @@ $this->registerCss('
                                         </td>
                                         <td>
                                             <input type="hidden" class="productid" name="productid[]" value="<?=$value->product_id?>">
-                                            <input type="text" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findCode($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                            <input type="text" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findEng($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control productname" name="prodname[]" value="<?=\backend\models\Product::findName($value->product_id)?>" readonly>
@@ -385,7 +385,7 @@ $js =<<<JS
                      var html = "";
                      for(var i =0;i<=data.length -1;i++){
                          html +="<tr ondblclick='getitem($(this));'><td style='vertical-align: middle'>"+
-                         data[i]['product_code']+"</td><td style='vertical-align: middle'>"+
+                         data[i]['engname']+"</td><td style='vertical-align: middle'>"+
                          data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
                           "<input type='hidden' class='prodcost' value='"+data[i]['cost']+"'/>" +
                           "<input type='hidden' class='prodprice' value='"+data[i]['price']+"'/>" +

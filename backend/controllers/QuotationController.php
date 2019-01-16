@@ -197,9 +197,9 @@ class QuotationController extends Controller
                     ->all();
                 return Json::encode($model);
             }else{
-                $model = \backend\models\Product::find()->where(['Like','product_code',$txt])
+                $model = \backend\models\Product::find()->where(['or',['Like','engname',$txt],['Like','name',$txt]])
+                    ->orFilterWhere(['like','engname',$txt])
                     ->orFilterWhere(['like','name',$txt])
-                    ->orFilterWhere(['like','description',$txt])
                     ->asArray()
                     ->all();
                 return Json::encode($model);

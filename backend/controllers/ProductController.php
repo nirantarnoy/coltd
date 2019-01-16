@@ -276,23 +276,27 @@ class ProductController extends Controller
                         if ($rowData[0] == '' || $i == 0) {
                             continue;
                         }
-                        $modelprod = \backend\models\Product::find()->where(['product_code' => $rowData[0]])->one();
+                        $modelprod = \backend\models\Product::find()->where(['engname' => $rowData[0]])->one();
                         if (count($modelprod) > 0) {
                             // $data_all +=1;
                             // array_push($data_fail,['name'=>$rowData[0][1]]);
                             continue;
                         }
                         $modelx = new \backend\models\Product();
-                        $modelx->product_code = $rowData[0];
-                        $modelx->barcode = $rowData[0];
-                        $modelx->name = $rowData[1];
-                        $modelx->description = $rowData[1] ;
-                        $modelx->category_id = $this->checkCat($rowData[2]);
-                        $modelx->unit_id = $this->checkUnit($rowData[3]);
-                        $modelx->price = $rowData[5];
-                        $modelx->cost = $rowData[6];
-                        $modelx->all_qty = str_replace(',','', $rowData[4]);;
-                        $modelx->available_qty = str_replace(',','', $rowData[4]);;
+                        $modelx->product_code = '';//$rowData[0];
+                        $modelx->barcode = '';//$rowData[0];
+                        $modelx->engname = ltrim($rowData[1]);
+                        $modelx->name = ltrim($rowData[2]);
+                        $modelx->description = '';//$rowData[1] ;
+                       // $modelx->category_id = $this->checkCat($rowData[2]);
+                      //  $modelx->unit_id = $this->checkUnit($rowData[3]);
+                      //  $modelx->unit_factor = $rowData[3];
+                     //   $modelx->volumn = $rowData[4];
+                     //   $modelx->volumn_content = $rowData[5];
+                        $modelx->price = 0;//$rowData[5];
+                        $modelx->cost = 0; //$rowData[6];
+                      //  $modelx->all_qty = str_replace(',','', $rowData[8]);;
+                      //  $modelx->available_qty = str_replace(',','', $rowData[8]);;
                         $modelx->status = 1;
 
                         if ($modelx->save(false)) {

@@ -254,6 +254,11 @@ class AuthitemController extends Controller
         $product_create = $auth->createPermission('product/create');
         $auth->add($product_create);
 
+        $product_import = $auth->createPermission('product/importproduct');
+        $auth->add($product_import);
+        $product_import_update = $auth->createPermission('product/importupdate');
+        $auth->add($product_import_update);
+
         $product_permission = $auth->createPermission('productmodule');
         $product_permission->description = "สิทธิ์ใช้งานโมดูล product";
         $auth->add($product_permission);
@@ -263,6 +268,8 @@ class AuthitemController extends Controller
         $auth->addChild($product_permission,$product_update);
         $auth->addChild($product_permission,$product_delete);
         $auth->addChild($product_permission,$product_create);
+        $auth->addChild($product_permission,$product_import);
+        $auth->addChild($product_permission,$product_import_update);
 
         $manage_product = $auth->createRole('Manage product');
         $manage_product->description = "Manage Product";

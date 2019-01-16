@@ -58,6 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attributes' => [
                          //   'id',
                             'product_code',
+                            'engname',
                             'name',
                             'description',
                             'barcode',
@@ -78,6 +79,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                             return \backend\models\Productcategory::findName($data->category_id);
                                           }
                                       ],
+                            'volumn',
+                            'volumn_content',
+                            'unit_factor',
 
                         ],
                     ]) ?>

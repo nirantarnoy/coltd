@@ -75,7 +75,9 @@ class StockbalanceSearch extends Stockbalance
 
        if($this->productSearch !=""){
            $query->orFilterWhere(['like','product.product_code',$this->productSearch])
-                 ->orFilterWhere(['like','product.name',$this->productSearch]);
+               ->orFilterWhere(['like','product.engname',$this->productSearch])
+               ->orFilterWhere(['like','product.name',$this->productSearch])
+           ->orFilterWhere(['like','product.description',$this->productSearch]);
        }
 
         return $dataProvider;

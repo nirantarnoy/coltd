@@ -15,7 +15,7 @@ $this->title = 'สินค้าคงคลัง';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="stockbalance-index">
-    <?php Pjax::begin();?>
+
     <div class="panel panel-headline">
         <div class="panel-heading">
             <h4 class="pull-left"><i class="fa fa-cubes text-warning"></i><small></small> <?=$this->title?> </h4>
@@ -59,6 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="table-responsive">
+                <?php Pjax::begin();?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
        // 'filterModel' => $searchModel,
@@ -72,11 +73,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
            // 'id',
+//            [
+//                'attribute' => 'product_id',
+//                'format' => 'raw',
+//                'value' => function($data){
+//                   return Html::a(\backend\models\Product::findCode($data->product_id), ['product/view', 'id' => $data->product_id]);
+//                }
+//            ],
             [
                 'attribute' => 'product_id',
                 'format' => 'raw',
                 'value' => function($data){
-                   return Html::a(\backend\models\Product::findCode($data->product_id), ['product/view', 'id' => $data->product_id]);
+                    return Html::a(\backend\models\Product::findEng($data->product_id), ['product/view', 'id' => $data->product_id]);
                 }
             ],
             [
@@ -100,7 +108,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return \backend\models\location::findLocationname($data->loc_id);
                 }
             ],
-            'qty',
+            [
+                'attribute' => 'qty',
+                'value' => function($data){
+                    return $data->qty == null?0:$data->qty;
+                }
+            ],
             //'status',
             //'created_at',
             //'updated_at',
@@ -114,3 +127,15 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
         </div>
     </div>
+<?php
+$js=<<<JS
+ $(function() {
+    $("#perpage").change(function(){
+            $("#form-perpage").submit();
+        });
+ });
+JS;
+
+$this->registerJs($js,static::POS_END);
+
+?>

@@ -45,7 +45,9 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_code'],'required'],
+
+            [['name'],'required'],
+            [['engname'],'unique'],
             [['category_id', 'product_type_id', 'unit_id', 'is_hold','unit_factor', 'has_variant', 'bom_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['min_stock', 'max_stock', 'cost', 'price','volumn','volumn_content'], 'number'],
             [['product_code', 'name', 'description', 'barcode', 'photo','engname'], 'string', 'max' => 255],
@@ -75,6 +77,9 @@ class Product extends \yii\db\ActiveRecord
             'bom_type' => Yii::t('app', 'ประเภทโครงสร้าง'),
             'cost' => Yii::t('app', 'ต้นทุน'),
             'price' => Yii::t('app', 'ราคา'),
+            'volumn' => Yii::t('app', 'ปริมาณต่อขวด(ลิตร)'),
+            'volumn_content' => Yii::t('app', 'Acohol Content'),
+            'unit_factor' => Yii::t('app', 'ปริมาณขวดต่อลัง'),
             'status' => Yii::t('app', 'สถานะ'),
             'all_qty' => Yii::t('app', 'จำนวนทั้งหมด'),
             'reserved_qty' => Yii::t('app', 'จำนวนจอง'),
