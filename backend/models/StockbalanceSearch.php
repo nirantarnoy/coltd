@@ -11,6 +11,7 @@ use backend\models\Stockbalance;
  */
 class StockbalanceSearch extends Stockbalance
 {
+    public $globalSearch ,$productSearch;
     /**
      * {@inheritdoc}
      */
@@ -19,6 +20,7 @@ class StockbalanceSearch extends Stockbalance
         return [
             [['id', 'product_id', 'warehouse_id', 'loc_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['qty'], 'number'],
+            [['globalSearch','productSearch'],'string'],
         ];
     }
 
@@ -42,6 +44,7 @@ class StockbalanceSearch extends Stockbalance
     {
         $query = Stockbalance::find();
 
+        $query->joinWith('product');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -69,6 +72,11 @@ class StockbalanceSearch extends Stockbalance
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
+
+       if($this->productSearch !=""){
+           $query->orFilterWhere(['like','product.product_code',$this->productSearch])
+                 ->orFilterWhere(['like','product.name',$this->productSearch]);
+       }
 
         return $dataProvider;
     }

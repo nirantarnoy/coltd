@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\StockbalanceSearch */
@@ -18,15 +20,27 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'productSearch')->textInput(['placeholder'=>'รหัสสินค้า/ชื่อสินค้า'])->label(false) ?>
 
-    <?= $form->field($model, 'product_id') ?>
+    <?= $form->field($model, 'warehouse_id')->widget(Select2::className(),[
+        'data'=>ArrayHelper::map(\backend\models\Warehouse::find()->all(),'id','name'),
+        'options' => [
+            'placeholder'=>'เลือกคลังสินค้า'
+        ],
+        'pluginOptions' => [
+                'allowClear'=> true,
+        ]
+    ])->label(false) ?>
 
-    <?= $form->field($model, 'warehouse_id') ?>
-
-    <?= $form->field($model, 'loc_id') ?>
-
-    <?= $form->field($model, 'qty') ?>
+    <?= $form->field($model, 'loc_id')->widget(Select2::className(),[
+        'data'=>ArrayHelper::map(\backend\models\Location::find()->all(),'id','name'),
+        'options' => [
+            'placeholder'=>'เลือกล๊อค'
+        ],
+        'pluginOptions' => [
+            'allowClear'=> true,
+        ]
+    ])->label(false) ?>
 
     <?php // echo $form->field($model, 'status') ?>
 
@@ -39,8 +53,9 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'updated_by') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+
+        <?= Html::submitButton('ค้นหา', ['class' => 'btn btn-primary','style'=>'margin-top: -10px;']) ?>
+        <?= Html::resetButton('รีเซ็ต', ['class' => 'btn btn-default','style'=>'margin-top: -10px;']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

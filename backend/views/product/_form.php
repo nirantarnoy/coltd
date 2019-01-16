@@ -36,6 +36,13 @@ use yii\helpers\Url;
                                                <?= $form->field($model, 'name')->textarea(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                             </div>
                                           </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ชื่ออังกฤษ <span class="required"></span>
+                                                </label>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <?= $form->field($model, 'engname')->textarea(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                                </div>
+                                            </div>
                                            <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">รายละเอียด <span class="required"></span>
                                             </label>
@@ -48,6 +55,13 @@ use yii\helpers\Url;
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <?= $form->field($model, 'cost')->textInput(['maxlength' => true,'class'=>'form-control','value'=>$model->cost!=""?$model->cost:0])->label(false) ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ราคา <span class="required"></span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <?= $form->field($model, 'price')->textInput(['maxlength' => true,'class'=>'form-control','value'=>$model->price!=""?$model->price:0])->label(false) ?>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -95,15 +109,29 @@ use yii\helpers\Url;
                                              ])->label(false) ?>
                                          </div>
                                      </div>
+                                     <div class="form-group">
+                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ปริมาณต่อลัง <span class="required"></span>
+                                         </label>
+                                         <div class="col-md-6 col-sm-6 col-xs-12">
+                                             <?= $form->field($model, 'volumn')->textInput()->label(false) ?>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ปริมาณต่อขวด/ลิตร <span class="required"></span>
+                                         </label>
+                                         <div class="col-md-6 col-sm-6 col-xs-12">
+                                             <?= $form->field($model, 'unit_factor')->textInput()->label(false) ?>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Aclohol Content <span class="required"></span>
+                                         </label>
+                                         <div class="col-md-6 col-sm-6 col-xs-12">
+                                             <?= $form->field($model, 'volumn_content')->textInput()->label(false) ?>
+                                         </div>
+                                     </div>
 
 
-                                           <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ราคา <span class="required"></span>
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                               <?= $form->field($model, 'price')->textInput(['maxlength' => true,'class'=>'form-control','value'=>$model->price!=""?$model->price:0])->label(false) ?>
-                                            </div>
-                                          </div>
 
 
                                  </div>

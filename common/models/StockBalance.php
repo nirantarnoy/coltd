@@ -46,11 +46,11 @@ class StockBalance extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'product_id' => Yii::t('app', 'Product ID'),
-            'warehouse_id' => Yii::t('app', 'Warehouse ID'),
-            'loc_id' => Yii::t('app', 'Loc ID'),
+            'product_id' => Yii::t('app', 'รหัสสินค้า'),
+            'warehouse_id' => Yii::t('app', 'คลังสินค้า'),
+            'loc_id' => Yii::t('app', 'ล็อค'),
             'qty' => Yii::t('app', 'Qty'),
-            'status' => Yii::t('app', 'Status'),
+            'status' => Yii::t('app', 'สถานะ'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),

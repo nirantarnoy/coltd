@@ -35,7 +35,8 @@
         "liyunfang/yii2-contextmenu": "*",
         "philippfrenzel/yii2fullcalendar":"*",
         "miloschuman/yii2-highcharts-widget": "dev-master",
-        "himiklab/yii2-recaptcha-widget" : "*"
+        "himiklab/yii2-recaptcha-widget" : "*",
+        "yii2tech/html2pdf": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

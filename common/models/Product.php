@@ -46,9 +46,9 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['product_code'],'required'],
-            [['category_id', 'product_type_id', 'unit_id', 'is_hold', 'has_variant', 'bom_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['min_stock', 'max_stock', 'cost', 'price'], 'number'],
-            [['product_code', 'name', 'description', 'barcode', 'photo'], 'string', 'max' => 255],
+            [['category_id', 'product_type_id', 'unit_id', 'is_hold','unit_factor', 'has_variant', 'bom_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['min_stock', 'max_stock', 'cost', 'price','volumn','volumn_content'], 'number'],
+            [['product_code', 'name', 'description', 'barcode', 'photo','engname'], 'string', 'max' => 255],
         ];
     }
 
@@ -61,6 +61,7 @@ class Product extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'product_code' => Yii::t('app', 'รหัสสินค้า'),
             'name' => Yii::t('app', 'ชื่อ'),
+            'engname' => Yii::t('app', 'ชื่ออังกฤษ'),
             'description' => Yii::t('app', 'รายละเอียด'),
             'barcode' => Yii::t('app', 'บาร์โค้ด'),
             'photo' => Yii::t('app', 'รูปภาพ'),

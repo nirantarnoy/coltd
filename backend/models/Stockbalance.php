@@ -44,4 +44,7 @@ class Stockbalance extends \common\models\StockBalance{
             ],
         ];
     }
+    public function getProduct(){
+        return $this->hasOne(\backend\models\Product::className(),['id'=>'product_id']);
+    }
 }
