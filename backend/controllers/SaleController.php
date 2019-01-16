@@ -89,13 +89,45 @@ class SaleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
+        if ($model->load(Yii::$app->request->post())) {
+            $prodid = Yii::$app->request->post('productid');
+            $lineqty = Yii::$app->request->post('qty');
+            $lineprice = Yii::$app->request->post('price');
+            $removelist = Yii::$app->request->post('removelist');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if($model->save()){
+                if(count($prodid)>0){
+                    for($i=0;$i<=count($prodid)-1;$i++){
+                        if($prodid[$i]==''){continue;}
+
+                        $modelcheck = \backend\models\Saleline::find()->where(['sale_id'=>$id,'product_id'=>$prodid[$i]])->one();
+                        if($modelcheck){
+                            $modelcheck->qty = $lineqty[$i];
+                            $modelcheck->price = $lineprice[$i];
+                            $modelcheck->line_amount = $lineqty[$i] * $lineprice[$i];
+                            $modelcheck->save();
+                        }else{
+                            $modelline = new \backend\models\Saleline();
+                            $modelline->sale_id = $model->id;
+                            $modelline->product_id = $prodid[$i];
+                            $modelline->qty = $lineqty[$i];
+                            $modelline->price = $lineprice[$i];
+                            $modelline->line_amount = $lineqty[$i] * $lineprice[$i];
+                            $modelline->save();
+                        }
+                    }
+                }
+                if(count($removelist)){
+                    \backend\models\Quotationline::deleteAll(['id'=>$removelist]);
+                }
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'modelline' => $modelline
         ]);
     }
 

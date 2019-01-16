@@ -75,8 +75,18 @@ $this->params['breadcrumbs'][] = $this->title;
           //  'id',
             'sale_no',
           //  'revise',
-            'require_date',
-            'customer_id',
+            [
+                'attribute'=>'require_date',
+                'value' => function($data){
+                    return date('d/m/Y',$data->require_date);
+                }
+            ],
+            [
+                'attribute'=>'customer_id',
+                'value' => function($data){
+                    return \backend\models\Customer::findName($data->customer_id);
+                }
+            ],
             //'customer_ref',
             //'delvery_to',
             //'currency',
@@ -86,7 +96,17 @@ $this->params['breadcrumbs'][] = $this->title;
             //'total_amount',
             //'quotation_id',
             //'note',
-            'status',
+            [
+                'attribute'=>'status',
+                'format' => 'raw',
+                'value' => function($data){
+                   if($data->status == 1){
+                       return "<div class='label label-success'> Opened</div>";
+                   }else{
+                       return "<div class='label label-danger'> Completed</div>";
+                   }
+                }
+            ],
             [
                     'attribute' => 'created_at',
                     'value'=>function($data){
