@@ -74,6 +74,7 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
+        $this->layout = false;
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -82,7 +83,7 @@ class SiteController extends Controller
         } else {
             $model->password = '';
 
-            return $this->render('login', [
+            return $this->render('_login', [
                 'model' => $model,
             ]);
         }

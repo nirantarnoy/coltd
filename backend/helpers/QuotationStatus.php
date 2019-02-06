@@ -2,21 +2,21 @@
 
 namespace backend\helpers;
 
-class SaleStatus
+class QuotationStatus
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
 
     private static $data = [
         1 => 'Open',
-        2 => 'Closed',
+        2 => 'Completed',
 
 
     ];
 
     private static $dataobj = [
         ['id'=>1,'name' => 'Open'],
-        ['id'=>2,'name' => 'Open'],
+        ['id'=>2,'name' => 'Completed'],
 
     ];
     public static function asArray()

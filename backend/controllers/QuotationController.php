@@ -25,7 +25,7 @@ class QuotationController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
         ];
@@ -77,6 +77,7 @@ class QuotationController extends Controller
             $lineprice = Yii::$app->request->post('price');
 
             $model->require_date = strtotime($model->require_date);
+            $model->status = 1;
             if($model->save()){
                 if(count($prodid)>0){
                     for($i=0;$i<=count($prodid)-1;$i++){
@@ -164,6 +165,7 @@ class QuotationController extends Controller
      */
     public function actionDelete($id)
     {
+        \backend\models\Quotationline::deleteAll(['quotation_id'=>$id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

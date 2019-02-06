@@ -295,8 +295,8 @@ class ProductController extends Controller
                      //   $modelx->volumn_content = $rowData[5];
                         $modelx->price = 0;//$rowData[5];
                         $modelx->cost = 0; //$rowData[6];
-                        $modelx->all_qty = str_replace(',','', $rowData[8]);;
-                        $modelx->available_qty = str_replace(',','', $rowData[8]);;
+                        $modelx->all_qty = str_replace(',','', $rowData[8]);
+                        $modelx->available_qty = str_replace(',','', $rowData[8]);
                         $modelx->status = 1;
 
                         if ($modelx->save(false)) {

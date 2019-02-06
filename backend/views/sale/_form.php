@@ -6,6 +6,8 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
+use yii2assets\fullscreenmodal\FullscreenModal;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Sale */
@@ -65,9 +67,9 @@ $this->registerCss('
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">
-                            <?= $form->field($model, 'delvery_to')->textInput() ?>
-                        </div>
+<!--                        <div class="col-lg-3">-->
+<!--                            --><?php ////echo $form->field($model, 'delvery_to')->textInput() ?>
+<!--                        </div>-->
                         <div class="col-lg-3">
                             <?= $form->field($model, 'currency')->widget(Select2::className(),[
                                 'data'=>ArrayHelper::map(\backend\helpers\Currency::asArrayObject(),'id','name'),
@@ -79,6 +81,12 @@ $this->registerCss('
                                 ]
                             ]) ?>
                         </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'status')->textInput(['value'=>\backend\helpers\SaleStatus::getTypeById($model->status)]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'quotation_id')->textInput(['value'=>\backend\models\Quotation::findNum($model->quotation_id),'readonly'=>'readonly']) ?>
+                        </div>
                     </div>
 
                 </div>
@@ -86,7 +94,7 @@ $this->registerCss('
 
                     <?= $form->field($model, 'note')->textarea(['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'status')->textInput() ?>
+
                 </div>
             </div>
 
@@ -155,7 +163,7 @@ $this->registerCss('
                                             <input type="number" min="0" class="form-control line_qty" name="qty[]" value="<?=$value->qty?>" onchange="cal_num($(this));">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_cost" name="cost[]" value="<?=\backend\models\Product::findProductinfo($value->product_id)->cost?>" readonly>
+                                            <input type="text" class="form-control line_cost" name="cost[]" value="<?=\backend\models\Product::findProductinfo($value->product_id)!=null?\backend\models\Product::findProductinfo($value->product_id)->cost:0?>" readonly>
                                         </td>
                                         <td>
                                             <input style="text-align: right" type="text" class="form-control line_price" name="price[]" value="<?=$value->price?>" onchange="cal_num($(this));">
@@ -225,6 +233,41 @@ $this->registerCss('
     </div>
 
 </div>
+<div class="panel">
+    <div class="panel-heading">
+        <h3>ประวัติ picking</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+             <tr>
+                 <th>#</th>
+                 <th>Picking</th>
+                 <th>วันที่</th>
+                 <th></th>
+             </tr>
+            </thead>
+            <tbody>
+            <?php if(!$model->isNewRecord):?>
+                <?php if(count($modelpick) > 0):?>
+                    <?php $i = 0;?>
+                    <?php foreach ($modelpick as $value):?>
+                      <tr>
+                          <td><?=$i?></td>
+                          <td><?=$value->picking_no?></td>
+                          <td><?=$value->trans_date?></td>
+                          <td>
+                              <div class="btn btn-default btn-picking-line">รายละเอียด</div>
+                          </td>
+                      </tr>
+                    <?php endforeach; ?>
+
+                <?php endif;?>
+            <?php endif;?>
+            </tbody>
+        </table>
+    </div>
+</div>
 <div id="findModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-md">
         <!-- Modal content-->
@@ -270,6 +313,43 @@ $this->registerCss('
 
     </div>
 </div>
+
+
+<div id="pickModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
+                <table class="table table-bordered table-striped table-picking">
+                    <thead>
+                    <tr>
+                        <th>รหัสสินค้า</th>
+                        <th>รายละเอียด</th>
+                        <th>จำนวน</th>
+                        <th>หน่วย</th>
+                        <th>เลขที่</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning"><i class="fa fa-save"></i> บันทึกรายการ</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close text-danger"></i> ปิดหน้าต่าง</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <?php
 $url_to_find = Url::to(['quotation/finditem'],true);
 $url_to_createinvoice = Url::to(['sale/createinvoice'],true);
@@ -324,6 +404,15 @@ $js =<<<JS
     $(".line_qty,.line_cost,.line_price").on("keypress",function(event){
        $(this).val($(this).val().replace(/[^0-9\.]/g,""));
        if((event.which != 46 || $(this).val().indexOf(".") != -1) && (event.which <48 || event.which >57)){event.preventDefault();}
+    });
+    
+    
+    $(".btn-gen-packing").click(function(){
+        $("#pickModal").modal("show");
+    });
+    
+    $(".btn-picking-line").click(function(){
+        
     });
  });
 
@@ -382,7 +471,7 @@ $js =<<<JS
                      var html = "";
                      for(var i =0;i<=data.length -1;i++){
                          html +="<tr ondblclick='getitem($(this));'><td style='vertical-align: middle'>"+
-                         data[i]['product_code']+"</td><td style='vertical-align: middle'>"+
+                         data[i]['engname']+"</td><td style='vertical-align: middle'>"+
                          data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
                           "<input type='hidden' class='prodcost' value='"+data[i]['cost']+"'/>" +
                           "<input type='hidden' class='prodprice' value='"+data[i]['price']+"'/>" +

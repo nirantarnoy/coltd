@@ -36,7 +36,7 @@ class SaleInvoice extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sale_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['sale_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','picking_id'], 'integer'],
             [['disc_amount', 'disc_percent', 'total_amount'], 'number'],
             [['invoice_no', 'note'], 'string', 'max' => 255],
         ];
@@ -49,13 +49,14 @@ class SaleInvoice extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'invoice_no' => 'Invoice No',
-            'sale_id' => 'Sale ID',
+            'invoice_no' => 'เลขที่',
+            'sale_id' => 'ใบสั่งซื้อ',
             'disc_amount' => 'Disc Amount',
             'disc_percent' => 'Disc Percent',
-            'total_amount' => 'Total Amount',
-            'note' => 'Note',
-            'status' => 'Status',
+            'total_amount' => 'ยอดรวมสุทธิ',
+            'note' => 'บันทึก',
+            'picking_id' => 'PickingList',
+            'status' => 'สถานะ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

@@ -64,9 +64,9 @@ $this->registerCss('
                         </div>
                     </div>
                    <div class="row">
-                       <div class="col-lg-3">
-                           <?= $form->field($model, 'delvery_to')->textInput() ?>
-                       </div>
+<!--                       <div class="col-lg-3">-->
+<!--                           --><?php ////echo $form->field($model, 'delvery_to')->textInput() ?>
+<!--                       </div>-->
                        <div class="col-lg-3">
                            <?= $form->field($model, 'currency')->widget(Select2::className(),[
                                'data'=>ArrayHelper::map(\backend\helpers\Currency::asArrayObject(),'id','name'),
@@ -78,6 +78,9 @@ $this->registerCss('
                                 ]
                            ]) ?>
                        </div>
+                       <div class="col-lg-3">
+                           <?= $form->field($model, 'status')->textInput(['value'=>\backend\helpers\QuotationStatus::getTypeById($model->status)]) ?>
+                       </div>
                    </div>
 
                 </div>
@@ -85,7 +88,7 @@ $this->registerCss('
 
                     <?= $form->field($model, 'note')->textarea(['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'status')->textInput() ?>
+
                 </div>
             </div>
 
@@ -154,7 +157,7 @@ $this->registerCss('
                                             <input type="number" min="0" class="form-control line_qty" name="qty[]" value="<?=$value->qty?>" onchange="cal_num($(this));">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_cost" name="cost[]" value="<?=\backend\models\Product::findProductinfo($value->product_id)->cost?>" readonly>
+                                            <input type="text" class="form-control line_cost" name="cost[]" value="<?=\backend\models\Product::findProductinfo($value->product_id)!=null?\backend\models\Product::findProductinfo($value->product_id)->cost:0?>" readonly>
                                         </td>
                                         <td>
                                             <input style="text-align: right" type="text" class="form-control line_price" name="price[]" value="<?=$value->price?>" onchange="cal_num($(this));">

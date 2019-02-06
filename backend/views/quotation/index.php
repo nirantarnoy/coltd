@@ -92,8 +92,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function($data){
                     if($data->status == 1){
-                        return "<div class='label label-success'> Pending</div>";
-                    }else{
+                        return "<div class='label label-success'> Open</div>";
+                    }else if($data->status == 2){
                         return "<div class='label label-danger'> Completed</div>";
                     }
                 }
@@ -166,3 +166,33 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+$this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
+$this->registerCssFile( '@web/css/sweetalert.css');
+//$url_to_delete =  Url::to(['product/bulkdelete'],true);
+$this->registerJs('
+    $(function(){
+        $("#perpage").change(function(){
+            $("#form-perpage").submit();
+        });
+    });
+
+   function recDelete(e){
+        //e.preventDefault();
+        var url = e.attr("data-url");
+        swal({
+              title: "ต้องการลบรายการนี้ใช่หรือไม่",
+              text: "",
+              type: "error",
+              showCancelButton: true,
+              closeOnConfirm: false,
+              showLoaderOnConfirm: true
+            }, function () {
+              e.attr("href",url); 
+              e.trigger("click");        
+        });
+    }
+
+    ',static::POS_END);
+?>
+

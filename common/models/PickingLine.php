@@ -41,6 +41,8 @@ class PickingLine extends \yii\db\ActiveRecord
             [['picking_id', 'product_id', 'site_id', 'warehouse_id', 'location_id', 'lot_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['qty'], 'number'],
             [['note'], 'string', 'max' => 255],
+            [['permit_no','excise_no','transport_in_no'],'string'],
+            [['permit_date','excise_date','transport_in_date'],'date']
         ];
     }
 
@@ -60,6 +62,12 @@ class PickingLine extends \yii\db\ActiveRecord
             'lot_id' => 'Lot ID',
             'note' => 'Note',
             'status' => 'Status',
+            'permit_no' => 'ใบอนุญาต',
+            'excise_no' => 'สรรพสามิต',
+            'transport_in_no' => 'ใบขนเข้า',
+            'permit_date' => 'วันที่',
+            'excise_date' => 'วันที่',
+            'transport_in_date' => 'วันที่',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

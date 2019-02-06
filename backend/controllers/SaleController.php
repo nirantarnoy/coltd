@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use backend\models\PickinglineSearch;
 use Yii;
 use backend\models\Sale;
 use backend\models\SaleSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -23,7 +25,7 @@ class SaleController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
         ];
@@ -71,13 +73,17 @@ class SaleController extends Controller
     {
         $model = new Sale();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->status = 1;
+            if($model->save()){
+                return $this->redirect(['update', 'id' => $model->id]);
+            }
+
         }
 
         return $this->render('create', [
             'model' => $model,
-            'runno' => '',
+            'runno' => $model::getLastNo(),
         ]);
     }
 
@@ -92,6 +98,27 @@ class SaleController extends Controller
     {
         $model = $this->findModel($id);
         $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
+
+        $pickinglist = [];
+
+
+        $modelpick = \backend\models\Picking::find()->all();
+//        if($modelpick){
+//            foreach($modelpick as $value){
+//                array_push($pickinglist,$value->id);
+//            }
+//        }
+//        if(count($pickinglist)>0){
+//            $dataProvider = \backend\models\Pickingline::find()->where(['picking_id'=>$pickinglist])->all();
+//
+//           // $dataProvider->query->andFilterWhere(['picking_id'=>$pickinglist]);
+//        }else{
+//            $dataProvider = \backend\models\Pickingline::find()->where(['picking_id'=>0])->all();
+//        }
+
+//return;
+
+
         if ($model->load(Yii::$app->request->post())) {
             $prodid = Yii::$app->request->post('productid');
             $lineqty = Yii::$app->request->post('qty');
@@ -129,7 +156,8 @@ class SaleController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'modelline' => $modelline
+            'modelline' => $modelline,
+            'modelpick' => $modelpick
         ]);
     }
 
@@ -142,6 +170,7 @@ class SaleController extends Controller
      */
     public function actionDelete($id)
     {
+        \backend\models\Saleline::deleteAll(['sale_id'=>$id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

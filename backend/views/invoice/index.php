@@ -72,10 +72,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
          //   'id',
             'invoice_no',
-            'sale_id',
-            'disc_amount',
-            'disc_percent',
-            //'total_amount',
+            [
+                'attribute' => 'sale_id',
+                'value' => function($data){
+                    return \backend\models\Sale::findName($data->sale_id);
+                }
+            ],
+            //'disc_amount',
+            //'disc_percent',
+            'total_amount',
+            [
+                    'attribute' => 'picking_id',
+                    'value' => function($data){
+                        return \backend\models\Picking::findName($data->picking_id);
+                    }
+            ],
             //'note',
             //'status',
             //'created_at',
@@ -83,7 +94,53 @@ $this->params['breadcrumbs'][] = $this->title;
             //'created_by',
             //'updated_by',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+
+                'header' => '',
+                'headerOptions' => ['style' => 'text-align:center;','class' => 'activity-view-link',],
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['style' => 'text-align: right'],
+                'buttons' => [
+                    'view' => function($url, $data, $index) {
+                        $options = [
+                            'title' => Yii::t('yii', 'View'),
+                            'aria-label' => Yii::t('yii', 'View'),
+                            'data-pjax' => '0',
+                        ];
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-eye-open btn btn-xs btn-default"></span>', $url, $options);
+                    },
+                    'update' => function($url, $data, $index) {
+                        $options = array_merge([
+                            'title' => Yii::t('yii', 'Update'),
+                            'aria-label' => Yii::t('yii', 'Update'),
+                            'data-pjax' => '0',
+                            'id'=>'modaledit',
+                        ]);
+                        return $data->status == 1? Html::a(
+                            '<span class="glyphicon glyphicon-pencil btn btn-xs btn-default"></span>', $url, [
+                            'id' => 'activity-view-link',
+                            //'data-toggle' => 'modal',
+                            // 'data-target' => '#modal',
+                            'data-id' => $index,
+                            'data-pjax' => '0',
+                            // 'style'=>['float'=>'rigth'],
+                        ]):'';
+                    },
+                    'delete' => function($url, $data, $index) {
+                        $options = array_merge([
+                            'title' => Yii::t('yii', 'Delete'),
+                            'aria-label' => Yii::t('yii', 'Delete'),
+                            //'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                            //'data-method' => 'post',
+                            //'data-pjax' => '0',
+                            'data-url'=>$url,
+                            'onclick'=>'recDelete($(this));'
+                        ]);
+                        return Html::a('<span class="glyphicon glyphicon-trash btn btn-xs btn-default"></span>', 'javascript:void(0)', $options);
+                    }
+                ]
+            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>
@@ -91,3 +148,32 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+$this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
+$this->registerCssFile( '@web/css/sweetalert.css');
+//$url_to_delete =  Url::to(['product/bulkdelete'],true);
+$this->registerJs('
+    $(function(){
+        $("#perpage").change(function(){
+            $("#form-perpage").submit();
+        });
+    });
+
+   function recDelete(e){
+        //e.preventDefault();
+        var url = e.attr("data-url");
+        swal({
+              title: "ต้องการลบรายการนี้ใช่หรือไม่",
+              text: "",
+              type: "error",
+              showCancelButton: true,
+              closeOnConfirm: false,
+              showLoaderOnConfirm: true
+            }, function () {
+              e.attr("href",url); 
+              e.trigger("click");        
+        });
+    }
+
+    ',static::POS_END);
+?>

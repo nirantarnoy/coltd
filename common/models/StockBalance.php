@@ -36,6 +36,8 @@ class StockBalance extends \yii\db\ActiveRecord
         return [
             [['product_id', 'warehouse_id', 'loc_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['qty'], 'number'],
+            [['permit_no','excise_no','transport_in_no'],'string'],
+            [['permit_date','excise_date','transport_in_date'],'date']
         ];
     }
 
@@ -50,6 +52,12 @@ class StockBalance extends \yii\db\ActiveRecord
             'warehouse_id' => Yii::t('app', 'คลังสินค้า'),
             'loc_id' => Yii::t('app', 'ล็อค'),
             'qty' => Yii::t('app', 'Qty'),
+            'permit_no' => 'ใบอนุญาต',
+            'excise_no' => 'สรรพสามิต',
+            'transport_in_no' => 'ใบขนเข้า',
+            'permit_date' => 'วันที่',
+            'excise_date' => 'วันที่',
+            'transport_in_date' => 'วันที่',
             'status' => Yii::t('app', 'สถานะ'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),

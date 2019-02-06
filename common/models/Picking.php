@@ -36,6 +36,7 @@ class Picking extends \yii\db\ActiveRecord
         return [
             [['trans_date', 'sale_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['picking_no', 'note'], 'string', 'max' => 255],
+
         ];
     }
 

@@ -62,6 +62,7 @@ class Product extends \common\models\Product
         $model = Product::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->engname:'';
     }
+
         public function findProductcatname($id){
             $model = Product::find()->where(['id'=>$id])->one();
             $catname = '';

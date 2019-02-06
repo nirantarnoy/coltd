@@ -47,9 +47,9 @@ class Picking extends \common\models\Picking
         ];
     }
 
-//    public function findName($id){
-//        $model = Customer::find()->where(['id'=>$id])->one();
-//        return count($model)>0?$model->name:'';
-//    }
+    public function findName($id){
+        $model = Picking::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model->picking_no:'';
+    }
 
 }

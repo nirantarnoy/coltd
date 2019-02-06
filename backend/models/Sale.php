@@ -44,4 +44,27 @@ class Sale extends \common\models\Sale{
             ],
         ];
     }
+    public function findName($id){
+        $model = Sale::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model->sale_no:'';
+    }
+    public function getLastNo(){
+        $model = \backend\models\Sale::find()->MAX('sale_no');
+//        $pre = \backend\models\Sequence::find()->where(['module_id'=>$trans_type])->one();
+        if($model){
+            $prefix = substr(date("Y"),2,2);
+            $cnum = substr((string)$model,strlen($prefix),strlen($model));
+            $len = strlen($cnum);
+            $clen = strlen($cnum + 1);
+            $loop = $len - $clen;
+            for($i=1;$i<=$loop;$i++){
+                $prefix.="0";
+            }
+            $prefix.=$cnum + 1;
+            return 'SO'.$prefix;
+        }else{
+            $prefix ='SO'.substr(date("Y"),2,2);
+            return $prefix.'000001';
+        }
+    }
 }
