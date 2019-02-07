@@ -36,8 +36,8 @@
         "philippfrenzel/yii2fullcalendar":"*",
         "miloschuman/yii2-highcharts-widget": "dev-master",
         "himiklab/yii2-recaptcha-widget" : "*",
-        "yii2tech/html2pdf": "*",
-        "yii2assets/yii2-fullscreen-modal": "*"
+        "yii2assets/yii2-fullscreen-modal": "*",
+        "yii2tech/html2pdf": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

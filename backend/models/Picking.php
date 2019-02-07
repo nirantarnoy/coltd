@@ -70,4 +70,13 @@ class Picking extends \common\models\Picking
             return $prefix.'000001';
         }
     }
+    public function findSo($id){
+        $model = \backend\models\Picking::find()->where(['id'=>$id])->one();
+        if($model){
+            $sale = \backend\models\Sale::findName($model->sale_id);
+            return $sale;
+        }else{
+            return '';
+        }
+    }
 }

@@ -5,13 +5,13 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Invoice */
 
-$this->title = 'Create Invoice';
-$this->params['breadcrumbs'][] = ['label' => 'Invoices', 'url' => ['index']];
+$this->title = 'สร้างใบเก็บเงิน';
+$this->params['breadcrumbs'][] = ['label' => 'ใบเก็บเงิน', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="invoice-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><i class="fa fa-edit text-warning"></i> <?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

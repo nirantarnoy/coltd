@@ -44,4 +44,23 @@ class Invoice extends \common\models\SaleInvoice {
             ],
         ];
     }
+    public function getLastNo(){
+        $model = \backend\models\Invoice::find()->MAX('invoice_no');
+//        $pre = \backend\models\Sequence::find()->where(['module_id'=>$trans_type])->one();
+        if($model){
+            $prefix = substr(date("Y"),2,2);
+            $cnum = substr((string)$model,4,strlen($model));
+            $len = strlen($cnum);
+            $clen = strlen($cnum + 1);
+            $loop = $len - $clen;
+            for($i=1;$i<=$loop;$i++){
+                $prefix.="0";
+            }
+            $prefix.=$cnum + 1;
+            return 'IV'.$prefix;
+        }else{
+            $prefix ='IV'.substr(date("Y"),2,2);
+            return $prefix.'000001';
+        }
+    }
 }

@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use kartik\mpdf\Pdf;
 
 /**
  * SaleController implements the CRUD actions for Sale model.
@@ -204,14 +205,15 @@ class SaleController extends Controller
         if(Yii::$app->request->isPost){
             $id = Yii::$app->request->post('sale_id');
             if($id){
-                $model = \backend\models\Sale::find()->where(['id'=>$id])->one();
-                $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
+                $model = \backend\models\Picking::find()->where(['id'=>$id])->one();
+                $modelline = \backend\models\Pickingline::find()->where(['picking_id'=>$id])->all();
 
                 if($model){
                     $order = new \backend\models\Invoice();
                     $order->sale_id = $model->id;
-                    $order->invoice_no = "INV0001";
+                    $order->invoice_no = $order::getLastNo();
                     $order->status = 1;
+                    $order->picking_id = $id;
                     $order->note = $model->note;
                     if($order->save()){
                         if(count($modelline)>0){
@@ -221,8 +223,8 @@ class SaleController extends Controller
                                 $orderline->product_id = $value->product_id;
                                 $orderline->qty = $value->qty;
                                 $orderline->price = $value->price;
-                                $orderline->disc_amount = $value->disc_amount;
-                                $orderline->line_amount = $value->line_amount;
+                              //  $orderline->disc_amount = $value->disc_amount;
+                              //  $orderline->line_amount = $value->line_amount;
                                 $orderline->save();
                             }
                         }
@@ -275,7 +277,8 @@ class SaleController extends Controller
         $sale = \Yii::$app->request->post("sale_id");
         if($sale){
             $prod = \Yii::$app->request->post("product_id");
-            $qty = \Yii::$app->request->post("product_id");
+            $qty = \Yii::$app->request->post("line_qty");
+            $price = \Yii::$app->request->post("line_price");
             $warehouse = \Yii::$app->request->post("picking_wh");
             $permit = \Yii::$app->request->post("picking_permit");
             $transport = \Yii::$app->request->post("picking_transport");
@@ -287,14 +290,17 @@ class SaleController extends Controller
             $model->trans_date = strtotime(date('d/m/Y'));
             $model->status= 1;
             if($model->save(false)){
-                if(count($prod)){
+                if(count($prod)>0){
                     for($i=0;$i<=count($prod)-1;$i++){
                         $modelline = new \backend\models\Pickingline();
                         $modelline->picking_id = $model->id;
                         $modelline->product_id = $prod[$i];
-                        $modelline->qty = $qty[$i];
+                        $modelline->qty = (int)$qty[$i];
+                        $modelline->price = (float)$price[$i];
+                        $modelline->warehouse_id = $warehouse[$i];
                         $modelline->permit_no = $permit[$i];
                         $modelline->transport_in_no = $transport[$i];
+                        $modelline->status = 1;
                         $modelline->save();
                     }
                 }
@@ -304,5 +310,52 @@ class SaleController extends Controller
         }
         return "";
 
+    }
+
+    public function actionPrintpicking(){
+        if(Yii::$app->request->isPost) {
+            $id = Yii::$app->request->post('sale_id');
+            if ($id) {
+               $this->redirect(['bill','id'=>$id,['target'=>'_blank']]);
+            }
+        }
+    }
+    public function actionBill($id){
+        $model = \backend\models\Picking::find()->where(['id' => $id])->one();
+        $modelline = \backend\models\Pickingline::find()->where(['picking_id'=>$id])->all();
+
+        if($model){
+            // return "nira";
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+                //  'format' => [150,236], //manaul
+                'format' =>  Pdf::FORMAT_A4,
+                //'format' =>  Pdf::FORMAT_A5,
+                'orientation' =>Pdf::ORIENT_PORTRAIT,
+                'destination' => Pdf::DEST_BROWSER,
+                'content' => $this->renderPartial('_picking',[
+                    'model'=>$model,
+                    'modelline'=>$modelline,
+
+                ]),
+                //'content' => "nira",
+                // 'defaultFont' => '@backend/web/fonts/config.php',
+                'cssFile' => '@backend/web/css/pdf.css',
+                'options' => [
+                    'title' => 'PICKING LIST',
+                    'subject' => ''
+                ],
+                'methods' => [
+                    //  'SetHeader' => ['รายงานรหัสสินค้า||Generated On: ' . date("r")],
+                    //  'SetFooter' => ['|Page {PAGENO}|'],
+                    //'SetFooter'=>'niran',
+                ],
+
+            ]);
+            //return $this->redirect(['genbill']);
+            Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+            Yii::$app->response->headers->add('Content-Type', 'application/pdf');
+            return $pdf->render();
+        }
     }
 }

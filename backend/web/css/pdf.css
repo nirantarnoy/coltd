@@ -1,0 +1,124 @@
+
+body{
+    font-family: "Garuda";
+    font-size: 8pt;
+    width: 8.5in;
+    margin: 0in .1875in;
+}
+
+.table_bordered{
+    border: 0.1px solid #000;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.table_bordered td{
+    border:0.8px solid #000;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
+.po-logo{
+    border: 0px solid;
+}
+.po-vendor{
+    border: 1px solid gray;
+    border-radius: 15px;
+    padding: 15px;
+}
+.po-detail{
+    border: 1px solid gray;
+    border-radius: 15px;
+}
+.po-bottom{
+    margin-bottom: 15px;
+    /*position: absolute;*/
+}
+.po-bottom-frame{
+    border: 1px solid gray;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.parent-block{
+    width: 100%;
+    float: left;
+    display: inline-list-item;
+    overflow: hidden;
+}
+.child-block{
+    padding: 5px 5px 5px 5px;
+    /*text-align: center;*/
+    float: left;
+    position: relative;
+}
+.product-section{
+    width: 100%;
+    text-align: center;
+}
+
+.label{
+    /* Avery 5160 labels -- CSS and HTML by MM at Boulder Information Services */
+    width: 1.855in; /* plus .6 inches from padding */
+    height: .875in; /* plus .125 inches from padding */
+    padding: .125in .3in 0;
+    margin-right: .125in; /* the gutter */
+
+    float: left;
+
+    text-align: center;
+    overflow: hidden;
+    border: 1px dotted #333333; /* outline doesn't occupy space like border does */
+}
+.page-break  {
+    clear: left;
+    display:block;
+    page-break-after:always;
+}
+.sup-name{
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 15px;
+    width: 60%;
+    float: left;
+    height: 50px;
+}
+.bill-header{
+    display: inline-block;
+    width: 100%;
+    overflow: auto;
+    position: absolute;
+}
+.bill-title{
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 15px;
+    width: 40%;
+    position: relative;
+}
+#main{
+    position:absolute;
+    width:100%;
+    height:240px;
+    border:1px solid black;
+    padding:10px;
+}
+#main > div{
+    float:right;
+    margin:10px;
+}
+#d1{
+    width:200px;
+    height:200px;
+    border:1px solid red;
+}
+
+#d2{
+    width:200px;
+    height:200px;
+    border:1px solid blue;
+}

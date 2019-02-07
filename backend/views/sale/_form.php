@@ -251,9 +251,9 @@ $this->registerCss('
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?=$i?>">
-                                        <?=$value->picking_no?> <label class="label label-success"><?=date('d/m/Y',$value->trans_date)?></label></a> <span class="pull-right"><div class="btn <?=$value->geninv?'btn-success':'btn-danger'?>"><i class='fa fa-check-circle'></i>  ออกเอกสารเก็บเงิน</div></span>
+                                        <?=$value->picking_no?> <label class="label label-success"><?=date('d/m/Y',$value->trans_date)?></label></a> <span class="pull-right"><div data-var="<?=$value->id?>" class="btn btn-pincking-invoice btn-danger" onclick="pickinginv($(this))"><i class='fa fa-print'></i>  พิมพ์</div></span>
                                 </h4>
-
+                                <form id="form-<?=$value->id?>" method="post" action="<?=Url::to(['sale/bill','id'=>$value->id],true)?>" target="_blank"></form>
                             </div>
                             <div id="collapse<?=$i?>" class="panel-collapse collapse out">
                                 <div class="panel-body">
@@ -370,6 +370,7 @@ $url_to_find_wh = Url::to(['sale/findwarehouse'],true);
 $url_to_find_permit = Url::to(['sale/findpermit'],true);
 $url_to_find_transport = Url::to(['sale/findtransport'],true);
 $url_to_createinvoice = Url::to(['sale/createinvoice'],true);
+$url_to_printpicking = Url::to(['sale/printpicking'],true);
 $js =<<<JS
  var currow = 0;
  var  removelist = [];
@@ -468,8 +469,11 @@ $js =<<<JS
               }
             });
             
+            var xprodid = "<input type='hidden' name='product_id[]' value='"+ prod +"'>";
+            var xqty = "<input type='hidden' name='line_qty[]' value='"+ $(this).find(".line_qty").val() +"'>";
+            var xprice = "<input type='hidden' name='line_price[]' value='"+ $(this).find(".line_price").val() +"'>";
             
-            var xrow = "<tr><td>"+$(this).find(".productcode").val()+"</td><td>"+$(this).find(".line_qty").val()+"</td><td>"+wselect+"</td><td>"+transportselect+"</td><td>"+perselect+"</td></tr>";
+            var xrow = "<tr><td>"+xprodid+$(this).find(".productcode").val()+"</td><td>"+xqty+$(this).find(".line_qty").val()+xprice+"</td><td>"+wselect+"</td><td>"+transportselect+"</td><td>"+perselect+"</td></tr>";
             $(".table-picking tbody").append(xrow);
         });
          $("#pickModal").modal("show").find(".sale-id").val("$model->id");
@@ -482,7 +486,23 @@ $js =<<<JS
        $("form#form-picking").submit();
     });
  });
-
+ function pickinginv(e){
+     var x = "#form-"+e.attr('data-var');
+   
+     $(x).submit();
+     //alert(x);
+     //if(confirm("คุณต้องการออกใบเก็บเงินใช่หรือไม่")){
+//         $.ajax({
+//              'type':'post',
+//              'dataType': 'html',
+//               'url': "$url_to_printpicking",
+//              'data': {'sale_id': x },
+//              'success': function(data) {
+//                 //alert(data);
+//              }
+//            });
+     //}
+ }
  function itemchange(e) {
    if(e.val() !=""){
       
