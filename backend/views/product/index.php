@@ -270,7 +270,7 @@ table.table-vendor td{
                                    'value'=> function($data){
                                     return \backend\models\Productcategory::findName($data->category_id);
                                   }
-                              ],
+                             ],
                             //'photo',
                             //'category_id',
                             //'product_type_id',

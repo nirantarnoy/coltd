@@ -30,6 +30,9 @@ $this->registerCss('
     }
 ');
 
+
+//$wh = \backend\models\Warehouse::find()->all();
+
 ?>
 
 <div class="sale-form">
@@ -245,6 +248,7 @@ $this->registerCss('
                  <th>Picking</th>
                  <th>วันที่</th>
                  <th></th>
+                 <th></th>
              </tr>
             </thead>
             <tbody>
@@ -259,6 +263,9 @@ $this->registerCss('
                           <td>
                               <div class="btn btn-default btn-picking-line">รายละเอียด</div>
                           </td>
+                          <td>
+                              <div class="btn btn-danger btn-picking-line">เรียกเก็บเงิน</div>
+                          </td>
                       </tr>
                     <?php endforeach; ?>
 
@@ -269,7 +276,7 @@ $this->registerCss('
     </div>
 </div>
 <div id="findModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -321,18 +328,18 @@ $this->registerCss('
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-
+                <h3 class="text-primary"><i class="fa fa-plus-circle"></i> ทำรายการ picking list</h3>
             </div>
             <div class="modal-body">
                 <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
                 <table class="table table-bordered table-striped table-picking">
                     <thead>
                     <tr>
-                        <th>รหัสสินค้า</th>
                         <th>รายละเอียด</th>
                         <th>จำนวน</th>
-                        <th>หน่วย</th>
-                        <th>เลขที่</th>
+                        <th>คลังสินค้า</th>
+                        <th>เลขที่ใบนำเข้า</th>
+                        <th>เลขที่ใบอนุญาต</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -409,6 +416,13 @@ $js =<<<JS
     
     $(".btn-gen-packing").click(function(){
         $("#pickModal").modal("show");
+        $(".table-picking tbody tr").remove();
+       
+        $(".table-quotation tbody tr").each(function(){
+            var xselect = "<select class='form-control'><option value='0'>ทดสอบ</option></select>";
+            var xrow = "<tr><td>"+$(this).find(".productcode").val()+"</td><td>"+$(this).find(".line_qty").val()+"</td><td>"+"<div class='btn btn-default'>เลือก</div>"+"</td><td>"+"<div class='btn btn-default'>เลือก</div>"+"</td><td>"+"<div class='btn btn-default'>เลือก</div>"+"</td></tr>";
+            $(".table-picking tbody").append(xrow);
+        });
     });
     
     $(".btn-picking-line").click(function(){

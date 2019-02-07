@@ -232,7 +232,7 @@ $this->registerCss('
 </div>
 
 <div id="findModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
