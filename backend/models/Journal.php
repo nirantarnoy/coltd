@@ -49,7 +49,7 @@ class Journal extends \common\models\Journal{
 //        $pre = \backend\models\Sequence::find()->where(['module_id'=>$trans_type])->one();
         if($model){
             $prefix = substr(date("Y"),2,2);
-            $cnum = substr((string)$model,strlen($prefix),strlen($model));
+            $cnum = substr((string)$model,4,strlen($model));
             $len = strlen($cnum);
             $clen = strlen($cnum + 1);
             $loop = $len - $clen;

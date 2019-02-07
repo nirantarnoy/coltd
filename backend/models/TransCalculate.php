@@ -17,7 +17,7 @@ class TransCalculate extends \yii\base\Model
         if($data){
             $model_journal = new Journal();
             $model_journal->journal_no = $model_journal::getLastNo();
-            $model_journal->trans_type = TransType::TRANS_ADJUST ;
+            $model_journal->trans_type = $data[0]['trans_type'] ;
             if($model_journal->save()){
                 return self::createJournalline($model_journal->id,$data);
             }else{
@@ -30,12 +30,16 @@ class TransCalculate extends \yii\base\Model
       if($data){
           for($i=0;$i<=count($data)-1;$i++){
               $param = [];
+              $stocktype = 0;
+
+              if($data[$i]['trans_type'] == 8){$stocktype = 1;} // 0 in 1 out
 
               $model_journalline = new \common\models\JournalTrans();
               $model_journalline->journal_id = $jour_id;
               $model_journalline->product_id = $data[$i]['prod_id'];
               $model_journalline->to_wh = $data[$i]['warehouse_id'];
               $model_journalline->qty = $data[$i]['qty'];
+              $model_journalline->stock_type = $stocktype;
               if($model_journalline->save()){
                   array_push($param,[
                       'prod_id'=>$data[$i]['prod_id'],
@@ -53,9 +57,21 @@ class TransCalculate extends \yii\base\Model
     }
     public static function createStocksum($param){
        if($param){
-          $model_stock = Stockbalance::find()->where(['product_id'=>$param[0]['prod_id'],'warehouse_id'=>$param[0]['warehouse_id']])->one();
+          $model_stock = Stockbalance::find()
+              ->where(['product_id'=>$param[0]['prod_id'],
+                       'warehouse_id'=>$param[0]['warehouse_id'],
+                       'permit_no'=>$param[0]['permit_no'],
+                       'transport_in_no'=>$param[0]['transport_no'],
+                       'excise_no'=>$param[0]['excise_no'],
+              ])
+              ->one();
           if($model_stock){
-              $model_stock->qty = $model_stock->qty + $param[0]['qty'];
+              if($param[0]['trans_type']==8){ // picking
+                  $model_stock->qty = $model_stock->qty - $param[0]['qty'];
+              }else{
+                  $model_stock->qty = $model_stock->qty + $param[0]['qty'];
+              }
+
               if($model_stock->save(false)){
                   self::updateProductInvent($param[0]['prod_id']);
               }else{
@@ -63,16 +79,21 @@ class TransCalculate extends \yii\base\Model
               }
 
           }else{
-              $model = new Stockbalance();
-              $model->product_id = $param[0]['prod_id'];
-              $model->warehouse_id = $param[0]['warehouse_id'];
-              $model->permit_no = $param[0]['permit_no'];
-              $model->transport_in_no = $param[0]['transport_in_no'];
-              $model->excise_no = $param[0]['excise_no'];
-              $model->qty = $param[0]['qty'];
-              if($model->save()){
-                  self::updateProductInvent($param[0]['prod_id']);
+              if($param[0]['trans_type']==8){ 
+
+              }else{
+                  $model = new Stockbalance();
+                  $model->product_id = $param[0]['prod_id'];
+                  $model->warehouse_id = $param[0]['warehouse_id'];
+                  $model->permit_no = $param[0]['permit_no'];
+                  $model->transport_in_no = $param[0]['transport_no'];
+                  $model->excise_no = $param[0]['excise_no'];
+                  $model->qty = $param[0]['qty'];
+                  if($model->save()){
+                      self::updateProductInvent($param[0]['prod_id']);
+                  }
               }
+
 
           }
        }else{

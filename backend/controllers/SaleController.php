@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\PickinglineSearch;
+use backend\models\TransCalculate;
 use Yii;
 use backend\models\Sale;
 use backend\models\SaleSearch;
@@ -11,6 +12,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
+use backend\helpers\TransType;
 
 /**
  * SaleController implements the CRUD actions for Sale model.
@@ -306,12 +308,32 @@ class SaleController extends Controller
                 }
 
             }
+
+            $this->updateStock($model->id);
+
             return $this->redirect(['update','id'=>$sale]);
         }
         return "";
 
     }
-
+    public function updateStock($pickingid){
+        $modelline = \backend\models\Pickingline::find()->where(['picking_id'=>$pickingid])->all();
+        if($modelline){
+            $data = [];
+            foreach($modelline as $value){
+                array_push($data,[
+                    'prod_id'=>$value->product_id,
+                    'qty'=>$value->qty,
+                    'warehouse_id'=>$value->warehouse_id,
+                    'trans_type'=>TransType::TRANS_PICKING,
+                    'permit_no' => $value->permit_no,
+                    'transport_no' => $value->transport_in_no,
+                    'excise_no'=> $value->excise_no,
+                ]);
+            }
+            $uptrans = TransCalculate::createJournal($data);
+        }
+    }
     public function actionPrintpicking(){
         if(Yii::$app->request->isPost) {
             $id = Yii::$app->request->post('sale_id');
