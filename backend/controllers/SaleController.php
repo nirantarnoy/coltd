@@ -16,6 +16,7 @@ use yii\filters\VerbFilter;
  */
 class SaleController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * {@inheritdoc}
      */
@@ -102,7 +103,13 @@ class SaleController extends Controller
         $pickinglist = [];
 
 
-        $modelpick = \backend\models\Picking::find()->all();
+        $modelpick = \backend\models\Picking::find()->where(['sale_id'=>$id])->all();
+        if($modelpick){
+            foreach ($modelpick as $value){
+                array_push($pickinglist,$value->id);
+            }
+        }
+        $modelpickline = \backend\models\Pickingline::find()->where(['picking_id'=>$pickinglist])->all();
 //        if($modelpick){
 //            foreach($modelpick as $value){
 //                array_push($pickinglist,$value->id);
@@ -157,7 +164,8 @@ class SaleController extends Controller
         return $this->render('update', [
             'model' => $model,
             'modelline' => $modelline,
-            'modelpick' => $modelpick
+            'modelpick' => $modelpick,
+            'modelpickline' => $modelpickline
         ]);
     }
 
@@ -223,5 +231,78 @@ class SaleController extends Controller
             }
         }
         return $this->redirect(['invoice/index']);
+    }
+    public function actionFindwarehouse(){
+        $prod = \Yii::$app->request->post("prod");
+        if($prod !=''){
+            $model = \backend\models\Warehouse::find()->all();
+            if($model){
+                foreach($model as $val){
+                    echo "<option value='" . $val->id . "'>$val->name</option>";
+                }
+            }
+        }else{
+            echo "";
+        }
+    }
+    public function actionFindpermit(){
+        $prod = \Yii::$app->request->post("prod");
+        if($prod !=''){
+            $model = \backend\models\Stockbalance::find()->where(['product_id'=>$prod])->andFilterWhere(['!=','qty',0])->all();
+            if($model){
+                foreach($model as $val){
+                    echo "<option value='" . $val->id . "'>$val->permit_no</option>";
+                }
+            }
+        }else{
+            echo "";
+        }
+    }
+    public function actionFindtransport(){
+        $prod = \Yii::$app->request->post("prod");
+        if($prod !=''){
+            $model = \backend\models\Stockbalance::find()->where(['product_id'=>$prod])->andFilterWhere(['!=','qty',0])->all();
+            if($model){
+                foreach($model as $val){
+                    echo "<option value='" . $val->id . "'>$val->transport_in_no</option>";
+                }
+            }
+        }else{
+            echo "";
+        }
+    }
+    public function actionCreatepicking(){
+        $sale = \Yii::$app->request->post("sale_id");
+        if($sale){
+            $prod = \Yii::$app->request->post("product_id");
+            $qty = \Yii::$app->request->post("product_id");
+            $warehouse = \Yii::$app->request->post("picking_wh");
+            $permit = \Yii::$app->request->post("picking_permit");
+            $transport = \Yii::$app->request->post("picking_transport");
+
+
+            $model = new \backend\models\Picking();
+            $model->picking_no = $model::getLastNo();
+            $model->sale_id = $sale;
+            $model->trans_date = strtotime(date('d/m/Y'));
+            $model->status= 1;
+            if($model->save(false)){
+                if(count($prod)){
+                    for($i=0;$i<=count($prod)-1;$i++){
+                        $modelline = new \backend\models\Pickingline();
+                        $modelline->picking_id = $model->id;
+                        $modelline->product_id = $prod[$i];
+                        $modelline->qty = $qty[$i];
+                        $modelline->permit_no = $permit[$i];
+                        $modelline->transport_in_no = $transport[$i];
+                        $modelline->save();
+                    }
+                }
+
+            }
+            return $this->redirect(['update','id'=>$sale]);
+        }
+        return "";
+
     }
 }

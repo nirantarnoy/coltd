@@ -50,7 +50,7 @@ class Quotation extends \common\models\Quotation {
         $pre = "QT";
         if($model){
             $prefix = $pre.substr(date("Y"),2,2);
-            $cnum = substr((string)$model,5,strlen($model));
+            $cnum = substr((string)$model,4,strlen($model));
             $len = strlen($cnum);
             $clen = strlen($cnum + 1);
             $loop = $len - $clen;

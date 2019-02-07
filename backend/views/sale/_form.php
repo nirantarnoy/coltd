@@ -40,7 +40,7 @@ $this->registerCss('
         <div class="panel-body">
             <div class="form-group pull-right">
                 <?= Html::Button("<i class='fa fa-list-alt'></i> picking list", ['class' => 'btn btn-info btn-gen-packing']) ?>
-                <?= Html::Button("<i class='fa fa-check-circle'></i> สร้างเอกสารเรียกเก็บเงิน", ['class' => 'btn btn-danger btn-gen-invoice']) ?>
+                <?php //echo Html::Button("<i class='fa fa-check-circle'></i> สร้างเอกสารเรียกเก็บเงิน", ['class' => 'btn btn-danger btn-gen-invoice']) ?>
             </div>
             <?php $form = ActiveForm::begin(); ?>
             <input type="hidden" class="remove-list" name="removelist" value="">
@@ -85,7 +85,7 @@ $this->registerCss('
                             ]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'status')->textInput(['value'=>\backend\helpers\SaleStatus::getTypeById($model->status)]) ?>
+                            <?= $form->field($model, 'status')->textInput(['value'=>\backend\helpers\SaleStatus::getTypeById($model->status),'readonly'=>'readonly']) ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'quotation_id')->textInput(['value'=>\backend\models\Quotation::findNum($model->quotation_id),'readonly'=>'readonly']) ?>
@@ -241,38 +241,44 @@ $this->registerCss('
         <h3>ประวัติ picking</h3>
     </div>
     <div class="panel-body">
-        <table class="table">
-            <thead>
-             <tr>
-                 <th>#</th>
-                 <th>Picking</th>
-                 <th>วันที่</th>
-                 <th></th>
-                 <th></th>
-             </tr>
-            </thead>
-            <tbody>
+        <div class="panel-group" id="accordion">
             <?php if(!$model->isNewRecord):?>
                 <?php if(count($modelpick) > 0):?>
                     <?php $i = 0;?>
                     <?php foreach ($modelpick as $value):?>
-                      <tr>
-                          <td><?=$i?></td>
-                          <td><?=$value->picking_no?></td>
-                          <td><?=$value->trans_date?></td>
-                          <td>
-                              <div class="btn btn-default btn-picking-line">รายละเอียด</div>
-                          </td>
-                          <td>
-                              <div class="btn btn-danger btn-picking-line">เรียกเก็บเงิน</div>
-                          </td>
-                      </tr>
+                        <?php $i+=1;?>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?=$i?>">
+                                        <?=$value->picking_no?> <label class="label label-success"><?=date('d/m/Y',$value->trans_date)?></label></a> <span class="pull-right"><div class="btn <?=$value->geninv?'btn-success':'btn-danger'?>"><i class='fa fa-check-circle'></i>  ออกเอกสารเก็บเงิน</div></span>
+                                </h4>
+
+                            </div>
+                            <div id="collapse<?=$i?>" class="panel-collapse collapse out">
+                                <div class="panel-body">
+                                    <table>
+                                        <?php foreach ($modelpickline as $val):?>
+                                        <?php if($value->id == $val->picking_id):?>
+                                        <tr>
+                                            <td>1</td>
+                                            <td><?=$val->product_id?></td>
+                                            <td><?=$val->qty?></td>
+                                            <td></td>
+                                        </tr>
+                                        <?php endif;?>
+                                        <?php endforeach;?>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     <?php endforeach; ?>
 
                 <?php endif;?>
             <?php endif;?>
-            </tbody>
-        </table>
+
+
+        </div>
     </div>
 </div>
 <div id="findModal" class="modal fade" role="dialog">
@@ -331,25 +337,26 @@ $this->registerCss('
                 <h3 class="text-primary"><i class="fa fa-plus-circle"></i> ทำรายการ picking list</h3>
             </div>
             <div class="modal-body">
-                <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
-                <table class="table table-bordered table-striped table-picking">
-                    <thead>
-                    <tr>
-                        <th>รายละเอียด</th>
-                        <th>จำนวน</th>
-                        <th>คลังสินค้า</th>
-                        <th>เลขที่ใบนำเข้า</th>
-                        <th>เลขที่ใบอนุญาต</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <form id="form-picking" action="<?=Url::to(['sale/createpicking'],true)?>" method="post">
+                    <input type="hidden" name="sale_id" class="sale-id" value="">
+                    <table class="table table-bordered table-striped table-picking">
+                        <thead>
+                        <tr>
+                            <th>รายละเอียด</th>
+                            <th>จำนวน</th>
+                            <th>คลังสินค้า</th>
+                            <th>เลขที่ใบนำเข้า</th>
+                            <th>เลขที่ใบอนุญาต</th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
-
+                        </tbody>
+                    </table>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-warning"><i class="fa fa-save"></i> บันทึกรายการ</button>
+                <button type="button" class="btn btn-warning btn-save-picking"><i class="fa fa-save"></i> บันทึกรายการ</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close text-danger"></i> ปิดหน้าต่าง</button>
             </div>
         </div>
@@ -359,6 +366,9 @@ $this->registerCss('
 
 <?php
 $url_to_find = Url::to(['quotation/finditem'],true);
+$url_to_find_wh = Url::to(['sale/findwarehouse'],true);
+$url_to_find_permit = Url::to(['sale/findpermit'],true);
+$url_to_find_transport = Url::to(['sale/findtransport'],true);
 $url_to_createinvoice = Url::to(['sale/createinvoice'],true);
 $js =<<<JS
  var currow = 0;
@@ -415,18 +425,61 @@ $js =<<<JS
     
     
     $(".btn-gen-packing").click(function(){
-        $("#pickModal").modal("show");
         $(".table-picking tbody tr").remove();
        
         $(".table-quotation tbody tr").each(function(){
-            var xselect = "<select class='form-control'><option value='0'>ทดสอบ</option></select>";
-            var xrow = "<tr><td>"+$(this).find(".productcode").val()+"</td><td>"+$(this).find(".line_qty").val()+"</td><td>"+"<div class='btn btn-default'>เลือก</div>"+"</td><td>"+"<div class='btn btn-default'>เลือก</div>"+"</td><td>"+"<div class='btn btn-default'>เลือก</div>"+"</td></tr>";
+           
+            var prod = $(this).find(".productid").val();
+            var wselect = '';
+            var perselect = '';
+            var transportselect = '';
+            
+            $.ajax({
+              'type':'post',
+              'dataType': 'html',
+              'url': "$url_to_find_wh",
+              'async': false,
+              'data': {'prod': prod},
+              'success': function(data) {
+                  wselect="<select name='picking_wh[]' class='form-control'>"+data+"</select>";
+                 // alert(data);
+              }
+            });
+            $.ajax({
+              'type':'post',
+              'dataType': 'html',
+              'url': "$url_to_find_permit",
+              'async': false,
+              'data': {'prod': prod},
+              'success': function(data) {
+                  perselect="<select name='picking_permit[]' class='form-control'>"+data+"</select>";
+                 // alert(data);
+              }
+            });
+            $.ajax({
+              'type':'post',
+              'dataType': 'html',
+              'url': "$url_to_find_transport",
+              'async': false,
+              'data': {'prod': prod},
+              'success': function(data) {
+                  transportselect="<select name='picking_transport[]' class='form-control'>"+data+"</select>";
+                 // alert(data);
+              }
+            });
+            
+            
+            var xrow = "<tr><td>"+$(this).find(".productcode").val()+"</td><td>"+$(this).find(".line_qty").val()+"</td><td>"+wselect+"</td><td>"+transportselect+"</td><td>"+perselect+"</td></tr>";
             $(".table-picking tbody").append(xrow);
         });
+         $("#pickModal").modal("show").find(".sale-id").val("$model->id");
     });
     
     $(".btn-picking-line").click(function(){
         
+    });
+    $(".btn-save-picking").click(function(){
+       $("form#form-picking").submit();
     });
  });
 
