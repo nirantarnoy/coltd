@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,
         'emptyCell'=>'-',
-        'layout'=>'{items}{summary}{pager}',
+        'layout'=>"{items}\n{summary}\n<div class='text-center'>{pager}</div>",
         'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
         'showOnEmpty'=>false,
         'tableOptions' => ['class' => 'table table-hover'],
@@ -101,9 +101,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function($data){
                    if($data->status == 1){
-                       return "<div class='label label-success'> Opened</div>";
-                   }else{
-                       return "<div class='label label-danger'> Completed</div>";
+                       return "<div class='label label-success'>".\backend\helpers\SaleStatus::getTypeById($data->status)."</div>";
+                   }else if($data->status == 2){
+                       return "<div class='label label-danger'>".\backend\helpers\SaleStatus::getTypeById($data->status)."</div>";
                    }
                 }
             ],

@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
        // 'filterModel' => $searchModel,
         'emptyCell'=>'-',
-        'layout'=>'{items}{summary}{pager}',
+        'layout'=>"{items}\n{summary}\n<div class='text-center'>{pager}</div>",
         'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
         'showOnEmpty'=>false,
         'tableOptions' => ['class' => 'table table-hover'],

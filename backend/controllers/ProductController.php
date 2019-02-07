@@ -299,10 +299,26 @@ class ProductController extends Controller
                         $modelx->available_qty = str_replace(',','', $rowData[8]);
                         $modelx->status = 1;
 
+
+                        $transport_in_no = '';
+                        $transport_in_date = '';
+                        $permit_no = '';
+                        $permit_date = '';
+                        $excise_no = '';
+                        $excise_date = '';
+
                         if ($modelx->save(false)) {
                             $res += 1;
                             // $data_all +=1;
-                             array_push($data,['prod_id'=>$modelx->id,'qty'=>$modelx->all_qty,'warehouse_id'=>1,'trans_type'=>TransType::TRANS_ADJUST]);
+                             array_push($data,[
+                                 'prod_id'=>$modelx->id,
+                                 'qty'=>$modelx->all_qty,
+                                 'warehouse_id'=>1,
+                                 'trans_type'=>TransType::TRANS_ADJUST,
+                                 'permit_no' => $permit_no,
+                                 'transport_no' => $transport_in_no,
+                                 'excise_no' => $excise_no,
+                             ]);
                         }
                     }
                      $update_stock = TransCalculate::createJournal($data);

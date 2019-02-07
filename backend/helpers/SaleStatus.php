@@ -16,7 +16,7 @@ class SaleStatus
 
     private static $dataobj = [
         ['id'=>1,'name' => 'Open'],
-        ['id'=>2,'name' => 'Open'],
+        ['id'=>2,'name' => 'Closed'],
 
     ];
     public static function asArray()

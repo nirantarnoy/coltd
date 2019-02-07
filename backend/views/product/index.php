@@ -192,7 +192,7 @@ table.table-vendor td{
                         'dataProvider' => $dataProvider,
                         //'filterModel' => $searchModel,
                         'emptyCell'=>'-',
-                        'layout'=>'{items}{summary}{pager}',
+                        'layout'=>"{items}\n{summary}\n<div class='text-center'>{pager}</div>",
                         'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
                         'showOnEmpty'=>false,
                         'bordered'=>false,
