@@ -114,6 +114,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->qty == null?0:$data->qty;
                 }
             ],
+            'permit_no',
+            'transport_in_no',
+            'excise_no',
             //'status',
             //'created_at',
             //'updated_at',
