@@ -38,7 +38,7 @@ $this->registerCss('
           <div class="pull-right">
               <a href="<?=Url::to(array('warehouse/index'),true)?>"><div class="btn btn-default">กลับ <i class="fa fa-arrow-right"></i> </div></a>
           </div>
-            
+
       </div>
      </div>
     <br>
@@ -65,7 +65,7 @@ $this->registerCss('
                                     return $data->is_primary === 1 ?'<div class="label label-success">คลังสินค้าหลัก</div>':'<div class="label label-default">ไม่ใช่</div>';
                                 }
                             ],
-                            
+
                         ],
                     ]) ?>
                 </div>
@@ -75,7 +75,7 @@ $this->registerCss('
                         'options'=>['class'=>'borderless'],
                         'attributes' => [
                            // 'id',
-                           
+
                             [
                                 'attribute'=>'status',
                                 'format' => 'html',
@@ -95,7 +95,7 @@ $this->registerCss('
                                     return date('d-m-Y H:i',$data->created_at);
                                 }
                             ],
-                           
+
                         ],
                     ]) ?>
                 </div>
@@ -104,7 +104,7 @@ $this->registerCss('
                         'model' => $model,
                         'options'=>['class'=>'borderless'],
                         'attributes' => [
-                          
+
                             [
                                 'attribute'=>'created_by',
                                 'value'=>function($data){
@@ -129,17 +129,17 @@ $this->registerCss('
                       <div class="col-md-4 tile">
                           <span><b>จำนวนสินค้าทั้งหมด</b></span>
                           <h2><?=number_format($allqty,0)?> </i></h2>
-                        
-                          <div class="btn btn-default"> ดูรายการสินค้า</div>
+
+                          <div class="btn btn-default" style="display: none"> ดูรายการสินค้า</div>
                         </div>
                         <div class="col-md-4 tile">
                           <span><b>มูลค่าสินค้า</b></span>
-                          <h2>0 บาท</i></h2>
+                          <h2><?=number_format($allamount,0)?> บาท</i></h2>
                           <span class="sparkline22 graph" style="height: 160px;">
                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
                           </span>
                         </div>
-                       
+
                 </div>
             </div>
 
@@ -147,7 +147,7 @@ $this->registerCss('
         </div>
     </div>
 
-  <div class="row">
+  <div class="row" style="display: none">
    <div class="col-md-12">
        <div class="panel panel-headlin">
            <div class="panel-heading">

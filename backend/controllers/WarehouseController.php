@@ -115,11 +115,16 @@ class WarehouseController extends Controller
             $allqty = $allqty + $val->qty;
         }
 
+
+        $stock_by_warehouse = \backend\models\Stockbalance::find()->where(['warehouse_id'=>$id])->sum('qty');
+        $amount_by_warehouse = \backend\models\Stockbalance::find()->where(['warehouse_id'=>$id])->sum('qty * 10');
+
         return $this->render('view', [
             'model' => $this->findModel($id),
             'movementSearch'=>$movementSearch,
             'movementDp' => $movementDp,
-            'allqty' => $allqty,
+            'allqty' => $stock_by_warehouse,
+            'allamount' => $amount_by_warehouse,
         ]);
     }
 
@@ -164,8 +169,8 @@ class WarehouseController extends Controller
         }
 
         return $this->render('update', ['model' => $model,]);
-       
-  
+
+
     }
 
     /**
