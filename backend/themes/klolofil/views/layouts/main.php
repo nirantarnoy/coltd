@@ -183,6 +183,18 @@ $(function(){
                             </ul>
                         </div>
                     </li>
+                    <li class="has-sub">
+                        <a href="#subReport" data-toggle="collapse" class="collapsed"><i class="fa fa-line-chart"></i> <span>รายงานสต๊อก</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+<!--                        <div id="subReport" class="collapse ">-->
+<!--                            <ul class="nav">-->
+<!--                                <li><a href="index.php?r=customergroup/index" class="customergroup">กลุ่มลูกค้า</a></li>-->
+<!--                                <li><a href="index.php?r=customer/index" class="customer">ลูกค้า</a></li>-->
+<!--                                <li><a href="index.php?r=quotation/index" class="quotation">เสนอราคา</a></li>-->
+<!--                                <li><a href="index.php?r=sale/index" class="sale">ขาย</a></li>-->
+<!--                                <!--                                <li><a href="index.php?r=invoice/index" class="invoice">เรียกเก็บเงิน</a></li>-->-->
+<!--                            </ul>-->
+<!--                        </div>-->
+                    </li>
 
 <?php //else:?>
 
