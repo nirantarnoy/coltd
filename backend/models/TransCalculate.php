@@ -40,11 +40,13 @@ class TransCalculate extends \yii\base\Model
               $model_journalline->to_wh = $data[$i]['warehouse_id'];
               $model_journalline->qty = $data[$i]['qty'];
               $model_journalline->stock_type = $stocktype;
+              $model_journalline->trans_date = date('Y-m-d');
               if($model_journalline->save()){
                   array_push($param,[
                       'prod_id'=>$data[$i]['prod_id'],
                       'warehouse_id'=>$data[$i]['warehouse_id'],
                       'qty'=>$data[$i]['qty'],
+                      'trans_type'=>$data[$i]['trans_type'],
                       'permit_no' => $data[$i]['permit_no'],
                       'transport_no' => $data[$i]['transport_no'],
                       'excise_no' => $data[$i]['excise_no'],

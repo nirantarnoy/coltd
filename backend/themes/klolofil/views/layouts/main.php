@@ -185,6 +185,11 @@ $(function(){
                     </li>
                     <li class="has-sub">
                         <a href="#subReport" data-toggle="collapse" class="collapsed"><i class="fa fa-line-chart"></i> <span>รายงานสต๊อก</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subReport" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="index.php?r=report/balance" class="customergroup">รายงานยอดคงคลัง</a></li>
+                            </ul>
+                        </div>
                     </li>
 
 <?php //else:?>

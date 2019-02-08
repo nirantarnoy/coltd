@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 use kartik\select2\Select2;
@@ -102,12 +102,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a(\backend\models\Warehouse::findWarehousename($data->warehouse_id), ['warehouse/view', 'id' => $data->warehouse_id]);
                 }
             ],
-            [
-                'attribute' => 'loc_id',
-                'value' => function($data){
-                    return \backend\models\location::findLocationname($data->loc_id);
-                }
-            ],
+//            [
+//                'attribute' => 'loc_id',
+//                'value' => function($data){
+//                    return \backend\models\location::findLocationname($data->loc_id);
+//                }
+//            ],
             [
                 'attribute' => 'qty',
                 'value' => function($data){
@@ -125,6 +125,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
           //  ['class' => 'yii\grid\ActionColumn'],
         ],
+                    'responsive' => true,
+                    'hover' => true,
+                    'bordered' => false,
     ]); ?>
     <?php Pjax::end(); ?>
 </div>

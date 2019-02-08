@@ -37,7 +37,9 @@
         "miloschuman/yii2-highcharts-widget": "dev-master",
         "himiklab/yii2-recaptcha-widget" : "*",
         "yii2assets/yii2-fullscreen-modal": "*",
-        "yii2tech/html2pdf": "*"
+        "yii2tech/html2pdf": "*",
+        "kartik-v/yii2-export": "dev-master",
+        "2amigos/yii2-date-picker-widget" : "~1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
