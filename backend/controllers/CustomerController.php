@@ -95,6 +95,7 @@ class CustomerController extends Controller
             $province = Yii::$app->request->post('select_province');
 
             $delivery = Yii::$app->request->post('delivery_type');
+            $address = Yii::$app->request->post('address_text');
 
 
 //            $item_check = substr(Yii::$app->request->post('select_item'),0,1);
@@ -126,6 +127,7 @@ class CustomerController extends Controller
             //print_r($bucket_list);return;
             $model->customer_group_id = Yii::$app->request->post('customer_group');
             $model->delivery_type = $delivery;
+            $model->address = $address;
             if ($model->save(false)) {
                 // insert address
                 $model_address->status = 1;
@@ -193,17 +195,31 @@ class CustomerController extends Controller
     {
         $model = $this->findModel($id);
         $model_address = new \backend\models\AddressBook();
-         if ($model->load(Yii::$app->request->post())) {
+        $model_address_plant = \backend\models\AddressBook::find()->where(['party_type_id'=>2,'party_id'=>$id])->one();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->customer_group_id = Yii::$app->request->post('customer_group');
 
+            $district = Yii::$app->request->post('select_district');
+            $city = Yii::$app->request->post('select_city');
+            $province = Yii::$app->request->post('select_province');
+
+            $delivery = Yii::$app->request->post('delivery_type');
+            $address = Yii::$app->request->post('address_text');
+
+
+            $model->address = $address;
+            if($model->save()){
                 $session = Yii::$app->session;
                 $session->setFlash('msg','บันทึกรายการเรียบร้อย');
                 return $this->redirect(['index']);
             }
+        }
 
 
         return $this->render('update', [
             'model' => $model,
             'model_address'=>$model_address,
+            'model_address_plant'=>$model_address_plant
 
         ]);
     }

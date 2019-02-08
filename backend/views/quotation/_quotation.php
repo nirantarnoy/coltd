@@ -47,11 +47,25 @@
                 </td>
             </tr><br><br>
             <tr >
-                <td colspan="4" style="border: none;font-size: 14px;font-weight: bold">Prepared For: </td>
+                <td colspan="2" style="border: none;font-size: 14px;font-weight: bold">Prepared For: </td>
+                <td colspan="2" style="border: none;font-size: 14px;font-weight: bold">
+
+                </td>
 
                 <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">
-                    Date: <?=date('d/m/Y',$model->trans_date)?><br />
-                    Invoice: <?=$model->picking_no?>
+                    Date: <?=date('d/m/Y',$model->require_date)?><br />
+                    Invoice: <?=$model->quotation_no?>
+                </td>
+            </tr>
+            <tr >
+                <td colspan="1" style="border: none;font-size: 14px;font-weight: bold"></td>
+                <td colspan="3" style="border: none;font-size: 13px;">
+                    <?=\backend\models\Customer::findInfo($model->customer_id)->name?> <br>
+                    <?=\backend\models\Customer::findInfo($model->customer_id)->address?>
+                </td>
+
+                <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">
+
                 </td>
             </tr>
             <tr >
@@ -63,15 +77,15 @@
             </thead>
             <tbody style="top: 10px;">
             <tr>
-                <td colspan="6" style="text-align: center;font-size: 14px">PICKING LIST</td>
+                <td colspan="6" style="text-align: center;font-size: 14px">QUOTATION</td>
             </tr>
             <tr style="background: #c3c3c3">
                 <td style="padding: 10px;border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 9%">No.</td>
                 <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Description</td>
                 <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Origin Country</td>
                 <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Qty</td>
-                <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 15%">Net weight</td>
-                <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 15%">Gross weight</td>
+                <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 15%">Price</td>
+                <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 15%">Total</td>
             </tr>
             <?php $rows = 0; ?>
             <?php $sumqty = 0; ?>
@@ -79,9 +93,9 @@
             <?php $sumgross = 0; ?>
             <?php foreach ($modelline as $value):?>
                 <?php
-                   $sumqty = $sumqty + $value->qty;
-                   $sumnet = $sumnet + \backend\models\Product::findProductinfo($value->product_id)->netweight;
-                   $sumgross = $sumgross + \backend\models\Product::findProductinfo($value->product_id)->grossweight;
+                $sumqty = $sumqty + $value->qty;
+                //$sumnet = $sumnet + \backend\models\Product::findProductinfo($value->product_id)->netweight;
+                $sumgross = $sumgross + number_format($value->qty * $value->price,0);
                 ?>
                 <?php $rows +=1; ?>
                 <tr style="border: 0.5px solid black;border-bottom:none;border-collapse: collapse;">
@@ -89,9 +103,9 @@
                     <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;padding-left: 5px;text-align: left"><?=\backend\models\Product::findProductinfo($value->product_id)->engname;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->origin;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($value->qty,0)?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: right;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->netweight;?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: right;padding-right: 10px;"><?=number_format($value->price,0)?></td>
 
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: right;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->grossweight;?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: right;padding-right: 10px;"><?=number_format($value->qty * $value->price,0)?></td>
 
                 </tr>
             <?php endforeach; ?>
@@ -117,12 +131,12 @@
             <!--            </tr>-->
             <?php //endfor; ?>
             <tr style="border: 1px solid black;border-left:none;border-right: none ">
-<!--            <tr>-->
+                <!--            <tr>-->
                 <td style="padding: 15px 15px 15px 15px;font-size: 14px;text-align: left" colspan="2">TOTAL</td>
 
                 <td></td>
                 <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($sumqty,0)?></td>
-                <td style="font-size: 14px;font-weight: normal;text-align: right;padding-right: 10px;"><?=number_format($sumnet,0)?></td>
+                <td style="font-size: 14px;font-weight: normal;text-align: right;padding-right: 10px;"></td>
                 <td style="font-size: 14px;font-weight: normal;text-align: right;padding-right: 10px;"><?=number_format($sumgross,0)?></td>
 
             </tr>

@@ -37,9 +37,9 @@ class Customer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['customer_code'],'required'],
+            [['name'],'required'],
             [['customer_group_id','customer_type','currency_id', 'payment_term','card_id', 'payment_type', 'delivery_type', 'sale_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'description','customer_code','first_name','last_name','email','mobile'], 'string', 'max' => 255],
+            [['name', 'description','code','first_name','last_name','email','mobile'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,7 +50,7 @@ class Customer extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'customer_code' => Yii::t('app', 'รหัสลูกค้า'),
+            'code' => Yii::t('app', 'รหัสลูกค้า'),
             'first_name' => Yii::t('app', 'ชื่อ'),
             'last_name' => Yii::t('app', 'นามสกุล'),
             'card_id' => Yii::t('app', 'เลขที่บัตรประชาชน'),

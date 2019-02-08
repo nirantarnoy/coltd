@@ -79,7 +79,7 @@ class TransCalculate extends \yii\base\Model
               }
 
           }else{
-              if($param[0]['trans_type']==8){ 
+              if($param[0]['trans_type']==8){
 
               }else{
                   $model = new Stockbalance();

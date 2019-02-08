@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use kartik\mpdf\Pdf;
 
 /**
  * QuotationController implements the CRUD actions for Quotation model.
@@ -246,5 +247,43 @@ class QuotationController extends Controller
             }
         }
         return $this->redirect(['sale/index']);
+    }
+    public function actionBill($id){
+        $model = \backend\models\Quotation::find()->where(['id' => $id])->one();
+        $modelline = \backend\models\Quotationline::find()->where(['quotation_id'=>$id])->all();
+
+        if($model){
+            // return "nira";
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+                //  'format' => [150,236], //manaul
+                'format' =>  Pdf::FORMAT_A4,
+                //'format' =>  Pdf::FORMAT_A5,
+                'orientation' =>Pdf::ORIENT_PORTRAIT,
+                'destination' => Pdf::DEST_BROWSER,
+                'content' => $this->renderPartial('_quotation',[
+                    'model'=>$model,
+                    'modelline'=>$modelline,
+
+                ]),
+                //'content' => "nira",
+                // 'defaultFont' => '@backend/web/fonts/config.php',
+                'cssFile' => '@backend/web/css/pdf.css',
+                'options' => [
+                    'title' => 'QUATATION',
+                    'subject' => ''
+                ],
+                'methods' => [
+                    //  'SetHeader' => ['รายงานรหัสสินค้า||Generated On: ' . date("r")],
+                    //  'SetFooter' => ['|Page {PAGENO}|'],
+                    //'SetFooter'=>'niran',
+                ],
+
+            ]);
+            //return $this->redirect(['genbill']);
+            Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+            Yii::$app->response->headers->add('Content-Type', 'application/pdf');
+            return $pdf->render();
+        }
     }
 }

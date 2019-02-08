@@ -30,26 +30,26 @@ $old_item = '';
 $m = 1;
 $old_bucket = '';
 $old_seeme = [];
-if(count($item_select)>0){
-    foreach ($item_select as $value){
-        if($l < count($item_select)){
-            $old_item .=$value->itemid.',';
-        }else if($l == count($item_select)){
-            $old_item .=$value->itemid;
-        }
-        $l+=1;
-    }
-}
-if(count($bucket)>0) {
-    foreach ($bucket as $value) {
-        if ($m < count($bucket)) {
-            $old_bucket .= $value->itemid . ',';
-        } else if ($m == count($bucket)) {
-            $old_bucket .= $value->itemid;
-        }
-        $m += 1;
-    }
-}
+//if(count($item_select)>0){
+//    foreach ($item_select as $value){
+//        if($l < count($item_select)){
+//            $old_item .=$value->itemid.',';
+//        }else if($l == count($item_select)){
+//            $old_item .=$value->itemid;
+//        }
+//        $l+=1;
+//    }
+//}
+//if(count($bucket)>0) {
+//    foreach ($bucket as $value) {
+//        if ($m < count($bucket)) {
+//            $old_bucket .= $value->itemid . ',';
+//        } else if ($m == count($bucket)) {
+//            $old_bucket .= $value->itemid;
+//        }
+//        $m += 1;
+//    }
+//}
 $url_to_findcity = Url::to(['plant/showcity'],true);
 $url_to_finddistrict = Url::to(['plant/showdistrict'],true);
 $url_to_findzipcode = Url::to(['plant/showzipcode'],true);
@@ -193,27 +193,7 @@ $this->registerJs($js,static::POS_END);
 
             <hr />
 
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="form-group" style="margin-top: -10px">
-                        <label class="control-label col-lg-12" for="first-name"><?=Yii::t('app','ประเทศ')?>
-                        </label>
-                        <div class="col-lg-12">
-                            <select name="select_district" class="form-control" id="district" >
 
-                                    <?php foreach ($country as $value):?>
-                                        <?php
-                                        $select = '';
-                                        $dis_id = $model_address_plant?$model_address_plant->district_id:0;
-                                        if($value->id ==  $dis_id){$select = 'selected';}
-                                        ?>
-                                        <option value="<?=$value->id?>" <?=$select;?>><?=$value->country_code." ".$value->country_name?></option>
-                                    <?php endforeach;?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <br>
 
             <div class="row">
@@ -332,103 +312,54 @@ $this->registerJs($js,static::POS_END);
             </div>
             <hr/>
 
-
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">อัพโหลดรูปภาพ</h4>
-                            <label for="input-file-max-fs"></label>
-                            <input type="file" name="imagefile[]" id="input-file-max-fs" multiple class="dropify" data-max-file-size="2M" />
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <?php if(!$model->isNewRecord): ?>
-                        <div class="row">
-                            <?php foreach ($modelfile as $value):?>
-
-                                <div class="col-xs-6 col-md-3">
-                                    <div class="card">
-                                        <img class="card-img-top img-responsive" src="../../backend/web/uploads/images/<?=$value->name?>" alt="Card image cap">
-                                        <div class="card-body">
-                                            <a href="#" onclick="removepic($(this));" class="btn btn-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <?php //echo Html::img("../../frontend/web/img/screenshots/".$value->filename,['width'=>'10%','class'=>'thumbnail']) ?>
-                            <?php endforeach;?>
-                        </div>
-
-                    <?php endif;?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-
-                                        <div class="card">
-                                            <div class="card-body">
-                    <h4 class="card-title">อัพโหลดเอกสาร</h4>
-                    <label for="input-file-max-fs"></label>
-                    <input type="file" name="docfile[]" id="input-file-max-fs" multiple class="dropify" data-max-file-size="2M" />
-                    <br>
-                    <br>
-                    <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group" style="margin-top: -10px">
+                        <label class="control-label col-lg-12" for="first-name"><?=Yii::t('app','ประเทศ')?>
+                        </label>
                         <div class="col-lg-12">
+                            <select name="select_district" class="form-control" id="district" >
 
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>ชื่อไฟล์</th>
-                                            <th></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php if(count($modeldoc)):?>
-                                            <?php $i = 0;?>
-                                            <?php foreach ($modeldoc as $value):?>
-                                                <?php $i +=1;?>
-                                                <tr>
-                                                    <td><?=$i?></td>
-                                                    <td>
-                                                        <?=$value->name?>
-                                                    </td>
-                                                    <td>
-                                                        <a href="uploads/documents/<?=$value->name?>" class="btn btn-secondary" target="_blank"><i class="fa fa-print"></i></a>
-                                                        <a href="#" class="btn btn-danger remove-file" onclick="removefile($(this))"><i class="fa fa-trash"></i></a>
-                                                    </td>
-
-                                                </tr>
-                                            <?php endforeach;?>
-                                        <?php else:?>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <?php endif;?>
-                                        </tbody>
-
-
-                                    </table>
-                                </div>
-                            </div>
-
-
+                                <?php foreach ($country as $value):?>
+                                    <?php
+                                    $select = '';
+                                    $dis_id = $model_address_plant?$model_address_plant->district_id:0;
+                                    if($value->id ==  $dis_id){$select = 'selected';}
+                                    ?>
+                                    <option value="<?=$value->id?>" <?=$select;?>><?=$value->country_code." ".$value->country_name?></option>
+                                <?php endforeach;?>
+                            </select>
                         </div>
                     </div>
                 </div>
-                </div>
-                                </div>
             </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group" style="margin-top: -10px">
+                        <div class="col-lg-12">
+                            <label for="">ทีอยู่</label>
+                            <textarea class="form-control" name="address_text" id="" cols="30" rows="10"><?=$model->address?></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+
+<!--            <div class="row">-->
+<!--                <div class="col-lg-12">-->
+<!--                    <div class="card">-->
+<!--                        <div class="card-body">-->
+<!--                            <h4 class="card-title">อัพโหลดรูปภาพ</h4>-->
+<!--                            <label for="input-file-max-fs"></label>-->
+<!--                            <input type="file" name="imagefile[]" id="input-file-max-fs" multiple class="dropify" data-max-file-size="2M" />-->
+<!---->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            -->
 
 
             <div class="form-group">

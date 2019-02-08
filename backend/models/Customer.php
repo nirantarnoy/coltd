@@ -55,5 +55,9 @@ class Customer extends \common\models\Customer
         $model = Customer::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->code." ".$model->name:'';
     }
+    public function findInfo($id){
+        $model = Customer::find()->where(['id'=>$id])->one();
+        return $model;
+    }
 
 }

@@ -49,8 +49,8 @@ class Product extends \yii\db\ActiveRecord
             [['name'],'required'],
             [['engname'],'unique'],
             [['category_id', 'product_type_id', 'unit_id', 'is_hold','unit_factor', 'has_variant', 'bom_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['min_stock', 'max_stock', 'cost', 'price','volumn','volumn_content'], 'number'],
-            [['product_code', 'name', 'description', 'barcode', 'photo','engname'], 'string', 'max' => 255],
+            [['min_stock', 'max_stock', 'cost', 'price','volumn','volumn_content','netweight','grossweight'], 'number'],
+            [['product_code', 'name', 'description', 'barcode', 'photo','engname','origin'], 'string', 'max' => 255],
         ];
     }
 

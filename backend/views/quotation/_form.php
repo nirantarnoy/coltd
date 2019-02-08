@@ -222,10 +222,12 @@ $this->registerCss('
 
             <div class="form-group pull-right">
                 <?= Html::submitButton("<i class='fa fa-save'></i> บันทึก", ['class' => 'btn btn-success']) ?>
+                <?= Html::Button("<i class='fa fa-print'></i> พิมพ์", ['class' => 'btn btn-warning btn-quote-print']) ?>
                 <?= Html::Button("<i class='fa fa-random'></i> เปิดออเดอร์", ['class' => 'btn btn-primary btn-firm-sale']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
+            <form id="form-quote" target="_blank" method="post" action="<?=Url::to(['quotation/bill','id'=>$model->id],true)?>"></form>
         </div>
     </div>
 
@@ -297,6 +299,10 @@ $js =<<<JS
               }
             });
         } 
+     });
+     $(".btn-quote-print").click(function(){
+         //alert($("#form-quote").attr("action"));
+        $("form#form-quote").submit(); 
      });
      $(".btn-addline").click(function(){
           var tr = $(".table-quotation tbody tr:last");
