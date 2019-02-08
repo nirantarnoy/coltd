@@ -47,11 +47,25 @@
                 </td>
             </tr><br><br>
             <tr >
-                <td colspan="4" style="border: none;font-size: 14px;font-weight: bold">Prepared For: </td>
+                <td colspan="2" style="border: none;font-size: 14px;font-weight: bold">Prepared For: </td>
+                <td colspan="2" style="border: none;font-size: 14px;font-weight: bold">
+
+                </td>
 
                 <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">
                     Date: <?=date('d/m/Y',$model->trans_date)?><br />
                     Invoice: <?=$model->picking_no?>
+                </td>
+            </tr>
+            <tr >
+                <td colspan="1" style="border: none;font-size: 14px;font-weight: bold"></td>
+                <td colspan="3" style="border: none;font-size: 13px;">
+                    <?=\backend\models\Picking::findCustomer($model->id)?> <br>
+                    <?= \backend\models\Picking::findCustomerAddress($model->id)?>
+                </td>
+
+                <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">
+
                 </td>
             </tr>
             <tr >

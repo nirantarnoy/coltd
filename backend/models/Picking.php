@@ -79,4 +79,36 @@ class Picking extends \common\models\Picking
             return '';
         }
     }
+    public function findCustomer($id){
+        $model = \backend\models\Picking::find()->where(['id'=>$id])->one();
+        if($model){
+            $customer = \backend\models\Sale::find()->where(['id'=>$model->sale_id])->one();
+            if($customer){
+                $name = \backend\models\Customer::find()->where(['id'=>$customer->customer_id])->one();
+                if($name){
+                    return $name->name;
+                }else{
+                    return '';
+                }
+            }
+        }else{
+            return '';
+        }
+    }
+    public function findCustomerAddress($id){
+        $model = \backend\models\Picking::find()->where(['id'=>$id])->one();
+        if($model){
+            $customer = \backend\models\Sale::find()->where(['id'=>$model->sale_id])->one();
+            if($customer){
+                $name = \backend\models\Customer::find()->where(['id'=>$customer->customer_id])->one();
+                if($name){
+                    return $name->address;
+                }else{
+                    return '';
+                }
+            }
+        }else{
+            return '';
+        }
+    }
 }
