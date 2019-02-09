@@ -65,6 +65,7 @@ class QuerybalanceSearch extends Querybalance
         // grid filtering conditions
         $query->andFilterWhere([
             //'trans_date' => $this->trans_date,
+            'journal_date' => $this->journal_date,
             'engname' => $this->engname,
             'name' => $this->name,
             'volumn' => $this->volumn,

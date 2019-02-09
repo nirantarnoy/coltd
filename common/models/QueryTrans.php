@@ -45,7 +45,7 @@ class QueryTrans extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'unit_id', 'category_id', 'product_type_id', 'status', 'journal_id', 'stock_type', 'unit_factor'], 'integer'],
-            [['all_qty', 'qty', 'volumn', 'volumn_content', 'netweight', 'grossweight','stock_in','stock_out'], 'number'],
+            [['all_qty', 'qty', 'volumn', 'volumn_content', 'netweight', 'grossweight','stock_in','stock_out','cost'], 'number'],
             [['product_code', 'name', 'description', 'journal_no', 'engname', 'origin'], 'string', 'max' => 255],
             [['trans_date'],'safe'],
             [['journal_date'],'date']
@@ -70,6 +70,7 @@ class QueryTrans extends \yii\db\ActiveRecord
             'journal_id' => 'Journal ID',
             'stock_type' => 'Stock Type',
             'qty' => 'Qty',
+            'cost' => 'Cost',
             'journal_no' => 'Journal No',
             'volumn' => 'ปริมาณต่อขวด(ลิตร)',
             'engname' => 'รายละเอียดสินค้า',

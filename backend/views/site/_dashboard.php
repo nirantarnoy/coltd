@@ -6,9 +6,9 @@ use miloschuman\highcharts\Highcharts;
 $this->title = "Dashboard";
 
 $dateval = date('d-m-Y').' ถึง '.date('d-m-Y');
-//if($from_date !='' && $to_date != ''){
-//    $dateval = $from_date.' ถึง '.$to_date;
-//}
+if($from_date !='' && $to_date != ''){
+    $dateval = $from_date.' ถึง '.$to_date;
+}
 
 
 ?>
@@ -49,7 +49,7 @@ $dateval = date('d-m-Y').' ถึง '.date('d-m-Y');
                 <div class="metric">
                     <span class="icon"><i class="fa fa-cube"></i></span>
                     <p>
-                        <span class="number">1</span>
+                        <span class="number"><?=number_format($all_sale_qty,0)?></span>
                         <span class="title">ยอดขาย(จำนวน)</span>
                     </p>
                 </div>
@@ -58,7 +58,7 @@ $dateval = date('d-m-Y').' ถึง '.date('d-m-Y');
                 <div class="metric">
                     <span class="icon"><i class="fa fa-money"></i></span>
                     <p>
-                        <span class="number">3</span>
+                        <span class="number"><?=number_format($all_sale_amount,0)?></span>
                         <span class="title">ยอดขาย(เงิน)</span>
                     </p>
                 </div>
@@ -67,7 +67,7 @@ $dateval = date('d-m-Y').' ถึง '.date('d-m-Y');
                 <div class="metric">
                     <span class="icon"><i class="fa fa-shopping-bag"></i></span>
                     <p>
-                        <span class="number">3</span>
+                        <span class="number"><?=number_format($all_rec_qty,0)?></span>
                         <span class="title">จำนวนรับเข้า(จำนวน)</span>
                     </p>
                 </div>
@@ -76,7 +76,7 @@ $dateval = date('d-m-Y').' ถึง '.date('d-m-Y');
                 <div class="metric">
                     <span class="icon"><i class="fa fa-money text-success"></i></span>
                     <p>
-                        <span class="number">3</span>
+                        <span class="number"><?=number_format($all_rec_amount,0)?></span>
                         <span class="title">จำนวนรับเข้า(เงิน)</span>
                     </p>
                 </div>
@@ -126,4 +126,11 @@ $dateval = date('d-m-Y').' ถึง '.date('d-m-Y');
         </div>
     </div>
 </div>
-
+<?php
+$js=<<<JS
+   $(".date_select").change(function() {
+      $("form#form_date").submit();
+    });
+JS;
+$this->registerJs($js,static::POS_END);
+?>

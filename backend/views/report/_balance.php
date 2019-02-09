@@ -28,18 +28,18 @@ $this->title = 'รายงานสินค้าคงเหลือ';
                         // 'id',
                         [
                             'attribute' => 'journal_date',
-                            'format' => 'raw',
-                            'value' => function($data){
-                                return Yii::$app->formatter->asDate($data->journal_date, 'php:d/m/Y');
-                            },
-                            'filter'=> DatePicker::widget([
-                                'model'=> $searchModel,
-                                'attribute' => 'journal_date',
-                                'clientOptions' => [
-                                    'autoclose'=>true,
-                                    'format'=>'yyyy/mm/dd'
-                                ]
-                            ])
+//                            'format' => 'raw',
+//                            'value' => function($data){
+//                                return Yii::$app->formatter->asDate($data->journal_date, 'php:d/m/Y');
+//                            },
+//                            'filter'=> DatePicker::widget([
+//                                'model'=> $searchModel,
+//                                'attribute' => 'journal_date',
+//                                'clientOptions' => [
+//                                    'autoclose'=>true,
+//                                    'format'=>'yyyy/mm/dd'
+//                                ]
+//                            ])
                         ],
                         'engname',
                         'name',
@@ -109,6 +109,7 @@ $this->title = 'รายงานสินค้าคงเหลือ';
                     [
                         'attribute' => 'journal_date',
                         'format' => 'raw',
+                        'options' => ['id'=>'jn_date'],
                         'value' => function($data){
                             return Yii::$app->formatter->asDate($data->journal_date, 'php:d/m/Y');
                         },
@@ -116,9 +117,10 @@ $this->title = 'รายงานสินค้าคงเหลือ';
                             'model'=> $searchModel,
                             'attribute' => 'journal_date',
                             'clientOptions' => [
-                                'autoclose'=>true,
-                                'format'=>'yyyy/mm/dd'
-                            ]
+                                'autoclose'=>false,
+                                'format'=>'yyyy/mm/dd',
+                            ],
+                            'options' => ['onchange'=>'window.location.reload();']
                         ])
                     ],
                     'engname',

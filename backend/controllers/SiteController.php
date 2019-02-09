@@ -60,7 +60,36 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('_dashboard');
+        $from_date = '';
+        $to_date = '';
+
+        $find_date = null;
+        if(Yii::$app->request->isGet){
+            $find_date = explode(' ถึง ',Yii::$app->request->get('date_select'));
+        }
+        if(count($find_date)>0 && Yii::$app->request->get('date_select') != null) {
+            $from_date = $find_date[0];
+            $to_date = $find_date[1];
+
+            $all_sale_qty = \backend\models\Saleline::find()->where(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->sum('qty');
+            $all_sale_amount = \backend\models\Saleline::find()->where(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->sum('qty * price');
+            $all_rec_qty = \common\models\QueryTrans::find()->where(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])
+                                                               ->andFilterWhere(['stock_type'=>0])->sum('qty');
+            $all_rec_amount = \common\models\QueryTrans::find()->where(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])
+                                                                ->andFilterWhere(['stock_type'=>0])->sum('qty * cost');
+
+
+        }
+
+
+        return $this->render('_dashboard',[
+            'from_date' => $from_date,
+            'to_date' => $to_date,
+            'all_sale_qty' =>$all_sale_qty,
+            'all_sale_amount' =>$all_sale_amount,
+            'all_rec_qty' =>$all_rec_qty,
+            'all_rec_amount' =>$all_rec_amount,
+        ]);
     }
 
     /**
