@@ -315,7 +315,7 @@ class ProductController extends Controller
                                  'prod_id'=>$modelx->id,
                                  'qty'=>$modelx->all_qty,
                                  'warehouse_id'=>1,
-                                 'trans_type'=>TransType::TRANS_ADJUST,
+                                 'trans_type'=>TransType::TRANS_ADJUST_IN,
                                  'permit_no' => $permit_no,
                                  'transport_no' => $transport_in_no,
                                  'excise_no' => $excise_no,

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "131c9f081290fecc60504ff16e04b507",
+    "content-hash": "79f3129dc8c25246ff564921464247a5",
     "packages": [
         {
             "name": "2amigos/yii2-date-picker-widget",
@@ -711,6 +711,55 @@
             "time": "2019-01-03T02:58:32+00:00"
         },
         {
+            "name": "kartik-v/bootstrap-popover-x",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/bootstrap-popover-x.git",
+                "reference": "6ad0aad550be15e2648926876aabbc2fdd13ddf8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-popover-x/zipball/6ad0aad550be15e2648926876aabbc2fdd13ddf8",
+                "reference": "6ad0aad550be15e2648926876aabbc2fdd13ddf8",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\plugins\\popover\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Bootstrap Popover Extended - Popover with modal behavior, styling enhancements and more.",
+            "homepage": "https://github.com/kartik-v/bootstrap-popover-x",
+            "keywords": [
+                "bootstrap",
+                "extended",
+                "jquery",
+                "modal",
+                "modal-popover",
+                "popover",
+                "popover-x"
+            ],
+            "time": "2018-11-05T12:40:59+00:00"
+        },
+        {
             "name": "kartik-v/yii2-checkbox-x",
             "version": "dev-master",
             "source": {
@@ -981,6 +1030,59 @@
             "time": "2018-12-13T10:30:33+00:00"
         },
         {
+            "name": "kartik-v/yii2-editable",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-editable.git",
+                "reference": "2329429b44a6209d0a840e7ea00c14e6152c611e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-editable/zipball/2329429b44a6209d0a840e7ea00c14e6152c611e",
+                "reference": "2329429b44a6209d0a840e7ea00c14e6152c611e",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-popover-x": "~1.3",
+                "kartik-v/yii2-widget-activeform": ">=1.5.7"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\editable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "An enhanced editable widget for Yii 2.0 that allows easy editing of displayed data with numerous configuration possibilities.",
+            "homepage": "https://github.com/kartik-v/yii2-editable",
+            "keywords": [
+                "bootstrap",
+                "editable",
+                "input",
+                "jquery",
+                "popover",
+                "popover-x",
+                "widget"
+            ],
+            "time": "2018-11-05T10:59:51+00:00"
+        },
+        {
             "name": "kartik-v/yii2-export",
             "version": "dev-master",
             "source": {
@@ -1195,6 +1297,59 @@
                 "yii2"
             ],
             "time": "2018-11-05T12:30:10+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-popover-x",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-popover-x.git",
+                "reference": "bf477bb07df86563377f5ca3c02ab3fe3564f94e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-popover-x/zipball/bf477bb07df86563377f5ca3c02ab3fe3564f94e",
+                "reference": "bf477bb07df86563377f5ca3c02ab3fe3564f94e",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/bootstrap-popover-x": ">=1.4",
+                "kartik-v/yii2-krajee-base": ">=2.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\popover\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "An extended bootstrap 3.0 popover widget which combines both the bootstrap popover and modal features and includes various new styling enhancements.",
+            "homepage": "https://github.com/kartik-v/yii2-popover-x",
+            "keywords": [
+                "bootstrap",
+                "extended",
+                "jquery",
+                "modal",
+                "modal-popover",
+                "popover",
+                "popover-x"
+            ],
+            "time": "2019-01-06T06:14:14+00:00"
         },
         {
             "name": "kartik-v/yii2-sortable",
@@ -1460,6 +1615,61 @@
                 "yii2"
             ],
             "time": "2018-12-11T10:34:32+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-widget-touchspin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-widget-touchspin.git",
+                "reference": "bdb1b3ab68c6b4236f413352007022e34718784a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-touchspin/zipball/bdb1b3ab68c6b4236f413352007022e34718784a",
+                "reference": "bdb1b3ab68c6b4236f413352007022e34718784a",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": ">=1.9"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\touchspin\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "A Yii2 wrapper widget for the Bootstrap Switch plugin to use checkboxes & radios as toggle touchspines (sub repo split from yii2-widgets)",
+            "homepage": "https://github.com/kartik-v/yii2-widget-touchspin",
+            "keywords": [
+                "bootstrap",
+                "extension",
+                "form",
+                "input",
+                "jquery",
+                "plugin",
+                "spinner",
+                "touch",
+                "widget",
+                "yii2"
+            ],
+            "time": "2018-11-05T12:35:09+00:00"
         },
         {
             "name": "lavrentiev/yii2-toastr",
@@ -2033,12 +2243,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
-                "reference": "bf00f0cc5f55c354018f9a9ef15e6e3e1a229051"
+                "reference": "11575ef3c416aa9c0be1ae3dfd3cad8d385a418c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/bf00f0cc5f55c354018f9a9ef15e6e3e1a229051",
-                "reference": "bf00f0cc5f55c354018f9a9ef15e6e3e1a229051",
+                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/11575ef3c416aa9c0be1ae3dfd3cad8d385a418c",
+                "reference": "11575ef3c416aa9c0be1ae3dfd3cad8d385a418c",
                 "shasum": ""
             },
             "require": {
@@ -2119,7 +2329,7 @@
                 "xls",
                 "xlsx"
             ],
-            "time": "2019-01-02T04:42:54+00:00"
+            "time": "2019-02-08T20:08:55+00:00"
         },
         {
             "name": "psr/log",
@@ -2516,12 +2726,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "2216a5c9b1a1832367b8cbd4e933673f786a7490"
+                "reference": "8727ae7879d57e3711bc7a13d5d0eae1c276e527"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/2216a5c9b1a1832367b8cbd4e933673f786a7490",
-                "reference": "2216a5c9b1a1832367b8cbd4e933673f786a7490",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/8727ae7879d57e3711bc7a13d5d0eae1c276e527",
+                "reference": "8727ae7879d57e3711bc7a13d5d0eae1c276e527",
                 "shasum": ""
             },
             "require": {
@@ -2608,7 +2818,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2019-02-07T17:44:11+00:00"
+            "time": "2019-02-08T09:47:39+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -4013,12 +4223,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/code-unit-reverse-lookup.git",
-                "reference": "22f5f5ff892d51035dd1fb4cd6b224a640ffb206"
+                "reference": "61b90af21579f042c2da1fca4feefc236c9dcdd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/code-unit-reverse-lookup/zipball/22f5f5ff892d51035dd1fb4cd6b224a640ffb206",
-                "reference": "22f5f5ff892d51035dd1fb4cd6b224a640ffb206",
+                "url": "https://api.github.com/repos/sebastianbergmann/code-unit-reverse-lookup/zipball/61b90af21579f042c2da1fca4feefc236c9dcdd8",
+                "reference": "61b90af21579f042c2da1fca4feefc236c9dcdd8",
                 "shasum": ""
             },
             "require": {
@@ -4050,7 +4260,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2018-05-15T05:52:48+00:00"
+            "time": "2019-02-08T13:54:19+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -5317,7 +5527,9 @@
         "kartik-v/bootstrap-fileinput": 20,
         "kartik-v/yii2-date-range": 20,
         "miloschuman/yii2-highcharts-widget": 20,
-        "kartik-v/yii2-export": 20
+        "kartik-v/yii2-export": 20,
+        "kartik-v/yii2-editable": 20,
+        "kartik-v/yii2-widget-touchspin": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

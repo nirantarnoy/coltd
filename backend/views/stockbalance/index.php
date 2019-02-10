@@ -108,11 +108,25 @@ $this->params['breadcrumbs'][] = $this->title;
 //                    return \backend\models\location::findLocationname($data->loc_id);
 //                }
 //            ],
+//            [
+//                'attribute' => 'qty',
+//                'value' => function($data){
+//                    return $data->qty == null?0:$data->qty;
+//                }
+//            ],
             [
-                'attribute' => 'qty',
-                'value' => function($data){
-                    return $data->qty == null?0:$data->qty;
-                }
+                'class'=>'kartik\grid\EditableColumn',
+                'attribute'=>'qty',
+                'editableOptions'=>[
+                    'header'=>'จำนวน',
+                    'inputType'=>\kartik\editable\Editable::INPUT_SPIN,
+                    'options'=>['pluginOptions'=>['min'=>0, 'max'=>5000]]
+                ],
+                'hAlign'=>'left',
+                'vAlign'=>'middle',
+                'width'=>'200px',
+                'format'=>['decimal', 0],
+                'pageSummary'=>true
             ],
             'permit_no',
             'transport_in_no',

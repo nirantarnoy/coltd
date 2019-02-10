@@ -62,10 +62,14 @@ class SiteController extends Controller
     {
         $from_date = '';
         $to_date = '';
-
+        $all_sale_qty = 0;
+        $all_sale_amount = 0;
+        $all_rec_qty = 0;
+        $all_rec_amount = 0;
         $find_date = null;
         if(Yii::$app->request->isGet){
             $find_date = explode(' ถึง ',Yii::$app->request->get('date_select'));
+        }else{
         }
         if(count($find_date)>0 && Yii::$app->request->get('date_select') != null) {
             $from_date = $find_date[0];

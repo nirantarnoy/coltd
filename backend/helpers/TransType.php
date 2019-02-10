@@ -6,8 +6,8 @@ class TransType
 {
     const TRANS_ISSUE = 1;
     const TRANS_RETURN = 2;
-    const TRANS_ADJUST = 3;
-    const TRANS_TRANSFER = 4;
+    const TRANS_ADJUST_IN = 3;
+    const TRANS_ADJUST_OUT = 4;
     const TRANS_COUNT = 5;
     const TRANS_QUOTATION = 6;
     const TRANS_SALEORDER = 7;
