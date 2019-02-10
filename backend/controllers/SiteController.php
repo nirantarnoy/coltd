@@ -67,6 +67,7 @@ class SiteController extends Controller
         $all_rec_qty = 0;
         $all_rec_amount = 0;
         $find_date = null;
+        $query = null;
         if(Yii::$app->request->isGet){
             $find_date = explode(' ถึง ',Yii::$app->request->get('date_select'));
         }else{
@@ -82,22 +83,19 @@ class SiteController extends Controller
             $all_rec_amount = \common\models\QueryTrans::find()->where(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])
                                                                 ->andFilterWhere(['stock_type'=>0])->sum('qty * cost');
 
-
+            $sql = "SELECT product_id,engname,SUM(qty*price) as total FROM query_picking WHERE created_at BETWEEN ".strtotime($from_date)." AND ".strtotime($to_date)." group by product_id";
+            $query = \Yii::$app->db->createCommand($sql)->queryAll();
         }
-           $sql = "SELECT product_id,engname,SUM(qty*price) as total FROM query_picking group by product_id";
-           $query = \Yii::$app->db->createCommand($sql)->queryAll();
+
            $name = [];
            $data = [];
 
-           if(count($query)){
+           if(count($query) || $query != null){
                for($i=0;$i<=count($query)-1;$i++){
                    array_push($name,$query[$i]['engname']);
                    array_push($data,(float)$query[$i]['total']);
                }
            }
-
-
-
 
         return $this->render('_dashboard',[
             'from_date' => $from_date,
