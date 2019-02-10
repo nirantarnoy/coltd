@@ -95,8 +95,12 @@ if($from_date !='' && $to_date != ''){
                     <div class="panel-body">
                         <!--                                <div id="visits-trends-chart" class="ct-chart"></div>-->
                         <?php
-                        $month = ['Jan', 'Feb', 'Mar', 'Apl', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                        $plan = ["เหล้า","ไวน์"];
+//                        $month = ['Jan', 'Feb', 'Mar', 'Apl', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+//                        $data = [100,200,450,350,400,689,550,300,450,200,600,1200];
+                        $month = $name;
+                       // $data2 = $data;
+
+                        $plan = ["ยอดขาย"];
                         //$po = [1500,1590];
                         echo Highcharts::widget([
                             'options' => [
@@ -106,11 +110,11 @@ if($from_date !='' && $to_date != ''){
                                     'categories' => $month
                                 ],
                                 'yAxis' => [
-                                    'title' => ['text' => 'จำนวนเ']
+                                    'title' => ['text' => 'จำนวน']
                                 ],
                                 'series' => [
-                                    ['name' => $plan[0], 'data' => [100,200,450,350,400,689,550,300,450,200,600,1200]],
-                                    ['name' => $plan[1], 'data' => [200,200,450,350,490,690,280,500,550,100,800,1290]],
+                                    ['name' => $plan[0], 'data' => $data],
+                                    //['name' => $plan[1], 'data' => [200,200,450,350,490,690,280,500,550,100,800,1290]],
 
                                 ],
                                 'credits' => ['enabled' => true],

@@ -84,6 +84,19 @@ class SiteController extends Controller
 
 
         }
+           $sql = "SELECT product_id,engname,SUM(qty*price) as total FROM query_picking group by product_id";
+           $query = \Yii::$app->db->createCommand($sql)->queryAll();
+           $name = [];
+           $data = [];
+
+           if(count($query)){
+               for($i=0;$i<=count($query)-1;$i++){
+                   array_push($name,$query[$i]['engname']);
+                   array_push($data,(float)$query[$i]['total']);
+               }
+           }
+
+
 
 
         return $this->render('_dashboard',[
@@ -93,6 +106,8 @@ class SiteController extends Controller
             'all_sale_amount' =>$all_sale_amount,
             'all_rec_qty' =>$all_rec_qty,
             'all_rec_amount' =>$all_rec_amount,
+            'name' => $name,
+            'data' => $data,
         ]);
     }
 
