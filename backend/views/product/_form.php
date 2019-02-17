@@ -6,13 +6,15 @@ use toxor88\switchery\Switchery;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use yii\helpers\Url;
+use kartik\file\FileInput;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\Product */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="product-form">
-<?php $form = ActiveForm::begin(['options'=>['class'=>'form-horizontal form-label-left']]); ?>
+<?php $form = ActiveForm::begin(['options'=>['class'=>'form-horizontal form-label-left','enctype'=>'multipart/form-data']]); ?>
     <div class="panel panel-headline">
         <div class="panel-heading">
                     <h3><i class="fa fa-cube"></i> <?=$this->title?> <small></small></h3>
@@ -151,6 +153,13 @@ use yii\helpers\Url;
                                              <?= $form->field($model, 'grossweight')->textInput()->label(false) ?>
                                          </div>
                                      </div>
+                                     <div class="form-group">
+                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">เลขที่สรรพสามิตร <span class="required"></span>
+                                         </label>
+                                         <div class="col-md-6 col-sm-6 col-xs-12">
+                                             <?= $form->field($model, 'excise_no')->textInput()->label(false) ?>
+                                         </div>
+                                     </div>
 
 
 
@@ -160,6 +169,42 @@ use yii\helpers\Url;
 
                            <hr />
 
+                      <div class="row">
+                          <div class="col-lg-5">
+                              <?php echo '<label class="control-label">แนบไฟล์รูป</label>';
+                              echo FileInput::widget([
+                                  'model' => $modelfile,
+                                  'attribute' => 'file_photo[]',
+                                  'options' => [
+                                      'multiple' => true ,
+                                      'accept' => 'image/*',
+                                  ]
+                              ]);
+                              ?>
+                          </div>
+                          <div class="col-lg-7">
+                              <?php if(!$model->isNewRecord): ?>
+                                  <div class="panel">
+                                          <?php foreach ($productimage as $value):?>
+
+                                              <div class="col-xs-6 col-md-3">
+                                                  <a href="#" class="thumbnail">
+                                                      <!--                                        <img src="../../backend/web/uploads/images/--><?php //echo $value->name?><!--" alt="">-->
+                                                      <img src="../../backend/web/uploads/images/<?=$value->name?>" alt="">
+                                                  </a>
+                                                  <div class="btn btn-default" data-var="<?=$value->id?>" onclick="removepic($(this));">ลบ</div>
+                                              </div>
+
+                                              <?php //echo Html::img("../../frontend/web/img/screenshots/".$value->filename,['width'=>'10%','class'=>'thumbnail']) ?>
+                                          <?php endforeach;?>
+
+                                  </div>
+                              <?php endif;?>
+                          </div>
+                      </div>
+                      <br>
+                           <hr />
+                      <br>
                         <div class="col-md-8 col-md-offset-4">
                            <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
                            <?php if(!$model->isNewRecord):?>
@@ -175,3 +220,26 @@ use yii\helpers\Url;
 
 
 </div>
+<?php
+$url_to_del_pic = Url::to(['product/deletephoto'],true);
+$js=<<<JS
+$(function() {
+  
+});
+function removepic(e){
+   // alert(e.attr("data-var"));return;
+    if(confirm("ต้องการลบรูปภาพนี้ใช่หรือไม่")){
+        $.ajax({
+           'type':'post',
+           'dataType':'html',
+           'url':"$url_to_del_pic",
+           'data': {'id':e.attr("data-var")},
+           'success': function(data) {
+             location.reload();
+           }
+        });
+    }
+  }
+JS;
+$this->registerJs($js,static::POS_END);
+?>

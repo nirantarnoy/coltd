@@ -17,6 +17,8 @@ use backend\helpers\TransType;
 use backend\models\TransCalculate;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
+use yii\imagine\Image;
+
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -149,9 +151,10 @@ class ProductController extends Controller
 //        }
 
        // $photoes = \backend\models\Productgallery::find()->where(['product_id'=>$id])->all();
-
+        $productimage = \backend\models\Productimage::find()->where(['product_id'=>$id])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'productimage' => $productimage,
            // 'modeljournalline' => $modeljournalline,
           //  'photoes'=>$photoes,
           //  'uploadfile'=>$uploadfile,
@@ -168,15 +171,39 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
+        $modelfile = new \backend\models\Modelfile();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $session = Yii::$app->session;
-            $session->setFlash('msg','บันทึกรายการเรียบร้อย');
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
+            $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
+
+            if($model->save()){
+
+                if(!empty($uploadimage)){
+
+                    foreach($uploadimage as $file){
+
+                        $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/images/'.$file);
+                        Image::thumbnail(Yii::getAlias('@backend') . '/web/uploads/images/' . $file, 100, 70)
+                            ->rotate(0)
+                            ->save(Yii::getAlias('@backend') . '/web/uploads/thumbnail/' . $file, ['jpeg_quality' => 100]);
+
+                        $modelfile = new \backend\models\Productimage();
+                        $modelfile->product_id = $model->id;
+                        $modelfile->name = $file;
+                        $modelfile->save(false);
+                    }
+                }
+
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
+
         }
 
         return $this->render('create', [
             'model' => $model,
+            'modelfile' => $modelfile
         ]);
     }
 
@@ -189,9 +216,29 @@ class ProductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelfile = new \backend\models\Modelfile();
+        $productimage = \backend\models\Productimage::find()->where(['product_id'=>$id])->all();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
+            $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
             if($model->save()){
+
+                if(!empty($uploadimage)){
+
+                    foreach($uploadimage as $file){
+
+                        $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/images/'.$file);
+                        Image::thumbnail(Yii::getAlias('@backend') . '/web/uploads/images/' . $file, 100, 70)
+                            ->rotate(0)
+                            ->save(Yii::getAlias('@backend') . '/web/uploads/thumbnail/' . $file, ['jpeg_quality' => 100]);
+
+                        $modelfile = new \backend\models\Productimage();
+                        $modelfile->product_id = $model->id;
+                        $modelfile->name = $file;
+                        $modelfile->save(false);
+                    }
+                }
+
                 $session = Yii::$app->session;
                 $session->setFlash('msg','บันทึกรายการเรียบร้อย');
                 return $this->redirect(['index']);
@@ -201,6 +248,8 @@ class ProductController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'modelfile' => $modelfile,
+            'productimage' => $productimage,
         ]);
     }
 
@@ -571,10 +620,16 @@ class ProductController extends Controller
             }
             return $this->redirect(['view','id'=>$prodid]);
         }
-        public function actionDeletephoto($id,$prodid){
-            \backend\models\Productgallery::deleteAll(['id'=>$id]);
-            return $this->redirect(['view','id'=>$prodid]);
+        public function actionDeletephoto(){
+            $id = \Yii::$app->request->post('id');
+            \backend\models\Productimage::deleteAll(['id'=>$id]);
+           // return $this->redirect(['view','id'=>$prodid]);
+            return true;
         }
+//    public function actionDeletephoto($id,$prodid){
+//        \backend\models\Productgallery::deleteAll(['id'=>$id]);
+//        return $this->redirect(['view','id'=>$prodid]);
+//    }
     public function actionPrintstock(){
         if(Yii::$app->request->isPost){
             $prod_id = Yii::$app->request->post('product_stocklist');

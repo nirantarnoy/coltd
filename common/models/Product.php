@@ -50,7 +50,7 @@ class Product extends \yii\db\ActiveRecord
             [['engname'],'unique'],
             [['category_id', 'product_type_id', 'unit_id', 'is_hold','unit_factor', 'has_variant', 'bom_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['min_stock', 'max_stock', 'cost', 'price','volumn','volumn_content','netweight','grossweight'], 'number'],
-            [['product_code', 'name', 'description', 'barcode', 'photo','engname','origin'], 'string', 'max' => 255],
+            [['product_code', 'name', 'description', 'barcode', 'photo','engname','origin','excise_no'], 'string', 'max' => 255],
         ];
     }
 
@@ -66,6 +66,7 @@ class Product extends \yii\db\ActiveRecord
             'engname' => Yii::t('app', 'ชื่ออังกฤษ'),
             'description' => Yii::t('app', 'รายละเอียด'),
             'barcode' => Yii::t('app', 'บาร์โค้ด'),
+            'excise_no' => Yii::t('app', 'เลขที่สรรพสามิตร'),
             'photo' => Yii::t('app', 'รูปภาพ'),
             'category_id' => Yii::t('app', 'กลุ่มสินค้า'),
             'product_type_id' => Yii::t('app', 'ประเภทสินค้า'),

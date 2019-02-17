@@ -253,6 +253,9 @@ class AuthitemController extends Controller
         $auth->add($product_view);
         $product_create = $auth->createPermission('product/create');
         $auth->add($product_create);
+        $product_photo_del = $auth->createPermission('product/deletephoto');
+        $auth->add($product_photo_del);
+
 
         $product_import = $auth->createPermission('product/importproduct');
         $auth->add($product_import);
@@ -270,6 +273,7 @@ class AuthitemController extends Controller
         $auth->addChild($product_permission,$product_create);
         $auth->addChild($product_permission,$product_import);
         $auth->addChild($product_permission,$product_import_update);
+        $auth->addChild($product_permission,$product_photo_del);
 
         $manage_product = $auth->createRole('Manage product');
         $manage_product->description = "Manage Product";
@@ -603,7 +607,7 @@ class AuthitemController extends Controller
         $auth->addChild($user_role,$manage_productionrec);
 
 
-        $auth->assign($admin_role,1);
+        $auth->assign($admin_role,3);
         $auth->assign($user_role,1);
 
 

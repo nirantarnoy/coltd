@@ -154,6 +154,8 @@ $(function(){
                                 <li><a href="index.php?r=section/index" class="section">แผนก</a></li>
                                 <li><a href="index.php?r=employee/index" class="employee">พนักงาน</a></li>
                                 <li><a href="index.php?r=position/index" class="position">ตำแหน่ง</a></li>
+                                <li><a href="index.php?r=currency/index" class="currency">สกุลเงิน</a></li>
+                                <li><a href="index.php?r=currencyrate/index" class="currencyrate">อัตราแลกเปลี่ยน</a></li>
                                 <li><a href="index.php?r=sequence/index" class="sequence">เลขที่เอกสาร</a></li>
                             </ul>
                         </div>

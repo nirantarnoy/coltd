@@ -156,6 +156,46 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--                    <i class="fa fa-warning"></i> <small class="text-danger"> คลิกดูรายการจำนวนสินค้าที่ตัวเลขจำนวน</small> -->
                </div>
            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-12">
+                    <?php if(1): ?>
+                        <?php $list = [];?>
+                        <?php foreach ($productimage as $value):?>
+                            <?php array_push($list,
+                                [
+                                    'url' => '../web/uploads/images/'.$value->name,
+                                    'src' => '../web/uploads/thumbnail/'.$value->name,
+                                    'options' =>[
+                                        'title' => 'ทดสอบรูปภาพ',
+                                        'style' => ['width'=>20]
+                                    ]
+                                ]
+                            );?>
+                        <?php endforeach;?>
+
+                    <?php endif;?>
+                    <?php $items = [
+                        [
+                            'url' => 'http://farm8.static.flickr.com/7429/9478294690_51ae7eb6c9_b.jpg',
+                            'src' => 'http://farm8.static.flickr.com/7429/9478294690_51ae7eb6c9_s.jpg',
+                            'options' => array('title' => 'Camposanto monumentale (inside)')
+                        ],
+                        [
+                            'url' => 'http://farm4.static.flickr.com/3825/9476606873_42ed88704d_b.jpg',
+                            'src' => 'http://farm4.static.flickr.com/3825/9476606873_42ed88704d_s.jpg',
+                            'options' => array('title' => 'Sail us to the Moon')
+                        ],
+                        [
+                            'url' => 'http://farm4.static.flickr.com/3749/9480072539_e3a1d70d39_b.jpg',
+                            'src' => 'http://farm4.static.flickr.com/3749/9480072539_e3a1d70d39_s.jpg',
+                            'options' => array('title' => 'Sail us to the Moon')
+                        ],
+
+                    ];?>
+                    <?= dosamigos\gallery\Gallery::widget(['items' => $list]);?>
+                </div>
+            </div>
 
        </div>
  </div>
