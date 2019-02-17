@@ -33,4 +33,8 @@ class Currency extends \common\models\Currency
             ],
         ];
     }
+    public function findName($id){
+        $model = Currency::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model->name:'';
+    }
 }

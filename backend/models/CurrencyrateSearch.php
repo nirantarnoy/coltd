@@ -11,6 +11,7 @@ use backend\models\Currencyrate;
  */
 class CurrencyrateSearch extends Currencyrate
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
@@ -20,6 +21,7 @@ class CurrencyrateSearch extends Currencyrate
             [['id', 'from_currency', 'to_integer', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'from_date', 'to_date'], 'safe'],
             [['rate', 'rate_factor'], 'number'],
+            [['globalSearch'],'string'],
         ];
     }
 
@@ -72,8 +74,10 @@ class CurrencyrateSearch extends Currencyrate
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
+        if($this->globalSearch!=''){
+            $query->andFilterWhere(['like', 'name', $this->globalSearch]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        }
 
         return $dataProvider;
     }
