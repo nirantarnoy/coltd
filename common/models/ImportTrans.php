@@ -5,28 +5,26 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "payment_trans".
+ * This is the model class for table "import_trans".
  *
  * @property int $id
- * @property string $trans_date
- * @property int $sale_id
- * @property double $amount
- * @property string $payment_by
- * @property string $note
+ * @property string $invoice_no
+ * @property string $invoice_date
+ * @property int $vendor_id
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
  * @property int $created_by
  * @property int $updated_by
  */
-class PaymentTrans extends \yii\db\ActiveRecord
+class ImportTrans extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'payment_trans';
+        return 'import_trans';
     }
 
     /**
@@ -35,10 +33,9 @@ class PaymentTrans extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['trans_date'], 'safe'],
-            [['sale_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['amount'], 'number'],
-            [['payment_by', 'note','slip'], 'string', 'max' => 255],
+            [['invoice_date'], 'safe'],
+            [['vendor_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['invoice_no'], 'string', 'max' => 255],
         ];
     }
 
@@ -49,12 +46,9 @@ class PaymentTrans extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'trans_date' => 'Trans Date',
-            'sale_id' => 'Sale ID',
-            'amount' => 'Amount',
-            'payment_by' => 'Payment By',
-            'note' => 'Note',
-            'slip' => 'Slip',
+            'invoice_no' => 'Invoice No',
+            'invoice_date' => 'Invoice Date',
+            'vendor_id' => 'Vendor ID',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

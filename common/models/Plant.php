@@ -43,7 +43,7 @@ class Plant extends \yii\db\ActiveRecord
     {
         return [
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'short_name', 'eng_name', 'description', 'tax_id', 'email', 'mobile', 'phone', 'website', 'facebook', 'line', 'logo'], 'string', 'max' => 255],
+            [['name','permit_no' ,'short_name', 'eng_name', 'description', 'tax_id', 'email', 'mobile', 'phone', 'website', 'facebook', 'line', 'logo'], 'string', 'max' => 255],
         ];
     }
 
@@ -61,6 +61,7 @@ class Plant extends \yii\db\ActiveRecord
             'tax_id' => Yii::t('app', 'Tax ID'),
             'email' => Yii::t('app', 'Email'),
             'mobile' => Yii::t('app', 'Mobile'),
+            'permit_no' => Yii::t('app', 'Permit No'),
             'phone' => Yii::t('app', 'Phone'),
             'website' => Yii::t('app', 'Website'),
             'facebook' => Yii::t('app', 'Facebook'),

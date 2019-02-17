@@ -152,9 +152,11 @@ class ProductController extends Controller
 
        // $photoes = \backend\models\Productgallery::find()->where(['product_id'=>$id])->all();
         $productimage = \backend\models\Productimage::find()->where(['product_id'=>$id])->all();
+        $modelcost = \backend\models\Productcost::find()->where(['product_id'=>$id])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'productimage' => $productimage,
+            'modelcost' => $modelcost,
            // 'modeljournalline' => $modeljournalline,
           //  'photoes'=>$photoes,
           //  'uploadfile'=>$uploadfile,
@@ -219,6 +221,7 @@ class ProductController extends Controller
         $modelfile = new \backend\models\Modelfile();
         $productimage = \backend\models\Productimage::find()->where(['product_id'=>$id])->all();
 
+
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
             $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
             if($model->save()){
@@ -250,6 +253,7 @@ class ProductController extends Controller
             'model' => $model,
             'modelfile' => $modelfile,
             'productimage' => $productimage,
+
         ]);
     }
 

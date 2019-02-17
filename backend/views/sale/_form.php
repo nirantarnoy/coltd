@@ -39,7 +39,7 @@ $this->registerCss('
     <div class="panel panel-headline">
         <div class="panel-body">
             <div class="form-group pull-right">
-                <?= Html::Button("<i class='fa fa-list-alt'></i> picking list", ['class' => 'btn btn-info btn-gen-packing']) ?>
+                <?= Html::Button("<i class='fa fa-list-alt'></i> packing list", ['class' => 'btn btn-info btn-gen-packing']) ?>
                 <?php //echo Html::Button("<i class='fa fa-check-circle'></i> สร้างเอกสารเรียกเก็บเงิน", ['class' => 'btn btn-danger btn-gen-invoice']) ?>
             </div>
             <?php $form = ActiveForm::begin(); ?>
@@ -238,7 +238,7 @@ $this->registerCss('
 </div>
 <div class="panel">
     <div class="panel-heading">
-        <h3>ประวัติ picking</h3>
+        <h3><i class="fa fa-truck"></i> ประวัติ picking</h3>
     </div>
     <div class="panel-body">
         <div class="panel-group" id="accordion">
@@ -281,6 +281,44 @@ $this->registerCss('
         </div>
     </div>
 </div>
+<div class="panel">
+    <div class="panel panel-heading">
+        <h3><i class="fa fa-clock-o"></i> ประวัติชำระเงิน</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>วันที่</th>
+                    <th>จำนวน</th>
+                    <th>Note</th>
+                    <th>slip</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if(!$model->isNewRecord):?>
+                <?php if(count($modelpayment) > 0):?>
+                    <?php $i = 0;?>
+                    <?php foreach ($modelpayment as $value):?>
+                        <?php $i +=1;?>
+                        <tr>
+                            <th><?=$i?></th>
+                            <th><?=$value->trans_date?></th>
+                            <th><?=$value->amount?></th>
+                            <th><?=$value->note?></th>
+                            <th>
+                                <a href="../web/uploads/slip/<?=trim($value->slip)?>" target="_blank"><?=trim($value->slip)?></a>
+                            </th>
+                        </tr>
+                    <?php endforeach;?>
+                <?php endif;?>
+            <?php endif;?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <div id="findModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
@@ -334,7 +372,7 @@ $this->registerCss('
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="text-primary"><i class="fa fa-plus-circle"></i> ทำรายการ picking list</h3>
+                <h3 class="text-primary"><i class="fa fa-plus-circle"></i> ทำรายการ packing list</h3>
             </div>
             <div class="modal-body">
                 <form id="form-picking" action="<?=Url::to(['sale/createpicking'],true)?>" method="post">

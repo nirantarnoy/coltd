@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
+use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\SaleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -123,6 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => ['style' => 'text-align:center;','class' => 'activity-view-link',],
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => ['style' => 'text-align: right'],
+                'template' => '{view} {update} {payment} {delete}',
                 'buttons' => [
                     'view' => function($url, $data, $index) {
                         $options = [
@@ -150,6 +152,19 @@ $this->params['breadcrumbs'][] = $this->title;
                             // 'style'=>['float'=>'rigth'],
                         ]):'';
                     },
+                    'payment' => function($url, $data, $index) {
+                        $options = [
+                            'title' => Yii::t('yii', 'View'),
+                            'aria-label' => Yii::t('yii', 'View'),
+                            'data-pjax' => '0',
+                            'data-url'=>$url,
+                            'data-var'=> $data->id,
+                            'onclick'=>'payment($(this));'
+
+                        ];
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-tags btn btn-xs btn-default"></span>', 'javascript:void(0)', $options);
+                    },
                     'delete' => function($url, $data, $index) {
                         $options = array_merge([
                             'title' => Yii::t('yii', 'Delete'),
@@ -171,14 +186,76 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 </div>
 </div>
+
+
+<div id="paymentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fa fa-tags"></i> บันทึกรับเงิน
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <form id="form-payment" action="<?=Url::to(['sale/payment'],true)?>" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="saleid" class="saleid" value="">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label for="">วันที่</label>
+                        <?php
+                            echo DatePicker::widget([
+                                    'name'=>'payment_date',
+                                    'value' => date('Y/m/d'),
+                            ])
+                        ?>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="">จำนวนเงิน</label>
+                        <input type="text" class="form-control payment-amount" name="amount" value="">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label for="">Notes</label>
+                        <textarea name="note" class="form-control" id="" cols="30" rows="3"></textarea>
+                    </div>
+                </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="">แนบหลักฐาน</label>
+                            <input type="file" name="payment_slip">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-payment" data-dismiss="modal"><i class="fa fa-close text-danger"></i> บันทึกรายการ</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close text-danger"></i> ปิดหน้าต่าง</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 <?php
 $this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
 $this->registerCssFile( '@web/css/sweetalert.css');
 //$url_to_delete =  Url::to(['product/bulkdelete'],true);
-$this->registerJs('
-    $(function(){
+$js=<<<JS
+ $(function(){
         $("#perpage").change(function(){
             $("#form-perpage").submit();
+        });
+        $(".payment-amount").on("keypress",function(event){
+           $(this).val($(this).val().replace(/[^0-9\.]/g,""));
+           if((event.which != 46 || $(this).val().indexOf(".") != -1) && (event.which <48 || event.which >57)){event.preventDefault();}
+        });
+        $(".btn-payment").click(function(){
+            $("form#form-payment").submit();
         });
     });
 
@@ -197,6 +274,25 @@ $this->registerJs('
               e.trigger("click");        
         });
     }
+    function payment(e){
+        //e.preventDefault();
+        //var url = e.attr("data-url");
+        var xdata = e.attr("data-var");
+       // alert(xdata);
+        $("#paymentModal").modal("show").find(".saleid").val(xdata);
+        // swal({
+        //       title: "ต้องการลบรายการนี้ใช่หรือไม่",
+        //       text: "",
+        //       type: "error",
+        //       showCancelButton: true,
+        //       closeOnConfirm: false,
+        //       showLoaderOnConfirm: true
+        //     }, function () {
+        //       e.attr("href",url); 
+        //       e.trigger("click");        
+        // });
+    }
+JS;
 
-    ',static::POS_END);
+$this->registerJs($js,static::POS_END);
 ?>

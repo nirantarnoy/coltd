@@ -13,7 +13,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
 use backend\helpers\TransType;
-
+use yii\web\UploadedFile;
 /**
  * SaleController implements the CRUD actions for Sale model.
  */
@@ -102,6 +102,7 @@ class SaleController extends Controller
     {
         $model = $this->findModel($id);
         $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
+        $modelpayment = \backend\models\Paymenttrans::find()->where(['sale_id'=>$id])->all();
 
         $pickinglist = [];
 
@@ -168,7 +169,9 @@ class SaleController extends Controller
             'model' => $model,
             'modelline' => $modelline,
             'modelpick' => $modelpick,
-            'modelpickline' => $modelpickline
+            'modelpickline' => $modelpickline,
+            'modelpayment' => $modelpayment,
+
         ]);
     }
 
@@ -183,6 +186,39 @@ class SaleController extends Controller
     {
         \backend\models\Saleline::deleteAll(['sale_id'=>$id]);
         $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    public function actionPayment(){
+        $saleid = \Yii::$app->request->post('saleid');
+        $pdate = \Yii::$app->request->post('payment_date');
+        $pamount = \Yii::$app->request->post('amount');
+        $note = \Yii::$app->request->post('note');
+        $uploaded = UploadedFile::getInstanceByName('payment_slip');
+        $file = '';
+        if($uploaded){
+            $file = $uploaded->name;
+            $uploaded->saveAs(Yii::getAlias('@backend') .'/web/uploads/slip/'.$uploaded->name);
+        }
+
+
+        if($pdate != ''){
+            if($pamount!='' && $pamount > 0){
+              $model = new \backend\models\Paymenttrans();
+              $model->sale_id = $saleid;
+              $model->trans_date = date('Y/m/d' , strtotime($pdate));
+              $model->amount = $pamount;
+              $model->note = $note;
+              $model->status = 1;
+              $model->slip = $file;
+
+              if($model->save()){
+
+              }
+            }
+        }
+
 
         return $this->redirect(['index']);
     }

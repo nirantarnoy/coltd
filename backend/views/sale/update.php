@@ -18,7 +18,8 @@ $this->params['breadcrumbs'][] = 'แก้ไข';
         'model' => $model,
         'modelline' => $modelline,
         'modelpick' => $modelpick,
-        'modelpickline' => $modelpickline
+        'modelpickline' => $modelpickline,
+        'modelpayment' => $modelpayment,
     ]) ?>
 
 </div>

@@ -201,6 +201,55 @@ $this->params['breadcrumbs'][] = $this->title;
  </div>
 </div>
 </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4>ข้อมูลราคาสินค้า</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table class="table">
+                                <thaed>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>เลขที่ใบขน</th>
+                                        <th>วันที่ใบขน</th>
+                                        <th>เลขที่ใบอนุญาต</th>
+                                        <th>วันที่ใบอนุญาต</th>
+                                        <th>สรรพสามิตร</th>
+                                        <th>วันที่</th>
+                                        <th>ราคา</th>
+                                    </tr>
+                                </thaed>
+                                <tbody>
+                                <?php if(!$model->isNewRecord):?>
+                                    <?php if(count($modelcost) > 0):?>
+                                        <?php $i = 0;?>
+                                        <?php foreach ($modelcost as $value):?>
+                                            <?php $i +=1;?>
+                                            <tr>
+                                                <td><?=$i?></td>
+                                                <td><?=$value->transport_in_no?></td>
+                                                <td><?=$value->transport_in_date?></td>
+                                                <td><?=$value->permit_no?></td>
+                                                <td><?=$value->permit_date?></td>
+                                                <td><?=$value->excise_no?></td>
+                                                <td><?=$value->excise_date?></td>
+                                                <td><?=$value->cost?></td>
+                                            </tr>
+                                        <?php endforeach;?>
+                                    <?php endif;?>
+                                <?php endif;?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
