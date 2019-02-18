@@ -27,6 +27,11 @@ $this->registerCss('
         border:0;
         background:transparent;
     }
+    
+     .popover1 {top: 10px; left: 10px; position: relative;}
+      #big { z-index: 999; position:absolute; text-align:center; padding:2px; background-color:#fff; border:1px solid #999; }
+      #big img { height: 250px; }
+    
 ');
 
 ?>
@@ -98,10 +103,11 @@ $this->registerCss('
                         <thead>
                             <tr style="background-color: #00afe1;color: #ffffff">
                                 <th style="width: 5%">#</th>
+                                <th style="width: 5%">รูป</th>
                                 <th>รหัสสินค้า</th>
                                 <th>รายละเอียด</th>
                                 <th style="width: 10%">จำนวน</th>
-                                <th style="width: 10%">ทุน</th>
+                                <th style="width: 10%">origin</th>
                                 <th>ราคา</th>
                                 <th>รวม</th>
                                 <th>-</th>
@@ -114,6 +120,9 @@ $this->registerCss('
                                 <td style="vertical-align: middle;text-align: center">
 
                                 </td>
+                                <td style="vertical-align: middle">
+                                    <i class="fa fa-image"></i>
+                                </td>
                                 <td>
                                     <input type="hidden" class="productid" name="productid[]">
                                     <input type="text" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
@@ -125,7 +134,8 @@ $this->registerCss('
                                     <input type="number" min="0" class="form-control line_qty" name="qty[]" value="" onchange="cal_num($(this))">
                                 </td>
                                 <td>
-                                    <input style="text-align: right" type="text" class="form-control line_cost" name="cost[]" value="" readonly>
+<!--                                    <input style="text-align: right" type="text" class="form-control line_cost" name="cost[]" value="" readonly>-->
+                                    <input style="text-align: right" type="text" class="form-control line_origin" name="origin[]" value="" readonly>
                                 </td>
                                 <td>
                                     <input style="text-align: right" type="text" class="form-control line_price" name="price[]" value="" onchange="cal_num($(this));">
@@ -146,6 +156,14 @@ $this->registerCss('
                                         <td style="vertical-align: middle;text-align: center">
                                             <?=$i?>
                                         </td>
+                                        <td style="vertical-align: middle;text-align: left">
+                                            <?php
+                                               if(\backend\models\Product::findImg($value->product_id) == ''):?>
+                                                <i class="fa fa-image"></i>
+                                                  <?php else:?>
+                                                   <?=Html::img('../web/uploads/images/'.\backend\models\Product::findImg($value->product_id),['style'=>'width: 100%;left: 0px;top: 0px','class'=>'popover1'])?>
+                                                  <?php endif;?>
+                                        </td>
                                         <td>
                                             <input type="hidden" class="productid" name="productid[]" value="<?=$value->product_id?>">
                                             <input type="text" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findEng($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
@@ -157,7 +175,8 @@ $this->registerCss('
                                             <input type="number" min="0" class="form-control line_qty" name="qty[]" value="<?=$value->qty?>" onchange="cal_num($(this));">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_cost" name="cost[]" value="<?=\backend\models\Product::findProductinfo($value->product_id)!=null?\backend\models\Product::findProductinfo($value->product_id)->cost:0?>" readonly>
+<!--                                            <input type="text" class="form-control line_cost" name="cost[]" value="" readonly>-->
+                                            <input type="text" class="form-control line_origin" name="origin[]" value="<?=\backend\models\Product::findProductinfo($value->product_id)!=null?\backend\models\Product::findProductinfo($value->product_id)->origin:''?>" readonly>
                                         </td>
                                         <td>
                                             <input style="text-align: right" type="text" class="form-control line_price" name="price[]" value="<?=$value->price?>" onchange="cal_num($(this));">
@@ -176,6 +195,9 @@ $this->registerCss('
                                     <td style="vertical-align: middle;text-align: center">
 
                                     </td>
+                                    <td style="vertical-align: middle">
+                                        <i class="fa fa-image"></i>
+                                    </td>
                                     <td>
                                         <input type="hidden" class="productid" name="productid[]">
                                         <input type="text" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
@@ -187,7 +209,8 @@ $this->registerCss('
                                         <input type="number" min="0" class="form-control line_qty" name="qty[]" value="" onchange="cal_num($(this));">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control line_cost" name="cost[]" value="" readonly>
+<!--                                        <input style="text-align: right" type="text" class="form-control line_cost" name="cost[]" value="" readonly>-->
+                                        <input style="text-align: right" type="text" class="form-control line_origin" name="origin[]" value="" readonly>
                                     </td>
                                     <td>
                                         <input style="text-align: right" type="text" class="form-control line_price" name="price[]" value="" onchange="cal_num($(this));">
@@ -205,7 +228,7 @@ $this->registerCss('
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="5"></td>
+                            <td colspan="6"></td>
                             <td style="text-align: right;font-weight: bold">ยอดรวม</td>
                             <td style="text-align: right;font-weight: bold" class="total-sum">0.00</td>
                             <td></td>
@@ -262,6 +285,7 @@ $this->registerCss('
                         <tr>
                             <th>รหัสสินค้า</th>
                             <th>รายละเอียด</th>
+                            <th>Origin</th>
                             <th style="text-align: center">เลือก</th>
                         </tr>
                     </thead>
@@ -278,6 +302,9 @@ $this->registerCss('
 
     </div>
 </div>
+<!--<div id="hover-div" display="none">-->
+<!--    <img class="popover1" style="height: 100px;" src="http://transolid.com/assets/images/colors/previews/prev_sorrento_coast.jpg" title="some title text"/>-->
+<!--</div>-->
 <?php
 $url_to_find = Url::to(['quotation/finditem'],true);
 $url_to_firm = Url::to(['quotation/firmorder'],true);
@@ -318,6 +345,7 @@ $js =<<<JS
           var linenum = 0;
           var clone = tr.clone();
           clone.find(":text").val("");
+          clone.find("td:eq(1)").text("");
           clone.attr("data-var","");
           
           clone.find(".line_qty,.line_price").on("keypress",function(event){
@@ -337,6 +365,30 @@ $js =<<<JS
        $(this).val($(this).val().replace(/[^0-9\.]/g,""));
        if((event.which != 46 || $(this).val().indexOf(".") != -1) && (event.which <48 || event.which >57)){event.preventDefault();}
     });
+    
+    
+    $('.popover1').on({
+      mousemove: function(e) {
+          $(this).next('#big').css({
+              top: e.pageY - 400 - 25, // height of image and title area plus some
+       //       left: e.pageX + -120
+              left: e.pageX + -250
+          });
+      },
+      mouseenter: function() {
+          var big = $('<img />', {'class': 'big_img1', src: this.src}),
+              title = $('<div class="title"/>').html(this.title),
+              frame = $('<div id="big" />');
+
+          frame.append(big).append(title);
+
+          $(this).after(frame);
+      },
+      mouseleave: function() {
+          $('#big').remove();
+      }
+  });
+    
  });
 
  function itemchange(e) {
@@ -398,7 +450,9 @@ $js =<<<JS
                          data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
                           "<input type='hidden' class='prodcost' value='"+data[i]['cost']+"'/>" +
                           "<input type='hidden' class='prodprice' value='"+data[i]['price']+"'/>" +
-                           "</td><td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td></tr>"
+                           "</td>"+
+                           "<td>"+data[i]['origin']+"</td>"+
+                           "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td></tr>"
                      }
                      $(".table-list tbody").html(html);
                      
@@ -423,6 +477,7 @@ $js =<<<JS
  function getitem(e){
     var prodcode = e.closest("tr").find("td:eq(0)").text();
     var prodname = e.closest("tr").find("td:eq(1)").text();
+    var prodorigin = e.closest("tr").find("td:eq(2)").text()=="null"?'':e.closest("tr").find("td:eq(2)").text();
     var prodid = e.closest("tr").find(".recid").val();
     var prodcost = e.closest("tr").find(".prodcost").val();
     var prodprice = e.closest("tr").find(".prodprice").val();
@@ -436,6 +491,7 @@ $js =<<<JS
               $(this).closest('tr').find(".productid").val(prodid);
               $(this).closest('tr').find(".line_qty").val(1);
               $(this).closest('tr').find(".line_cost").val(prodcost);
+              $(this).closest('tr').find(".line_origin").val(prodorigin);
               $(this).closest('tr').find(".line_price").val(prodprice);
         }
         cal_num($(this));

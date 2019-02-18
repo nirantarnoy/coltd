@@ -28,6 +28,10 @@ $this->registerCss('
         border:0;
         background:transparent;
     }
+     .popover1 {top: 10px; left: 10px; position: relative;}
+      #big { z-index: 999; position:absolute; text-align:center; padding:2px; background-color:#fff; border:1px solid #999; }
+      #big img { height: 250px; }
+    
 ');
 
 
@@ -107,6 +111,7 @@ $this->registerCss('
                         <thead>
                         <tr style="background-color: #00afe1;color: #ffffff">
                             <th style="width: 5%">#</th>
+                            <th style="width: 5%">รูป</th>
                             <th>รหัสสินค้า</th>
                             <th>รายละเอียด</th>
                             <th style="width: 10%">จำนวน</th>
@@ -122,6 +127,9 @@ $this->registerCss('
                             <tr>
                                 <td style="vertical-align: middle;text-align: center">
 
+                                </td>
+                                <td style="vertical-align: middle">
+                                    <i class="fa fa-image"></i>
                                 </td>
                                 <td>
                                     <input type="hidden" class="productid" name="productid[]">
@@ -155,6 +163,14 @@ $this->registerCss('
                                         <td style="vertical-align: middle;text-align: center">
                                             <?=$i?>
                                         </td>
+                                        <td style="vertical-align: middle;text-align: left">
+                                            <?php
+                                            if(\backend\models\Product::findImg($value->product_id) == ''):?>
+                                                <i class="fa fa-image"></i>
+                                            <?php else:?>
+                                                <?=Html::img('../web/uploads/images/'.\backend\models\Product::findImg($value->product_id),['style'=>'width: 100%;left: 0px;top: 0px','class'=>'popover1'])?>
+                                            <?php endif;?>
+                                        </td>
                                         <td>
                                             <input type="hidden" class="productid" name="productid[]" value="<?=$value->product_id?>">
                                             <input type="text" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findEng($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
@@ -185,6 +201,9 @@ $this->registerCss('
                                     <td style="vertical-align: middle;text-align: center">
 
                                     </td>
+                                    <td style="vertical-align: middle">
+                                        <i class="fa fa-image"></i>
+                                    </td>
                                     <td>
                                         <input type="hidden" class="productid" name="productid[]">
                                         <input type="text" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
@@ -214,7 +233,7 @@ $this->registerCss('
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="5"></td>
+                            <td colspan="6"></td>
                             <td style="text-align: right;font-weight: bold">ยอดรวม</td>
                             <td style="text-align: right;font-weight: bold" class="total-sum">0.00</td>
                             <td></td>
@@ -348,6 +367,7 @@ $this->registerCss('
                     <tr>
                         <th>รหัสสินค้า</th>
                         <th>รายละเอียด</th>
+                        <th>Origin</th>
                         <th style="text-align: center">เลือก</th>
                     </tr>
                     </thead>
@@ -442,6 +462,7 @@ $js =<<<JS
           var linenum = 0;
           var clone = tr.clone();
           clone.find(":text").val("");
+           clone.find("td:eq(1)").text("");
           clone.attr("data-var","");
           
           clone.find(".line_qty,.line_price").on("keypress",function(event){
@@ -523,6 +544,28 @@ $js =<<<JS
     $(".btn-save-picking").click(function(){
        $("form#form-picking").submit();
     });
+    
+    $('.popover1').on({
+      mousemove: function(e) {
+          $(this).next('#big').css({
+              top: e.pageY - 400 - 25, // height of image and title area plus some
+       //       left: e.pageX + -120
+              left: e.pageX + -250
+          });
+      },
+      mouseenter: function() {
+          var big = $('<img />', {'class': 'big_img1', src: this.src}),
+              title = $('<div class="title"/>').html(this.title),
+              frame = $('<div id="big" />');
+
+          frame.append(big).append(title);
+
+          $(this).after(frame);
+      },
+      mouseleave: function() {
+          $('#big').remove();
+      }
+  });
  });
  function pickinginv(e){
      var x = "#form-"+e.attr('data-var');
@@ -600,7 +643,9 @@ $js =<<<JS
                          data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
                           "<input type='hidden' class='prodcost' value='"+data[i]['cost']+"'/>" +
                           "<input type='hidden' class='prodprice' value='"+data[i]['price']+"'/>" +
-                           "</td><td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td></tr>"
+                           "</td>"+
+                           "<td>"+data[i]['origin']+"</td>"+
+                           "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td></tr>"
                      }
                      $(".table-list tbody").html(html);
                      

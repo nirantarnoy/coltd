@@ -62,6 +62,10 @@ class Product extends \common\models\Product
         $model = Product::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->engname:'';
     }
+    public function findImg($id){
+        $model = \backend\models\Productimage::find()->where(['product_id'=>$id])->one();
+        return count($model)>0?$model->name:'';
+    }
 
         public function findProductcatname($id){
             $model = Product::find()->where(['id'=>$id])->one();

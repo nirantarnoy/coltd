@@ -33,7 +33,7 @@ class ProductCategory extends \yii\db\ActiveRecord
     {
         return [
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'description'], 'string', 'max' => 255],
+            [['name', 'description','geolocation'], 'string', 'max' => 255],
         ];
     }
 
@@ -46,6 +46,7 @@ class ProductCategory extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'ชื่อ'),
             'description' => Yii::t('app', 'รายละเอียด'),
+            'geolocation' => 'พิกัด',
             'status' => Yii::t('app', 'สถานะ'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),

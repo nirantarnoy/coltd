@@ -39,20 +39,27 @@ use toxor88\switchery\Switchery;
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">รายละเอียด 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">รายละเอียด
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'description')->textarea(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
+                      <div class="form-group">
+                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">พิกัด
+                          </label>
+                          <div class="col-md-6 col-sm-6 col-xs-12">
+                              <?= $form->field($model, 'geolocation')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                          </div>
+                      </div>
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สถานะ 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สถานะ
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label(false) ?>
                                 </div>
                               </div>
-                          
+
 
                              <div class="ln_solid"></div>
                         <div class="form-group">
