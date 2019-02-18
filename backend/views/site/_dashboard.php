@@ -86,7 +86,7 @@ if($from_date !='' && $to_date != ''){
             <div class="col-lg-12">
                 <div class="panel">
                     <div class="panel-heading">
-                        <h3 class="panel-title">เปรียบเทียบยอดขาย</h3>
+                        <h3 class="panel-title">ยอดขายแยกตามสินค้า</h3>
                         <div class="right">
                             <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
                             <button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
@@ -120,6 +120,55 @@ if($from_date !='' && $to_date != ''){
                                 'credits' => ['enabled' => true],
                                 'chart' => [
                                     'type' => 'line',
+                                ],
+                            ]
+                        ]);
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">ยอดขายแยกตามประเภทสินค้า</h3>
+                        <div class="right">
+                            <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+                            <button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <!--                                <div id="visits-trends-chart" class="ct-chart"></div>-->
+                        <?php
+                        //                        $month = ['Jan', 'Feb', 'Mar', 'Apl', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                        //                        $data = [100,200,450,350,400,689,550,300,450,200,600,1200];
+                        $month = $name;
+                        // $data2 = $data;
+
+                        $plan = ["ยอดขาย"];
+                        //$po = [1500,1590];
+                        echo Highcharts::widget([
+                            'options' => [
+                                'class'=>'compare_chart',
+                                'title' => ['text' => ''],
+//                                'xAxis' => [
+//                                    'categories' => $month
+//                                ],
+//                                'yAxis' => [
+//                                    'title' => ['text' => 'จำนวน']
+//                                ],
+                                'series' => [
+                                    [
+                                            'name' => 'ประเภท',
+                                            'colorByPoint'=>true,
+                                            'data'=>$data2],
+                                    //['name' => $plan[1], 'data' => [200,200,450,350,490,690,280,500,550,100,800,1290]],
+
+                                ],
+                                'credits' => ['enabled' => true],
+                                'chart' => [
+                                    'type' => 'pie',
                                 ],
                             ]
                         ]);

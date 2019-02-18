@@ -68,6 +68,7 @@ class SiteController extends Controller
         $all_rec_amount = 0;
         $find_date = null;
         $query = null;
+        $query2 = null;
         if(Yii::$app->request->isGet){
             $find_date = explode(' ถึง ',Yii::$app->request->get('date_select'));
         }else{
@@ -83,19 +84,28 @@ class SiteController extends Controller
             $all_rec_amount = \common\models\QueryTrans::find()->where(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])
                                                                 ->andFilterWhere(['stock_type'=>0])->sum('qty * cost');
 
-            $sql = "SELECT product_id,engname,SUM(qty*price) as total FROM query_picking WHERE created_at BETWEEN ".strtotime($from_date)." AND ".strtotime($to_date)." group by product_id";
+            $sql = "SELECT engname,SUM(qty*price) as total FROM query_picking WHERE created_at BETWEEN ".strtotime($from_date)." AND ".strtotime($to_date)." group by engname";
             $query = \Yii::$app->db->createCommand($sql)->queryAll();
+
+            $sql2 = "SELECT product_group,SUM(qty*price) as total FROM query_picking WHERE created_at BETWEEN ".strtotime($from_date)." AND ".strtotime($to_date)." group by product_group";
+            $query2 = \Yii::$app->db->createCommand($sql2)->queryAll();
         }
 
            $name = [];
            $data = [];
+           $data2 = [];
 
-           if(count($query) || $query != null){
+        if(count($query) || $query != null){
                for($i=0;$i<=count($query)-1;$i++){
                    array_push($name,$query[$i]['engname']);
                    array_push($data,(float)$query[$i]['total']);
                }
            }
+        if(count($query2) || $query2 != null){
+            for($i=0;$i<=count($query2)-1;$i++){
+                array_push($data2,['name'=>$query2[$i]['product_group'],'y'=>(float)$query2[$i]['total']]);
+            }
+        }
 
         return $this->render('_dashboard',[
             'from_date' => $from_date,
@@ -106,6 +116,7 @@ class SiteController extends Controller
             'all_rec_amount' =>$all_rec_amount,
             'name' => $name,
             'data' => $data,
+            'data2' => $data2,
         ]);
     }
 
