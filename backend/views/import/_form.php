@@ -261,11 +261,11 @@ function showfind(e){
     var prodorigin = e.closest("tr").find("td:eq(2)").text()=="null"?'':e.closest("tr").find("td:eq(2)").text();
     var prodid = e.closest("tr").find(".recid").val();
     var prodcost = e.closest("tr").find(".prodcost").val();
-    var prodprice = e.closest("tr").find(".prodprice").val();
-    var prodnet = e.closest("tr").find(".prodnet").val();
-    var prodgross = e.closest("tr").find(".prodgross").val();
-    var prodorigin = e.closest("tr").find(".prodorigin").val();
-    var prodgeo = e.closest("tr").find(".prodgeo").val();
+    var prodprice = e.closest("tr").find(".prodprice").val() == "null"?'0':e.closest("tr").find(".prodprice").val();
+    var prodnet = e.closest("tr").find(".prodnet").val() == "null"?'0':e.closest("tr").find(".prodnet").val();
+    var prodgross = e.closest("tr").find(".prodgross").val() == "null"?'0':e.closest("tr").find(".prodgross").val();
+    var prodorigin = e.closest("tr").find(".prodorigin").val() == "null"?'':e.closest("tr").find(".prodorigin").val();
+    var prodgeo = e.closest("tr").find(".prodgeo").val() == "null"?'':e.closest("tr").find(".prodgeo").val();
     $(".table-importline tbody tr").each(function() {
         if($(this).closest('tr').find(".productcode").val() == prodcode){
           alert("รายการสินค้านี้ซ้ำ");return false;   
