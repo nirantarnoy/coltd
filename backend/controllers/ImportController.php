@@ -8,6 +8,7 @@ use backend\models\ImportSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ImportController implements the CRUD actions for Import model.
@@ -68,13 +69,29 @@ class ImportController extends Controller
     public function actionCreate()
     {
         $model = new Import();
+        $modelfile = new \backend\models\Modelfile();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $uploaded = UploadedFile::getInstance($modelfile,'file');
+            $model->invoice_date = date('Y/m/d',strtotime($model->invoice_date));
+            if($model->save(false)){
+                if(!empty($uploaded)){
+                    $uploaded->saveAs(Yii::getAlias('@backend') .'/web/uploads/files/'.$uploaded);
+
+                    $importfile = new \backend\models\Importfile();
+                    $importfile->import_id = $model->id;
+                    $importfile->filename = $uploaded->name;
+                    $importfile->save(false);
+                  }
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
         }
 
         return $this->render('create', [
             'model' => $model,
+            'modelfile' => $modelfile
         ]);
     }
 
@@ -88,13 +105,27 @@ class ImportController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelfile = new \backend\models\Modelfile();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $uploaded = UploadedFile::getInstance($modelfile,'file');
+            $model->invoice_date = date('Y/m/d',strtotime($model->invoice_date));
+            if($model->save(false)){
+                if(!empty($uploaded)){
+                    $uploaded->saveAs(Yii::getAlias('@backend') .'/web/uploads/files/'.$uploaded);
+                    $importfile = new \backend\models\Importfile();
+                    $importfile->import_id = $model->id;
+                    $importfile->filename = $uploaded->name;
+                    $importfile->save();
+                }
+
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'modelfile' => $modelfile,
         ]);
     }
 

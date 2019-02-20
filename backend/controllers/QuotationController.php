@@ -194,13 +194,26 @@ class QuotationController extends Controller
             return Json::encode($list);
             //return 'no';
         }else{
+//            if($txt == "*"){
+//                $model = \backend\models\Product::find()
+//                    ->asArray()
+//                    ->all();
+//                return Json::encode($model);
+//            }else{
+//                $model = \backend\models\Product::find()->where(['or',['Like','engname',$txt],['Like','name',$txt]])
+//                    ->orFilterWhere(['like','engname',$txt])
+//                    ->orFilterWhere(['like','name',$txt])
+//                    ->asArray()
+//                    ->all();
+//                return Json::encode($model);
+//            }
             if($txt == "*"){
-                $model = \backend\models\Product::find()
+                $model = \common\models\QueryProduct::find()
                     ->asArray()
                     ->all();
                 return Json::encode($model);
             }else{
-                $model = \backend\models\Product::find()->where(['or',['Like','engname',$txt],['Like','name',$txt]])
+                $model = \common\models\QueryProduct::find()->where(['or',['Like','engname',$txt],['Like','name',$txt]])
                     ->orFilterWhere(['like','engname',$txt])
                     ->orFilterWhere(['like','name',$txt])
                     ->asArray()

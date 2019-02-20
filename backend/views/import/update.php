@@ -5,17 +5,15 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Import */
 
-$this->title = 'Update Import: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Imports', 'url' => ['index']];
+$this->title = 'แก้ไข: ' . $model->invoice_no;
+$this->params['breadcrumbs'][] = ['label' => 'นำเข้าสินค้า', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="import-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+        'modelfile' => $modelfile,
     ]) ?>
 
 </div>
