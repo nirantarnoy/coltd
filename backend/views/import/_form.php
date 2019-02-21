@@ -6,6 +6,8 @@ use kartik\date\DatePicker;
 use toxor88\switchery\Switchery;
 use yii\helpers\Url;
 use kartik\file\FileInput;
+use yii\helpers\ArrayHelper;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Import */
@@ -31,6 +33,17 @@ $this->registerCss('
                 <?= $form->field($model, 'invoice_date')->widget(DatePicker::className(),[
                     'value' =>date('Y/m/d')
                 ]) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <?= $form->field($model, 'vendor_id')->widget(Select2::className(),[
+                        'data'=>ArrayHelper::map(\backend\models\Ve),
+                        'options' => ['placeholder'=>'เลือกคู่ค้า'],
+                        'pluginOptions' => [
+                                'allowClear'=> true,
+                        ]
+                ])->label() ?>
             </div>
         </div>
        <div class="row">
