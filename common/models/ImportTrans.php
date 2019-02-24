@@ -48,7 +48,7 @@ class ImportTrans extends \yii\db\ActiveRecord
             'id' => 'ID',
             'invoice_no' => 'Invoice No',
             'invoice_date' => 'Invoice Date',
-            'vendor_id' => 'Vendor ID',
+            'vendor_id' => 'คู่ค้า/เจ้าหนี้',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

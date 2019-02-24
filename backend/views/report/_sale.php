@@ -101,17 +101,35 @@ $this->title = 'รายงานยอดขาย';
                             'attribute' => 'picking_date',
                             'hAlign' => 'left',
                             'format' => 'raw',
+                            'filterType' => GridView::FILTER_DATE_RANGE,
+                            'filterWidgetOptions' => ([
+                                'attribute' => 'only_date',
+                                'presetDropdown' => true,
+                                'convertFormat' => false,
+                                'pluginOptions' => [
+                                    'separator' => ' - ',
+                                    'format' => 'YYYY/MM/DD',
+                                    'locale' => [
+                                        'format' => 'YYYY/MM/DD'
+                                    ],
+                                ],
+                                'pluginEvents' => [
+                                    "apply.daterangepicker" => "function() { apply_filter('only_date') }",
+                                ],
+                            ])
+
+
 //                            'value' => function($data){
 //                                return Yii::$app->formatter->asDate($data->trans_date, 'php:d/m/Y');
 //                            },
-                            'filter'=> DatePicker::widget([
-                                'model'=> $searchModel,
-                                'attribute' => 'picking_date',
-                                'clientOptions' => [
-                                    'autoclose'=>true,
-                                    'format'=>'yyyy/mm/dd'
-                                ]
-                            ]),
+//                            'filter'=> DatePicker::widget([
+//                                'model'=> $searchModel,
+//                                'attribute' => 'picking_date',
+//                                'clientOptions' => [
+//                                    'autoclose'=>true,
+//                                    'format'=>'yyyy/mm/dd'
+//                                ]
+//                            ]),
 
                         ],
                         'transport_in_no',

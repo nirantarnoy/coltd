@@ -21,6 +21,7 @@ class QuerypickingSearch extends Querypicking
             [['created_at', 'require_date', 'currency', 'customer_id', 'trans_date', 'product_id', 'status', 'warehouse_id', 'category_id', 'currency_id'], 'integer'],
             [['qty', 'price'], 'number'],
             [['permit_date', 'transport_in_date', 'excise_date'], 'safe'],
+            [['picking_date'],'date'],
             [['sale_no', 'permit_no', 'transport_in_no', 'excise_no', 'name', 'engname', 'product_group', 'customer_name', 'currency_name'], 'string', 'max' => 255],
         ];
     }
@@ -64,6 +65,7 @@ class QuerypickingSearch extends Querypicking
             'id' => $this->id,
             'sale_no' => $this->sale_no,
             'product_id' => $this->product_id,
+            //'picking_date' => $this->picking_date,
             'transport_in_no' => $this->transport_in_no,
             'product_group' => $this->product_group,
             'qty'=> $this->qty,

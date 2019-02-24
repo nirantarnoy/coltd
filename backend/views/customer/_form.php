@@ -312,25 +312,13 @@ $this->registerJs($js,static::POS_END);
             </div>
             <hr/>
 
+
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="form-group" style="margin-top: -10px">
-                        <label class="control-label col-lg-12" for="first-name"><?=Yii::t('app','ประเทศ')?>
-                        </label>
-                        <div class="col-lg-12">
-                            <select name="select_district" class="form-control" id="district" >
-
-                                <?php foreach ($country as $value):?>
-                                    <?php
-                                    $select = '';
-                                    $dis_id = $model_address_plant?$model_address_plant->district_id:0;
-                                    if($value->id ==  $dis_id){$select = 'selected';}
-                                    ?>
-                                    <option value="<?=$value->id?>" <?=$select;?>><?=$value->country_code." ".$value->country_name?></option>
-                                <?php endforeach;?>
-                            </select>
-                        </div>
-                    </div>
+                    <?php echo $form->field($model, 'customer_country')->widget(Select2::className(),[
+                            'data'=>ArrayHelper::map(\common\models\Countries::find()->all(),'id','country_name'),
+                             'options' => ['placeholder'=>'']
+                    ])->label('ประเทศ') ?>
                 </div>
             </div>
             <br>

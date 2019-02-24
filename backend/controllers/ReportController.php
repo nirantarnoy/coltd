@@ -54,8 +54,19 @@ class ReportController extends Controller
        ]);
     }
     public function actionSale(){
+        $from_date = '';
+        $to_date = '';
+
+        $find_date = explode('-',Yii::$app->request->queryParams['QuerypickingSearch']['picking_date']);
+        if(count($find_date)){
+            $from_date = $find_date[0];
+            $to_date = $find_date[1];
+        }
+//        $find_date = Yii::$app->request->get('picking_date');
+      //  echo print_r(Yii::$app->request->queryParams['QuerypickingSearch']['picking_date']);return;
         $searchModel = new QuerypickingSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andFilterWhere(['AND',['>=','picking_date',$from_date],['<=','picking_date',$to_date]]);
         $dataProvider->setSort(['defaultOrder'=>['picking_date'=>SORT_ASC]]);
         return $this->render('_sale',[
             'searchModel' => $searchModel,

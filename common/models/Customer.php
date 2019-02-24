@@ -40,6 +40,7 @@ class Customer extends \yii\db\ActiveRecord
             [['name'],'required'],
             [['customer_group_id','customer_type','currency_id', 'payment_term','card_id', 'payment_type', 'delivery_type', 'sale_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'description','code','first_name','last_name','email','mobile'], 'string', 'max' => 255],
+            [['customer_country'],'integer'],
         ];
     }
 
