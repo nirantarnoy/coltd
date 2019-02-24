@@ -38,7 +38,7 @@ $this->registerCss('
         <div class="row">
             <div class="col-lg-6">
                 <?= $form->field($model, 'vendor_id')->widget(Select2::className(),[
-                        'data'=>ArrayHelper::map(\backend\models\Ve),
+                        'data'=>ArrayHelper::map(\backend\models\Vendor::find()->all(),'id','name'),
                         'options' => ['placeholder'=>'เลือกคู่ค้า'],
                         'pluginOptions' => [
                                 'allowClear'=> true,

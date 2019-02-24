@@ -191,6 +191,7 @@ $(function(){
                         <div id="subReport" class="collapse ">
                             <ul class="nav">
                                 <li><a href="index.php?r=report/balance" class="customergroup">รายงานยอดคงคลัง</a></li>
+                                <li><a href="index.php?r=report/sale" class="sale">รายงานยอดขาย</a></li>
                             </ul>
                         </div>
                     </li>

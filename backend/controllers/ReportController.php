@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\PickinglineSearch;
 use backend\models\QuerybalanceSearch;
+use backend\models\QuerypickingSearch;
 use backend\models\TransCalculate;
 use Yii;
 use backend\models\Sale;
@@ -51,5 +52,14 @@ class ReportController extends Controller
            'searchModel' => $searchModel,
            'dataProvider' => $dataProvider,
        ]);
+    }
+    public function actionSale(){
+        $searchModel = new QuerypickingSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->setSort(['defaultOrder'=>['picking_date'=>SORT_ASC]]);
+        return $this->render('_sale',[
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }

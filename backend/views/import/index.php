@@ -76,8 +76,13 @@ $this->params['breadcrumbs'][] = $this->title;
           //  'id',
             'invoice_no',
             'invoice_date',
-            'vendor_id',
-            'status',
+           [
+                   'attribute' => 'vendor_id',
+               'value' => function($data){
+                    return \backend\models\Vendor::findName($data->vendor_id);
+               }
+           ],
+           // 'status',
             //'created_at',
             //'updated_at',
             //'created_by',
