@@ -63,15 +63,15 @@ class QuerypickingSearch extends Querypicking
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'sale_no' => $this->sale_no,
-            'product_id' => $this->product_id,
+            //'sale_no' => $this->sale_no,
+           // 'product_id' => $this->product_id,
             //'picking_date' => $this->picking_date,
-            'transport_in_no' => $this->transport_in_no,
-            'product_group' => $this->product_group,
-            'qty'=> $this->qty,
-            'permit_no' => $this->permit_no,
-            'customer_name' => $this->customer_name,
-            'currency_name' => $this->currency_name
+           // 'transport_in_no' => $this->transport_in_no,
+           // 'product_group' => $this->product_group,
+           // 'qty'=> $this->qty,
+           // 'permit_no' => $this->permit_no,
+           // 'customer_name' => $this->customer_name,
+           // 'currency_name' => $this->currency_name
 
         ]);
 
