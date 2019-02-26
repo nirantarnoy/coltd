@@ -62,6 +62,15 @@ class Product extends \common\models\Product
         $model = Product::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->engname:'';
     }
+    public function findGeo($id){
+        $model = Product::find()->where(['id'=>$id])->one();
+        $geo = '';
+        if($model){
+            $geo = \backend\models\Productcategory::findGeo($model->category_id);
+        }
+
+        return $geo;
+    }
     public function findImg($id){
         $model = \backend\models\Productimage::find()->where(['product_id'=>$id])->one();
         return count($model)>0?$model->name:'';
@@ -71,7 +80,7 @@ class Product extends \common\models\Product
             $model = Product::find()->where(['id'=>$id])->one();
             $catname = '';
             if($model){
-                $catname = \backend\models\Productcat::findGroupname($model->category_id);
+                $catname = \backend\models\Productcategory::findGroupname($model->category_id);
             }
 
             return $catname;

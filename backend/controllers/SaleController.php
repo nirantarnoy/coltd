@@ -416,4 +416,21 @@ class SaleController extends Controller
             return $pdf->render();
         }
     }
+    public function actionCreatepacking(){
+        $id = \Yii::$app->request->post('saleid');
+
+        if($id){
+            return $this->redirect(['sale/showcreate','id'=>$id]);
+        }
+    }
+    public function actionShowcreate($id){
+        if($id){
+            $model = \backend\models\Sale::find()->where(['id'=>$id])->one();
+            $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
+            return $this->render('_packingslip',[
+                'model'=>$model,
+                'modelline' => $modelline,
+            ]);
+        }
+    }
 }

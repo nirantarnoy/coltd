@@ -429,6 +429,7 @@ $url_to_find_permit = Url::to(['sale/findpermit'],true);
 $url_to_find_transport = Url::to(['sale/findtransport'],true);
 $url_to_createinvoice = Url::to(['sale/createinvoice'],true);
 $url_to_printpicking = Url::to(['sale/printpicking'],true);
+$url_to_createpacking = Url::to(['sale/createpacking'],true);
 $js =<<<JS
  var currow = 0;
  var  removelist = [];
@@ -485,57 +486,70 @@ $js =<<<JS
     
     
     $(".btn-gen-packing").click(function(){
-        $(".table-picking tbody tr").remove();
-       
-        $(".table-quotation tbody tr").each(function(){
-           
-            var prod = $(this).find(".productid").val();
-            var wselect = '';
-            var perselect = '';
-            var transportselect = '';
-            
-            $.ajax({
+        $.ajax({
               'type':'post',
               'dataType': 'html',
-              'url': "$url_to_find_wh",
+              'url': "$url_to_createpacking",
               'async': false,
-              'data': {'prod': prod},
+              'data': {'saleid': 1},
               'success': function(data) {
-                  wselect="<select name='picking_wh[]' class='form-control'>"+data+"</select>";
-                 // alert(data);
+                alert(data);
+              },
+              'error':function(data){
+                  alert(data);
               }
-            });
-            $.ajax({
-              'type':'post',
-              'dataType': 'html',
-              'url': "$url_to_find_permit",
-              'async': false,
-              'data': {'prod': prod},
-              'success': function(data) {
-                  perselect="<select name='picking_permit[]' class='form-control'>"+data+"</select>";
-                 // alert(data);
-              }
-            });
-            $.ajax({
-              'type':'post',
-              'dataType': 'html',
-              'url': "$url_to_find_transport",
-              'async': false,
-              'data': {'prod': prod},
-              'success': function(data) {
-                  transportselect="<select name='picking_transport[]' class='form-control'>"+data+"</select>";
-                 // alert(data);
-              }
-            });
-            
-            var xprodid = "<input type='hidden' name='product_id[]' value='"+ prod +"'>";
-            var xqty = "<input type='hidden' name='line_qty[]' value='"+ $(this).find(".line_qty").val() +"'>";
-            var xprice = "<input type='hidden' name='line_price[]' value='"+ $(this).find(".line_price").val() +"'>";
-            
-            var xrow = "<tr><td>"+xprodid+$(this).find(".productcode").val()+"</td><td>"+xqty+$(this).find(".line_qty").val()+xprice+"</td><td>"+wselect+"</td><td>"+transportselect+"</td><td>"+perselect+"</td></tr>";
-            $(".table-picking tbody").append(xrow);
         });
-         $("#pickModal").modal("show").find(".sale-id").val("$model->id");
+//        $(".table-picking tbody tr").remove();
+//       
+//        $(".table-quotation tbody tr").each(function(){
+//           
+//            var prod = $(this).find(".productid").val();
+//            var wselect = '';
+//            var perselect = '';
+//            var transportselect = '';
+//            
+//            $.ajax({
+//              'type':'post',
+//              'dataType': 'html',
+//              'url': "$url_to_find_wh",
+//              'async': false,
+//              'data': {'prod': prod},
+//              'success': function(data) {
+//                  wselect="<select name='picking_wh[]' class='form-control'>"+data+"</select>";
+//                 // alert(data);
+//              }
+//            });
+//            $.ajax({
+//              'type':'post',
+//              'dataType': 'html',
+//              'url': "$url_to_find_permit",
+//              'async': false,
+//              'data': {'prod': prod},
+//              'success': function(data) {
+//                  perselect="<select name='picking_permit[]' class='form-control'>"+data+"</select>";
+//                 // alert(data);
+//              }
+//            });
+//            $.ajax({
+//              'type':'post',
+//              'dataType': 'html',
+//              'url': "$url_to_find_transport",
+//              'async': false,
+//              'data': {'prod': prod},
+//              'success': function(data) {
+//                  transportselect="<select name='picking_transport[]' class='form-control'>"+data+"</select>";
+//                 // alert(data);
+//              }
+//            });
+//            
+//            var xprodid = "<input type='hidden' name='product_id[]' value='"+ prod +"'>";
+//            var xqty = "<input type='hidden' name='line_qty[]' value='"+ $(this).find(".line_qty").val() +"'>";
+//            var xprice = "<input type='hidden' name='line_price[]' value='"+ $(this).find(".line_price").val() +"'>";
+//            
+//            var xrow = "<tr><td>"+xprodid+$(this).find(".productcode").val()+"</td><td>"+xqty+$(this).find(".line_qty").val()+xprice+"</td><td>"+wselect+"</td><td>"+transportselect+"</td><td>"+perselect+"</td></tr>";
+//            $(".table-picking tbody").append(xrow);
+//        });
+//         $("#pickModal").modal("show").find(".sale-id").val("$model->id");
     });
     
     $(".btn-picking-line").click(function(){

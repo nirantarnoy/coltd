@@ -48,4 +48,8 @@ class Productcategory extends \common\models\ProductCategory{
         $model = \backend\models\Productcategory::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->name:'';
     }
+    public function findGeo($id){
+        $model = \backend\models\Productcategory::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model->geolocation:'';
+    }
 }

@@ -72,6 +72,7 @@ $this->registerCss('
         <br>
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            <div class="btn btn-default"><i class="fa fa-upload"></i> นำเข้าใบนำเข้าจาก Excel</div>
         </div>
 
     </div>
