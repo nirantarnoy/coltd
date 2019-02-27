@@ -12,7 +12,7 @@ use yii\web\UploadedFile;
 use yii\helpers\Json;
 use kartik\mpdf\Pdf;
 use yii\imagine\Image;
-
+use backend\models\Addressbook;
 
 /**
  * CustomerController implements the CRUD actions for Custumer model.
@@ -84,7 +84,7 @@ class CustomerController extends Controller
     public function actionCreate()
     {
         $model = new Customer();
-        $model_address = new \backend\models\AddressBook();
+        $model_address = new Addressbook();
 
         if ($model->load(Yii::$app->request->post()) || $model_address->load(Yii::$app->request->post())) {
 
@@ -194,8 +194,8 @@ class CustomerController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model_address = new \backend\models\AddressBook();
-        $model_address_plant = \backend\models\AddressBook::find()->where(['party_type_id'=>2,'party_id'=>$id])->one();
+        $model_address = new AddressBook();
+        $model_address_plant = AddressBook::find()->where(['party_type_id'=>2,'party_id'=>$id])->one();
         if ($model->load(Yii::$app->request->post())) {
             $model->customer_group_id = Yii::$app->request->post('customer_group');
 
@@ -289,7 +289,7 @@ class CustomerController extends Controller
         if($id) {
             $model = \backend\models\Custumer::find()->where(['id'=>$id])->one();
             if($model){
-                $cus_address = \backend\models\AddressBook::findAddress($id);
+                $cus_address = AddressBook::findAddress($id);
                 $pdf = new Pdf([
 
                     //'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
@@ -327,7 +327,7 @@ class CustomerController extends Controller
         if($id) {
             $model = \backend\models\Custumer::find()->where(['id'=>$id])->one();
             if($model){
-                $cus_address = \backend\models\AddressBook::findAddress($id);
+                $cus_address = AddressBook::findAddress($id);
                 $pdf = new Pdf([
 
                     //'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts

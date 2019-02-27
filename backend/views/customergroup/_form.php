@@ -9,8 +9,13 @@ use toxor88\switchery\Switchery;
 ?>
 
 <div class="custumergroup-form">
-    <div class="card">
-        <div class="card-body">
+    <div class="panel panel-headlin">
+        <div class="panel-heading">
+            <h3><i class="fa fa-institution"></i> <?=$this->title?> <small></small></h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <br />
             <?php $form = ActiveForm::begin(); ?>
 
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -28,5 +33,5 @@ use toxor88\switchery\Switchery;
             <?php ActiveForm::end(); ?>
         </div>
     </div>
-
 </div>
+
