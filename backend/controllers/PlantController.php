@@ -162,7 +162,7 @@ class PlantController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model_address = new \backend\models\Addressbook()
+        $model_address = new \backend\models\Addressbook();
         $model_address_plant = \backend\models\Addressbook::find()->where(['party_id'=>$id,'party_type_id'=>1])->one();
         //$model_bankdata = \backend\models\Bankaccount::find()->where(['party_id'=>$id,'party_type_id'=>1])->all();
 
