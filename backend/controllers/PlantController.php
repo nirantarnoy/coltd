@@ -80,7 +80,7 @@ class PlantController extends Controller
     public function actionIndex()
     {
         $modelx = Plant::find()->one();
-        $model_address = new AddressBook();
+        $model_address = new \backend\models\Addressbook();
         if(count($modelx)>0){
             return $this->redirect(['update','id'=>$modelx->id]);
         }
