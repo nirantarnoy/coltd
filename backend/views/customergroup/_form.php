@@ -22,7 +22,7 @@ use toxor88\switchery\Switchery;
 
             <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-            <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label(false) ?>
+            <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label() ?>
 
 
 
