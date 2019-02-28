@@ -310,7 +310,7 @@ class ProductController extends Controller
             </table>
         ";
     }
-    public function actionImportproduct2(){
+    public function actionImportproduct(){
 
         $model = new \backend\models\Uploadfile();
         if(Yii::$app->request->post()){
@@ -392,7 +392,7 @@ class ProductController extends Controller
             }
         }
     }
-    public function actionImportproduct(){
+    public function actionImportproduct2(){
 
         $model = new \backend\models\Uploadfile();
         if(Yii::$app->request->post()){
