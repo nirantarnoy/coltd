@@ -36,7 +36,7 @@ class TransCalculate extends \yii\base\Model
               if($data[$i]['trans_type'] == TransType::TRANS_ADJUST_IN){$stocktype = 0;} // 0 in 1 out
               if($data[$i]['trans_type'] == TransType::TRANS_ADJUST_OUT){$stocktype = 1;} // 0 in 1 out
 
-              $model_journalline = new \backend\models\JournalTrans();
+              $model_journalline = new Journaltrans();
               $model_journalline->journal_id = $jour_id;
               $model_journalline->product_id = $data[$i]['prod_id'];
               $model_journalline->to_wh = $data[$i]['warehouse_id'];
