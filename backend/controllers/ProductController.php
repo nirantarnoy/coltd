@@ -392,7 +392,8 @@ class ProductController extends Controller
             }
         }
     }
-    public function actionImportupdate(){
+    public function actionImportproduct2(){
+
         $model = new \backend\models\Uploadfile();
         if(Yii::$app->request->post()){
             $uploaded = UploadedFile::getInstance($model, 'file');
@@ -408,54 +409,75 @@ class ProductController extends Controller
                     $i = -1;
                     $res = 0;
                     $data = [];
-                    $update_stock = false;
                     while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE) {
                         $i += 1;
-                        if ($rowData[0] == '' || $i == 0) {
+                        if ($rowData[1] == '' || $i == 0) {
                             continue;
                         }
-                        $modelprod = \backend\models\Product::find()->where(['product_code' => $rowData[0]])->one();
+                        $modelprod = \backend\models\Product::find()->where(['engname' => $rowData[0]])->one();
                         if (count($modelprod) > 0) {
-                            $modelprod->price = $rowData[5];
-                            $modelprod->cost = $rowData[6];
-                            $modelprod->category_id = $this->checkCat($rowData[2]);
-                            $modelprod->unit_id = $this->checkUnit($rowData[3]);
-                            $modelprod->all_qty = str_replace(',','', $rowData[4]);
-                            if($modelprod->save(false)){
-                                $res += 1;
-                                array_push($data,['prod_id'=>$modelprod->id,'qty'=>$modelprod->all_qty,'warehouse_id'=>1,'trans_type'=>TransType::TRANS_ADJUST]);
-                            }
-                        }else{
-                            $modelx = new \backend\models\Product();
-                            $modelx->product_code = $rowData[0];
-                            $modelx->barcode = $rowData[0];
-                            $modelx->name = $rowData[1];
-                            $modelx->description = $rowData[1] ;
-                            $modelx->category_id = $this->checkCat($rowData[2]);
-                            $modelx->unit_id = $this->checkUnit($rowData[3]);
-                            $modelx->price = $rowData[5];
-                            $modelx->cost = str_replace(',','', $rowData[6]);
-                            $modelx->all_qty = str_replace(',','', $rowData[4]);
-                            $modelx->available_qty = str_replace(',','', $rowData[4]);
-                            $modelx->status = 1;
-                            if ($modelx->save(false)) {
-                                $res += 1;
-                                // $data_all +=1;
-                                array_push($data,['prod_id'=>$modelx->id,'qty'=>$modelx->all_qty,'warehouse_id'=>1,'trans_type'=>TransType::TRANS_ADJUST]);
-                            }
+                            // $data_all +=1;
+                            // array_push($data_fail,['name'=>$rowData[0][1]]);
+                            $group = $this->checkCat($rowData[6]);
+
+                            $modelprod->excise_no = ltrim($rowData[2]);
+                            $modelprod->origin = ltrim($rowData[4]);
+                            $modelprod->category_id = $group;
+                            $modelprod->save(false);
+
+                            continue;
                         }
-                        $update_stock = TransCalculate::createJournal($data);
+//                        $modelx = new \backend\models\Product();
+//                        $modelx->product_code = '';//$rowData[0];
+//                        $modelx->barcode = '';//$rowData[0];
+//                        $modelx->engname = ltrim($rowData[1]);
+//                        $modelx->name = ltrim($rowData[2]);
+//                        $modelx->description = '';//$rowData[1] ;
+//                        $modelx->price = 0;//$rowData[5];
+//                        $modelx->cost = 0; //$rowData[6];
+//                        $modelx->unit_factor = $rowData[3];
+//                        $modelx->volumn = $rowData[4];
+//                        $modelx->volumn_content = $rowData[5];
+//                        $modelx->all_qty = str_replace(',','', $rowData[8]);
+//                        //    $modelx->available_qty = str_replace(',','', $rowData[8]);
+//                        $modelx->status = 1;
+//
+//
+//                        $transport_in_no = '';
+//                        $transport_in_date = '';
+//                        $permit_no = '';
+//                        $permit_date = '';
+//                        $excise_no = '';
+//                        $excise_date = '';
+//
+//                        if ($modelx->save(false)) {
+//                            $res += 1;
+//                            // $data_all +=1;
+//                            array_push($data,[
+//                                'prod_id'=>$modelx->id,
+//                                'qty'=>$modelx->all_qty,
+//                                'warehouse_id'=>1,
+//                                'trans_type'=>TransType::TRANS_ADJUST_IN,
+//                                'permit_no' => $permit_no,
+//                                'transport_no' => $transport_in_no,
+//                                'excise_no' => $excise_no,
+//                            ]);
+//                        }
                     }
 
-                    if($res > 0 && $update_stock ){
                         $session = Yii::$app->session;
                         $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
                         return $this->redirect(['index']);
-                    }else{
-                        $session = Yii::$app->session;
-                        $session->setFlash('msg-error','พบข้อมผิดพลาด');
-                        return $this->redirect(['index']);
-                    }
+//                    $update_stock = TransCalculate::createJournal($data);
+//                    if($res > 0 && $update_stock){
+//                        $session = Yii::$app->session;
+//                        $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
+//                        return $this->redirect(['index']);
+//                    }else{
+//                        $session = Yii::$app->session;
+//                        $session->setFlash('msg-error','พบข้อมผิดพลาด');
+//                        return $this->redirect(['index']);
+//                    }
                 }
                 fclose($file);
             }else{
@@ -463,13 +485,14 @@ class ProductController extends Controller
             }
         }
     }
+
     public function checkCat($name){
-        $model = \backend\models\Productcategory::find()->where(['name'=>$name])->one();
+        $model = \backend\models\Productcategory::find()->where(['name'=>ltrim($name)])->one();
         if(count($model)>0){
             return $model->id;
         }else{
             $model_new = new \backend\models\Productcategory();
-            $model_new->name = $name;
+            $model_new->name = ltrim($name);
             $model_new->status = 1;
             if($model_new->save(false)){
                 return $model_new->id;
