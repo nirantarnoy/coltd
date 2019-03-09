@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use backend\models\Product;
 
 /**
  * ImportController implements the CRUD actions for Import model.
@@ -157,5 +158,93 @@ class ImportController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    public function actionExport($type="xsl"){
+        if($type !=''){
+
+            $contenttype = "";
+            $fileName = "";
+
+            if($type == 'xsl'){
+                $contenttype = "application/x-msexcel";
+                $fileName="export_import.xls";
+            }
+            if($type == 'csv'){
+                $contenttype = "application/csv";
+                $fileName="export_import.csv";
+            }
+
+            header('Content-Encoding: UTF-8');
+            header("Content-Type: ".$contenttype." ; name=\"$fileName\" ;charset=utf-8");
+            header("Content-Disposition: attachment; filename=\"$fileName\"");
+            header("Content-Transfer-Encoding: binary");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+           // print "\xEF\xBB\xBF";
+
+            $model = Product::find()->all();
+            if($model){
+                echo "
+                       <table border='1'>
+                         <tr>
+                            <td>#</td>
+                            <td>รายการ</td>
+                            <td>ราคา ลัง(USD)</td>
+                            <td>ราคา ลัง(BAHT)</td>
+                            <td>จำนวน</td>
+                            <td>PACKING</td>
+                            <td>ราคา/ขวด</td>
+                            <td>ราคารวม</td>
+                            <td>จำนวนขวด</td>
+                            <td>น้ำหนักลิตร</td>
+                            <td>น้ำหนัก</td>
+                            <td>น้ำหนักรวมหีบห่อ</td>
+                            <td>เลขที่ใบขนขาเข้า</td>
+                            <td>รายการที่</td>
+                            <td>พิกัด</td>
+                            <td>ประเทศต้นกำเนิด</td>
+                            <td>รหัสสินค้าสรรพสามิต</td>
+                            <td>วันที่ (ค.ส)</td>
+                            <td>กนอ</td>
+                            <td>วันที่</td>
+                            <td>ใบอนุญาต</td>
+                            <td>วันที่</td>
+                         </tr>
+                       
+                    ";
+                foreach($model as $data){
+                   // $cat = \backend\models\Productcat::findGroupname($data->category_id);
+                   // $unit = \backend\models\Unit::findUnitname($data->unit_id);
+                    echo "
+                        <tr>
+                            <td>#</td>
+                            <td>รายการ</td>
+                            <td>ราคา ลัง(USD)</td>
+                            <td>ราคา ลัง(BAHT)</td>
+                            <td>จำนวน</td>
+                            <td>PACKING</td>
+                            <td>ราคา/ขวด</td>
+                            <td>ราคารวม</td>
+                            <td>จำนวนขวด</td>
+                            <td>น้ำหนักลิตร</td>
+                            <td>น้ำหนัก</td>
+                            <td>น้ำหนักรวมหีบห่อ</td>
+                            <td>เลขที่ใบขนขาเข้า</td>
+                            <td>รายการที่</td>
+                            <td>พิกัด</td>
+                            <td>ประเทศต้นกำเนิด</td>
+                            <td>รหัสสินค้าสรรพสามิต</td>
+                            <td>วันที่ (ค.ส)</td>
+                            <td>กนอ</td>
+                            <td>วันที่</td>
+                            <td>ใบอนุญาต</td>
+                            <td>วันที่</td>
+                         </tr>
+                    ";
+                }
+                echo "</table>";
+            }
+        }
     }
 }
