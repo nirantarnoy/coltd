@@ -271,6 +271,13 @@ class ProductController extends Controller
         $session->setFlash('msg','ลบรหัสสินค้าเรียบร้อย');
         return $this->redirect(['index']);
     }
+    public function actionDeleteAll(){
+        $delete_ids = explode(',', Yii::$app->request->post('ids'));
+        Product::deleteAll(['in','id',$delete_ids]);
+        $session = Yii::$app->session;
+        $session->setFlash('msg','ลบรหัสสินค้าเรียบร้อย');
+        return $this->redirect(['index']);
+    }
 
     /**
      * Finds the Product model based on its primary key value.

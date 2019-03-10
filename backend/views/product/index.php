@@ -198,6 +198,7 @@ table.table-vendor td{
                         'bordered'=>false,
                         'striped' => false,
                         'hover' => true,
+                        'id'=>'product-grid',
                         //'tableOptions' => ['class' => 'table table-hover'],
                         'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
                         'rowOptions' => function($model, $key, $index, $gird){
@@ -236,7 +237,24 @@ table.table-vendor td{
                                     },
                                 ],
                             ],
-                            ['class' => 'yii\grid\CheckboxColumn','headerOptions' => ['style' => 'text-align: center'],'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
+                            ['class' => 'yii\grid\CheckboxColumn',
+                                'headerOptions' => ['style' => 'text-align: center'],
+                                'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
+                                'multiple'=>true,
+                                'name'=>'selection',
+                                'checkboxOptions' => [
+                                        'onclick'=>'
+                                            var keys = $("#product-grid").yiiGridView("getSelectedRows");
+                                            //console.log(keys);
+                                            if(keys.length>0){
+                                                $(".btn-bulk-remove").attr("disabled",false);
+//                                              jQuery.post("'.Url::to(['delete-all']).'",{ids:keys.join()},function(){
+//                                        
+//                                              });
+                                            }
+                                        '
+                                ]
+                            ],
                              // ['class' => 'yii\grid\RadioButtonColumn','headerOptions' => ['style' => 'text-align: center'],'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
                           //  ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle']],
 
@@ -853,6 +871,20 @@ $this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\
        $(".btn-cancel-vendor").click(function(){
             $(".table-vendor tbody>tr").each(function(){$(this).remove();});
             $("#vendorModal").modal("hide");
+       });
+       
+       $(".btn-bulk-remove").click(function(){
+                  var keys = $("#product-grid").yiiGridView("getSelectedRows");
+                  if(keys.length>0){
+                      $(".btn-bulk-remove").attr("disabled",false);
+                      if(confirm("ต้องการลบรายการตามนี้ใช่หรอไม่")){
+                       jQuery.post("'.Url::to(['delete-all']).'",{ids:keys.join()},function(){
+                                            
+                      });
+                      } 
+                  }else{
+                      $(".btn-bulk-remove").attr("disabled",true);
+                  }
        });
        
     });
