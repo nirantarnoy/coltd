@@ -262,9 +262,9 @@ class PlantController extends Controller
 
         return $this->redirect(['index']);
     }
-    public function actionDeletelogo($logo){
-        if($logo!=''){
-            unlink(Yii::$app->basePath . '/web/uploads/logo/' . $logo);
+    public function actionDeletelogo($logoname){
+        if($logoname!=''){
+            unlink(Yii::$app->basePath . '/web/uploads/logo/' . $logoname);
             $this->redirect(['index']);
         }
     }
