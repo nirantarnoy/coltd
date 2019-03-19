@@ -164,7 +164,7 @@ $dist = District::find()->all();
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','')?>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                   <?= Html::img('@web/uploads/logo/'.$model->logo,['style'=>'width: 20%;']);?>
+                                   <?= Html::img('@web/uploads/logo/'.$model->logo,['style'=>'width: 25%;']);?>
                                 </div>
                               </div>
 
