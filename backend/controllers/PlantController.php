@@ -153,6 +153,7 @@ class PlantController extends Controller
         ]);
     }
 
+
     /**
      * Updates an existing Plant model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -261,7 +262,12 @@ class PlantController extends Controller
 
         return $this->redirect(['index']);
     }
-
+    public function actionDeletelogo($logo){
+        if($logo!=''){
+            unlink(Yii::$app->basePath . '/web/uploads/logo/' . $logo);
+            $this->redirect(['index']);
+        }
+    }
     /**
      * Finds the Plant model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
