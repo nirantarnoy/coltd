@@ -225,6 +225,8 @@ class AuthitemController extends Controller
         $auth->add($plant_view);
         $plant_create = $auth->createPermission('plant/create');
         $auth->add($plant_create);
+        $plant_deletelogo = $auth->createPermission('plant/deletelogo');
+        $auth->add($plant_deletelogo);
 
         $plant_permission = $auth->createPermission('plantmodule');
         $plant_permission->description = "สิทธิ์ใช้งานโมดูล Plant";
@@ -235,6 +237,7 @@ class AuthitemController extends Controller
         $auth->addChild($plant_permission,$plant_update);
         $auth->addChild($plant_permission,$plant_delete);
         $auth->addChild($plant_permission,$plant_create);
+        $auth->addChild($plant_permission,$plant_deletelogo);
 
         $manage_plant = $auth->createRole('Manage Plant');
         $manage_plant->description = "Manage plant";

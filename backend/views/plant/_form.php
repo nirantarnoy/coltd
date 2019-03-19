@@ -167,6 +167,15 @@ $dist = District::find()->all();
                                    <?= Html::img('@web/uploads/logo/'.$model->logo,['style'=>'width: 25%;']);?>
                                 </div>
                               </div>
+                                <div class="form-group" style="margin-top: -10px">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','')?>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <?php if($model->logo !=''):?>
+                                        <a href="<?=Url::to(['plant/deletelogo','logoname'=>$model->logo],true)?>">ลบโลโก้</a>
+                                        <?php endif;?>
+                                    </div>
+                                </div>
 
 
                         <div class="ln_solid"></div>
