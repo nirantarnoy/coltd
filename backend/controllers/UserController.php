@@ -92,6 +92,7 @@ class UserController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->setPassword($model->pwd);
             $model->generateAuthKey();
+            $model->email = $model->username.'@coltd.com';
             if($model->save()){
                  $model->assignment();
                   $session = Yii::$app->session;
@@ -125,7 +126,7 @@ class UserController extends Controller
                 $session->setFlash('msg','บันทึกรายการเรียบร้อย');
                 return $this->redirect(['index']);
             }
-          
+
         }
 
         return $this->render('update', [
