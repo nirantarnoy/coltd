@@ -172,7 +172,7 @@ $dist = District::find()->all();
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <?php if($model->logo !=''):?>
-                                        <a href="<?=Url::to(['plant/deletelogo','logoname'=>$model->logo],true)?>">ลบโลโก้</a>
+                                        <a href="<?=Url::to(['plant/deletelogo','id'=>$model->id,'logoname'=>$model->logo],true)?>">ลบโลโก้</a>
                                         <?php endif;?>
                                     </div>
                                 </div>
