@@ -72,8 +72,10 @@ $this->registerCss('
         <br>
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-            <div class="btn btn-default"><i class="fa fa-upload text-primary"></i> นำเข้าใบนำเข้าจาก Excel</div>
-            <div class="btn btn-default"><i class="fa fa-download text-primary"></i> นำออกเป็น Excel</div>
+            <div class="btn btn-default btn-import-file"><i class="fa fa-upload text-primary"></i> นำเข้าใบนำเข้าจาก Excel</div>
+            <?php if(!$model->isNewRecord):?>
+              <a class="btn btn-default btn-export-file"  href="<?=Url::to(['import/export','id'=>$model->id],true)?>"><i class="fa fa-download text-primary"></i> นำออกเป็น Excel</a>
+            <?php endif;?>
         </div>
 
     </div>
@@ -110,33 +112,65 @@ $this->registerCss('
                     </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type="hidden" class="productcode" name="product_id[]" value="">
-                        <input type="text" class="form-control productname" name="" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
-                    </td>
-                    <td><input type="text" class="form-control" name="" value=""></td>
-                    <td><input type="text" class="form-control " name="" value=""></td>
-                    <td><input style="width: 70px" type="number" class="form-control line_qty" name="" value=""></td>
-                    <td><input type="number" class="form-control line_packing" name="" value=""></td>
-                    <td><input type="text" class="form-control line_price_per" name="" value=""></td>
-                    <td><input style="width: 100px" type="text" class="form-control line_total_amount" name="" value="" readonly></td>
-                    <td><input type="text" class="form-control line_bottle_qty" name="" value=""></td>
-                    <td><input type="text" class="form-control line_litre" name="" value=""></td>
-                    <td><input type="text" class="form-control line_net" name="" value="" readonly></td>
-                    <td><input type="text" class="form-control line_gross" name="" value="" readonly></td>
-                    <td><input type="text" class="form-control line_transport_in_no" name="" value=""></td>
-                    <td><input type="text" class="form-control line_num" name="" value=""></td>
-                    <td><input style="width: 75px" type="text" class="form-control line_geo" name="" value="" readonly></td>
-                    <td><input type="text" class="form-control line_origin" name="" value="" readonly></td>
-                    <td><input type="text" class="form-control line_excise_no" name="" value=""></td>
-                    <td><input type="text" class="form-control line_excise_date" name="" value=""></td>
-                    <td><input type="text" class="form-control line_kno_no" name="" value=""></td>
-                    <td><input type="text" class="form-control line_kno_date" name="" value=""></td>
-                    <td><input type="text" class="form-control line_permit_no" name="" value=""></td>
-                    <td><input type="text" class="form-control line_permit_date" name="" value=""></td>
-                </tr>
+                <?php if($model->isNewRecord): ?>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="hidden" class="productcode" name="product_id[]" value="">
+                            <input type="text" class="form-control productname" name="" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                        </td>
+                        <td><input type="text" class="form-control product-pack1" name="product_pack1[]"  value=""></td>
+                        <td><input type="text" class="form-control product-pack2" name="product_pack2[]" value=""></td>
+                        <td><input style="width: 70px" type="number" class="form-control line_qty" name="line_qty[]" value=""></td>
+                        <td><input type="number" class="form-control line_packing" name="line_packing[]" value=""></td>
+                        <td><input type="text" class="form-control line_price_per" name="line_price_per[]" value=""></td>
+                        <td><input style="width: 100px" type="text" class="form-control line_total_amount" name="line_total_amount[]" value="" readonly></td>
+                        <td><input type="text" class="form-control line_bottle_qty" name="line_bottle_qty[]" value=""></td>
+                        <td><input type="text" class="form-control line_litre" name="line_litre[]" value=""></td>
+                        <td><input type="text" class="form-control line_net" name="line_net[]" value="" readonly></td>
+                        <td><input type="text" class="form-control line_gross" name="line_gross[]" value="" readonly></td>
+                        <td><input type="text" class="form-control line_transport_in_no" name="line_transport_in_no[]" value=""></td>
+                        <td><input type="text" class="form-control line_num" name="line_num[]" value=""></td>
+                        <td><input style="width: 75px" type="text" class="form-control line_geo" name="line_geo[]" value="" readonly></td>
+                        <td><input type="text" class="form-control line_origin" name="line_origin[]" value="" readonly></td>
+                        <td><input type="text" class="form-control line_excise_no" name="line_excise_no[]" value=""></td>
+                        <td><input type="text" class="form-control line_excise_date" name="line_excise_date[]" value=""></td>
+                        <td><input type="text" class="form-control line_kno_no" name="line_kno_no[]" value=""></td>
+                        <td><input type="text" class="form-control line_kno_date" name="line_kno_date[]" value=""></td>
+                        <td><input type="text" class="form-control line_permit_no" name="line_permit_no[]" value=""></td>
+                        <td><input type="text" class="form-control line_permit_date" name="line_permit_date[]" value=""></td>
+                    </tr>
+                <?php else:?>
+                   <?php foreach ($modelline as $value):?>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="hidden" class="productcode" name="product_id[]" value="">
+                                <input type="text" class="form-control productname" name="" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                            </td>
+                            <td><input type="text" class="form-control product-pack1" name="product_pack1[]"  value=""></td>
+                            <td><input type="text" class="form-control product-pack2" name="product_pack2[]" value=""></td>
+                            <td><input style="width: 70px" type="number" class="form-control line_qty" name="line_qty[]" value=""></td>
+                            <td><input type="number" class="form-control line_packing" name="line_packing[]" value=""></td>
+                            <td><input type="text" class="form-control line_price_per" name="line_price_per[]" value=""></td>
+                            <td><input style="width: 100px" type="text" class="form-control line_total_amount" name="line_total_amount[]" value="" readonly></td>
+                            <td><input type="text" class="form-control line_bottle_qty" name="line_bottle_qty[]" value=""></td>
+                            <td><input type="text" class="form-control line_litre" name="line_litre[]" value=""></td>
+                            <td><input type="text" class="form-control line_net" name="line_net[]" value="" readonly></td>
+                            <td><input type="text" class="form-control line_gross" name="line_gross[]" value="" readonly></td>
+                            <td><input type="text" class="form-control line_transport_in_no" name="line_transport_in_no[]" value=""></td>
+                            <td><input type="text" class="form-control line_num" name="line_num[]" value=""></td>
+                            <td><input style="width: 75px" type="text" class="form-control line_geo" name="line_geo[]" value="" readonly></td>
+                            <td><input type="text" class="form-control line_origin" name="line_origin[]" value="" readonly></td>
+                            <td><input type="text" class="form-control line_excise_no" name="line_excise_no[]" value=""></td>
+                            <td><input type="text" class="form-control line_excise_date" name="line_excise_date[]" value=""></td>
+                            <td><input type="text" class="form-control line_kno_no" name="line_kno_no[]" value=""></td>
+                            <td><input type="text" class="form-control line_kno_date" name="line_kno_date[]" value=""></td>
+                            <td><input type="text" class="form-control line_permit_no" name="line_permit_no[]" value=""></td>
+                            <td><input type="text" class="form-control line_permit_date" name="line_permit_date[]" value=""></td>
+                        </tr>
+                    <?php endforeach;?>
+                <?php endif;?>
                 </tbody>
             </table>
             </div>
@@ -198,8 +232,11 @@ $this->registerCss('
 </div>
 <?php
 $url_to_find = Url::to(['quotation/finditem'],true);
+$url_to_import_export = Url::to(['import/export'],true);
 $js=<<<JS
 $(function() {
+    var importid = "$model->id";
+  
   $(".btn-add-line").click(function() {
     var tr = $(".table-importline tbody tr:last");
           //
