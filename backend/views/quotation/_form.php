@@ -11,6 +11,8 @@ use yii\helpers\Url;
 /* @var $model backend\models\Quotation */
 /* @var $form yii\widgets\ActiveForm */
 
+$has_so = \backend\models\Sale::find()->where(['quotation_id'=>$model->id])->one();
+
 $this->registerCss('
     #imaginary_container{
         margin-top:1%; /* Don\'t copy this */
@@ -242,11 +244,21 @@ $this->registerCss('
 
             <hr />
 
-
+            <div class="pull-left">
+                <?php if($has_so):?>
+                    <div style="border: 1px solid orange;width: 300px;text-align: center;border-radius: 25px;padding: 5px 0px 5px 0px;">
+                        <?php echo "เลขที่ใบสั่งซื้อ ".$has_so->sale_no;?>
+                    </div>
+                <?php endif;?>
+            </div>
             <div class="form-group pull-right">
                 <?= Html::submitButton("<i class='fa fa-save'></i> บันทึก", ['class' => 'btn btn-success']) ?>
-                <?= Html::Button("<i class='fa fa-print'></i> พิมพ์", ['class' => 'btn btn-warning btn-quote-print']) ?>
-                <?= Html::Button("<i class='fa fa-random'></i> เปิดออเดอร์", ['class' => 'btn btn-primary btn-firm-sale']) ?>
+                <?php if(!$model->isNewRecord):?>
+                    <?= Html::Button("<i class='fa fa-print'></i> พิมพ์", ['class' => 'btn btn-warning btn-quote-print']) ?>
+                    <?php if(!$has_so):?>
+                        <?= Html::Button("<i class='fa fa-random'></i> เปิดออเดอร์", ['class' => 'btn btn-primary btn-firm-sale']) ?>
+                    <?php endif;?>
+                <?php endif;?>
             </div>
 
             <?php ActiveForm::end(); ?>

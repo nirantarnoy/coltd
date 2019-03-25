@@ -43,6 +43,7 @@ $this->registerCss('
     <div class="panel panel-headline">
         <div class="panel-body">
             <div class="form-group pull-right">
+                <input type="hidden" class="current-id" value="<?=$model->id?>">
                 <?= Html::Button("<i class='fa fa-list-alt'></i> packing list", ['class' => 'btn btn-info btn-gen-packing']) ?>
                 <?php //echo Html::Button("<i class='fa fa-check-circle'></i> สร้างเอกสารเรียกเก็บเงิน", ['class' => 'btn btn-danger btn-gen-invoice']) ?>
             </div>
@@ -523,19 +524,23 @@ $js =<<<JS
     
     
     $(".btn-gen-packing").click(function(){
-        $.ajax({
+        var cid = $(".current-id").val();
+        if(cid !=''){
+             $.ajax({
               'type':'post',
               'dataType': 'html',
               'url': "$url_to_createpacking",
               'async': false,
-              'data': {'saleid': 1},
+              'data': {'saleid': cid},
               'success': function(data) {
                 alert(data);
               },
               'error':function(data){
-                  alert(data);
+                  //alert(data);
               }
         });
+        }
+       
 //        $(".table-picking tbody tr").remove();
 //       
 //        $(".table-quotation tbody tr").each(function(){
