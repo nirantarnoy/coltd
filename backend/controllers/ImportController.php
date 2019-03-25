@@ -139,8 +139,10 @@ class ImportController extends Controller
                         $modelline->save();
                     }
                 }
-
-                return $this->redirect(['view', 'id' => $model->id]);
+                $session = Yii::$app->session;
+                $session->setFlash('msg','ดำเนินการเรียบร้อย');
+                return $this->redirect(['index']);
+                //return $this->redirect(['view', 'id' => $model->id]);
             }
 
         }
@@ -257,7 +259,8 @@ class ImportController extends Controller
 
                     }
                 }
-
+                $session = Yii::$app->session;
+                $session->setFlash('msg','ดำเนินการเรียบร้อย');
                 return $this->redirect(['index']);
             }
         }
@@ -278,8 +281,10 @@ class ImportController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        \backend\models\Importfile::deleteAll(['import_id'=>$id]);
+            $this->findModel($id)->delete();
+        $session = Yii::$app->session;
+        $session->setFlash('msg','ดำเนินการเรียบร้อย');
         return $this->redirect(['index']);
     }
 

@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
+use lavrentiev\widgets\toastr\Notification;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ImportSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -12,7 +13,36 @@ $this->title = 'นำเข้าสินค้า';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="import-index">
-
+    <?php $session = Yii::$app->session;
+    if ($session->getFlash('msg')): ?>
+        <!-- <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <?php //echo $session->getFlash('msg'); ?>
+      </div> -->
+        <?php echo Notification::widget([
+            'type' => 'success',
+            'title' => 'แจ้งผลการทำงาน',
+            'message' => $session->getFlash('msg'),
+            //  'message' => 'Hello',
+            'options' => [
+                "closeButton" => false,
+                "debug" => false,
+                "newestOnTop" => false,
+                "progressBar" => false,
+                "positionClass" => "toast-top-center",
+                "preventDuplicates" => false,
+                "onclick" => null,
+                "showDuration" => "300",
+                "hideDuration" => "1000",
+                "timeOut" => "6000",
+                "extendedTimeOut" => "1000",
+                "showEasing" => "swing",
+                "hideEasing" => "linear",
+                "showMethod" => "fadeIn",
+                "hideMethod" => "fadeOut"
+            ]
+        ]); ?>
+    <?php endif; ?>
     <h1><?= Html::encode($this->title) ?></h1>
     <?php Pjax::begin(); ?>
     <div class="panel panel-headline">
@@ -65,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'emptyCell'=>'-',
-        'layout'=>'{items}{summary}{pager}',
+        'layout'=>"{items}{summary}<div align=\'center\'>{pager}</div>",
         'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
         'showOnEmpty'=>false,
         'tableOptions' => ['class' => 'table table-hover'],
@@ -125,17 +155,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         $options = array_merge([
                             'title' => Yii::t('yii', 'Delete'),
                             'aria-label' => Yii::t('yii', 'Delete'),
-                            //'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                            //'data-method' => 'post',
-                            //'data-pjax' => '0',
-                            'data-url'=>$url,
-                            'onclick'=>'recDelete($(this));'
+                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                            'data-method' => 'post',
+                            'data-pjax' => '0',
+                           // 'data-url'=>$url,
+                           // 'onclick'=>'recDelete($(this));'
                         ]);
-                        return Html::a('<span class="glyphicon glyphicon-trash btn btn-xs btn-default"></span>', 'javascript:void(0)', $options);
+                        return Html::a('<span class="glyphicon glyphicon-trash btn btn-xs btn-default"></span>', $url, $options);
                     }
                 ]
             ],
         ],
+
     ]); ?>
     <?php Pjax::end(); ?>
             </div>
