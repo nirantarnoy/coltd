@@ -723,4 +723,42 @@ class ProductController extends Controller
         print_r($product);
        // return Json::encode($lists);
     }
+    public function actionSearchitem(){
+        $txt = \Yii::$app->request->post('txt');
+        $list = [];
+        if($txt == ''){
+            return Json::encode($list);
+            //return 'no';
+        }else{
+//            if($txt == "*"){
+//                $model = \backend\models\Product::find()
+//                    ->asArray()
+//                    ->all();
+//                return Json::encode($model);
+//            }else{
+//                $model = \backend\models\Product::find()->where(['or',['Like','engname',$txt],['Like','name',$txt]])
+//                    ->orFilterWhere(['like','engname',$txt])
+//                    ->orFilterWhere(['like','name',$txt])
+//                    ->asArray()
+//                    ->all();
+//                return Json::encode($model);
+//            }
+            if($txt == "*"){
+                $model = \common\models\QueryProduct::find()
+                    ->asArray()
+                    ->all();
+                return Json::encode($model);
+            }else{
+                $model = \common\models\QueryProduct::find()->where(['or',['Like','engname',$txt],['Like','name',$txt]])
+                    ->orFilterWhere(['like','engname',$txt])
+                    ->orFilterWhere(['like','name',$txt])
+                    ->asArray()
+                    ->all();
+                return Json::encode($model);
+            }
+
+
+        }
+
+    }
 }

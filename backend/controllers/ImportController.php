@@ -315,6 +315,8 @@ class ImportController extends Controller
                 $fileName="export_import.csv";
             }
 
+            $model = \backend\models\Importline::find()->all();
+
             header('Content-Encoding: UTF-8');
             header("Content-Type: ".$contenttype." ; name=\"$fileName\" ;charset=utf-8");
             header("Content-Disposition: attachment; filename=\"$fileName\"");
@@ -326,7 +328,7 @@ class ImportController extends Controller
             echo "
                        <table border='1'>
                          <tr>
-                            <td>#</td>
+                            <td>".$id."</td>
                             <td>รายการ</td>
                             <td>ราคา ลัง(USD)</td>
                             <td>ราคา ลัง(BAHT)</td>
@@ -351,42 +353,42 @@ class ImportController extends Controller
                          </tr>
                        
                     ";
-            $model = Importline::find()->where(['import_id'=>$id])->all();
-            if($model){
-                $i=0;
-                foreach($model as $data){
-                    $i+=1;
-                    // $cat = \backend\models\Productcat::findGroupname($data->category_id);
-                    // $unit = \backend\models\Unit::findUnitname($data->unit_id);
-                    echo "
-                        <tr>
-                            <td>".$i."</td>
-                            <td>".$data->product_id."</td>
-                            <td>".$data->price_pack1."</td>
-                            <td>".$data->price_pack2."</td>
-                            <td>".$data->qty."</td>
-                            <td>".$data->product_packing."</td>
-                            <td>".$data->price_per."</td>
-                            <td>".$data->total_price."</td>
-                            <td>".$data->total_qty."</td>
-                            <td>".$data->weight_litre."</td>
-                            <td>".$data->netweight."</td>
-                            <td>".$data->grossweight."</td>
-                            <td>".$data->transport_in_no."</td>
-                            <td>".$data->line_num."</td>
-                            <td>".$data->position."</td>
-                            <td>".$data->origin."</td>
-                            <td>".$data->exsice_no."</td>
-                            <td>".$data->excise_date."</td>
-                            <td>".$data->kno."</td>
-                            <td>".$data->kno_date."</td>
-                            <td>".$data->permit_no."</td>
-                            <td>".$data->permit_date."</td>
-                         </tr>
-                    ";
-                }
-                echo "</table>";
-            }
+
+//            if($model){
+//                $i=0;
+//                foreach($model as $data){
+//                    $i+=1;
+//                    // $cat = \backend\models\Productcat::findGroupname($data->category_id);
+//                    // $unit = \backend\models\Unit::findUnitname($data->unit_id);
+//                    echo "
+//                        <tr>
+//                            <td>".$i."</td>
+//                            <td>".$data->product_id."</td>
+//                            <td>".$data->price_pack1."</td>
+//                            <td>".$data->price_pack2."</td>
+//                            <td>".$data->qty."</td>
+//                            <td>".$data->product_packing."</td>
+//                            <td>".$data->price_per."</td>
+//                            <td>".$data->total_price."</td>
+//                            <td>".$data->total_qty."</td>
+//                            <td>".$data->weight_litre."</td>
+//                            <td>".$data->netweight."</td>
+//                            <td>".$data->grossweight."</td>
+//                            <td>".$data->transport_in_no."</td>
+//                            <td>".$data->line_num."</td>
+//                            <td>".$data->position."</td>
+//                            <td>".$data->origin."</td>
+//                            <td>".$data->exsice_no."</td>
+//                            <td>".$data->excise_date."</td>
+//                            <td>".$data->kno."</td>
+//                            <td>".$data->kno_date."</td>
+//                            <td>".$data->permit_no."</td>
+//                            <td>".$data->permit_date."</td>
+//                         </tr>
+//                    ";
+//                }
+//                echo "</table>";
+//            }
 
         }
     }

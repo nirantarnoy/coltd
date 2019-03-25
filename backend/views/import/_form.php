@@ -195,12 +195,14 @@ $this->registerCss('
                     <div class="col-sm-6">
                         <div id="imaginary_container">
                             <div class="input-group stylish-input-group">
-                                <input type="text" class="form-control"  placeholder="ค้นหาสินค้า" >
+
+                                <input type="text" class="form-control search-item"  placeholder="ค้นหาสินค้า" >
                                 <span class="input-group-addon">
-                                        <button type="submit">
+                                        <button type="submit" class="btn-search-submit">
                                             <span class="fa fa-search"></span>
                                         </button>
                                     </span>
+
                             </div>
                         </div>
                     </div>
@@ -233,11 +235,47 @@ $this->registerCss('
 </div>
 <?php
 $url_to_find = Url::to(['quotation/finditem'],true);
+$url_to_find_product = Url::to(['product/searchitem'],true);
 $url_to_import_export = Url::to(['import/export'],true);
 $js=<<<JS
 $(function() {
     var importid = "$model->id";
-  
+  $(".btn-search-submit").click(function(){
+      var textsearch = $(".search-item").val();
+      $.ajax({
+              'type':'post',
+              'dataType': 'json',
+              'url': "$url_to_find_product",
+              'data': {'txt': textsearch},
+              'success': function(data) {
+                // alert(data);return;
+                 if(data.length == 0){
+                      $(".table-list").hide();
+                     $(".modal-error").show();
+                 }else{
+                     $(".modal-error").hide();
+                     $(".table-list").show();
+                     var html = "";
+                     for(var i =0;i<=data.length -1;i++){
+                         html +="<tr ondblclick='getitem($(this));'><td style='vertical-align: middle'>"+
+                         data[i]['engname']+"</td><td style='vertical-align: middle'>"+
+                         data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
+                          "<input type='hidden' class='prodcost' value='"+data[i]['cost']+"'/>" +
+                          "<input type='hidden' class='prodprice' value='"+data[i]['price']+"'/>" +
+                          "<input type='hidden' class='prodnet' value='"+data[i]['netweight']+"'/>" +
+                          "<input type='hidden' class='prodgross' value='"+data[i]['grossweight']+"'/>" +
+                          "<input type='hidden' class='prodorigin' value='"+data[i]['origin']+"'/>" +
+                          "<input type='hidden' class='prodgeo' value='"+data[i]['geolocation']+"'/>" +
+                           "</td>"+
+                           "<td>"+data[i]['origin']+"</td>"+
+                           "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td></tr>"
+                     }
+                     $(".table-list tbody").html(html);
+                     
+                 }
+              }
+            });
+  });
   $(".btn-add-line").click(function() {
     var tr = $(".table-importline tbody tr:last");
           //
