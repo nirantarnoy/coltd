@@ -99,6 +99,8 @@ class ImportController extends Controller
             $permit_no = Yii::$app->request->post('line_permit_no');
             $permit_date = Yii::$app->request->post('line_permit_date');
 
+           // print_r($productid);return;
+
 
             $model->invoice_date = date('Y/m/d',strtotime($model->invoice_date));
             if($model->save(false)){
@@ -113,6 +115,7 @@ class ImportController extends Controller
                 if(count($productid)>0){
                     for($i=0;$i<=count($productid)-1;$i++){
                         $modelline = new \backend\models\Importline();
+                        $modelline->import_id = $model->id;
                         $modelline->product_id = $productid[$i];
                         $modelline->price_pack1 = $pack1[$i];
                         $modelline->price_pack2 = $pack2[$i];
@@ -226,6 +229,7 @@ class ImportController extends Controller
                             $modelcheck->save();
                         }else{
                             $modelline = new \backend\models\Importline();
+                            $modelline->import_id = $id;
                             $modelline->product_id = $productid[$i];
                             $modelline->price_pack1 = $pack1[$i];
                             $modelline->price_pack2 = $pack2[$i];

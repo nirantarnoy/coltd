@@ -578,11 +578,23 @@ class AuthitemController extends Controller
         $auth->addChild($warehouse_permission,$warehouse_create);
 
         $manage_warehouse = $auth->createRole('Manage warehouse');
-        $manage_warehouse->description = "Manage message";
+        $manage_warehouse->description = "Manage warehouse";
         $auth->add($manage_warehouse);
         $auth->addChild($manage_warehouse,$warehouse_permission);
 
+        //db manager
+        $db_index = $auth->createPermission('db-manager');
+        $auth->add($db_index);
 
+        $bakup_permission = $auth->createPermission('backupmodule');
+        $bakup_permission->description = "สิทธิ์ใช้งานโมดูล bakup_permission";
+        $auth->add($bakup_permission);
+
+        $manage_backup = $auth->createRole('Manage backup');
+        $manage_backup->description = "Manage backup";
+        $auth->add($manage_backup);
+
+        $auth->addChild($manage_backup,$bakup_permission);
 
 
 
@@ -601,6 +613,7 @@ class AuthitemController extends Controller
         $auth->addChild($admin_role,$manage_employee);
         $auth->addChild($admin_role,$manage_message);
         $auth->addChild($admin_role,$manage_warehouse);
+        $auth->addChild($admin_role,$manage_backup);
 
         $user_role = $auth->createRole('System User');
         $user_role->description = "ผู้ใช้งานทั่วไป";

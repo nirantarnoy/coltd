@@ -195,6 +195,14 @@ $(function(){
                             </ul>
                         </div>
                     </li>
+                    <li class="has-sub">
+                        <a href="#subBackup" data-toggle="collapse" class="collapsed"><i class="fa fa-life-saver"></i> <span>สำรองข้อมูล</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subBackup" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="index.php?r=backup/index" class="report">ตั้งค่าการสำรองข้อมูล</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
 <?php //else:?>
 
