@@ -199,7 +199,7 @@ $(function(){
                         <a href="#subBackup" data-toggle="collapse" class="collapsed"><i class="fa fa-life-saver"></i> <span>สำรองข้อมูล</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="subBackup" class="collapse ">
                             <ul class="nav">
-                                <li><a href="index.php?r=db-manager/index" class="db-manager">ตั้งค่าการสำรองข้อมูล</a></li>
+                                <li><a href="index.php?r=db-manager" class="db-manager">ตั้งค่าการสำรองข้อมูล</a></li>
                             </ul>
                         </div>
                     </li>
