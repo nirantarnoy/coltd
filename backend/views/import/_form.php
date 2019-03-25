@@ -117,7 +117,7 @@ $this->registerCss('
                         <td></td>
                         <td>
                             <input type="hidden" class="productid" name="product_id[]" value="">
-                            <input type="text" class="form-control productname" name="product_name[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                            <input type="text" style="width: 400px" class="form-control productname" name="product_name[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                         </td>
                         <td><input type="text" class="form-control product-pack1" name="product_pack1[]"  value=""></td>
                         <td><input type="text" class="form-control product-pack2" name="product_pack2[]" value=""></td>
@@ -147,7 +147,7 @@ $this->registerCss('
                             <td>
                                 <input type="hidden" class="productcode" name="product_id[]" value="<?=$value->product_id?>">
                                 <input type="hidden" class="recid" name="recid[]" value="<?=$value->id?>">
-                                <input type="text" class="form-control productname" name="" value="<?=\backend\models\Product::findName($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                <input type="text" style="width: 400px" class="form-control productname" name="" value="<?=\backend\models\Product::findName($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                             </td>
                             <td><input type="text" class="form-control product-pack1" name="product_pack1[]"  value="<?=$value->price_pack1?>"></td>
                             <td><input type="text" class="form-control product-pack2" name="product_pack2[]" value="<?=$value->price_pack2?>"></td>
