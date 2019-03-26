@@ -113,7 +113,7 @@ $(function(){
 <!--                            <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>-->
 <!--                            <li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>-->
 <!--                            <li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>-->
-                            <li><a href="index.php?r=changepwd/index"><i class="fa fa-refresh"></i> <span>เปลี่ยนรหัสผ่าน</span></a></li>
+                            <li><a href="index.php?r=site/resetpassword"><i class="fa fa-refresh"></i> <span>เปลี่ยนรหัสผ่าน</span></a></li>
                             <li><a href="index.php?r=site/logout"><i class="lnr lnr-exit"></i> <span>ออกจากระบบ</span></a></li>
                         </ul>
                     </li>
