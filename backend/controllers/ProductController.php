@@ -177,7 +177,7 @@ class ProductController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
             $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
-
+            //$model->excise_date =
             if($model->save()){
 
                 if(!empty($uploadimage)){
@@ -224,6 +224,7 @@ class ProductController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
             $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
+            $model->excise_date = date('Y-m-d',strtotime($model->excise_date));
             if($model->save()){
 
                 if(!empty($uploadimage)){

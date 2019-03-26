@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use yii\helpers\Url;
 use kartik\file\FileInput;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Product */
@@ -158,6 +159,13 @@ use kartik\file\FileInput;
                                          </label>
                                          <div class="col-md-6 col-sm-6 col-xs-12">
                                              <?= $form->field($model, 'excise_no')->textInput()->label(false) ?>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">วันที่สรรพสามิตร <span class="required"></span>
+                                         </label>
+                                         <div class="col-md-6 col-sm-6 col-xs-12">
+                                             <?= $form->field($model, 'excise_date')->widget(DatePicker::className())->label(false) ?>
                                          </div>
                                      </div>
 
