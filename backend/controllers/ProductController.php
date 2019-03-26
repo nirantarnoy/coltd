@@ -340,24 +340,29 @@ class ProductController extends Controller
                         if ($rowData[1] == '' || $i == 0) {
                             continue;
                         }
-                        $modelprod = \backend\models\Product::find()->where(['engname' => $rowData[0]])->one();
+                        $modelprod = \backend\models\Product::find()->where(['product_code' => $rowData[0]])->one();
                         if (count($modelprod) > 0) {
                             // $data_all +=1;
                             // array_push($data_fail,['name'=>$rowData[0][1]]);
                             continue;
                         }
                         $modelx = new \backend\models\Product();
-                        $modelx->product_code = '';//$rowData[0];
-                        $modelx->barcode = '';//$rowData[0];
+                        $modelx->product_code = $rowData[0];
+                        $modelx->barcode = $rowData[0];
                         $modelx->engname = ltrim($rowData[1]);
-                        $modelx->name = ltrim($rowData[2]);
+                        $modelx->name = ltrim($rowData[1]);
+                        $modelx->category_id = $this->checkCat($rowData[3]);
+                       // $modelx->unit_id = $this->checkUnit($rowData[3]);
                         $modelx->description = '';//$rowData[1] ;
                         $modelx->price = 0;//$rowData[5];
                         $modelx->cost = 0; //$rowData[6];
-                        $modelx->unit_factor = $rowData[3];
-                        $modelx->volumn = $rowData[4];
-                        $modelx->volumn_content = $rowData[5];
-                        $modelx->all_qty = str_replace(',','', $rowData[8]);
+                        $modelx->origin = $rowData[4];
+                        $modelx->unit_factor = $rowData[7];
+                        $modelx->volumn = $rowData[8];
+                        $modelx->volumn_content = $rowData[9];
+                        $modelx->excise_no = $rowData[5];
+                        $modelx->excise_date = date('Y-m-d',strtotime($rowData[6]));
+                      //  $modelx->all_qty = str_replace(',','', $rowData[8]);
                     //    $modelx->available_qty = str_replace(',','', $rowData[8]);
                         $modelx->status = 1;
 

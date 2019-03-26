@@ -260,19 +260,28 @@ table.table-vendor td{
 
                          //   'id',
                              [
-                                  'attribute'=>'engname',
+                                  'attribute'=>'product_code',
                                   'format'=>'html',
                                   'headerOptions' => ['style' => 'text-align: left'],
                                   'contentOptions' => ['style' => 'vertical-align: middle'],
                                   'value'=>function($data){
-                                      return Html::a($data->engname, ['product/view', 'id' => $data->id]);
+                                      return Html::a($data->product_code, ['product/view', 'id' => $data->id]);
                                   }
                              ],
-                             [
-                                  'attribute'=>'name',
-                                  'headerOptions' => ['style' => 'text-align: left'],
-                                  'contentOptions' => ['style' => 'vertical-align: middle'],
-                             ],
+                            [
+                                'attribute'=>'engname',
+                                'format'=>'html',
+                                'headerOptions' => ['style' => 'text-align: left'],
+                                'contentOptions' => ['style' => 'vertical-align: middle'],
+                                'value'=>function($data){
+                                    return Html::a($data->engname, ['product/view', 'id' => $data->id]);
+                                }
+                            ],
+//                             [
+//                                  'attribute'=>'name',
+//                                  'headerOptions' => ['style' => 'text-align: left'],
+//                                  'contentOptions' => ['style' => 'vertical-align: middle'],
+//                             ],
                              [
                                   'attribute'=>'unit_id',
                                   'headerOptions' => ['style' => 'text-align: left'],
