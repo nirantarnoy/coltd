@@ -431,12 +431,25 @@ class ProductController extends Controller
                         if (count($modelprod) > 0) {
                             // $data_all +=1;
                             // array_push($data_fail,['name'=>$rowData[0][1]]);
-                            $group = $this->checkCat($rowData[6]);
+//                            $group = $this->checkCat($rowData[6]);
+//
+//                            $modelprod->excise_no = ltrim($rowData[2]);
+//                            $modelprod->origin = ltrim($rowData[4]);
+//                            $modelprod->category_id = $group;
+//                            $modelprod->save(false);
 
-                            $modelprod->excise_no = ltrim($rowData[2]);
-                            $modelprod->origin = ltrim($rowData[4]);
-                            $modelprod->category_id = $group;
-                            $modelprod->save(false);
+                            $modelx = new \backend\models\Productcost();
+                            $modelx->product_id = $modelprod->id;
+                            $modelx->transport_in_no = $rowData[0];
+                            $modelx->transport_in_date = $rowData[0];
+                            $modelx->excise_no = $rowData[0];
+                            $modelx->excise_date = $rowData[0];
+                            $modelx->permit_no = $rowData[0];
+                            $modelx->permit_date = $rowData[0];
+                            $modelx->cost = $rowData[0];
+                            $modelx->note = '';
+                            $modelx->trans_date = strtotime(date('Y-m-d'));
+                            $modelx->save(false);
 
                             continue;
                         }
