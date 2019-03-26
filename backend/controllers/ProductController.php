@@ -447,10 +447,13 @@ class ProductController extends Controller
                             $modelx->permit_no = $rowData[0];
                             $modelx->permit_date = $rowData[0];
                             $modelx->cost = $rowData[0];
+                            $modelx->qty = (int)$rowData[0];
                             $modelx->note = '';
                             $modelx->trans_date = strtotime(date('Y-m-d'));
                             $modelx->save(false);
 
+
+                            $this->cal_import_qty($modelprod->id);
                             continue;
                         }
 //                        $modelx = new \backend\models\Product();
@@ -509,9 +512,23 @@ class ProductController extends Controller
             }else{
 
             }
+
+
         }
     }
-
+    public function cal_import_qty($product_id){
+        $model = \backend\models\Productcost::find()->where(['product_id'=>$product_id])->all();
+        if($model){
+           $total_qty = 0;
+           foreach ($model as $value){
+               $total_qty+=$value->qty;
+           }
+           $modelupdate = \backend\models\product::find()->where(['id'=>$product_id])->one();
+           $modelupdate->all_qty = $total_qty;
+           $modelupdate->available_qty = $total_qty;
+           $modelupdate->save(false);
+        }
+    }
     public function checkCat($name){
         $model = \backend\models\Productcategory::find()->where(['name'=>ltrim($name)])->one();
         if(count($model)>0){

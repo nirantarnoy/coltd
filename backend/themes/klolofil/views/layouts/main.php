@@ -65,7 +65,7 @@ $(function(){
     <!-- NAVBAR -->
     <nav id="nav-program" class="navbar navbar-default navbar-fixed-top">
         <div class="brand">
-            <a href="index.php?r=site/index"><img src="img/aj.png" alt="COLTD" class="img-responsive logo"></a>
+            <a href="index.php?r=site/index"><img src="../web/uploads/images/logo.png" style="width: 55%;text-align: center;margin-top:-25px;right: 50px" alt="COLTD" class="img-responsive logo"></a>
         </div>
         <div class="container-fluid">
             <div class="navbar-btn">
