@@ -205,7 +205,7 @@ class QuotationController extends Controller
 //                    ->orFilterWhere(['like','name',$txt])
 //                    ->asArray()
 //                    ->all();
-//                return Json::encode($model);
+//                return Json::encode($mode`l);
 //            }
             if($txt == "*"){
                 $model = \common\models\QueryProduct::find()
