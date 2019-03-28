@@ -169,10 +169,10 @@ class ImportController extends Controller
                 $contenttype = "application/x-msexcel";
                 $fileName="export_import.xls";
             }
-            if($type == 'csv'){
-                $contenttype = "application/csv";
-                $fileName="export_import.csv";
-            }
+//            if($type == 'csv'){
+//                $contenttype = "application/csv";
+//                $fileName="export_import.csv";
+//            }
 
             header('Content-Encoding: UTF-8');
             header("Content-Type: ".$contenttype." ; name=\"$fileName\" ;charset=utf-8");
@@ -182,10 +182,7 @@ class ImportController extends Controller
             header("Expires: 0");
 
            // print "\xEF\xBB\xBF";
-
-            $model = Product::find()->all();
-            if($model){
-                echo "
+            echo "
                        <table border='1'>
                          <tr>
                             <td>#</td>
@@ -213,6 +210,10 @@ class ImportController extends Controller
                          </tr>
                        
                     ";
+            
+            $model = Product::find()->all();
+            if($model){
+
                 foreach($model as $data){
                    // $cat = \backend\models\Productcat::findGroupname($data->category_id);
                    // $unit = \backend\models\Unit::findUnitname($data->unit_id);
