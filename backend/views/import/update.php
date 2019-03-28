@@ -7,13 +7,14 @@ use yii\helpers\Html;
 
 $this->title = 'แก้ไข: ' . $model->invoice_no;
 $this->params['breadcrumbs'][] = ['label' => 'นำเข้าสินค้า', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->invoice_no, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="import-update">
     <?= $this->render('_form', [
         'model' => $model,
         'modelfile' => $modelfile,
+        'modelline'=> $modelline,
     ]) ?>
 
 </div>

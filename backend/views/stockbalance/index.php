@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
        // 'filterModel' => $searchModel,
         'emptyCell'=>'-',
-        'layout'=>"{items}\n{summary}\n<div class='text-center'>{pager}</div>",
+        'layout'=>"{items}\n{summary}\n<div class='text-left'>{pager}</div>",
         'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
         'showOnEmpty'=>false,
         'tableOptions' => ['class' => 'table table-hover'],
@@ -84,17 +84,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'product_id',
                 'format' => 'raw',
                 'value' => function($data){
-                    return Html::a(\backend\models\Product::findEng($data->product_id), ['product/view', 'id' => $data->product_id]);
+                    return Html::a(\backend\models\Product::findCode($data->product_id), ['product/view', 'id' => $data->product_id]);
                 }
             ],
             [
                 'attribute' => 'product_id',
                 'format' => 'raw',
-                'label' => 'ชื่อสินค้า',
                 'value' => function($data){
-                    return Html::a(\backend\models\Product::findName($data->product_id), ['product/view', 'id' => $data->product_id]);
+                    return Html::a(\backend\models\Product::findEng($data->product_id), ['product/view', 'id' => $data->product_id]);
                 }
             ],
+//            [
+//                'attribute' => 'product_id',
+//                'format' => 'raw',
+//                'label' => 'ชื่อสินค้า',
+//                'value' => function($data){
+//                    return Html::a(\backend\models\Product::findName($data->product_id), ['product/view', 'id' => $data->product_id]);
+//                }
+//            ],
             [
                 'attribute' => 'warehouse_id',
                 'format' => 'html',

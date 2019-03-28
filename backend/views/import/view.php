@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Import */
 
-$this->title = $model->id;
+$this->title = $model->invoice_no;
 $this->params['breadcrumbs'][] = ['label' => 'Imports', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);

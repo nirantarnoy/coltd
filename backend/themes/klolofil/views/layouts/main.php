@@ -65,7 +65,7 @@ $(function(){
     <!-- NAVBAR -->
     <nav id="nav-program" class="navbar navbar-default navbar-fixed-top">
         <div class="brand">
-            <a href="index.php?r=site/index"><img src="img/aj.png" alt="COLTD" class="img-responsive logo"></a>
+            <a href="index.php?r=site/index"><img src="../web/uploads/images/logo.png" style="width: 55%;text-align: center;margin-top:-25px;right: 50px" alt="COLTD" class="img-responsive logo"></a>
         </div>
         <div class="container-fluid">
             <div class="navbar-btn">
@@ -113,7 +113,7 @@ $(function(){
 <!--                            <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>-->
 <!--                            <li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>-->
 <!--                            <li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>-->
-                            <li><a href="index.php?r=changepwd/index"><i class="fa fa-refresh"></i> <span>เปลี่ยนรหัสผ่าน</span></a></li>
+                            <li><a href="index.php?r=site/resetpassword"><i class="fa fa-refresh"></i> <span>เปลี่ยนรหัสผ่าน</span></a></li>
                             <li><a href="index.php?r=site/logout"><i class="lnr lnr-exit"></i> <span>ออกจากระบบ</span></a></li>
                         </ul>
                     </li>
@@ -192,6 +192,15 @@ $(function(){
                             <ul class="nav">
                                 <li><a href="index.php?r=report/balance" class="report">รายงานยอดคงคลัง</a></li>
                                 <li><a href="index.php?r=report/sale" class="report">รายงานยอดขาย</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="has-sub">
+                        <a href="#subBackup" data-toggle="collapse" class="collapsed"><i class="fa fa-life-saver"></i> <span>สำรองข้อมูล</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subBackup" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="index.php?r=dbrestore/index" class="dbrestore">อัพโหลดกู้คืนข้อมูล</a></li>
+                                <li><a href="index.php?r=db-manager" class="default">ตั้งค่าการสำรองข้อมูล</a></li>
                             </ul>
                         </div>
                     </li>

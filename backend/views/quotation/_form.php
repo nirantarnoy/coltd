@@ -11,6 +11,8 @@ use yii\helpers\Url;
 /* @var $model backend\models\Quotation */
 /* @var $form yii\widgets\ActiveForm */
 
+$has_so = \backend\models\Sale::find()->where(['quotation_id'=>$model->id])->one();
+
 $this->registerCss('
     #imaginary_container{
         margin-top:1%; /* Don\'t copy this */
@@ -106,6 +108,9 @@ $this->registerCss('
                                 <th style="width: 5%">รูป</th>
                                 <th>รหัสสินค้า</th>
                                 <th>รายละเอียด</th>
+                                <th>ปริมาณ/ลัง</th>
+                                <th>ลิตร/ขวด</th>
+                                <th>%</th>
                                 <th style="width: 10%">จำนวน</th>
                                 <th style="width: 10%">origin</th>
                                 <th>ราคา</th>
@@ -129,6 +134,15 @@ $this->registerCss('
                                 </td>
                                 <td>
                                     <input type="text" class="form-control productname" name="prodname[]" value="" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control line_packper" value="" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control line_litre" value="" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control line_percent" value="" readonly>
                                 </td>
                                 <td>
                                     <input type="number" min="0" class="form-control line_qty" name="qty[]" value="" onchange="cal_num($(this))">
@@ -166,10 +180,19 @@ $this->registerCss('
                                         </td>
                                         <td>
                                             <input type="hidden" class="productid" name="productid[]" value="<?=$value->product_id?>">
-                                            <input type="text" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findEng($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                            <input type="text" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findCode($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control productname" name="prodname[]" value="<?=\backend\models\Product::findName($value->product_id)?>" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control line_packper" value="" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control line_litre" value="" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control line_percent" value="" readonly>
                                         </td>
                                         <td>
                                             <input type="number" min="0" class="form-control line_qty" name="qty[]" value="<?=$value->qty?>" onchange="cal_num($(this));">
@@ -206,6 +229,15 @@ $this->registerCss('
                                         <input type="text" class="form-control productname" name="prodname[]" value="" readonly>
                                     </td>
                                     <td>
+                                        <input type="text" class="form-control line_packper" value="" readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control line_litre" value="" readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control line_percent" value="" readonly>
+                                    </td>
+                                    <td>
                                         <input type="number" min="0" class="form-control line_qty" name="qty[]" value="" onchange="cal_num($(this));">
                                     </td>
                                     <td>
@@ -228,7 +260,7 @@ $this->registerCss('
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="6"></td>
+                            <td colspan="9"></td>
                             <td style="text-align: right;font-weight: bold">ยอดรวม</td>
                             <td style="text-align: right;font-weight: bold" class="total-sum">0.00</td>
                             <td></td>
@@ -242,11 +274,21 @@ $this->registerCss('
 
             <hr />
 
-
+            <div class="pull-left">
+                <?php if($has_so):?>
+                    <div style="border: 1px solid orange;width: 300px;text-align: center;border-radius: 25px;padding: 5px 0px 5px 0px;">
+                        <?php echo "เลขที่ใบสั่งซื้อ ".$has_so->sale_no;?>
+                    </div>
+                <?php endif;?>
+            </div>
             <div class="form-group pull-right">
                 <?= Html::submitButton("<i class='fa fa-save'></i> บันทึก", ['class' => 'btn btn-success']) ?>
-                <?= Html::Button("<i class='fa fa-print'></i> พิมพ์", ['class' => 'btn btn-warning btn-quote-print']) ?>
-                <?= Html::Button("<i class='fa fa-random'></i> เปิดออเดอร์", ['class' => 'btn btn-primary btn-firm-sale']) ?>
+                <?php if(!$model->isNewRecord):?>
+                    <?= Html::Button("<i class='fa fa-print'></i> พิมพ์", ['class' => 'btn btn-warning btn-quote-print']) ?>
+                    <?php if(!$has_so):?>
+                        <?= Html::Button("<i class='fa fa-random'></i> เปิดออเดอร์", ['class' => 'btn btn-primary btn-firm-sale']) ?>
+                    <?php endif;?>
+                <?php endif;?>
             </div>
 
             <?php ActiveForm::end(); ?>
@@ -266,9 +308,9 @@ $this->registerCss('
                         <div class="col-sm-6">
                             <div id="imaginary_container">
                                 <div class="input-group stylish-input-group">
-                                    <input type="text" class="form-control"  placeholder="ค้นหาสินค้า" >
+                                    <input type="text" class="form-control search-item"  placeholder="ค้นหาสินค้า" >
                                     <span class="input-group-addon">
-                                        <button type="submit">
+                                        <button type="submit" class="btn-search-submit">
                                             <span class="fa fa-search"></span>
                                         </button>
                                     </span>
@@ -308,6 +350,7 @@ $this->registerCss('
 <?php
 $url_to_find = Url::to(['quotation/finditem'],true);
 $url_to_firm = Url::to(['quotation/firmorder'],true);
+$url_to_find_product = Url::to(['product/searchitem'],true);
 $js =<<<JS
  var currow = 0;
  var  removelist = [];
@@ -389,6 +432,46 @@ $js =<<<JS
       }
   });
     
+    $(".btn-search-submit").click(function(){
+      var textsearch = $(".search-item").val();
+      $.ajax({
+              'type':'post',
+              'dataType': 'json',
+              'url': "$url_to_find_product",
+              'data': {'txt': textsearch},
+              'success': function(data) {
+                // alert(data);return;
+                 if(data.length == 0){
+                      $(".table-list").hide();
+                     $(".modal-error").show();
+                 }else{
+                     $(".modal-error").hide();
+                     $(".table-list").show();
+                     var html = "";
+                     for(var i =0;i<=data.length -1;i++){
+                         html +="<tr ondblclick='getitem($(this));'><td style='vertical-align: middle'>"+
+                         data[i]['engname']+"</td><td style='vertical-align: middle'>"+
+                         data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
+                          "<input type='hidden' class='prodcost' value='"+data[i]['cost']+"'/>" +
+                          "<input type='hidden' class='prodprice' value='"+data[i]['price']+"'/>" +
+                          "<input type='hidden' class='prodnet' value='"+data[i]['netweight']+"'/>" +
+                          "<input type='hidden' class='prodgross' value='"+data[i]['grossweight']+"'/>" +
+                          "<input type='hidden' class='prodorigin' value='"+data[i]['origin']+"'/>" +
+                          "<input type='hidden' class='prodgeo' value='"+data[i]['geolocation']+"'/>" +
+                          "<input type='hidden' class='unitfactor' value='"+data[i]['unit_factor']+"'/>" +
+                          "<input type='hidden' class='volumn' value='"+data[i]['volumn']+"'/>" +
+                          "<input type='hidden' class='volumn_content' value='"+data[i]['volumn_content']+"'/>" +
+                           "</td>"+
+                           "<td>"+data[i]['origin']+"</td>"+
+                           "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td></tr>"
+                     }
+                     $(".table-list tbody").html(html);
+                     
+                 }
+              }
+            });
+  });
+    
  });
 
  function itemchange(e) {
@@ -404,7 +487,7 @@ $js =<<<JS
          if(e.parent().parent().attr("data-var") !=''){
              removelist.push(e.parent().parent().attr("data-var"));
          }  
-         alert(removelist);
+        // alert(removelist);
          $(".remove-list").val(removelist);
          if($(".table-quotation tbody tr").length == 1){
              $(".table-quotation tbody tr").each(function(){
@@ -450,6 +533,13 @@ $js =<<<JS
                          data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
                           "<input type='hidden' class='prodcost' value='"+data[i]['cost']+"'/>" +
                           "<input type='hidden' class='prodprice' value='"+data[i]['price']+"'/>" +
+                          "<input type='hidden' class='prodnet' value='"+data[i]['netweight']+"'/>" +
+                          "<input type='hidden' class='prodgross' value='"+data[i]['grossweight']+"'/>" +
+                          "<input type='hidden' class='prodorigin' value='"+data[i]['origin']+"'/>" +
+                          "<input type='hidden' class='prodgeo' value='"+data[i]['geolocation']+"'/>" +
+                          "<input type='hidden' class='unitfactor' value='"+data[i]['unit_factor']+"'/>" +
+                          "<input type='hidden' class='volumn' value='"+data[i]['volumn']+"'/>" +
+                          "<input type='hidden' class='volumn_content' value='"+data[i]['volumn_content']+"'/>" +
                            "</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
                            "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td></tr>"
@@ -481,6 +571,11 @@ $js =<<<JS
     var prodid = e.closest("tr").find(".recid").val();
     var prodcost = e.closest("tr").find(".prodcost").val();
     var prodprice = e.closest("tr").find(".prodprice").val();
+    var unitfactor = e.closest("tr").find(".unitfactor").val();
+    var volumn = e.closest("tr").find(".volumn").val();
+    var volumn_content = e.closest("tr").find(".volumn_content").val();
+    
+    //alert(volumn);
     $(".table-quotation tbody tr").each(function() {
         if($(this).closest('tr').find(".productcode").val() == prodcode){
           alert("รายการสินค้านี้ซ้ำ");return false;   
@@ -493,6 +588,9 @@ $js =<<<JS
               $(this).closest('tr').find(".line_cost").val(prodcost);
               $(this).closest('tr').find(".line_origin").val(prodorigin);
               $(this).closest('tr').find(".line_price").val(prodprice);
+              $(this).closest('tr').find(".line_packper").val(unitfactor);
+              $(this).closest('tr').find(".line_litre").val(volumn);
+              $(this).closest('tr').find(".line_percent").val(volumn_content);
         }
         cal_num($(this));
     });

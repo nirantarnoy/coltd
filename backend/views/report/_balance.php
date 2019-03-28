@@ -41,8 +41,9 @@ $this->title = 'รายงานสินค้าคงเหลือ';
 //                                ]
 //                            ])
                         ],
+                        'product_code',
                         'engname',
-                        'name',
+                       // 'name',
                         'volumn',
                         'unit_factor',
                         'volumn_content',
@@ -123,8 +124,9 @@ $this->title = 'รายงานสินค้าคงเหลือ';
                             'options' => ['onchange'=>'window.location.reload();']
                         ])
                     ],
+                    'product_code',
                     'engname',
-                    'name',
+                    //'name',
                     'volumn',
                     'unit_factor',
                     'volumn_content',

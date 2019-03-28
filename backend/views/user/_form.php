@@ -23,7 +23,7 @@ $this->registerJsFile(
 <div class="panel panel-headlin">
     <div class="panel-heading">
                     <h3><i class="fa fa-users"></i> <?=$this->title?> <small></small></h3>
-                    
+
                     <div class="clearfix"></div>
                   </div>
                   <div class="panel-body">
@@ -36,6 +36,7 @@ $this->registerJsFile(
                                    <?= $form->field($model, 'username')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
+
                               <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">กลุ่มผู้ใช้ <span class="required">*</span>
                                 </label>
@@ -55,7 +56,7 @@ $this->registerJsFile(
                               </div>
                       <?php endif;?>
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สถานะ 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สถานะ
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label(false) ?>
@@ -63,13 +64,13 @@ $this->registerJsFile(
                               </div>
 
                                <div class="form-group group-role" style="background: #F0F0F0;padding-top: 20px;">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สิทธิ์ใช้งาน 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สิทธิ์ใช้งาน
                                 </label>
                                 <div class="col-md-2 col-sm-2 col-xs-2">
                                     <?= $form->field($model, 'roles')->checkboxList($model->getAllRoles())->label(false) ?>
                                 </div>
                               </div>
-                          
+
 
                              <div class="ln_solid"></div>
                         <div class="form-group">

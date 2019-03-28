@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
 use kartik\cmenu\ContextMenu;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
 
 //use yii\jui\AutoComplete;
 use yii\web\JsExpression;
@@ -129,23 +130,16 @@ table.table-vendor td{
 
                                 <input type="text" class="form-control search_all" name="search_all" value="<?=$searchname;?>" placeholder="ค้นหารหัส,ชื่อ">
                                 <?php
-                                      echo MultiSelect::widget([
-                                              'id'=>"product_group",
-                                              'name'=>'product_group[]',
-                                              //'model'=>null,
-                                              "options" => ['multiple'=>"multiple",
-                                                              'onchange'=>''], // for the actual multiselect
-                                              'data' => count($groupall)==0?['ไม่มีข้อมูล']:ArrayHelper::map($groupall,'id','name'), // data as array
-                                              'value' => $group, // if preselected
-                                              "clientOptions" =>
-                                                  [
-                                                      "includeSelectAllOption" => true,
-                                                      'numberDisplayed' => 5,
-                                                      'nonSelectedText'=>'กลุ่มสินค้า',
-                                                      'enableFiltering' => true,
-                                                      'enableCaseInsensitiveFiltering'=>true,
-                                                  ],
-                                  ]); ?>
+//                                   echo \kartik\select2\Select2::widget([
+//                                       'name' => 'kv-state-240',
+//                                       'data' => \backend\models\Productcategory::find()->all(),
+//                                       'size' => Select2::MEDIUM,
+//                                       'options' => ['placeholder' => 'Select a state ...', 'multiple' => true],
+//                                       'pluginOptions' => [
+//                                           'allowClear' => true
+//                                       ],
+//                                   ]);
+                                ?>
 
                                 <input type="hidden" name="perpage" value="<?=$perpage?>">
                                    <div class="btn-group">
@@ -260,19 +254,28 @@ table.table-vendor td{
 
                          //   'id',
                              [
-                                  'attribute'=>'engname',
+                                  'attribute'=>'product_code',
                                   'format'=>'html',
                                   'headerOptions' => ['style' => 'text-align: left'],
                                   'contentOptions' => ['style' => 'vertical-align: middle'],
                                   'value'=>function($data){
-                                      return Html::a($data->engname, ['product/view', 'id' => $data->id]);
+                                      return Html::a($data->product_code, ['product/view', 'id' => $data->id]);
                                   }
                              ],
-                             [
-                                  'attribute'=>'name',
-                                  'headerOptions' => ['style' => 'text-align: left'],
-                                  'contentOptions' => ['style' => 'vertical-align: middle'],
-                             ],
+                            [
+                                'attribute'=>'engname',
+                                'format'=>'html',
+                                'headerOptions' => ['style' => 'text-align: left'],
+                                'contentOptions' => ['style' => 'vertical-align: middle'],
+                                'value'=>function($data){
+                                    return Html::a($data->engname, ['product/view', 'id' => $data->id]);
+                                }
+                            ],
+//                             [
+//                                  'attribute'=>'name',
+//                                  'headerOptions' => ['style' => 'text-align: left'],
+//                                  'contentOptions' => ['style' => 'vertical-align: middle'],
+//                             ],
                              [
                                   'attribute'=>'unit_id',
                                   'headerOptions' => ['style' => 'text-align: left'],
