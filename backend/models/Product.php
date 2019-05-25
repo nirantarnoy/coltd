@@ -54,6 +54,10 @@ class Product extends \common\models\Product
           $model = Product::find()->where(['id'=>$id])->one();
           return count($model)>0?$model->product_code:'';
         }
+    public function findId($code){
+        $model = Product::find()->where(['product_code'=>$code])->one();
+        return count($model)>0?$model->id:0;
+    }
     public function findName($id){
         $model = Product::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->name:'';

@@ -628,7 +628,7 @@ class AuthitemController extends Controller
         $auth->addChild($user_role,$manage_productionrec);
 
 
-        $auth->assign($admin_role,3);
+        $auth->assign($admin_role,2);
         $auth->assign($user_role,1);
 
 

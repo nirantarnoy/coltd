@@ -18,6 +18,7 @@ use backend\models\TransCalculate;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
 use yii\imagine\Image;
+use \backend\models\Productstock;
 
 
 /**
@@ -340,28 +341,40 @@ class ProductController extends Controller
                         if ($rowData[1] == '' || $i == 0) {
                             continue;
                         }
-                        $modelprod = \backend\models\Product::find()->where(['product_code' => $rowData[0]])->one();
+                        $modelprod = \backend\models\Product::find()->where(['name' => $rowData[1]])->one();
                         if (count($modelprod) > 0) {
                             // $data_all +=1;
                             // array_push($data_fail,['name'=>$rowData[0][1]]);
                             continue;
                         }
+                        $catid = 0;
+                        $qty = 0;
+                        $price = 0;
+
+                        $qty = str_replace(",","",$rowData[24]);
+                        $price = str_replace(",","",$rowData[21]);
+                        $catid = $this->checkCat($rowData[6]);
+
+
                         $modelx = new \backend\models\Product();
                         $modelx->product_code = $rowData[0];
                         $modelx->barcode = $rowData[0];
                         $modelx->engname = ltrim($rowData[1]);
                         $modelx->name = ltrim($rowData[1]);
-                        $modelx->category_id = $this->checkCat($rowData[3]);
+                        $modelx->category_id = $catid;
                        // $modelx->unit_id = $this->checkUnit($rowData[3]);
                         $modelx->description = '';//$rowData[1] ;
-                        $modelx->price = 0;//$rowData[5];
-                        $modelx->cost = 0; //$rowData[6];
-                        $modelx->origin = $rowData[4];
-                        $modelx->unit_factor = $rowData[7];
-                        $modelx->volumn = $rowData[8];
-                        $modelx->volumn_content = $rowData[9];
-                        $modelx->excise_no = $rowData[5];
-                        $modelx->excise_date = date('Y-m-d',strtotime($rowData[6]));
+                        $modelx->price = $price;//$rowData[5];
+                        $modelx->cost = $price; //$rowData[6];
+                        $modelx->origin = $rowData[7];
+                        $modelx->unit_factor = $rowData[2];
+                        $modelx->volumn = $rowData[3];
+                        $modelx->volumn_content = $rowData[4];
+                        $modelx->excise_no = $rowData[8];
+                        $modelx->all_qty = $qty;
+                        $modelx->excise_date = date('Y-m-d',strtotime($rowData[9]));
+
+                        $this->updatePositiongroup($catid,$rowData[5]);
                       //  $modelx->all_qty = str_replace(',','', $rowData[8]);
                     //    $modelx->available_qty = str_replace(',','', $rowData[8]);
                         $modelx->status = 1;
@@ -405,8 +418,7 @@ class ProductController extends Controller
             }
         }
     }
-    public function actionImportproduct2(){
-
+    public function actionImportupdate(){
         $model = new \backend\models\Uploadfile();
         if(Yii::$app->request->post()){
             $uploaded = UploadedFile::getInstance($model, 'file');
@@ -427,47 +439,79 @@ class ProductController extends Controller
                         if ($rowData[1] == '' || $i == 0) {
                             continue;
                         }
-                        $modelprod = \backend\models\Product::find()->where(['engname' => $rowData[0]])->one();
-                        if (count($modelprod) > 0) {
-                            // $data_all +=1;
-                            // array_push($data_fail,['name'=>$rowData[0][1]]);
-//                            $group = $this->checkCat($rowData[6]);
-//
-//                            $modelprod->excise_no = ltrim($rowData[2]);
-//                            $modelprod->origin = ltrim($rowData[4]);
-//                            $modelprod->category_id = $group;
-//                            $modelprod->save(false);
-
-                            $modelx = new \backend\models\Productcost();
-                            $modelx->product_id = $modelprod->id;
-                            $modelx->transport_in_no = $rowData[0];
-                            $modelx->transport_in_date = $rowData[0];
-                            $modelx->excise_no = $rowData[0];
-                            $modelx->excise_date = $rowData[0];
-                            $modelx->permit_no = $rowData[0];
-                            $modelx->permit_date = $rowData[0];
-                            $modelx->cost = $rowData[0];
-                            $modelx->qty = (int)$rowData[0];
-                            $modelx->note = '';
-                            $modelx->trans_date = strtotime(date('Y-m-d'));
-                            $modelx->save(false);
 
 
-                            $this->cal_import_qty($modelprod->id);
-                            continue;
+                        $has_product = \backend\models\Product::find()->where(['product_code'=>$rowData[0]])->one();
+                        if($has_product){
+                            $whid = 0;
+                            $prodid = \backend\models\Product::findId($rowData[0]);
+                            $qty = str_replace(",","",$rowData[20]);
+                            $usd = str_replace(",","",$rowData[21]);
+                            $thb = str_replace(",","",$rowData[22]);
+                            $wh_get_id = \backend\models\Warehouse::find()->where(['name'=>$rowData[10]])->one();
+                            if($wh_get_id){$whid=$wh_get_id->id;}
+
+                           // $qty = 100;
+                            echo $rowData[11];
+                            $has_stock = Productstock::find()->where(['product_id'=>$has_product->id,'warehouse_id'=>$whid,
+                                'invoice_no'=>$rowData[11],'transport_in_no'=>$rowData[13]])->one();
+                            if($has_stock){
+                                $has_stock->in_qty = $qty;
+                                $has_stock->out_qty = 0;
+                                $has_stock->usd_rate = $usd;
+                                $has_stock->thb_amount =  $thb;
+                                $has_stock->save();
+                            }else{
+                                $modelstock = new Productstock();
+                                $modelstock->product_id = $prodid;
+                                $modelstock->warehouse_id = $whid;
+                                $modelstock->invoice_no = $rowData[11];
+                                $modelstock->invoice_date = date('Y-m-d',strtotime($rowData[12]));
+                                $modelstock->transport_in_no = $rowData[13];
+                                $modelstock->transport_in_date = date('Y-m-d',strtotime($rowData[14]));
+                                $modelstock->sequence = $rowData[15];
+                                $modelstock->permit_no = $rowData[16];
+                                $modelstock->permit_date = date('Y-m-d',strtotime($rowData[17]));
+                                $modelstock->kno_no_in = $rowData[18];
+                                $modelstock->kno_in_date = date('Y-m-d',strtotime($rowData[19]));
+                                $modelstock->in_qty = $qty;
+                                $modelstock->out_qty = 0;
+                                $modelstock->usd_rate = $usd;
+                                $modelstock->thb_amount =  $thb;
+                                $modelstock->save(false);
+                            }
                         }
+                    }
+
+//                        $catid = 0;
+//                        $qty = 0;
+//                        $price = 0;
+//
+//                        $qty = str_replace(",","",$rowData[24]);
+//                        $price = str_replace(",","",$rowData[21]);
+//                        $catid = $this->checkCat($rowData[6]);
+//
+//
 //                        $modelx = new \backend\models\Product();
-//                        $modelx->product_code = '';//$rowData[0];
-//                        $modelx->barcode = '';//$rowData[0];
+//                        $modelx->product_code = $rowData[0];
+//                        $modelx->barcode = $rowData[0];
 //                        $modelx->engname = ltrim($rowData[1]);
-//                        $modelx->name = ltrim($rowData[2]);
+//                        $modelx->name = ltrim($rowData[1]);
+//                        $modelx->category_id = $catid;
+//                        // $modelx->unit_id = $this->checkUnit($rowData[3]);
 //                        $modelx->description = '';//$rowData[1] ;
-//                        $modelx->price = 0;//$rowData[5];
-//                        $modelx->cost = 0; //$rowData[6];
-//                        $modelx->unit_factor = $rowData[3];
-//                        $modelx->volumn = $rowData[4];
-//                        $modelx->volumn_content = $rowData[5];
-//                        $modelx->all_qty = str_replace(',','', $rowData[8]);
+//                        $modelx->price = $price;//$rowData[5];
+//                        $modelx->cost = $price; //$rowData[6];
+//                        $modelx->origin = $rowData[7];
+//                        $modelx->unit_factor = $rowData[2];
+//                        $modelx->volumn = $rowData[3];
+//                        $modelx->volumn_content = $rowData[4];
+//                        $modelx->excise_no = $rowData[8];
+//                        $modelx->all_qty = $qty;
+//                        $modelx->excise_date = date('Y-m-d',strtotime($rowData[9]));
+//
+//                        $this->updatePositiongroup($catid,$rowData[5]);
+//                        //  $modelx->all_qty = str_replace(',','', $rowData[8]);
 //                        //    $modelx->available_qty = str_replace(',','', $rowData[8]);
 //                        $modelx->status = 1;
 //
@@ -492,11 +536,7 @@ class ProductController extends Controller
 //                                'excise_no' => $excise_no,
 //                            ]);
 //                        }
-                    }
-
-                        $session = Yii::$app->session;
-                        $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
-                        return $this->redirect(['index']);
+//                    }
 //                    $update_stock = TransCalculate::createJournal($data);
 //                    if($res > 0 && $update_stock){
 //                        $session = Yii::$app->session;
@@ -512,8 +552,124 @@ class ProductController extends Controller
             }else{
 
             }
-
-
+        }
+    }
+//    public function actionImportproduct2(){
+//
+//        $model = new \backend\models\Uploadfile();
+//        if(Yii::$app->request->post()){
+//            $uploaded = UploadedFile::getInstance($model, 'file');
+//            if(!empty($uploaded)) {
+//                $upfiles = time() . "." . $uploaded->getExtension();
+//                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)) {
+//                    //echo "okk";return;
+//                    $myfile = '../web/uploads/files/' . $upfiles;
+//                    $file = fopen($myfile, "r");
+//                    fwrite($file, "\xEF\xBB\xBF");
+//
+//                    setlocale(LC_ALL, 'th_TH.TIS-620');
+//                    $i = -1;
+//                    $res = 0;
+//                    $data = [];
+//                    while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE) {
+//                        $i += 1;
+//                        if ($rowData[1] == '' || $i == 0) {
+//                            continue;
+//                        }
+//                        $modelprod = \backend\models\Product::find()->where(['engname' => $rowData[0]])->one();
+//                        if (count($modelprod) > 0) {
+//                            // $data_all +=1;
+//                            // array_push($data_fail,['name'=>$rowData[0][1]]);
+////                            $group = $this->checkCat($rowData[6]);
+////
+////                            $modelprod->excise_no = ltrim($rowData[2]);
+////                            $modelprod->origin = ltrim($rowData[4]);
+////                            $modelprod->category_id = $group;
+////                            $modelprod->save(false);
+//
+//                            $modelx = new \backend\models\Productcost();
+//                            $modelx->product_id = $modelprod->id;
+//                            $modelx->transport_in_no = $rowData[0];
+//                            $modelx->transport_in_date = $rowData[0];
+//                            $modelx->excise_no = $rowData[0];
+//                            $modelx->excise_date = $rowData[0];
+//                            $modelx->permit_no = $rowData[0];
+//                            $modelx->permit_date = $rowData[0];
+//                            $modelx->cost = $rowData[0];
+//                            $modelx->qty = (int)$rowData[0];
+//                            $modelx->note = '';
+//                            $modelx->trans_date = strtotime(date('Y-m-d'));
+//                            $modelx->save(false);
+//
+//
+//                            $this->cal_import_qty($modelprod->id);
+//                            continue;
+//                        }
+////                        $modelx = new \backend\models\Product();
+////                        $modelx->product_code = '';//$rowData[0];
+////                        $modelx->barcode = '';//$rowData[0];
+////                        $modelx->engname = ltrim($rowData[1]);
+////                        $modelx->name = ltrim($rowData[2]);
+////                        $modelx->description = '';//$rowData[1] ;
+////                        $modelx->price = 0;//$rowData[5];
+////                        $modelx->cost = 0; //$rowData[6];
+////                        $modelx->unit_factor = $rowData[3];
+////                        $modelx->volumn = $rowData[4];
+////                        $modelx->volumn_content = $rowData[5];
+////                        $modelx->all_qty = str_replace(',','', $rowData[8]);
+////                        //    $modelx->available_qty = str_replace(',','', $rowData[8]);
+////                        $modelx->status = 1;
+////
+////
+////                        $transport_in_no = '';
+////                        $transport_in_date = '';
+////                        $permit_no = '';
+////                        $permit_date = '';
+////                        $excise_no = '';
+////                        $excise_date = '';
+////
+////                        if ($modelx->save(false)) {
+////                            $res += 1;
+////                            // $data_all +=1;
+////                            array_push($data,[
+////                                'prod_id'=>$modelx->id,
+////                                'qty'=>$modelx->all_qty,
+////                                'warehouse_id'=>1,
+////                                'trans_type'=>TransType::TRANS_ADJUST_IN,
+////                                'permit_no' => $permit_no,
+////                                'transport_no' => $transport_in_no,
+////                                'excise_no' => $excise_no,
+////                            ]);
+////                        }
+//                    }
+//
+//                        $session = Yii::$app->session;
+//                        $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
+//                        return $this->redirect(['index']);
+////                    $update_stock = TransCalculate::createJournal($data);
+////                    if($res > 0 && $update_stock){
+////                        $session = Yii::$app->session;
+////                        $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
+////                        return $this->redirect(['index']);
+////                    }else{
+////                        $session = Yii::$app->session;
+////                        $session->setFlash('msg-error','พบข้อมผิดพลาด');
+////                        return $this->redirect(['index']);
+////                    }
+//                }
+//                fclose($file);
+//            }else{
+//
+//            }
+//
+//
+//        }
+//    }
+    public function updatePositiongroup($groupid,$position){
+        $model = \backend\models\Productcategory::find()->where(['name'=>$groupid])->one();
+        if($model){
+            $model->geolocation = $position;
+            $model->save();
         }
     }
     public function cal_import_qty($product_id){

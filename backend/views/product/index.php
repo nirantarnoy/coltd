@@ -406,7 +406,7 @@ table.table-vendor td{
                 <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายการสินค้า <small id="items"> </small></h4>
             </div>
             <div class="modal-body">
-                <?php $form_upload = ActiveForm::begin(['action'=>'index.php?r=product/importproduct','options'=>['enctype' => 'multipart/form-data']]); ?>
+                <?php $form_upload = ActiveForm::begin(['action'=>'index.php?r=product/importupdate','options'=>['enctype' => 'multipart/form-data']]); ?>
                 <div class="row">
                     <div class="col-lg-12">
                         <small class="text-info"> สามารถดาวน์โหลด template สำหรับการนำเข้าสินค้าโดยคลิก </small><a href="<?=Url::to(['product/exporttemplate'],true)?>" style="text-decoration-style: dashed;text-decoration: underline;">ที่นี่</a>
@@ -705,44 +705,44 @@ $this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\
         };
        
     
-        if($("#product_group").val()!=""){
-            $("#product_group").multiselect({
-               includeSelectAllOption: true,
-               enableFiltering: true,
-               nonSelectedText: "กลุ่มสินค้า"
-            });
-            $("select#product_group").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
-          }
-           if($("#stock_status").val()!=""){
-            $("#stock_status").multiselect({
-               includeSelectAllOption: true,
-               enableFiltering: true,
-               nonSelectedText: "ประเภทสต๊อก"
-            });
-            $("select#stock_status").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
-          }
-          
-        $("select#prouduct_group").change(function(){
-           if($(this).val()!=""){
-                $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
-           }else{
-                $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
-            }
-        }); 
-        
-         
-         $("div.btn-reset").click(function(){
-
-                $(".search_all").val("");
-                $("select#product_group option:selected").remove();
-                $("select#product_group").multiselect("rebuild");
-        
-                $("select#stock_status option:selected").remove();
-                $("select#stock_status").multiselect("rebuild");
-      
-                
-                $(".btn-search").trigger("click");
-         });
+//        if($("#product_group").val()!=""){
+//            $("#product_group").multiselect({
+//               includeSelectAllOption: true,
+//               enableFiltering: true,
+//               nonSelectedText: "กลุ่มสินค้า"
+//            });
+//            $("select#product_group").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+//          }
+//           if($("#stock_status").val()!=""){
+//            $("#stock_status").multiselect({
+//               includeSelectAllOption: true,
+//               enableFiltering: true,
+//               nonSelectedText: "ประเภทสต๊อก"
+//            });
+//            $("select#stock_status").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+//          }
+//          
+//        $("select#prouduct_group").change(function(){
+//           if($(this).val()!=""){
+//                $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+//           }else{
+//                $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+//            }
+//        }); 
+//        
+//         
+//         $("div.btn-reset").click(function(){
+//
+//                $(".search_all").val("");
+//                $("select#product_group option:selected").remove();
+//                //$("select#product_group").multiselect("rebuild");
+//        
+//                $("select#stock_status option:selected").remove();
+//                //$("select#stock_status").multiselect("rebuild");
+//      
+//                
+//                $(".btn-search").trigger("click");
+//         });
           
         $(".btn-import").click(function(){
             $("#importModal").modal("show");
