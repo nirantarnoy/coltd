@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
             </div>
-            <div class="table-responsive" style="overflow-y: auto">
+            <div class="table-responsive" >
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -66,25 +66,42 @@ $this->params['breadcrumbs'][] = $this->title;
         'layout'=>"{items}\n{summary}\n<div class='text-left'>{pager}</div>",
         'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
         'showOnEmpty'=>false,
-        'tableOptions' => ['class' => 'table table-hover'],
+        'tableOptions' => ['class' => 'table table-hover table-condensed'],
+        'options' => ['style' => 'white-space:nowrap; font-size: 14px'],
         'emptyText' => '<br /><div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
            // 'id',
-            'product_id',
-            'warehouse_id',
-            'in_qty',
+            ['attribute' => 'product_id','value'=>function($data){
+                return \backend\models\Product::findCode($data->product_id);
+            }],
+            ['attribute' => 'warehouse_id','value'=>function($data){
+                return \backend\models\Warehouse::findWarehousename($data->warehouse_id);
+            }],
+            ['attribute' => 'in_qty','value'=>function($data){
+                return $data->in_qty!=null?$data->in_qty:0;
+            }],
             'out_qty',
             'invoice_no',
-            'invoice_date',
+            ['attribute' => 'invoice_date','value'=>function($data){
+               return date('d-m-Y',strtotime($data->invoice_date));
+            }],
             'transport_in_no',
-            'transport_in_date',
-            'sequence',
+            ['attribute' => 'transport_in_date','value'=>function($data){
+                return date('d-m-Y',strtotime($data->transport_in_date));
+            }],
+            ['attribute' => 'sequence','value'=>function($data){
+                return $data->sequence!=null?$data->sequence:0;
+            }],
             'permit_no',
-            'permit_date',
+            ['attribute' => 'permit_date','value'=>function($data){
+                return date('d-m-Y',strtotime($data->permit_date));
+            }],
             'kno_no_in',
-            'kno_in_date',
+            ['attribute' => 'kno_in_date','value'=>function($data){
+                return date('d-m-Y',strtotime($data->kno_in_date));
+            }],
             'usd_rate',
             'thb_amount',
             //'status',
@@ -95,6 +112,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
+        'condensed' => false,
+        'responsive' => false,
+        'containerOptions' => ['style'=>'overflow-y: '],
+        'resizableColumnsOptions' => ['resizeFromBody' => true],
+        'hover' => true,
+
+
     ]); ?>
             </div>
     <?php Pjax::end(); ?>
