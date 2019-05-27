@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Productstock */
 
-$this->title = 'Update Productstock: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Productstocks', 'url' => ['index']];
+$this->title = 'แก้ไขสต๊อกสินค้า: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'สต๊อกสินค้า', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

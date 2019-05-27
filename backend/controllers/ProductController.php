@@ -354,6 +354,7 @@ class ProductController extends Controller
                         $qty = str_replace(",","",$rowData[24]);
                         $price = str_replace(",","",$rowData[21]);
                         $catid = $this->checkCat($rowData[6]);
+                        $whid = $this->checkWarehouse($rowData[10]);
 
 
                         $modelx = new \backend\models\Product();
@@ -691,6 +692,19 @@ class ProductController extends Controller
             return $model->id;
         }else{
             $model_new = new \backend\models\Productcategory();
+            $model_new->name = ltrim($name);
+            $model_new->status = 1;
+            if($model_new->save(false)){
+                return $model_new->id;
+            }
+        }
+    }
+    public function checkWarehouse($name){
+        $model = \backend\models\Warehouse::find()->where(['name'=>ltrim($name)])->one();
+        if(count($model)>0){
+            return $model->id;
+        }else{
+            $model_new = new \backend\models\Warehouse();
             $model_new->name = ltrim($name);
             $model_new->status = 1;
             if($model_new->save(false)){

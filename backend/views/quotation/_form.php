@@ -86,7 +86,8 @@ $this->registerCss('
                            ]) ?>
                        </div>
                        <div class="col-lg-3">
-                           <?= $form->field($model, 'status')->textInput(['value'=>\backend\helpers\QuotationStatus::getTypeById($model->status)]) ?>
+                           <?php $xstatus = $model->isNewRecord?'open':\backend\helpers\QuotationStatus::getTypeById($model->status);?>
+                           <?= $form->field($model, 'status')->textInput(['value'=>$xstatus , 'readonly'=>'readonly']) ?>
                        </div>
                    </div>
 
@@ -130,7 +131,7 @@ $this->registerCss('
                                 </td>
                                 <td>
                                     <input type="hidden" class="productid" name="productid[]">
-                                    <input type="text" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                    <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                                 </td>
                                 <td>
                                     <input type="text" class="form-control productname" name="prodname[]" value="" readonly>
@@ -186,13 +187,13 @@ $this->registerCss('
                                             <input type="text" class="form-control productname" name="prodname[]" value="<?=\backend\models\Product::findName($value->product_id)?>" readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_packper" value="" readonly>
+                                            <input type="text" class="form-control line_packper" value="<?=\backend\models\Product::findProductInfo($value->product_id)->unit_factor?>" readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_litre" value="" readonly>
+                                            <input type="text" class="form-control line_litre" value="<?=\backend\models\Product::findProductInfo($value->product_id)->volumn_content?>" readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_percent" value="" readonly>
+                                            <input type="text" class="form-control line_percent" value="<?=\backend\models\Product::findProductInfo($value->product_id)->volumn?>" readonly>
                                         </td>
                                         <td>
                                             <input type="number" min="0" class="form-control line_qty" name="qty[]" value="<?=$value->qty?>" onchange="cal_num($(this));">
@@ -434,13 +435,14 @@ $js =<<<JS
     
     $(".btn-search-submit").click(function(){
       var textsearch = $(".search-item").val();
+      //alert(textsearch);
       $.ajax({
               'type':'post',
               'dataType': 'json',
-              'url': "$url_to_find_product",
+              'url': "$url_to_find",
               'data': {'txt': textsearch},
               'success': function(data) {
-                // alert(data);return;
+                 alert(data.length);return;
                  if(data.length == 0){
                       $(".table-list").hide();
                      $(".modal-error").show();
@@ -468,6 +470,9 @@ $js =<<<JS
                      $(".table-list tbody").html(html);
                      
                  }
+              },
+              error: function(err){
+                  //alert(err);
               }
             });
   });

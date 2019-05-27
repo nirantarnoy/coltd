@@ -90,7 +90,8 @@ $this->registerCss('
                             ]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'status')->textInput(['value'=>\backend\helpers\SaleStatus::getTypeById($model->status),'readonly'=>'readonly']) ?>
+                            <?php $xstatus = $model->isNewRecord?'open':\backend\helpers\SaleStatus::getTypeById($model->status);?>
+                            <?= $form->field($model, 'status')->textInput(['value'=>$xstatus,'readonly'=>'readonly']) ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'quotation_id')->textInput(['value'=>\backend\models\Quotation::findNum($model->quotation_id),'readonly'=>'readonly']) ?>
@@ -264,7 +265,7 @@ $this->registerCss('
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="6"></td>
+                            <td colspan="9"></td>
                             <td style="text-align: right;font-weight: bold">ยอดรวม</td>
                             <td style="text-align: right;font-weight: bold" class="total-sum">0.00</td>
                             <td></td>

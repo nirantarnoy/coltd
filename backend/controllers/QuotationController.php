@@ -194,6 +194,7 @@ class QuotationController extends Controller
             return Json::encode($list);
             //return 'no';
         }else{
+
 //            if($txt == "*"){
 //                $model = \backend\models\Product::find()
 //                    ->asArray()

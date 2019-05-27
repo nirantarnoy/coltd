@@ -98,7 +98,7 @@ table.table-vendor td{
                        </div>
                        <div class="btn-group">
                           <div class="btn btn-default btn-import"><i class="fa fa-upload"></i> นำเข้า</div>
-                          <div class="btn btn-default btn-export"><i class="fa fa-download"></i> นำออก</div>
+                          <div class="btn btn-default btn-import-update"><i class="fa fa-upload"></i> นำเข้าอัพเดท</div>
                            <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
                           <div class="btn btn-default btn-printbarcode"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>
 <!--                          <div class="btn btn-default view-list"><i class="fa fa-list"></i></div>-->
@@ -406,7 +406,7 @@ table.table-vendor td{
                 <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายการสินค้า <small id="items"> </small></h4>
             </div>
             <div class="modal-body">
-                <?php $form_upload = ActiveForm::begin(['action'=>'index.php?r=product/importupdate','options'=>['enctype' => 'multipart/form-data']]); ?>
+                <?php $form_upload = ActiveForm::begin(['action'=>'index.php?r=product/importproduct','options'=>['enctype' => 'multipart/form-data']]); ?>
                 <div class="row">
                     <div class="col-lg-12">
                         <small class="text-info"> สามารถดาวน์โหลด template สำหรับการนำเข้าสินค้าโดยคลิก </small><a href="<?=Url::to(['product/exporttemplate'],true)?>" style="text-decoration-style: dashed;text-decoration: underline;">ที่นี่</a>
@@ -417,6 +417,48 @@ table.table-vendor td{
                        <br />
 
                            <?= $form_upload->field($modelupload,'file')->fileinput(['class'=>'form-control','accept'=>'.csv'])->label(false)?>
+
+
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <i class="fa fa-warning text-danger"></i> <small class="text-danger"> ขนาดไฟล์ไม่เกิน 100 MB</small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <input type="submit" class="btn btn-success" value="ตกลง">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+            </div>
+            <?php ActiveForm::end();?>
+        </div>
+
+    </div>
+</div>
+<div id="importUpdateModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
+                <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายการสินค้า <small id="items"> </small></h4>
+            </div>
+            <div class="modal-body">
+                <?php $form_upload = ActiveForm::begin(['action'=>'index.php?r=product/importupdate','options'=>['enctype' => 'multipart/form-data']]); ?>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <small class="text-info"> สามารถดาวน์โหลด template สำหรับการนำเข้าสินค้าโดยคลิก </small><a href="<?=Url::to(['product/exporttemplate'],true)?>" style="text-decoration-style: dashed;text-decoration: underline;">ที่นี่</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <br />
+
+                        <?= $form_upload->field($modelupload,'file')->fileinput(['class'=>'form-control','accept'=>'.csv'])->label(false)?>
 
 
                     </div>
@@ -746,6 +788,9 @@ $this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\
           
         $(".btn-import").click(function(){
             $("#importModal").modal("show");
+        });
+        $(".btn-import-update").click(function(){
+            $("#importUpdateModal").modal("show");
         });
           $(".btn-export").click(function(){
             $("#exportModal").modal("show");
