@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 use kartik\date\DatePicker;
+use kartik\time\TimePicker;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\SaleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -142,7 +143,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-pjax' => '0',
                             'id'=>'modaledit',
                         ]);
-                        return $data->status == 1? Html::a(
+                        return Html::a(
                             '<span class="glyphicon glyphicon-pencil btn btn-xs btn-default"></span>', $url, [
                             'id' => 'activity-view-link',
                             //'data-toggle' => 'modal',
@@ -150,7 +151,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-id' => $index,
                             'data-pjax' => '0',
                             // 'style'=>['float'=>'rigth'],
-                        ]):'';
+                        ]);
                     },
                     'payment' => function($url, $data, $index) {
                         $options = [
@@ -210,6 +211,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ])
                         ?>
                     </div>
+
                     <div class="col-lg-6">
                         <label for="">จำนวนเงิน</label>
                         <input type="text" class="form-control payment-amount" name="amount" value="">
@@ -218,10 +220,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 <br>
                 <div class="row">
                     <div class="col-lg-6">
-                        <label for="">Notes</label>
-                        <textarea name="note" class="form-control" id="" cols="30" rows="3"></textarea>
+                        <label class="control-label">เวลา</label>
+                        <?php echo TimePicker::widget(['name' => 'payment_time']);?>
                     </div>
                 </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="">Notes</label>
+                            <textarea name="note" class="form-control" id="" cols="30" rows="3"></textarea>
+                        </div>
+                    </div>
                     <br>
                     <div class="row">
                         <div class="col-lg-6">

@@ -138,7 +138,7 @@ $this->registerCss('
                                 </td>
                                 <td>
                                     <input type="hidden" class="productid" name="productid[]">
-                                    <input type="text" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                    <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                                 </td>
                                 <td>
                                     <input type="text" class="form-control productname" name="prodname[]" value="" readonly>
@@ -187,19 +187,19 @@ $this->registerCss('
                                         </td>
                                         <td>
                                             <input type="hidden" class="productid" name="productid[]" value="<?=$value->product_id?>">
-                                            <input type="text" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findEng($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                            <input type="text" utocomplete="off" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findEng($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control productname" name="prodname[]" value="<?=\backend\models\Product::findName($value->product_id)?>" readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_packper" value="" readonly>
+                                            <input type="text" class="form-control line_packper" value="<?=\backend\models\Product::findProductInfo($value->product_id)->unit_factor?>" readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_litre" value="" readonly>
+                                            <input type="text" class="form-control line_litre" value="<?=\backend\models\Product::findProductInfo($value->product_id)->volumn_content?>" readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_percent" value="" readonly>
+                                            <input type="text" class="form-control line_percent" value="<?=\backend\models\Product::findProductInfo($value->product_id)->volumn?>" readonly>
                                         </td>
                                         <td>
                                             <input type="number" min="0" class="form-control line_qty" name="qty[]" value="<?=$value->qty?>" onchange="cal_num($(this));">
@@ -229,7 +229,7 @@ $this->registerCss('
                                     </td>
                                     <td>
                                         <input type="hidden" class="productid" name="productid[]">
-                                        <input type="text" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                        <input type="text" utocomplete="off" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control productname" name="prodname[]" value="" readonly>

@@ -62,9 +62,11 @@ class SaleController extends Controller
     public function actionView($id)
     {
         $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
+        $paymenttrans = \backend\models\Paymenttrans::find()->where(['sale_id'=>$id])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'modelline' => $modelline
+            'modelline' => $modelline,
+            'payment' => $paymenttrans,
         ]);
     }
 
@@ -193,6 +195,7 @@ class SaleController extends Controller
     public function actionPayment(){
         $saleid = \Yii::$app->request->post('saleid');
         $pdate = \Yii::$app->request->post('payment_date');
+        $ptime = \Yii::$app->request->post('payment_time');
         $pamount = \Yii::$app->request->post('amount');
         $note = \Yii::$app->request->post('note');
         $uploaded = UploadedFile::getInstanceByName('payment_slip');
@@ -207,8 +210,9 @@ class SaleController extends Controller
             if($pamount!='' && $pamount > 0){
               $model = new \backend\models\Paymenttrans();
               $model->sale_id = $saleid;
-              $model->trans_date = date('Y/m/d' , strtotime($pdate));
-              $model->amount = $pamount;
+                $model->trans_date = date('Y-m-d' , strtotime($pdate));
+                $model->trans_time = date('H:i:s' , strtotime($ptime));
+                $model->amount = $pamount;
               $model->note = $note;
               $model->status = 1;
               $model->slip = $file;
@@ -427,10 +431,58 @@ class SaleController extends Controller
         if($id){
             $model = \backend\models\Sale::find()->where(['id'=>$id])->one();
             $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
-            return $this->render('_packingslip',[
-                'model'=>$model,
-                'modelline' => $modelline,
+            $data = [];
+            if($modelline){
+               foreach ($modelline as $value){
+                   array_push($data, $value->product_id);
+               }
+            }
+            $searchModel = new \backend\models\ProductstockSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $dataProvider->query->andFilterWhere(['product_id'=>$data]);
+
+            return $this->render('_pickingnew',[
+                'searchModel'=> $searchModel,
+                'dataProvider' => $dataProvider,
+                'order_no' => $model->sale_no,
             ]);
+//            return $this->render('_packingslip',[
+//                'model'=>$model,
+//                'modelline' => $modelline,
+//            ]);
+        }
+    }
+    public function actionSavepicking(){
+        if(Yii::$app->request->isAjax){
+            $list = Yii::$app->request->post('list');
+            if(count($list)){
+                $picking = new \backend\models\Picking();
+                $picking->sale_id = 1;
+                $picking->getLastNo();
+                $picking->trans_date = strtotime(date('Y-m-d'));
+                $picking->picking_date = date('Y-m-d');
+                if($picking->save()){
+                    if(count($list)>0) {
+                        for($i=0;$i<=count($list)-1;$i++){
+                            $stock_info = \backend\models\Productstock::find()->where(['id'=>$list[$i]])->one();
+                            if($stock_info) {
+                                $pickline = new \backend\models\Pickingline();
+                                $pickline->picking_id = $picking->id;
+                                $pickline->product_id = $stock_info->product_id;
+                                $pickline->qty = $stock_info->in_qty;
+                                $pickline->warehouse_id = $stock_info->warehouse_id;
+                                $pickline->permit_no = $stock_info->permit_no;
+                                $pickline->permit_date = $stock_info->permit_date;
+                                $pickline->excise_no = $stock_info->excise_no;
+                                $pickline->excise_date = $stock_info->excise_date;
+                                $pickline->save();
+
+                            }
+                        }
+                    }
+
+                }
+            }
         }
     }
 }

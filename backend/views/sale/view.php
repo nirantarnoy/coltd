@@ -218,6 +218,32 @@ $this->registerCss('
             <div class="panel-heading">
                 <h3><i class="fa fa-money"></i> Packing Slip <small></small></h3>
                 <div class="clearfix"></div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>วันที่</th>
+                        <th>เวลา</th>
+                        <th>จำนวนเงิน</th>
+                        <th>หลักฐาน</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php if(count($payment)):?>
+                    <?php $i=0;?>
+                    <?php foreach ($payment as $value):?>
+                            <?php $i+=1;?>
+                            <tr>
+                                <td><?=$i?></td>
+                                <td><?=date('d-m-Y',strtotime($value->trans_date))?></td>
+                                <td><?=date('H:i:s',strtotime($value->trans_time))?></td>
+                                <td><?=number_format($value->amount,0)?></td>
+                                <td><a href="../web/uploads/slip/<?=$value->slip?>" target="_blank"><?=$value->slip?></a> </td>
+                            </tr>
+                    <?php endforeach;?>
+                    <?php endif;?>
+                    </tbody>
+                </table>
             </div>
             <div class="panel-body">
             </div>
