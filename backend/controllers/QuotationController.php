@@ -89,7 +89,7 @@ class QuotationController extends Controller
                         $modelline->product_id = $prodid[$i];
                         $modelline->qty = $lineqty[$i];
                         $modelline->price = $lineprice[$i];
-                        $modelline->stock_id = $stockid;
+                        $modelline->stock_id = $stockid[$i];
                         $modelline->save();
                     }
                 }
@@ -144,7 +144,7 @@ class QuotationController extends Controller
                             $modelline->product_id = $prodid[$i];
                             $modelline->qty = $lineqty[$i];
                             $modelline->price = $lineprice[$i];
-                            $modelline->stock_id = $stockid;
+                            $modelline->stock_id = $stockid[$i];
                             $modelline->line_amount = $lineqty[$i] * $lineprice[$i];
                             $modelline->save();
                         }

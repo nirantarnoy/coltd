@@ -110,6 +110,7 @@ class SaleController extends Controller
 
 
         $modelpick = \backend\models\Picking::find()->where(['sale_id'=>$id])->all();
+
         if($modelpick){
             foreach ($modelpick as $value){
                 array_push($pickinglist,$value->id);
@@ -137,7 +138,7 @@ class SaleController extends Controller
             $lineqty = Yii::$app->request->post('qty');
             $lineprice = Yii::$app->request->post('price');
             $removelist = Yii::$app->request->post('removelist');
-
+            $model->status = 1;
             if($model->save()){
                 if(count($prodid)>0){
                     for($i=0;$i<=count($prodid)-1;$i++){
@@ -437,14 +438,31 @@ class SaleController extends Controller
                    array_push($data, $value->product_id);
                }
             }
+
+            $sql = "SELECT t1.product_id,t1.qty,t1.price,t2.invoice_no,t2.invoice_date,t2.transport_in_no,".
+                   "t2.transport_in_date,t2.sequence,t2.permit_no,t2.permit_date,t2.kno_no_in,t2.kno_in_date,t3.origin,".
+                "t2.thb_amount,t2.usd_rate,t1.stock_id,t1.sale_id,t1.id as sale_line_id".
+                   " FROM sale_line as t1 left join product_stock as t2 on t1.stock_id = t2.id inner join product as t3 on ".
+                   "t3.id = t1.product_id".
+                   " WHERE sale_id=".$model->id;
+
+            $query = Yii::$app->db->createCommand($sql)->queryAll();
+
+            //print_r($query);return;
+
+
+
             $searchModel = new \backend\models\ProductstockSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             $dataProvider->query->andFilterWhere(['product_id'=>$data]);
 
-            return $this->render('_pickingnew',[
-                'searchModel'=> $searchModel,
-                'dataProvider' => $dataProvider,
-                'order_no' => $model->sale_no,
+            return $this->render('_packingslip',[
+               'model'=>$model,
+               'modelline'=>$modelline,
+               'query' => $query
+               // 'searchModel'=> $searchModel,
+               // 'dataProvider' => $dataProvider,
+              //  'order_no' => $model->sale_no,
             ]);
 //            return $this->render('_packingslip',[
 //                'model'=>$model,
@@ -453,34 +471,41 @@ class SaleController extends Controller
         }
     }
     public function actionSavepicking(){
-        if(Yii::$app->request->isAjax){
-            $list = Yii::$app->request->post('list');
+        //if(Yii::$app->request->isAjax){
+           // $list = Yii::$app->request->post('list');
+
+            $sale_id = Yii::$app->request->post('sale_id');
+            $sale_line_id = Yii::$app->request->post('sale_line_id');
+            $stock_id = Yii::$app->request->post('stock_id');
+            $line_qty = Yii::$app->request->post('line_qty');
+
             $qty = 0;
             $price = 0;
-            if(count($list)){
+            if(count($stock_id)){
                 $picking = new \backend\models\Picking();
-                $picking->sale_id = 1;
+                $picking->sale_id = $sale_id[0];
                 $picking->getLastNo();
                 $picking->trans_date = strtotime(date('Y-m-d'));
                 $picking->picking_date = date('Y-m-d');
                 if($picking->save()){
-                    if(count($list)>0) {
-                        for($i=0;$i<=count($list)-1;$i++){
-                            $stock_info = \backend\models\Productstock::find()->where(['id'=>$list[$i]])->one();
+                    if(count($stock_id)>0) {
+                        for($i=0;$i<=count($stock_id)-1;$i++){
+                           // echo "kkdkd";return;
+                            $stock_info = \common\models\ProductStock::find()->where(['id'=>$stock_id[$i]])->one();
                             if($stock_info) {
                                 $pickline = new \backend\models\Pickingline();
                                 $pickline->picking_id = $picking->id;
                                 $pickline->product_id = $stock_info->product_id;
-                                $pickline->qty = $stock_info->in_qty;
+                                $pickline->qty = $line_qty[$i];
                                 $pickline->warehouse_id = $stock_info->warehouse_id;
-                                $pickline->inv_no = $stock_info->inv_no;
-                                $pickline->inv_date = $stock_info->date;
+                                $pickline->inv_no = $stock_info->invoice_no;
+                                $pickline->inv_date = $stock_info->invoice_date;
                                 $pickline->permit_no = $stock_info->permit_no;
                                 $pickline->permit_date = $stock_info->permit_date;
-                                $pickline->excise_no = $stock_info->excise_no;
+                             //   $pickline->excise_no = $stock_info->excise_no;
                                 $pickline->price = $stock_info->usd_rate;
-                                $pickline->excise_date = $stock_info->excise_date;
-                                $pickline->save();
+                              //  $pickline->excise_date = $stock_info->excise_date;
+                                $pickline->save(false);
 
                             }
                         }
@@ -488,6 +513,7 @@ class SaleController extends Controller
 
                 }
             }
-        }
+            return $this->redirect(['sale/update','id'=>$sale_id[0]]);
+        //}
     }
 }

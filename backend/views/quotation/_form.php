@@ -471,6 +471,8 @@ $js =<<<JS
                      $(".table-list").show();
                      var html = "";
                      for(var i =0;i<=data.length -1;i++){
+                            var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
+                         var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
                          html +="<tr ondblclick='getitem($(this));'>" +
                           "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td>"+
                           "<td style='vertical-align: middle'>"+
@@ -485,7 +487,8 @@ $js =<<<JS
                           "<input type='hidden' class='unitfactor' value='"+data[i]['unit_factor']+"'/>" +
                           "<input type='hidden' class='volumn' value='"+data[i]['volumn']+"'/>" +
                           "<input type='hidden' class='volumn_content' value='"+data[i]['volumn_content']+"'/>" +
-                          "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
+                           "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
+                           "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
                            "</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
                            "<td>"+data[i]['warehouse_name']+"</td>"+
@@ -499,10 +502,10 @@ $js =<<<JS
                            "<td>"+data[i]['excise_no']+"</td>" +
                            "<td>"+data[i]['kno_no_in']+"</td>" +
                            "<td>"+data[i]['kno_in_date']+"</td>" +
-                           "<td>"+data[i]['in_qty']+"</td>" +
-                           "<td>"+data[i]['out_qty']+"</td>" +
-                           "<td>"+data[i]['in_qty']+"</td>" +
-                            "</tr>"
+                            "<td style='color:green;text-align: right;'>"+parseFloat(in_q).toLocaleString()+"</td>" +
+                           "<td style='color:red;text-align: right;'>"+parseFloat(out_q).toLocaleString()+"</td>" +
+                           "<td style='font-weight: bold;text-align: right;'>"+ parseFloat(in_q).toLocaleString()+"</td>" +
+                           "</tr>"
                           
                      }
                      $(".table-list tbody").html(html);
@@ -588,6 +591,7 @@ $js =<<<JS
                           "<input type='hidden' class='volumn' value='"+data[i]['volumn']+"'/>" +
                           "<input type='hidden' class='volumn_content' value='"+data[i]['volumn_content']+"'/>" +
                           "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
+                          "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
                            "</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
                              "<td>"+data[i]['warehouse_name']+"</td>"+
@@ -636,6 +640,7 @@ $js =<<<JS
     var prodprice = e.closest("tr").find(".prodprice").val();
     var unitfactor = e.closest("tr").find(".unitfactor").val();
     var stock_id = e.closest("tr").find(".stock_refid").val();
+    var stock_price = e.closest("tr").find(".stock_price").val();
     var volumn = e.closest("tr").find(".volumn").val();
     var volumn_content = e.closest("tr").find(".volumn_content").val();
     
@@ -652,7 +657,7 @@ $js =<<<JS
               $(this).closest('tr').find(".stock-id").val(stock_id);
               $(this).closest('tr').find(".line_cost").val(prodcost);
               $(this).closest('tr').find(".line_origin").val(prodorigin);
-              $(this).closest('tr').find(".line_price").val(prodprice);
+              $(this).closest('tr').find(".line_price").val(stock_price);
               $(this).closest('tr').find(".line_packper").val(unitfactor);
               $(this).closest('tr').find(".line_litre").val(volumn);
               $(this).closest('tr').find(".line_percent").val(volumn_content);
