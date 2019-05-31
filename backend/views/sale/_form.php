@@ -187,7 +187,7 @@ $this->registerCss('
                                         </td>
                                         <td>
                                             <input type="hidden" class="productid" name="productid[]" value="<?=$value->product_id?>">
-                                            <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findEng($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                            <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findProductInfo($value->product_id)->product_code?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control productname" name="prodname[]" value="<?=\backend\models\Product::findName($value->product_id)?>" readonly>
@@ -293,40 +293,56 @@ $this->registerCss('
     </div>
     <div class="panel-body">
         <div class="panel-group" id="accordion">
-            <?php if(!$model->isNewRecord):?>
-                <?php if(count($modelpick) > 0):?>
-                    <?php $i = 0;?>
-                    <?php foreach ($modelpick as $value):?>
-                        <?php $i+=1;?>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?=$i?>">
-                                        <?=$value->picking_no?> <label class="label label-success"><?=date('d/m/Y',$value->trans_date)?></label></a> <span class="pull-right"><div data-var="<?=$value->id?>" class="btn btn-pincking-invoice btn-danger" onclick="pickinginv($(this))"><i class='fa fa-print'></i>  พิมพ์</div></span>
-                                </h4>
-                                <form id="form-<?=$value->id?>" method="post" action="<?=Url::to(['sale/bill','id'=>$value->id],true)?>" target="_blank"></form>
-                            </div>
-                            <div id="collapse<?=$i?>" class="panel-collapse collapse out">
-                                <div class="panel-body">
-                                    <table>
-                                        <?php foreach ($modelpickline as $val):?>
-                                        <?php if($value->id == $val->picking_id):?>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><?=$val->product_id?></td>
-                                            <td><?=$val->qty?></td>
-                                            <td></td>
-                                        </tr>
-                                        <?php endif;?>
-                                        <?php endforeach;?>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#home">รายการ</a></li>
+                <li><a data-toggle="tab" href="#menu1">รายละอียด</a></li>
+            </ul>
 
-                <?php endif;?>
-            <?php endif;?>
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
+                    <?php if(!$model->isNewRecord):?>
+                        <?php if(count($modelpick) > 0):?>
+                            <?php $i = 0;?>
+                            <?php foreach ($modelpick as $value):?>
+                                <?php $i+=1;?>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?=$i?>">
+                                                <?=$value->picking_no?> <label class="label label-success"><?=date('d/m/Y',$value->trans_date)?></label></a> <span class="pull-right"><div data-var="<?=$value->id?>" class="btn btn-pincking-invoice btn-danger" onclick="pickinginv($(this))"><i class='fa fa-print'></i>  พิมพ์</div></span>
+                                        </h4>
+                                        <form id="form-<?=$value->id?>" method="post" action="<?=Url::to(['sale/bill','id'=>$value->id],true)?>" target="_blank"></form>
+                                    </div>
+                                    <div id="collapse<?=$i?>" class="panel-collapse collapse out">
+                                        <div class="panel-body">
+                                            <table>
+                                                <?php foreach ($modelpickline as $val):?>
+                                                    <?php if($value->id == $val->picking_id):?>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td><?=$val->product_id?></td>
+                                                            <td><?=$val->qty?></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    <?php endif;?>
+                                                <?php endforeach;?>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+
+                        <?php endif;?>
+                    <?php endif;?>
+                </div>
+                <div id="menu1" class="tab-pane fade">
+                    <h3>Menu 1</h3>
+                    <p>Some content in menu 1.</p>
+                </div>
+
+            </div>
+
+
 
 
         </div>

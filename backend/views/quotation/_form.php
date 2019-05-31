@@ -131,6 +131,7 @@ $this->registerCss('
                                 </td>
                                 <td>
                                     <input type="hidden" class="productid" name="productid[]">
+                                    <input type="hidden" class="stock-id" name="stock_id[]" value="">
                                     <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                                 </td>
                                 <td>
@@ -181,6 +182,7 @@ $this->registerCss('
                                         </td>
                                         <td>
                                             <input type="hidden" class="productid" name="productid[]" value="<?=$value->product_id?>">
+                                            <input type="hidden" class="stock-id" name="stock_id[]" value="<?=$value->stock_id?>">
                                             <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findCode($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
 
                                         </td>
@@ -225,6 +227,7 @@ $this->registerCss('
                                     </td>
                                     <td>
                                         <input type="hidden" class="productid" name="productid[]">
+                                        <input type="hidden" class="stock-id" name="stock_id[]" value="">
                                         <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                                     </td>
                                     <td>
@@ -322,15 +325,30 @@ $this->registerCss('
                     </div>
 
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="white-space:nowrap;overflow-y: auto">
                 <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
                 <table class="table table-bordered table-striped table-list">
                     <thead>
                         <tr>
+                            <th style="text-align: center">เลือก</th>
                             <th>รหัสสินค้า</th>
                             <th>รายละเอียด</th>
                             <th>Origin</th>
-                            <th style="text-align: center">เลือก</th>
+                            <th>คลัง</th>
+                            <th>inv</th>
+                            <th>inv.date</th>
+                            <th>ใบอนุญาต</th>
+                            <th>วันที่</th>
+                            <th>ใบขน</th>
+                            <th>วันที่</th>
+                            <th>ลำดับ</th>
+                            <th>สรรพสามิตร</th>
+                            <th>กนอ.</th>
+                            <th>วันที่</th>
+                            <th>เข้า</th>
+                            <th>ออก</th>
+                            <th>คงเหลือ</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -346,6 +364,7 @@ $this->registerCss('
 
     </div>
 </div>
+
 <!--<div id="hover-div" display="none">-->
 <!--    <img class="popover1" style="height: 100px;" src="http://transolid.com/assets/images/colors/previews/prev_sorrento_coast.jpg" title="some title text"/>-->
 <!--</div>-->
@@ -443,7 +462,7 @@ $js =<<<JS
               'url': "$url_to_find",
               'data': {'txt': textsearch},
               'success': function(data) {
-                 alert(data.length);return;
+                // alert(data.length);return;
                  if(data.length == 0){
                       $(".table-list").hide();
                      $(".modal-error").show();
@@ -452,8 +471,10 @@ $js =<<<JS
                      $(".table-list").show();
                      var html = "";
                      for(var i =0;i<=data.length -1;i++){
-                         html +="<tr ondblclick='getitem($(this));'><td style='vertical-align: middle'>"+
-                         data[i]['engname']+"</td><td style='vertical-align: middle'>"+
+                         html +="<tr ondblclick='getitem($(this));'>" +
+                          "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td>"+
+                          "<td style='vertical-align: middle'>"+
+                         data[i]['product_code']+"</td><td style='vertical-align: middle'>"+
                          data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
                           "<input type='hidden' class='prodcost' value='"+data[i]['cost']+"'/>" +
                           "<input type='hidden' class='prodprice' value='"+data[i]['price']+"'/>" +
@@ -464,9 +485,25 @@ $js =<<<JS
                           "<input type='hidden' class='unitfactor' value='"+data[i]['unit_factor']+"'/>" +
                           "<input type='hidden' class='volumn' value='"+data[i]['volumn']+"'/>" +
                           "<input type='hidden' class='volumn_content' value='"+data[i]['volumn_content']+"'/>" +
+                          "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
                            "</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
-                           "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td></tr>"
+                           "<td>"+data[i]['warehouse_name']+"</td>"+
+                           "<td>"+data[i]['invoice_no']+"</td>"+
+                           "<td>"+data[i]['invoice_date']+"</td>" +
+                           "<td>"+data[i]['permit_no']+"</td>" +
+                           "<td>"+data[i]['permit_date']+"</td>" +
+                             "<td>"+data[i]['transport_in_no']+"</td>" +
+                           "<td>"+data[i]['transport_in_date']+"</td>" +
+                                     "<td>"+data[i]['sequence']+"</td>" +
+                           "<td>"+data[i]['excise_no']+"</td>" +
+                           "<td>"+data[i]['kno_no_in']+"</td>" +
+                           "<td>"+data[i]['kno_in_date']+"</td>" +
+                           "<td>"+data[i]['in_qty']+"</td>" +
+                           "<td>"+data[i]['out_qty']+"</td>" +
+                           "<td>"+data[i]['in_qty']+"</td>" +
+                            "</tr>"
+                          
                      }
                      $(".table-list tbody").html(html);
                      
@@ -534,8 +571,12 @@ $js =<<<JS
                      $(".table-list").show();
                      var html = "";
                      for(var i =0;i<=data.length -1;i++){
-                         html +="<tr ondblclick='getitem($(this));'><td style='vertical-align: middle'>"+
-                         data[i]['engname']+"</td><td style='vertical-align: middle'>"+
+                         var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
+                         var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
+                         html +="<tr ondblclick='getitem($(this));'>" +
+                         "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td>"+
+                          "<td style='vertical-align: middle'>"+
+                         data[i]['product_code']+"</td><td style='vertical-align: middle'>"+
                          data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
                           "<input type='hidden' class='prodcost' value='"+data[i]['cost']+"'/>" +
                           "<input type='hidden' class='prodprice' value='"+data[i]['price']+"'/>" +
@@ -546,9 +587,25 @@ $js =<<<JS
                           "<input type='hidden' class='unitfactor' value='"+data[i]['unit_factor']+"'/>" +
                           "<input type='hidden' class='volumn' value='"+data[i]['volumn']+"'/>" +
                           "<input type='hidden' class='volumn_content' value='"+data[i]['volumn_content']+"'/>" +
+                          "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
                            "</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
-                           "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td></tr>"
+                             "<td>"+data[i]['warehouse_name']+"</td>"+
+                           "<td>"+data[i]['invoice_no']+"</td>"+
+                           "<td>"+data[i]['invoice_date']+"</td>"+
+                          "<td>"+data[i]['permit_no']+"</td>"+
+                          "<td>"+data[i]['permit_date']+"</td>"+
+                            "<td>"+data[i]['transport_in_no']+"</td>" +
+                           "<td>"+data[i]['transport_in_date']+"</td>" +
+                           "<td>"+data[i]['sequence']+"</td>" +
+                           "<td>"+data[i]['excise_no']+"</td>" +
+                           "<td>"+data[i]['kno_no_in']+"</td>" +
+                           "<td>"+data[i]['kno_in_date']+"</td>" +
+                           "<td style='color:green;text-align: right;'>"+parseFloat(in_q).toLocaleString()+"</td>" +
+                           "<td style='color:red;text-align: right;'>"+parseFloat(out_q).toLocaleString()+"</td>" +
+                           "<td style='font-weight: bold;text-align: right;'>"+ parseFloat(in_q).toLocaleString()+"</td>" +
+                           "</tr>"
+                           
                      }
                      $(".table-list tbody").html(html);
                      
@@ -571,13 +628,14 @@ $js =<<<JS
    }
  
  function getitem(e){
-    var prodcode = e.closest("tr").find("td:eq(0)").text();
-    var prodname = e.closest("tr").find("td:eq(1)").text();
-    var prodorigin = e.closest("tr").find("td:eq(2)").text()=="null"?'':e.closest("tr").find("td:eq(2)").text();
+    var prodcode = e.closest("tr").find("td:eq(1)").text();
+    var prodname = e.closest("tr").find("td:eq(2)").text();
+    var prodorigin = e.closest("tr").find("td:eq(3)").text()=="null"?'':e.closest("tr").find("td:eq(3)").text();
     var prodid = e.closest("tr").find(".recid").val();
     var prodcost = e.closest("tr").find(".prodcost").val();
     var prodprice = e.closest("tr").find(".prodprice").val();
     var unitfactor = e.closest("tr").find(".unitfactor").val();
+    var stock_id = e.closest("tr").find(".stock_refid").val();
     var volumn = e.closest("tr").find(".volumn").val();
     var volumn_content = e.closest("tr").find(".volumn_content").val();
     
@@ -591,6 +649,7 @@ $js =<<<JS
               $(this).closest('tr').find(".productname").val(prodname);
               $(this).closest('tr').find(".productid").val(prodid);
               $(this).closest('tr').find(".line_qty").val(1);
+              $(this).closest('tr').find(".stock-id").val(stock_id);
               $(this).closest('tr').find(".line_cost").val(prodcost);
               $(this).closest('tr').find(".line_origin").val(prodorigin);
               $(this).closest('tr').find(".line_price").val(prodprice);

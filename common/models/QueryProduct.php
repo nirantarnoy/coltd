@@ -30,9 +30,26 @@ use Yii;
  * @property string $engname
  * @property double $netweight
  * @property double $grossweight
- * @property string $excise_no
  * @property string $excise_date
  * @property string $group_name
+ * @property int $warehouse_id
+ * @property string $warehouse_name
+ * @property int $in_qty
+ * @property int $out_qty
+ * @property string $invoice_no
+ * @property string $invoice_date
+ * @property string $transport_in_no
+ * @property string $transport_in_date
+ * @property int $sequence
+ * @property string $permit_no
+ * @property string $permit_date
+ * @property string $kno_no_in
+ * @property string $kno_in_date
+ * @property string $excise_no
+ * @property double $usd_rate
+ * @property double $thb_amount
+ * @property int $stock_status
+ * @property int $stock_id
  */
 class QueryProduct extends \yii\db\ActiveRecord
 {
@@ -50,10 +67,11 @@ class QueryProduct extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'category_id', 'product_type_id', 'unit_id', 'is_hold', 'bom_type', 'status'], 'integer'],
-            [['min_stock', 'max_stock', 'cost', 'price', 'all_qty', 'unit_factor', 'volumn_content', 'volumn', 'netweight', 'grossweight'], 'number'],
+            [['id', 'category_id', 'product_type_id', 'unit_id', 'is_hold', 'bom_type', 'status', 'warehouse_id', 'in_qty', 'out_qty', 'sequence', 'stock_status', 'stock_id'], 'integer'],
+            [['min_stock', 'max_stock', 'cost', 'price', 'all_qty', 'unit_factor', 'volumn_content', 'volumn', 'netweight', 'grossweight', 'usd_rate', 'thb_amount'], 'number'],
             [['excise_date'], 'safe'],
-            [['product_code', 'name', 'description', 'barcode', 'origin', 'engname', 'excise_no', 'group_name'], 'string', 'max' => 255],
+            [['product_code', 'name', 'description', 'barcode', 'origin', 'engname', 'group_name', 'warehouse_name', 'invoice_no', 'transport_in_no', 'permit_no', 'kno_no_in', 'excise_no'], 'string', 'max' => 255],
+            [['invoice_date', 'transport_in_date', 'permit_date', 'kno_in_date'], 'string', 'max' => 10],
         ];
     }
 
@@ -86,9 +104,26 @@ class QueryProduct extends \yii\db\ActiveRecord
             'engname' => 'Engname',
             'netweight' => 'Netweight',
             'grossweight' => 'Grossweight',
-            'excise_no' => 'Excise No',
             'excise_date' => 'Excise Date',
             'group_name' => 'Group Name',
+            'warehouse_id' => 'Warehouse ID',
+            'warehouse_name' => 'Warehouse Name',
+            'in_qty' => 'In Qty',
+            'out_qty' => 'Out Qty',
+            'invoice_no' => 'Invoice No',
+            'invoice_date' => 'Invoice Date',
+            'transport_in_no' => 'Transport In No',
+            'transport_in_date' => 'Transport In Date',
+            'sequence' => 'Sequence',
+            'permit_no' => 'Permit No',
+            'permit_date' => 'Permit Date',
+            'kno_no_in' => 'Kno No In',
+            'kno_in_date' => 'Kno In Date',
+            'excise_no' => 'Excise No',
+            'usd_rate' => 'Usd Rate',
+            'thb_amount' => 'Thb Amount',
+            'stock_status' => 'Stock Status',
+            'stock_id' => 'Stock ID',
         ];
     }
 }

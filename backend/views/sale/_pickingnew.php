@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'showOnEmpty'=>false,
                     'tableOptions' => ['class' => 'table table-hover table-condensed'],
                     'id' => 'my-grid',
-                    'options' => ['style' => 'white-space:nowrap; font-size: 14px'],
+                    'options' => ['style' => 'white-space:nowrap; font-size: 16px'],
                     'emptyText' => '<br /><div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
                     'rowOptions' => function ($model) {
                         if ($model->sequence == 0) {
@@ -77,7 +77,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['attribute' => 'in_qty','value'=>function($data){
                             return $data->in_qty!=null?$data->in_qty:0;
                         }],
-                        'out_qty',
+                        ['attribute' => 'out_qty','format'=>'raw','value'=>function($data){
+                            //  return $data->in_qty!=null?$data->in_qty:0;
+                            return Html::textInput('',$data->out_qty);
+                        }],
                         'invoice_no',
                         ['attribute' => 'invoice_date','value'=>function($data){
                             return date('d-m-Y',strtotime($data->invoice_date));
@@ -97,7 +100,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['attribute' => 'kno_in_date','value'=>function($data){
                             return date('d-m-Y',strtotime($data->kno_in_date));
                         }],
-                        'usd_rate',
+                        ['attribute' => 'usd_rate','value'=>function($data){
+                              return $data->in_qty!=null?$data->in_qty:0;
+                            //return Html::textInput('',$data->usd_rate);
+                        }],
                         'thb_amount',
                         //'status',
                         //'created_at',

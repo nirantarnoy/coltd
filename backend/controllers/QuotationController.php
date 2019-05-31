@@ -76,6 +76,7 @@ class QuotationController extends Controller
             $prodid = Yii::$app->request->post('productid');
             $lineqty = Yii::$app->request->post('qty');
             $lineprice = Yii::$app->request->post('price');
+            $stockid = Yii::$app->request->post('stock_id');
 
             $model->require_date = strtotime($model->require_date);
             $model->status = 1;
@@ -88,6 +89,7 @@ class QuotationController extends Controller
                         $modelline->product_id = $prodid[$i];
                         $modelline->qty = $lineqty[$i];
                         $modelline->price = $lineprice[$i];
+                        $modelline->stock_id = $stockid;
                         $modelline->save();
                     }
                 }
@@ -117,11 +119,13 @@ class QuotationController extends Controller
             $prodid = Yii::$app->request->post('productid');
             $lineqty = Yii::$app->request->post('qty');
             $lineprice = Yii::$app->request->post('price');
+            $stockid = Yii::$app->request->post('stock_id');
             $removelist = Yii::$app->request->post('removelist');
 
             //print_r($removelist);return;
 
             $model->require_date = strtotime($model->require_date);
+            $model->status = 1;
             if($model->save()){
                 if(count($prodid)>0){
                     for($i=0;$i<=count($prodid)-1;$i++){
@@ -132,6 +136,7 @@ class QuotationController extends Controller
                             $modelcheck->qty = $lineqty[$i];
                             $modelcheck->price = $lineprice[$i];
                             $modelcheck->line_amount = $lineqty[$i] * $lineprice[$i];
+                            $modelcheck->stock_id = $stockid;
                             $modelcheck->save();
                         }else{
                             $modelline = new \backend\models\Quotationline();
@@ -139,6 +144,7 @@ class QuotationController extends Controller
                             $modelline->product_id = $prodid[$i];
                             $modelline->qty = $lineqty[$i];
                             $modelline->price = $lineprice[$i];
+                            $modelline->stock_id = $stockid;
                             $modelline->line_amount = $lineqty[$i] * $lineprice[$i];
                             $modelline->save();
                         }
@@ -214,8 +220,8 @@ class QuotationController extends Controller
                     ->all();
                 return Json::encode($model);
             }else{
-                $model = \common\models\QueryProduct::find()->where(['or',['Like','engname',$txt],['Like','name',$txt]])
-                    ->orFilterWhere(['like','engname',$txt])
+                $model = \common\models\QueryProduct::find()->where(['or',['Like','product_code',$txt],['Like','name',$txt]])
+                    ->orFilterWhere(['like','product_code',$txt])
                     ->orFilterWhere(['like','name',$txt])
                     ->asArray()
                     ->all();
@@ -235,7 +241,7 @@ class QuotationController extends Controller
 
                 if($model){
                     $order = new \backend\models\Sale();
-                    $order->sale_no = "SO19";
+                    $order->sale_no = \backend\models\Sale::getLastNo();
                     $order->customer_id = $model->customer_id;
                     $order->quotation_id = $model->id;
                     $order->status = 1;
@@ -253,6 +259,7 @@ class QuotationController extends Controller
                                 $orderline->price = $value->price;
                                 $orderline->disc_amount = $value->disc_amount;
                                 $orderline->line_amount = $value->line_amount;
+                                $orderline->stock_id = $value->stock_id;
                                 $orderline->save();
                             }
                         }
