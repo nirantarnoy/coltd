@@ -455,6 +455,8 @@ class SaleController extends Controller
     public function actionSavepicking(){
         if(Yii::$app->request->isAjax){
             $list = Yii::$app->request->post('list');
+            $qty = 0;
+            $price = 0;
             if(count($list)){
                 $picking = new \backend\models\Picking();
                 $picking->sale_id = 1;
@@ -471,9 +473,12 @@ class SaleController extends Controller
                                 $pickline->product_id = $stock_info->product_id;
                                 $pickline->qty = $stock_info->in_qty;
                                 $pickline->warehouse_id = $stock_info->warehouse_id;
+                                $pickline->inv_no = $stock_info->inv_no;
+                                $pickline->inv_date = $stock_info->date;
                                 $pickline->permit_no = $stock_info->permit_no;
                                 $pickline->permit_date = $stock_info->permit_date;
                                 $pickline->excise_no = $stock_info->excise_no;
+                                $pickline->price = $stock_info->usd_rate;
                                 $pickline->excise_date = $stock_info->excise_date;
                                 $pickline->save();
 
