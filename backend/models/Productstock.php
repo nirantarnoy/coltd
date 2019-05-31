@@ -49,6 +49,9 @@ class Productstock extends \common\models\ProductStock
     public function getProduct(){
         return $this->hasOne(\backend\models\Product::className(),['id'=>'product_id']);
     }
+    public function getWarehouse(){
+        return $this->hasOne(\backend\models\Warehouse::className(),['id'=>'warehouse_id']);
+    }
 
 //    public function findLocationinfo($id){
 //        $model = Location::find()->where(['id'=>$id])->one();

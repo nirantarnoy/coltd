@@ -11,17 +11,18 @@ use backend\models\Productstock;
  */
 class ProductstockSearch extends Productstock
 {
-    public $globalSearch ,$productSearch;
+    public $globalSearch ,$productSearch,$warehouseSearch;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'product_id', 'warehouse_id', 'in_qty', 'out_qty', 'sequence', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id',  'warehouse_id', 'in_qty', 'out_qty', 'sequence', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['invoice_no', 'invoice_date', 'transport_in_no', 'transport_in_date', 'permit_no', 'permit_date', 'kno_no_in', 'kno_in_date'], 'safe'],
             [['usd_rate', 'thb_amount'], 'number'],
-            [['globalSearch','productSearch'],'string'],
+            [['globalSearch','productSearch','warehouseSearch'],'string'],
+            [['product_id'],'safe'],
         ];
     }
 
@@ -46,6 +47,7 @@ class ProductstockSearch extends Productstock
         $query = Productstock::find();
 
         $query->joinWith('product');
+        $query->joinWith('warehouse');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -63,7 +65,7 @@ class ProductstockSearch extends Productstock
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'product_id' => $this->product_id,
+           // 'product_id' => $this->product_id,
             'warehouse_id' => $this->warehouse_id,
             'in_qty' => $this->in_qty,
             'out_qty' => $this->out_qty,
@@ -86,6 +88,7 @@ class ProductstockSearch extends Productstock
                 ->orFilterWhere(['like','product.engname',$this->productSearch])
                 ->orFilterWhere(['like','product.name',$this->productSearch])
                 ->orFilterWhere(['like','product.description',$this->productSearch]);
+            //$query->AndFilterWhere(['like','warehouse.name',$this->warehouseSearch]);
         }
 
         return $dataProvider;

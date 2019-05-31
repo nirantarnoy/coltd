@@ -79,10 +79,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute' => 'warehouse_id','value'=>function($data){
                 return \backend\models\Warehouse::findWarehousename($data->warehouse_id);
             }],
-            ['attribute' => 'in_qty','value'=>function($data){
+            [
+                    'attribute' => 'in_qty',
+                'headerOptions' => ['style'=>'background-color: green;color: white'],
+                'contentOptions' => ['style'=>'background-color: green;color: white;text-align: right'],
+                'value'=>function($data){
                 return $data->in_qty!=null?$data->in_qty:0;
             }],
-            'out_qty',
+            [
+                'attribute' => 'out_qty',
+                'headerOptions' => ['style'=>'background-color: orange;color: white'],
+                'contentOptions' => ['style'=>'background-color: orange;color: white;text-align: right'],
+                'value'=>function($data){
+                    return $data->out_qty!=null?$data->out_qty:0;
+                }],
             'invoice_no',
             ['attribute' => 'invoice_date','value'=>function($data){
                return date('d-m-Y',strtotime($data->invoice_date));
