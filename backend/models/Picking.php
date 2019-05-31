@@ -95,6 +95,10 @@ class Picking extends \common\models\Picking
             return '';
         }
     }
+    public function checkPick($saleid){
+        $model = \backend\models\Picking::find()->where(['sale_id'=>$saleid])->one();
+        return count($model)>0?1:0;
+    }
     public function findCustomerAddress($id){
         $model = \backend\models\Picking::find()->where(['id'=>$id])->one();
         if($model){

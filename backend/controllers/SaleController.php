@@ -46,6 +46,7 @@ class SaleController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $pageSize;
 
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -105,6 +106,8 @@ class SaleController extends Controller
         $model = $this->findModel($id);
         $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
         $modelpayment = \backend\models\Paymenttrans::find()->where(['sale_id'=>$id])->all();
+
+
 
         $pickinglist = [];
 

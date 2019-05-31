@@ -163,8 +163,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             'onclick'=>'payment($(this));'
 
                         ];
-                        return Html::a(
-                            '<span class="glyphicon glyphicon-tags btn btn-xs btn-default"></span>', 'javascript:void(0)', $options);
+                        return \backend\models\Picking::checkPick($data->id)==1? Html::a(
+                            '<span class="glyphicon glyphicon-tags btn btn-xs btn-default"></span>', 'javascript:void(0)', $options)
+                            :'';
                     },
                     'delete' => function($url, $data, $index) {
                         $options = array_merge([
