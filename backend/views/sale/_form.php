@@ -295,7 +295,7 @@ $this->registerCss('
         <div class="panel-group" id="accordion">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#home">รายการ</a></li>
-                <li><a data-toggle="tab" href="#menu1">รายละอียด</a></li>
+<!--                <li><a data-toggle="tab" href="#menu1">รายละอียด</a></li>-->
             </ul>
 
             <div class="tab-content">
