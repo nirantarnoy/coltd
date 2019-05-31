@@ -329,41 +329,10 @@ class ImportController extends Controller
             header("Pragma: no-cache");
             header("Expires: 0");
 
-<<<<<<< HEAD
-           // print "\xEF\xBB\xBF";
-=======
+
             // print "\xEF\xBB\xBF";
->>>>>>> 1cd507b126935d8662d4e51da1c88d3b66482031
-            echo "
-                       <table border='1'>
-                         <tr>
-                            <td>".$id."</td>
-                            <td>รายการ</td>
-                            <td>ราคา ลัง(USD)</td>
-                            <td>ราคา ลัง(BAHT)</td>
-                            <td>จำนวน</td>
-                            <td>PACKING</td>
-                            <td>ราคา/ขวด</td>
-                            <td>ราคารวม</td>
-                            <td>จำนวนขวด</td>
-                            <td>น้ำหนักลิตร</td>
-                            <td>น้ำหนัก</td>
-                            <td>น้ำหนักรวมหีบห่อ</td>
-                            <td>เลขที่ใบขนขาเข้า</td>
-                            <td>รายการที่</td>
-                            <td>พิกัด</td>
-                            <td>ประเทศต้นกำเนิด</td>
-                            <td>รหัสสินค้าสรรพสามิต</td>
-                            <td>วันที่ (ค.ส)</td>
-                            <td>กนอ</td>
-                            <td>วันที่</td>
-                            <td>ใบอนุญาต</td>
-                            <td>วันที่</td>
-                         </tr>
-                       
-                    ";
-<<<<<<< HEAD
-            
+
+
             $model = Product::find()->all();
             if($model){
 
@@ -399,45 +368,43 @@ class ImportController extends Controller
                 }
                 echo "</table>";
             }
-=======
 
-//            if($model){
-//                $i=0;
-//                foreach($model as $data){
-//                    $i+=1;
-//                    // $cat = \backend\models\Productcat::findGroupname($data->category_id);
-//                    // $unit = \backend\models\Unit::findUnitname($data->unit_id);
-//                    echo "
-//                        <tr>
-//                            <td>".$i."</td>
-//                            <td>".$data->product_id."</td>
-//                            <td>".$data->price_pack1."</td>
-//                            <td>".$data->price_pack2."</td>
-//                            <td>".$data->qty."</td>
-//                            <td>".$data->product_packing."</td>
-//                            <td>".$data->price_per."</td>
-//                            <td>".$data->total_price."</td>
-//                            <td>".$data->total_qty."</td>
-//                            <td>".$data->weight_litre."</td>
-//                            <td>".$data->netweight."</td>
-//                            <td>".$data->grossweight."</td>
-//                            <td>".$data->transport_in_no."</td>
-//                            <td>".$data->line_num."</td>
-//                            <td>".$data->position."</td>
-//                            <td>".$data->origin."</td>
-//                            <td>".$data->exsice_no."</td>
-//                            <td>".$data->excise_date."</td>
-//                            <td>".$data->kno."</td>
-//                            <td>".$data->kno_date."</td>
-//                            <td>".$data->permit_no."</td>
-//                            <td>".$data->permit_date."</td>
-//                         </tr>
-//                    ";
-//                }
-//                echo "</table>";
-//            }
+            if($model){
+                $i=0;
+                foreach($model as $data){
+                    $i+=1;
+                    // $cat = \backend\models\Productcat::findGroupname($data->category_id);
+                    // $unit = \backend\models\Unit::findUnitname($data->unit_id);
+                    echo "
+                        <tr>
+                            <td>".$i."</td>
+                            <td>".$data->product_id."</td>
+                            <td>".$data->price_pack1."</td>
+                            <td>".$data->price_pack2."</td>
+                            <td>".$data->qty."</td>
+                            <td>".$data->product_packing."</td>
+                            <td>".$data->price_per."</td>
+                            <td>".$data->total_price."</td>
+                            <td>".$data->total_qty."</td>
+                            <td>".$data->weight_litre."</td>
+                            <td>".$data->netweight."</td>
+                            <td>".$data->grossweight."</td>
+                            <td>".$data->transport_in_no."</td>
+                            <td>".$data->line_num."</td>
+                            <td>".$data->position."</td>
+                            <td>".$data->origin."</td>
+                            <td>".$data->exsice_no."</td>
+                            <td>".$data->excise_date."</td>
+                            <td>".$data->kno."</td>
+                            <td>".$data->kno_date."</td>
+                            <td>".$data->permit_no."</td>
+                            <td>".$data->permit_date."</td>
+                         </tr>
+                    ";
+                }
+                echo "</table>";
+            }
 
->>>>>>> 1cd507b126935d8662d4e51da1c88d3b66482031
         }
     }
 
