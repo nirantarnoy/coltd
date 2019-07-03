@@ -453,7 +453,7 @@ class ProductController extends Controller
                             if($wh_get_id){$whid=$wh_get_id->id;}
 
                            // $qty = 100;
-                            echo $rowData[11];
+                            //echo $rowData[11];
                             $has_stock = Productstock::find()->where(['product_id'=>$has_product->id,'warehouse_id'=>$whid,
                                 'invoice_no'=>$rowData[11],'transport_in_no'=>$rowData[13]])->one();
                             if($has_stock){
@@ -483,6 +483,9 @@ class ProductController extends Controller
                             }
                         }
                     }
+                    $session = Yii::$app->session;
+                        $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
+                        return $this->redirect(['index']);
 
 //                        $catid = 0;
 //                        $qty = 0;
