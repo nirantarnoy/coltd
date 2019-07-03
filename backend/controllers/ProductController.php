@@ -394,7 +394,7 @@ class ProductController extends Controller
                              array_push($data,[
                                  'prod_id'=>$modelx->id,
                                  'qty'=>$modelx->all_qty,
-                                 'warehouse_id'=>1,
+                                 'warehouse_id'=>$whid,
                                  'trans_type'=>TransType::TRANS_ADJUST_IN,
                                  'permit_no' => $permit_no,
                                  'transport_no' => $transport_in_no,
@@ -691,11 +691,15 @@ class ProductController extends Controller
         if(count($model)>0){
             return $model->id;
         }else{
-            $model_new = new \backend\models\Productcategory();
-            $model_new->name = ltrim($name);
-            $model_new->status = 1;
-            if($model_new->save(false)){
-                return $model_new->id;
+            if($name != '') {
+                $model_new = new \backend\models\Productcategory();
+                $model_new->name = ltrim($name);
+                $model_new->status = 1;
+                if ($model_new->save(false)) {
+                    return $model_new->id;
+                }
+            }else{
+                return 0;
             }
         }
     }
@@ -704,11 +708,15 @@ class ProductController extends Controller
         if(count($model)>0){
             return $model->id;
         }else{
-            $model_new = new \backend\models\Warehouse();
-            $model_new->name = ltrim($name);
-            $model_new->status = 1;
-            if($model_new->save(false)){
-                return $model_new->id;
+            if($name != '') {
+                $model_new = new \backend\models\Warehouse();
+                $model_new->name = ltrim($name);
+                $model_new->status = 1;
+                if ($model_new->save(false)) {
+                    return $model_new->id;
+                }
+            }else{
+                return 0;
             }
         }
     }
@@ -717,11 +725,15 @@ class ProductController extends Controller
         if(count($model)>0){
             return $model->id;
         }else{
-            $model_new = new \backend\models\Unit();
-            $model_new->name = $name;
-            $model_new->status = 1;
-            if($model_new->save(false)){
-                return $model_new->id;
+            if($name != '') {
+                $model_new = new \backend\models\Unit();
+                $model_new->name = $name;
+                $model_new->status = 1;
+                if ($model_new->save(false)) {
+                    return $model_new->id;
+                }
+            }else{
+                return 0;
             }
         }
     }
