@@ -153,7 +153,8 @@ class ProductController extends Controller
 
        // $photoes = \backend\models\Productgallery::find()->where(['product_id'=>$id])->all();
         $productimage = \backend\models\Productimage::find()->where(['product_id'=>$id])->all();
-        $modelcost = \backend\models\Productcost::find()->where(['product_id'=>$id])->all();
+      //  $modelcost = \backend\models\Productcost::find()->where(['product_id'=>$id])->all();
+        $modelcost = \backend\models\Productstock::find()->where(['product_id'=>$id])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'productimage' => $productimage,
@@ -390,7 +391,8 @@ class ProductController extends Controller
 
                         if ($modelx->save(false)) {
                             $res += 1;
-                            // $data_all +=1;
+                      //      $this->manageprodstock($whid,$modelx->id,$modelx->all_qty,);
+                        //     $data_all +=1;
                              array_push($data,[
                                  'prod_id'=>$modelx->id,
                                  'qty'=>$modelx->all_qty,
@@ -417,6 +419,45 @@ class ProductController extends Controller
             }else{
 
             }
+        }
+    }
+    public function manageprodstock($whid,$prodid,$qty,$usd,$thb,$whdata,$invno,$trans_in_no){
+        $whid = 0;
+//        $prodid = \backend\models\Product::findId($rowData[0]);
+//        $qty = str_replace(",","",$rowData[20]);
+//        $usd = str_replace(",","",$rowData[21]);
+//        $thb = str_replace(",","",$rowData[22]);
+        $wh_get_id = \backend\models\Warehouse::find()->where(['name'=>$whdata])->one();
+        if($wh_get_id){$whid=$wh_get_id->id;}
+
+        // $qty = 100;
+        //echo $rowData[11];
+        $has_stock = Productstock::find()->where(['product_id'=>$prodid,'warehouse_id'=>$whid,
+            'invoice_no'=>$invno,'transport_in_no'=>$trans_in_no])->one();
+        if($has_stock){
+            $has_stock->in_qty = $qty;
+            $has_stock->out_qty = 0;
+            $has_stock->usd_rate = $usd;
+            $has_stock->thb_amount =  $thb;
+            $has_stock->save(false);
+        }else{
+            $modelstock = new Productstock();
+            $modelstock->product_id = $prodid;
+            $modelstock->warehouse_id = $whid;
+            $modelstock->invoice_no = $rowData[11];
+            $modelstock->invoice_date = date('Y-m-d',strtotime($rowData[12]));
+            $modelstock->transport_in_no = $rowData[13];
+            $modelstock->transport_in_date = date('Y-m-d',strtotime($rowData[14]));
+            $modelstock->sequence = $rowData[15];
+            $modelstock->permit_no = $rowData[16];
+            $modelstock->permit_date = date('Y-m-d',strtotime($rowData[17]));
+            $modelstock->kno_no_in = $rowData[18];
+            $modelstock->kno_in_date = date('Y-m-d',strtotime($rowData[19]));
+            $modelstock->in_qty = $qty;
+            $modelstock->out_qty = 0;
+            $modelstock->usd_rate = $usd;
+            $modelstock->thb_amount =  $thb;
+            $modelstock->save(false);
         }
     }
     public function actionImportupdate(){

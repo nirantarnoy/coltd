@@ -232,12 +232,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <tr>
                                                 <td><?=$i?></td>
                                                 <td><?=$value->transport_in_no?></td>
-                                                <td><?=$value->transport_in_date?></td>
+                                                <td><?=date('d-m-Y',strtotime($value->transport_in_date))?></td>
                                                 <td><?=$value->permit_no?></td>
-                                                <td><?=$value->permit_date?></td>
-                                                <td><?=$value->excise_no?></td>
-                                                <td><?=$value->excise_date?></td>
-                                                <td><?=$value->cost?></td>
+                                                <td><?=date('d-m-Y',strtotime($value->permit_date))?></td>
+                                                <td><?php //echo $value->excise_no?></td>
+                                                <td><?php //echo $value->excise_date?></td>
+                                                <td><?php echo $value->thb_amount?></td>
                                             </tr>
                                         <?php endforeach;?>
                                     <?php endif;?>
