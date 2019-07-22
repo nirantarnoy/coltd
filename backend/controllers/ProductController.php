@@ -393,14 +393,28 @@ class ProductController extends Controller
                             $res += 1;
                       //      $this->manageprodstock($whid,$modelx->id,$modelx->all_qty,);
                         //     $data_all +=1;
+                            $usd = str_replace(",","",$rowData[21]);
+                            $thb = str_replace(",","",$rowData[22]);
                              array_push($data,[
                                  'prod_id'=>$modelx->id,
                                  'qty'=>$modelx->all_qty,
                                  'warehouse_id'=>$whid,
                                  'trans_type'=>TransType::TRANS_ADJUST_IN,
-                                 'permit_no' => $permit_no,
-                                 'transport_no' => $transport_in_no,
+                                 'permit_no' => $rowData[16],
+                                 'permit_date' => date('Y-m-d',strtotime($rowData[17])),
+                                 'transport_in_no' => $rowData[13],
+                                 'transport_in_date' => date('Y-m-d',strtotime($rowData[14])),
                                  'excise_no' => $excise_no,
+                                 'invoice_no' => $rowData[11],
+                                 'invoice_date' => date('Y-m-d',strtotime($rowData[12])),
+                                 'sequence' => $rowData[15],
+                                 'kno_no_in' => $rowData[18],
+                                 'kno_in_date' => date('Y-m-d',strtotime($rowData[19])),
+                                 'out_qty' => 0,
+                                 'usd_rate' => $usd,
+                                 'thb_amount' => $thb,
+
+
                              ]);
                         }
                     }
@@ -502,7 +516,9 @@ class ProductController extends Controller
                                 $has_stock->out_qty = 0;
                                 $has_stock->usd_rate = $usd;
                                 $has_stock->thb_amount =  $thb;
-                                $has_stock->save(false);
+                                if($has_stock->save(false)){
+                                    $this->sumOnhand($has_product->prodid);
+                                }
                             }else{
                                 $modelstock = new Productstock();
                                 $modelstock->product_id = $prodid;
@@ -520,7 +536,9 @@ class ProductController extends Controller
                                 $modelstock->out_qty = 0;
                                 $modelstock->usd_rate = $usd;
                                 $modelstock->thb_amount =  $thb;
-                                $modelstock->save(false);
+                                if($modelstock->save(false)){
+                                    $this->sumOnhand($has_product->prodid);
+                                }
                             }
                         }
                     }
@@ -599,7 +617,10 @@ class ProductController extends Controller
             }
         }
     }
-
+    public function sumOnhand($prodid){
+        $onhand = \backend\models\Productstock::find()->where(['prod_id'=>$prodid])->sum('qty');
+        $upproduct = \backend\models\Product::find()->where()->one();
+    }
     public function updatePositiongroup($groupid,$position){
         $model = \backend\models\Productcategory::find()->where(['name'=>$groupid])->one();
         if($model){

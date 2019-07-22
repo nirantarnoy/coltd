@@ -98,7 +98,7 @@ table.table-vendor td{
                        </div>
                        <div class="btn-group">
                           <div class="btn btn-default btn-import"><i class="fa fa-upload"></i> นำเข้า</div>
-                          <div class="btn btn-default btn-import-update"><i class="fa fa-upload"></i> นำเข้าอัพเดท</div>
+<!--                          <div class="btn btn-default btn-import-update"><i class="fa fa-upload"></i> นำเข้าอัพเดท</div>-->
                            <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
                           <div class="btn btn-default btn-printbarcode"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>
 <!--                          <div class="btn btn-default view-list"><i class="fa fa-list"></i></div>-->

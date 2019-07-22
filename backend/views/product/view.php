@@ -218,7 +218,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <th>วันที่ใบขน</th>
                                         <th>เลขที่ใบอนุญาต</th>
                                         <th>วันที่ใบอนุญาต</th>
-                                        <th>สรรพสามิตร</th>
+                                        <th>invoice</th>
                                         <th>วันที่</th>
                                         <th>ราคา</th>
                                     </tr>
@@ -235,8 +235,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <td><?=date('d-m-Y',strtotime($value->transport_in_date))?></td>
                                                 <td><?=$value->permit_no?></td>
                                                 <td><?=date('d-m-Y',strtotime($value->permit_date))?></td>
-                                                <td><?php //echo $value->excise_no?></td>
-                                                <td><?php //echo $value->excise_date?></td>
+                                                <td><?php echo $value->invoice_no?></td>
+                                                <td><?php echo date('d-m-Y',strtotime($value->invoice_date))?></td>
                                                 <td><?php echo $value->thb_amount?></td>
                                             </tr>
                                         <?php endforeach;?>
