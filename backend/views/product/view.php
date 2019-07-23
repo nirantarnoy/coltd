@@ -220,6 +220,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <th>วันที่ใบอนุญาต</th>
                                         <th>invoice</th>
                                         <th>วันที่</th>
+                                        <th>จำนวน</th>
                                         <th>ราคา</th>
                                     </tr>
                                 </thaed>
@@ -237,6 +238,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <td><?=date('d-m-Y',strtotime($value->permit_date))?></td>
                                                 <td><?php echo $value->invoice_no?></td>
                                                 <td><?php echo date('d-m-Y',strtotime($value->invoice_date))?></td>
+                                                <td><?php echo number_format($value->in_qty,0)?></td>
                                                 <td><?php echo $value->thb_amount?></td>
                                             </tr>
                                         <?php endforeach;?>
