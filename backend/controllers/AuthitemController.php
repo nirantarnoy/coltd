@@ -239,10 +239,64 @@ class AuthitemController extends Controller
         $auth->addChild($plant_permission,$plant_create);
         $auth->addChild($plant_permission,$plant_deletelogo);
 
-        $manage_plant = $auth->createRole('Manage Plant');
+        $manage_plant = $auth->createRole('จัดการข้อมูลบริษัท');
         $manage_plant->description = "Manage plant";
         $auth->add($manage_plant);
         $auth->addChild($manage_plant,$plant_permission);
+
+        // user_module
+        $user_index = $auth->createPermission('user/index');
+        $auth->add($user_index);
+        $user_update = $auth->createPermission('user/update');
+        $auth->add($user_update);
+        $user_delete = $auth->createPermission('user/delete');
+        $auth->add($user_delete);
+        $user_view = $auth->createPermission('user/view');
+        $auth->add($user_view);
+        $user_create = $auth->createPermission('user/create');
+        $auth->add($user_create);
+
+        $user_permission = $auth->createPermission('usermodule');
+        $user_permission->description = "สิทธิ์ใช้งานโมดูล Plant";
+        $auth->add($user_permission);
+
+        $auth->addChild($user_permission,$user_index);
+        $auth->addChild($user_permission,$user_view);
+        $auth->addChild($user_permission,$user_update);
+        $auth->addChild($user_permission,$user_delete);
+        $auth->addChild($user_permission,$user_create);
+
+        $manage_user = $auth->createRole('จัดการข้อมูลผู้ใช้งาน');
+        $manage_user->description = "Manage user";
+        $auth->add($manage_user);
+        $auth->addChild($manage_user,$user_permission);
+
+        // usergroup_module
+        $usergroup_index = $auth->createPermission('usergroup/index');
+        $auth->add($usergroup_index);
+        $usergroup_update = $auth->createPermission('usergroup/update');
+        $auth->add($usergroup_update);
+        $usergroup_delete = $auth->createPermission('usergroup/delete');
+        $auth->add($usergroup_delete);
+        $usergroup_view = $auth->createPermission('usergroup/view');
+        $auth->add($usergroup_view);
+        $usergroup_create = $auth->createPermission('usergroup/create');
+        $auth->add($usergroup_create);
+
+        $usergroup_permission = $auth->createPermission('usergroupmodule');
+        $usergroup_permission->description = "สิทธิ์ใช้งานโมดูล Plant";
+        $auth->add($usergroup_permission);
+
+        $auth->addChild($usergroup_permission,$usergroup_index);
+        $auth->addChild($usergroup_permission,$usergroup_view);
+        $auth->addChild($usergroup_permission,$usergroup_update);
+        $auth->addChild($usergroup_permission,$usergroup_delete);
+        $auth->addChild($usergroup_permission,$usergroup_create);
+
+        $manage_usergroup = $auth->createRole('จัดการข้อมูลกลุ่มผู้ใช้งาน');
+        $manage_usergroup->description = "Manage usergroup";
+        $auth->add($manage_usergroup);
+        $auth->addChild($manage_usergroup,$usergroup_permission);
 
         // product module
         $product_index = $auth->createPermission('product/index');
@@ -283,196 +337,13 @@ class AuthitemController extends Controller
         $auth->addChild($product_permission,$product_del_all);
         $auth->addChild($product_permission,$product_search);
 
-        $manage_product = $auth->createRole('Manage product');
+        $manage_product = $auth->createRole('จัดการข้อมูลสินค้า');
         $manage_product->description = "Manage Product";
         $auth->add($manage_product);
         $auth->addChild($manage_product,$product_permission);
 
         //work schedule module
-        $workschedule_index = $auth->createPermission('workschedule/index');
-        $auth->add($workschedule_index);
-        $workschedule_update = $auth->createPermission('workschedule/update');
-        $auth->add($workschedule_update);
-        $workschedule_delete = $auth->createPermission('workschedule/delete');
-        $auth->add($workschedule_delete);
-        $workschedule_view = $auth->createPermission('workschedule/view');
-        $auth->add($workschedule_view);
-        $workschedule_create = $auth->createPermission('workschedule/create');
-        $auth->add($workschedule_create);
 
-        $workschedule_permission = $auth->createPermission('workschedulemodule');
-        $workschedule_permission->description = "สิทธิ์ใช้งานโมดูล workschedule";
-        $auth->add($workschedule_permission);
-
-        $auth->addChild($workschedule_permission,$workschedule_index);
-        $auth->addChild($workschedule_permission,$workschedule_view);
-        $auth->addChild($workschedule_permission,$workschedule_update);
-        $auth->addChild($workschedule_permission,$workschedule_delete);
-        $auth->addChild($workschedule_permission,$workschedule_create);
-
-        $manage_workschedule = $auth->createRole('Manage workschedule');
-        $manage_workschedule->description = "Manage work schedule";
-        $auth->add($manage_workschedule);
-        $auth->addChild($manage_workschedule,$workschedule_permission);
-
-        //purchplan module
-        $purchplan_index = $auth->createPermission('purchplan/index');
-        $auth->add($purchplan_index);
-        $purchplan_update = $auth->createPermission('purchplan/update');
-        $auth->add($purchplan_update);
-        $purchplan_delete = $auth->createPermission('purchplan/delete');
-        $auth->add($purchplan_delete);
-        $purchplan_view = $auth->createPermission('purchplan/view');
-        $auth->add($purchplan_view);
-        $purchplan_create = $auth->createPermission('purchplan/create');
-        $auth->add($purchplan_create);
-        $purchplan_testsave = $auth->createPermission('purchplan/testsave');
-        $auth->add($purchplan_testsave);
-        $purchplan_showcalendar = $auth->createPermission('purchplan/showcalendar');
-        $auth->add($purchplan_showcalendar);
-        $purchplan_calendaritem = $auth->createPermission('purchplan/calendaritem');
-        $auth->add($purchplan_calendaritem);
-        $purchplan_updateplan = $auth->createPermission('purchplan/updateplan');
-        $auth->add($purchplan_updateplan);
-        $purchplan_copyplan = $auth->createPermission('purchplan/copyplan');
-        $auth->add($purchplan_copyplan);
-        $purchplan_findevent = $auth->createPermission('purchplan/findevent');
-        $auth->add($purchplan_findevent);
-        $purchplan_checkoldplan = $auth->createPermission('purchplan/checkoldplan');
-        $auth->add($purchplan_checkoldplan);
-
-        $purchplan_permission = $auth->createPermission('purchplanmodule');
-        $purchplan_permission->description = "สิทธิ์ใช้งานโมดูล purchplan";
-        $auth->add($purchplan_permission);
-
-        $auth->addChild($purchplan_permission,$purchplan_index);
-        $auth->addChild($purchplan_permission,$purchplan_view);
-        $auth->addChild($purchplan_permission,$purchplan_update);
-        $auth->addChild($purchplan_permission,$purchplan_delete);
-        $auth->addChild($purchplan_permission,$purchplan_create);
-        $auth->addChild($purchplan_permission,$purchplan_testsave);
-        $auth->addChild($purchplan_permission,$purchplan_showcalendar);
-        $auth->addChild($purchplan_permission,$purchplan_calendaritem);
-        $auth->addChild($purchplan_permission,$purchplan_updateplan);
-        $auth->addChild($purchplan_permission,$purchplan_copyplan);
-        $auth->addChild($purchplan_permission,$purchplan_findevent);
-        $auth->addChild($purchplan_permission,$purchplan_checkoldplan);
-
-        $manage_purchplan = $auth->createRole('Manage purchplan');
-        $manage_purchplan->description = "Manage purchase plan";
-        $auth->add($manage_purchplan);
-        $auth->addChild($manage_purchplan,$purchplan_permission);
-
-        // prodrec module
-        $prodrec_index = $auth->createPermission('prodrec/index');
-        $auth->add($prodrec_index);
-        $prodrec_update = $auth->createPermission('prodrec/update');
-        $auth->add($prodrec_update);
-        $prodrec_delete = $auth->createPermission('prodrec/delete');
-        $auth->add($prodrec_delete);
-        $prodrec_view = $auth->createPermission('prodrec/view');
-        $auth->add($prodrec_view);
-        $prodrec_bill = $auth->createPermission('prodrec/bill');
-        $auth->add($prodrec_bill);
-        $prodrec_create = $auth->createPermission('prodrec/create');
-        $auth->add($prodrec_create);
-        $prodrec_cancelqc = $auth->createPermission('prodrec/cancelqc');
-        $auth->add($prodrec_cancelqc);
-        $prodrec_createinv = $auth->createPermission('prodrec/createinv');
-        $auth->add($prodrec_createinv);
-
-        $prodrec_permission = $auth->createPermission('prodrecmodule');
-        $prodrec_permission->description = "สิทธิ์ใช้งานโมดูล prodrec";
-        $auth->add($prodrec_permission);
-
-        $auth->addChild($prodrec_permission,$prodrec_index);
-        $auth->addChild($prodrec_permission,$prodrec_view);
-        $auth->addChild($prodrec_permission,$prodrec_update);
-        $auth->addChild($prodrec_permission,$prodrec_delete);
-        $auth->addChild($prodrec_permission,$prodrec_bill);
-        $auth->addChild($prodrec_permission,$prodrec_create);
-        $auth->addChild($prodrec_permission,$prodrec_cancelqc);
-        $auth->addChild($prodrec_permission,$prodrec_createinv);
-
-        $manage_prodrec = $auth->createRole('Manage prodrec');
-        $manage_prodrec->description = "Manage product received";
-        $auth->add($manage_prodrec);
-        $auth->addChild($manage_prodrec,$prodrec_permission);
-
-        //prodissue module
-        $prodissue_index = $auth->createPermission('prodissue/index');
-        $auth->add($prodissue_index);
-        $prodissue_update = $auth->createPermission('prodissue/update');
-        $auth->add($prodissue_update);
-        $prodissue_delete = $auth->createPermission('prodissue/delete');
-        $auth->add($prodissue_delete);
-        $prodissue_view = $auth->createPermission('prodissue/view');
-        $auth->add($prodissue_view);
-        $prodissue_create = $auth->createPermission('prodissue/create');
-        $auth->add($prodissue_create);
-        $prodissue_showemp = $auth->createPermission('prodissue/showemp');
-        $auth->add($prodissue_showemp);
-        $prodissue_getzoneinfo = $auth->createPermission('prodissue/getzoneinfo');
-        $auth->add($prodissue_getzoneinfo);
-        $prodissue_cancel = $auth->createPermission('prodissue/cancel');
-        $auth->add($prodissue_cancel);
-
-        $prodissue_permission = $auth->createPermission('prodissuemodule');
-        $prodissue_permission->description = "สิทธิ์ใช้งานโมดูล prodissue";
-        $auth->add($prodissue_permission);
-
-        $auth->addChild($prodissue_permission,$prodissue_index);
-        $auth->addChild($prodissue_permission,$prodissue_view);
-        $auth->addChild($prodissue_permission,$prodissue_update);
-        $auth->addChild($prodissue_permission,$prodissue_delete);
-        $auth->addChild($prodissue_permission,$prodissue_create);
-        $auth->addChild($prodissue_permission,$prodissue_showemp);
-        $auth->addChild($prodissue_permission,$prodissue_getzoneinfo);
-        $auth->addChild($prodissue_permission,$prodissue_cancel);
-
-        $manage_prodissue = $auth->createRole('Manage prodissue');
-        $manage_prodissue->description = "Manage product issue";
-        $auth->add($manage_prodissue);
-        $auth->addChild($manage_prodissue,$prodissue_permission);
-
-        //productionrec module
-        $productionrec_index = $auth->createPermission('productionrec/index');
-        $auth->add($productionrec_index);
-        $productionrec_update = $auth->createPermission('productionrec/update');
-        $auth->add($productionrec_update);
-        $productionrec_delete = $auth->createPermission('productionrec/delete');
-        $auth->add($productionrec_delete);
-        $productionrec_view = $auth->createPermission('productionrec/view');
-        $auth->add($productionrec_view);
-        $productionrec_print = $auth->createPermission('productionrec/print');
-        $auth->add($productionrec_print);
-        $productionrec_create = $auth->createPermission('productionrec/create');
-        $auth->add($productionrec_create);
-        $productionrec_findemp = $auth->createPermission('productionrec/findemp');
-        $auth->add($productionrec_findemp);
-        $productionrec_findzonedate = $auth->createPermission('productionrec/findzonedate');
-        $auth->add($productionrec_findzonedate);
-        $productionrec_finditem = $auth->createPermission('productionrec/finditem');
-        $auth->add($productionrec_finditem);
-
-        $productionrec_permission = $auth->createPermission('productionrecmodule');
-        $productionrec_permission->description = "สิทธิ์ใช้งานโมดูล productionrec";
-        $auth->add($productionrec_permission);
-
-        $auth->addChild($productionrec_permission,$productionrec_index);
-        $auth->addChild($productionrec_permission,$productionrec_view);
-        $auth->addChild($productionrec_permission,$productionrec_update);
-        $auth->addChild($productionrec_permission,$productionrec_delete);
-        $auth->addChild($productionrec_permission,$productionrec_create);
-        $auth->addChild($productionrec_permission,$productionrec_print);
-        $auth->addChild($productionrec_permission,$productionrec_findemp);
-        $auth->addChild($productionrec_permission,$productionrec_findzonedate);
-        $auth->addChild($productionrec_permission,$productionrec_finditem);
-
-        $manage_productionrec = $auth->createRole('Manage productionrec');
-        $manage_productionrec->description = "Manage production received";
-        $auth->add($manage_productionrec);
-        $auth->addChild($manage_productionrec,$productionrec_permission);
 
         //invoice module
         $invoice_index = $auth->createPermission('invoice/index');
@@ -499,7 +370,7 @@ class AuthitemController extends Controller
         $auth->addChild($invoice_permission,$invoice_bill);
         $auth->addChild($invoice_permission,$invoice_create);
 
-        $manage_invoice = $auth->createRole('Manage invoice');
+        $manage_invoice = $auth->createRole('จัดการใบเรียกเก็บเงิน');
         $manage_invoice->description = "Manage invoice";
         $auth->add($manage_invoice);
         $auth->addChild($manage_invoice,$invoice_permission);
@@ -526,10 +397,64 @@ class AuthitemController extends Controller
         $auth->addChild($employee_permission,$employee_delete);
         $auth->addChild($employee_permission,$employee_create);
 
-        $manage_employee = $auth->createRole('Manage employee');
+        $manage_employee = $auth->createRole('จัดการข้อมูลพนักงาน');
         $manage_employee->description = "Manage invoice";
         $auth->add($manage_employee);
         $auth->addChild($manage_employee,$employee_permission);
+
+        //product group module
+        $productcategory_index = $auth->createPermission('productcategory/index');
+        $auth->add($productcategory_index);
+        $productcategory_update = $auth->createPermission('productcategory/update');
+        $auth->add($productcategory_update);
+        $productcategory_delete = $auth->createPermission('productcategory/delete');
+        $auth->add($productcategory_delete);
+        $productcategory_view = $auth->createPermission('productcategory/view');
+        $auth->add($productcategory_view);
+        $productcategory_create = $auth->createPermission('productcategory/create');
+        $auth->add($productcategory_create);
+
+        $productcategory_permission = $auth->createPermission('productcategorymodule');
+        $productcategory_permission->description = "สิทธิ์ใช้งานโมดูล productcategory";
+        $auth->add($productcategory_permission);
+
+        $auth->addChild($productcategory_permission,$productcategory_index);
+        $auth->addChild($productcategory_permission,$productcategory_view);
+        $auth->addChild($productcategory_permission,$productcategory_update);
+        $auth->addChild($productcategory_permission,$productcategory_delete);
+        $auth->addChild($productcategory_permission,$productcategory_create);
+
+        $manage_productcategory = $auth->createRole('จัดการข้อมูลกลุ่มสินค้า');
+        $manage_productcategory->description = "Manage product category";
+        $auth->add($manage_productcategory);
+        $auth->addChild($manage_productcategory,$productcategory_permission);
+
+        //product unit module
+        $unit_index = $auth->createPermission('unit/index');
+        $auth->add($unit_index);
+        $unit_update = $auth->createPermission('unit/update');
+        $auth->add($unit_update);
+        $unit_delete = $auth->createPermission('unit/delete');
+        $auth->add($unit_delete);
+        $unit_view = $auth->createPermission('unit/view');
+        $auth->add($unit_view);
+        $unit_create = $auth->createPermission('unit/create');
+        $auth->add($unit_create);
+
+        $unit_permission = $auth->createPermission('unitmodule');
+        $unit_permission->description = "สิทธิ์ใช้งานโมดูล unit";
+        $auth->add($unit_permission);
+
+        $auth->addChild($unit_permission,$unit_index);
+        $auth->addChild($unit_permission,$unit_view);
+        $auth->addChild($unit_permission,$unit_update);
+        $auth->addChild($unit_permission,$unit_delete);
+        $auth->addChild($unit_permission,$unit_create);
+
+        $manage_unit = $auth->createRole('จัดการข้อมูลหน่วยนับ');
+        $manage_unit->description = "Manage unit";
+        $auth->add($manage_unit);
+        $auth->addChild($manage_unit,$unit_permission);
 
         //message module
         $message_index = $auth->createPermission('message/index');
@@ -553,7 +478,7 @@ class AuthitemController extends Controller
         $auth->addChild($message_permission,$message_delete);
         $auth->addChild($message_permission,$message_create);
 
-        $manage_message = $auth->createRole('Manage message');
+        $manage_message = $auth->createRole('จัดการการแจ้งเตือน');
         $manage_message->description = "Manage message";
         $auth->add($manage_message);
         $auth->addChild($manage_message,$message_permission);
@@ -580,10 +505,118 @@ class AuthitemController extends Controller
         $auth->addChild($warehouse_permission,$warehouse_delete);
         $auth->addChild($warehouse_permission,$warehouse_create);
 
-        $manage_warehouse = $auth->createRole('Manage warehouse');
+        $manage_warehouse = $auth->createRole('จัดกาข้อมูลคลังสินค้า');
         $manage_warehouse->description = "Manage warehouse";
         $auth->add($manage_warehouse);
         $auth->addChild($manage_warehouse,$warehouse_permission);
+
+        //customergroup module
+        $customergroup_index = $auth->createPermission('customergroup/index');
+        $auth->add($customergroup_index);
+        $customergroup_update = $auth->createPermission('customergroup/update');
+        $auth->add($customergroup_update);
+        $customergroup_delete = $auth->createPermission('customergroup/delete');
+        $auth->add($customergroup_delete);
+        $customergroup_view = $auth->createPermission('customergroup/view');
+        $auth->add($customergroup_view);
+        $customergroup_create = $auth->createPermission('customergroup/create');
+        $auth->add($customergroup_create);
+
+        $customergroup_permission = $auth->createPermission('customergroupmodule');
+        $customergroup_permission->description = "สิทธิ์ใช้งานโมดูล customergroup";
+        $auth->add($customergroup_permission);
+
+        $auth->addChild($customergroup_permission,$customergroup_index);
+        $auth->addChild($customergroup_permission,$customergroup_view);
+        $auth->addChild($customergroup_permission,$customergroup_update);
+        $auth->addChild($customergroup_permission,$customergroup_delete);
+        $auth->addChild($customergroup_permission,$customergroup_create);
+
+        $manage_customergroup = $auth->createRole('จัดกาข้อมูลกลุ่มสินค้า');
+        $manage_customergroup->description = "Manage customergroup";
+        $auth->add($manage_customergroup);
+        $auth->addChild($manage_customergroup,$customergroup_permission);
+
+        //customer module
+        $customer_index = $auth->createPermission('customer/index');
+        $auth->add($customer_index);
+        $customer_update = $auth->createPermission('customer/update');
+        $auth->add($customer_update);
+        $customer_delete = $auth->createPermission('customer/delete');
+        $auth->add($customer_delete);
+        $customer_view = $auth->createPermission('customer/view');
+        $auth->add($customer_view);
+        $customer_create = $auth->createPermission('customer/create');
+        $auth->add($customer_create);
+
+        $customer_permission = $auth->createPermission('customermodule');
+        $customer_permission->description = "สิทธิ์ใช้งานโมดูล customer";
+        $auth->add($customer_permission);
+
+        $auth->addChild($customer_permission,$customer_index);
+        $auth->addChild($customer_permission,$customer_view);
+        $auth->addChild($customer_permission,$customer_update);
+        $auth->addChild($customer_permission,$customer_delete);
+        $auth->addChild($customer_permission,$customer_create);
+
+        $manage_customer = $auth->createRole('จัดกาข้อมูลลูกค้า');
+        $manage_customer->description = "Manage customer";
+        $auth->add($manage_customer);
+        $auth->addChild($manage_customer,$customer_permission);
+
+        //quotation module
+        $quotation_index = $auth->createPermission('quotation/index');
+        $auth->add($quotation_index);
+        $quotation_update = $auth->createPermission('quotation/update');
+        $auth->add($quotation_update);
+        $quotation_delete = $auth->createPermission('quotation/delete');
+        $auth->add($quotation_delete);
+        $quotation_view = $auth->createPermission('quotation/view');
+        $auth->add($quotation_view);
+        $quotation_create = $auth->createPermission('quotation/create');
+        $auth->add($quotation_create);
+
+        $quotation_permission = $auth->createPermission('quotationmodule');
+        $quotation_permission->description = "สิทธิ์ใช้งานโมดูล quotation";
+        $auth->add($quotation_permission);
+
+        $auth->addChild($quotation_permission,$quotation_index);
+        $auth->addChild($quotation_permission,$quotation_view);
+        $auth->addChild($quotation_permission,$quotation_update);
+        $auth->addChild($quotation_permission,$quotation_delete);
+        $auth->addChild($quotation_permission,$quotation_create);
+
+        $manage_quotation = $auth->createRole('จัดกาข้อมูลใบเสนอราคา');
+        $manage_quotation->description = "Manage quotation";
+        $auth->add($manage_quotation);
+        $auth->addChild($manage_quotation,$quotation_permission);
+
+        //sale module
+        $sale_index = $auth->createPermission('sale/index');
+        $auth->add($sale_index);
+        $sale_update = $auth->createPermission('sale/update');
+        $auth->add($sale_update);
+        $sale_delete = $auth->createPermission('sale/delete');
+        $auth->add($sale_delete);
+        $sale_view = $auth->createPermission('sale/view');
+        $auth->add($sale_view);
+        $sale_create = $auth->createPermission('sale/create');
+        $auth->add($sale_create);
+
+        $sale_permission = $auth->createPermission('salemodule');
+        $sale_permission->description = "สิทธิ์ใช้งานโมดูล sale";
+        $auth->add($sale_permission);
+
+        $auth->addChild($sale_permission,$sale_index);
+        $auth->addChild($sale_permission,$sale_view);
+        $auth->addChild($sale_permission,$sale_update);
+        $auth->addChild($sale_permission,$sale_delete);
+        $auth->addChild($sale_permission,$sale_create);
+
+        $manage_sale = $auth->createRole('จัดกาข้อมูลใบสั่งซื้อ');
+        $manage_sale->description = "Manage sale";
+        $auth->add($manage_sale);
+        $auth->addChild($manage_sale,$sale_permission);
 
         //db manager
         $db_index = $auth->createPermission('db-manager');
@@ -593,7 +626,7 @@ class AuthitemController extends Controller
         $bakup_permission->description = "สิทธิ์ใช้งานโมดูล bakup_permission";
         $auth->add($bakup_permission);
 
-        $manage_backup = $auth->createRole('Manage backup');
+        $manage_backup = $auth->createRole('จัดการการสำรองข้อมูล');
         $manage_backup->description = "Manage backup";
         $auth->add($manage_backup);
 
@@ -606,16 +639,19 @@ class AuthitemController extends Controller
         $auth->add($admin_role);
 
         $auth->addChild($admin_role,$manage_plant);
+        $auth->addChild($admin_role,$manage_user);
+        $auth->addChild($admin_role,$manage_usergroup);
         $auth->addChild($admin_role,$manage_product);
-        $auth->addChild($admin_role,$manage_prodrec);
-        $auth->addChild($admin_role,$manage_prodissue);
-        $auth->addChild($admin_role,$manage_productionrec);
-        $auth->addChild($admin_role,$manage_purchplan);
         $auth->addChild($admin_role,$manage_invoice);
-        $auth->addChild($admin_role,$manage_workschedule);
+        $auth->addChild($admin_role,$manage_productcategory);
+        $auth->addChild($admin_role,$manage_unit);
         $auth->addChild($admin_role,$manage_employee);
         $auth->addChild($admin_role,$manage_message);
         $auth->addChild($admin_role,$manage_warehouse);
+        $auth->addChild($admin_role,$manage_customergroup);
+        $auth->addChild($admin_role,$manage_customer);
+        $auth->addChild($admin_role,$manage_quotation);
+        $auth->addChild($admin_role,$manage_sale);
         $auth->addChild($admin_role,$manage_backup);
 
         $user_role = $auth->createRole('System User');
@@ -624,12 +660,10 @@ class AuthitemController extends Controller
 
 
         $auth->addChild($user_role,$manage_product);
-        $auth->addChild($user_role,$manage_prodrec);
-        $auth->addChild($user_role,$manage_productionrec);
 
 
-        $auth->assign($admin_role,1);
-        $auth->assign($user_role,1);
+        $auth->assign($admin_role,2);
+        $auth->assign($user_role,2);
 
 
 
