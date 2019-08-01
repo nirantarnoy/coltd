@@ -81,9 +81,38 @@ class SaleController extends Controller
         $model = new Sale();
 
         if ($model->load(Yii::$app->request->post())) {
+            $prodid = Yii::$app->request->post('productid');
+            $lineqty = Yii::$app->request->post('qty');
+            $lineprice = Yii::$app->request->post('price');
+            $removelist = Yii::$app->request->post('removelist');
+            $model->require_date = strtotime($model->require_date);
             $model->status = 1;
-            if($model->save()){
-                return $this->redirect(['update', 'id' => $model->id]);
+            if($model->save(false)){
+                if(count($prodid)>0){
+                    for($i=0;$i<=count($prodid)-1;$i++){
+                        if($prodid[$i]==''){continue;}
+
+                        $modelcheck = \backend\models\Saleline::find()->where(['sale_id'=>$model->id,'product_id'=>$prodid[$i]])->one();
+                        if($modelcheck){
+                            $modelcheck->qty = $lineqty[$i];
+                            $modelcheck->price = $lineprice[$i];
+                            $modelcheck->line_amount = $lineqty[$i] * $lineprice[$i];
+                            $modelcheck->save();
+                        }else{
+                            $modelline = new \backend\models\Saleline();
+                            $modelline->sale_id = $model->id;
+                            $modelline->product_id = $prodid[$i];
+                            $modelline->qty = $lineqty[$i];
+                            $modelline->price = $lineprice[$i];
+                            $modelline->line_amount = $lineqty[$i] * $lineprice[$i];
+                            $modelline->save();
+                        }
+                    }
+                }
+                if(count($removelist)){
+                    \backend\models\Quotationline::deleteAll(['id'=>$removelist]);
+                }
+                return $this->redirect(['index']);
             }
 
         }
@@ -141,6 +170,7 @@ class SaleController extends Controller
             $lineqty = Yii::$app->request->post('qty');
             $lineprice = Yii::$app->request->post('price');
             $removelist = Yii::$app->request->post('removelist');
+            $model->require_date = strtotime($model->require_date);
             $model->status = 1;
             if($model->save()){
                 if(count($prodid)>0){
