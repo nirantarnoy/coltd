@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
+use kartik\export\ExportMenu;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductstockSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -32,7 +33,76 @@ $this->params['breadcrumbs'][] = $this->title;
             </ul> -->
             <div class="clearfix"></div>
         </div>
+
         <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <?php
+
+                    echo ExportMenu::widget([
+                        'dataProvider' => $dataProvider,
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+
+                            // 'id',
+                            ['attribute' => 'product_id','value'=>function($data){
+                                return \backend\models\Product::findCode($data->product_id);
+                            }],
+                            ['attribute' => 'warehouse_id','value'=>function($data){
+                                return \backend\models\Warehouse::findWarehousename($data->warehouse_id);
+                            }],
+                            [
+                                'attribute' => 'in_qty',
+                                'headerOptions' => ['style'=>'background-color: green;color: white'],
+                                'contentOptions' => ['style'=>'background-color: green;color: white;text-align: right'],
+                                'value'=>function($data){
+                                    return $data->in_qty!=null?$data->in_qty:0;
+                                }],
+                            [
+                                'attribute' => 'out_qty',
+                                'headerOptions' => ['style'=>'background-color: orange;color: white'],
+                                'contentOptions' => ['style'=>'background-color: orange;color: white;text-align: right'],
+                                'value'=>function($data){
+                                    return $data->out_qty!=null?$data->out_qty:0;
+                                }],
+                            'invoice_no',
+                            ['attribute' => 'invoice_date','value'=>function($data){
+                                return date('d-m-Y',strtotime($data->invoice_date));
+                            }],
+                            'transport_in_no',
+                            ['attribute' => 'transport_in_date','value'=>function($data){
+                                return date('d-m-Y',strtotime($data->transport_in_date));
+                            }],
+                            ['attribute' => 'sequence','value'=>function($data){
+                                return $data->sequence!=null?$data->sequence:0;
+                            }],
+                            'permit_no',
+                            ['attribute' => 'permit_date','value'=>function($data){
+                                return date('d-m-Y',strtotime($data->permit_date));
+                            }],
+                            'kno_no_in',
+                            ['attribute' => 'kno_in_date','value'=>function($data){
+                                return date('d-m-Y',strtotime($data->kno_in_date));
+                            }],
+                            'usd_rate',
+                            'thb_amount',
+
+
+                        ],
+                        'pjax' => true,
+                        'bordered' => true,
+                        'striped' => false,
+                        'condensed' => false,
+                        'responsive' => true,
+                        'hover' => true,
+                        //'floatHeader' => true,
+                        // 'floatHeaderOptions' => ['scrollingTop' => $scrollingTop],
+                        'showPageSummary' => true,
+                    ]);
+                    ?>
+                </div>
+            </div>
+            <br>
             <div class="row">
                 <div class="col-lg-9">
                     <div class="form-inline">

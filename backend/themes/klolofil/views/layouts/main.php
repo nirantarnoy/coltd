@@ -170,7 +170,7 @@ $(function(){
                                 <li><a href="index.php?r=warehouse/index" class="warehouse">คลังสินค้า</a></li>
 <!--                                <li><a href="index.php?r=location/index" class="location">ล๊อก</a></li>-->
                                 <li><a href="index.php?r=import/index" class="import">นำเข้าสินค้า</a></li>
-                                <li><a href="index.php?r=productstock/index" class="productstock">สินค้าคงคลัง</a></li>
+<!--                                <li><a href="index.php?r=productstock/index" class="productstock">สินค้าคงคลัง</a></li>-->
                             </ul>
                         </div>
                     </li>
@@ -190,7 +190,8 @@ $(function(){
                         <a href="#subReport" data-toggle="collapse" class="collapsed"><i class="fa fa-line-chart"></i> <span>รายงานสต๊อก</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="subReport" class="collapse ">
                             <ul class="nav">
-                                <li><a href="index.php?r=report/balance" class="report">รายงานยอดคงคลัง</a></li>
+<!--                                <li><a href="index.php?r=report/balance" class="report">รายงานยอดคงคลัง</a></li>-->
+                                <li><a href="index.php?r=productstock/index" class="report">รายงานยอดคงคลัง</a></li>
                                 <li><a href="index.php?r=report/sale" class="report">รายงานยอดขาย</a></li>
                             </ul>
                         </div>
