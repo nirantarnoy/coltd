@@ -575,6 +575,8 @@ class AuthitemController extends Controller
         $auth->add($quotation_view);
         $quotation_create = $auth->createPermission('quotation/create');
         $auth->add($quotation_create);
+        $quotation_firmorder = $auth->createPermission('quotation/firmorder');
+        $auth->add($quotation_firmorder);
 
         $quotation_permission = $auth->createPermission('quotationmodule');
         $quotation_permission->description = "สิทธิ์ใช้งานโมดูล quotation";
@@ -585,6 +587,7 @@ class AuthitemController extends Controller
         $auth->addChild($quotation_permission,$quotation_update);
         $auth->addChild($quotation_permission,$quotation_delete);
         $auth->addChild($quotation_permission,$quotation_create);
+        $auth->addChild($quotation_permission,$quotation_firmorder);
 
         $manage_quotation = $auth->createRole('จัดกาข้อมูลใบเสนอราคา');
         $manage_quotation->description = "Manage quotation";
@@ -602,6 +605,8 @@ class AuthitemController extends Controller
         $auth->add($sale_view);
         $sale_create = $auth->createPermission('sale/create');
         $auth->add($sale_create);
+        $sale_payment = $auth->createPermission('sale/payment');
+        $auth->add($sale_payment);
 
         $sale_permission = $auth->createPermission('salemodule');
         $sale_permission->description = "สิทธิ์ใช้งานโมดูล sale";
@@ -612,6 +617,7 @@ class AuthitemController extends Controller
         $auth->addChild($sale_permission,$sale_update);
         $auth->addChild($sale_permission,$sale_delete);
         $auth->addChild($sale_permission,$sale_create);
+        $auth->addChild($sale_permission,$sale_payment);
 
         $manage_sale = $auth->createRole('จัดกาข้อมูลใบสั่งซื้อ');
         $manage_sale->description = "Manage sale";

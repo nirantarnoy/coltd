@@ -163,7 +163,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'onclick'=>'payment($(this));'
 
                         ];
-                        return \backend\models\Picking::checkPick($data->id)==1? Html::a(
+                        return \backend\models\Picking::checkPick($data->id)==1 && $data->payment_status==0? Html::a(
                             '<span class="glyphicon glyphicon-tags btn btn-xs btn-default"></span>', 'javascript:void(0)', $options)
                             :'';
                     },

@@ -87,6 +87,7 @@ class SaleController extends Controller
             $removelist = Yii::$app->request->post('removelist');
             $model->require_date = strtotime($model->require_date);
             $model->status = 1;
+            $model->payment_status = 0;
             if($model->save(false)){
                 if(count($prodid)>0){
                     for($i=0;$i<=count($prodid)-1;$i++){
@@ -252,13 +253,26 @@ class SaleController extends Controller
               $model->slip = $file;
 
               if($model->save()){
-
+                 self::updatePayment($saleid,$model->amount);
               }
             }
         }
 
 
         return $this->redirect(['index']);
+    }
+    public function updatePayment($saleid,$payamount){
+        if($saleid){
+            $model = \backend\models\Sale::find()->where(['id'=>$saleid])->one();
+            if($model){
+                $model_paytrans = \backend\models\Paymenttrans::find()->where(['sale_id'=>$saleid])->sum('amount');
+
+                if($model->total_amount <= ($payamount + $model_paytrans)){
+                    $model->payment_status = 1;
+                    $model->save(false);
+                }
+            }
+        }
     }
 
     /**

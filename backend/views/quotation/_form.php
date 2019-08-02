@@ -280,7 +280,7 @@ $this->registerCss('
             <hr />
 
             <div class="pull-left">
-                <?php if($has_so):?>
+                <?php if($has_so && !$model->isNewRecord):?>
                     <div style="border: 1px solid orange;width: 300px;text-align: center;border-radius: 25px;padding: 5px 0px 5px 0px;">
                         <?php echo "เลขที่ใบสั่งซื้อ ".$has_so->sale_no;?>
                     </div>

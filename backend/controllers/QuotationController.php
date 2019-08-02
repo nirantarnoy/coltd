@@ -249,6 +249,8 @@ class QuotationController extends Controller
                     $order->currency = $model->currency;
                     $order->note = $model->note;
                     $order->delvery_to = $model->delvery_to;
+                    $order->payment_status = 0;
+                    $order->total_amount = self::calTotal($modelline);
                     if($order->save()){
                         if(count($modelline)>0){
                             foreach($modelline as $value){
@@ -268,6 +270,15 @@ class QuotationController extends Controller
             }
         }
         return $this->redirect(['sale/index']);
+    }
+    public function calTotal($modelline){
+        $totalamt = 0;
+        if(count($modelline)>0){
+            foreach($modelline as $value){
+                $totalamt = $totalamt + ($value->qty * $value->price);
+            }
+        }
+        return $totalamt;
     }
     public function actionBill($id){
         $model = \backend\models\Quotation::find()->where(['id' => $id])->one();
