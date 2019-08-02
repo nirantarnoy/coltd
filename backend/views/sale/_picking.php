@@ -77,7 +77,7 @@
             </thead>
             <tbody style="top: 10px;">
             <tr>
-                <td colspan="6" style="text-align: center;font-size: 14px">PICKING LIST</td>
+                <td colspan="6" style="text-align: center;font-size: 14px">PACKING LIST</td>
             </tr>
             <tr style="background: #c3c3c3">
                 <td style="padding: 10px;border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 9%">No.</td>

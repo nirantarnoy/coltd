@@ -289,7 +289,7 @@ $this->registerCss('
 </div>
 <div class="panel">
     <div class="panel-heading">
-        <h3><i class="fa fa-truck"></i> ประวัติ picking</h3>
+        <h3><i class="fa fa-truck"></i> ประวัติ packing</h3>
     </div>
     <div class="panel-body">
         <div class="panel-group" id="accordion">
