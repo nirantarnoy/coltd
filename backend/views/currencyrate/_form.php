@@ -49,7 +49,10 @@ use kartik\date\DatePicker;
                 <?= $form->field($model, 'to_date')->widget(DatePicker::className()) ?>
             </div>
             <div class="col-lg-3">
-
+                <?= $form->field($model, 'rate_type')->widget(Select2::className(),[
+                    'data' => ArrayHelper::map(backend\helpers\RateType::asArrayObject(),'id','name'),
+                    'options' => ['placeholder'=>'เลือกประเภท']
+                ])->label('ใช้กับ') ?>
             </div>
         </div>
         <div class="row">

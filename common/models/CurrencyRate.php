@@ -38,7 +38,7 @@ class CurrencyRate extends \yii\db\ActiveRecord
     {
         return [
             [['from_date','to_date'],'required'],
-            [['from_currency', 'to_integer', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['from_currency', 'to_integer','rate_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['rate', 'rate_factor'], 'number'],
             [['from_date', 'to_date'], 'safe'],
             [['name'], 'string', 'max' => 255],
@@ -60,6 +60,7 @@ class CurrencyRate extends \yii\db\ActiveRecord
             'from_date' => 'จากวันที่',
             'to_date' => 'ถึงวันที่',
             'status' => 'Status',
+            'rate_type' => 'ใช้กับ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

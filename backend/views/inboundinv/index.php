@@ -5,21 +5,51 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\CurrencyrateSearch */
+/* @var $searchModel backend\models\InboundinvSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'อัตราแลกเปลี่ยน';
+$this->title = 'นำเข้าสินค้า';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="currencyrate-index">
+<div class="inboundinv-index">
 
+    <?php $session = Yii::$app->session;
+    if ($session->getFlash('msg')): ?>
+        <!-- <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <?php //echo $session->getFlash('msg'); ?>
+      </div> -->
+        <?php echo Notification::widget([
+            'type' => 'success',
+            'title' => 'แจ้งผลการทำงาน',
+            'message' => $session->getFlash('msg'),
+            //  'message' => 'Hello',
+            'options' => [
+                "closeButton" => false,
+                "debug" => false,
+                "newestOnTop" => false,
+                "progressBar" => false,
+                "positionClass" => "toast-top-center",
+                "preventDuplicates" => false,
+                "onclick" => null,
+                "showDuration" => "300",
+                "hideDuration" => "1000",
+                "timeOut" => "6000",
+                "extendedTimeOut" => "1000",
+                "showEasing" => "swing",
+                "hideEasing" => "linear",
+                "showMethod" => "fadeIn",
+                "hideMethod" => "fadeOut"
+            ]
+        ]); ?>
+    <?php endif; ?>
     <?php Pjax::begin(); ?>
     <div class="panel panel-headline">
         <div class="panel-heading">
             <div class="btn-group">
-                <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างอัตราแลกเปลี่ยน'), ['create'], ['class' => 'btn btn-success']) ?>
+                <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> นำเข้าสินค้า'), ['create'], ['class' => 'btn btn-success']) ?>
             </div>
-            <h4 class="pull-right"><?=$this->title?> <i class="fa fa-institution"></i><small></small></h4>
+            <h4 class="pull-right"><?=$this->title?> <i class="fa fa-refresh"></i><small></small></h4>
             <!-- <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
               <li class="dropdown">
@@ -45,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-lg-3">
                     <div class="pull-right">
-                        <form id="form-perpage" class="form-inline" action="<?=Url::to(['currencyrate/index'],true)?>" method="post">
+                        <form id="form-perpage" class="form-inline" action="<?=Url::to(['import/index'],true)?>" method="post">
                             <div class="form-group">
                                 <label>แสดง </label>
                                 <select class="form-control" name="perpage" id="perpage">
@@ -60,11 +90,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="table-responsive">
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'emptyCell'=>'-',
-        'layout'=>'{items}{summary}{pager}',
+        'layout'=>"{items}{summary}<div align=\'center\'>{pager}</div>",
         'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
         'showOnEmpty'=>false,
         'tableOptions' => ['class' => 'table table-hover'],
@@ -72,33 +101,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
-            'name',
-           // 'from_currency',
+           // 'id',
+            'invoice_no',
+            'invoice_date',
+            'delivery_term',
+            //'sold_to',
             [
-               'attribute' => 'from_currency',
-               'value' => function($data){
-                 return \backend\models\Currency::findName($data->from_currency);
-               }
-            ],
-            [
-                'attribute' => 'to_integer',
+                'attribute'=>'status',
+                'format' => 'raw',
                 'value' => function($data){
-                    return \backend\models\Currency::findName($data->to_integer);
+                    if($data->status == 1){
+                        return "<div class='label label-success'> Open</div>";
+                    }else if($data->status == 2){
+                        return "<div class='label label-danger'> Completed</div>";
+                    }
                 }
             ],
-            'rate_factor',
-            'rate',
-            'from_date',
-            'to_date',
-            [
-                    'attribute'=>'rate_type',
-                    'value' => function($data){
-                        return \backend\helpers\RateType::getTypeById($data->rate_type);
-                    }
-],
-            //'status',
-            //'created_at',
+            'created_at',
             //'updated_at',
             //'created_by',
             //'updated_by',
@@ -152,8 +171,38 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
+
     <?php Pjax::end(); ?>
             </div>
         </div>
     </div>
 </div>
+<?php
+$this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
+$this->registerCssFile( '@web/css/sweetalert.css');
+//$url_to_delete =  Url::to(['product/bulkdelete'],true);
+$this->registerJs('
+    $(function(){
+        $("#perpage").change(function(){
+            $("#form-perpage").submit();
+        });
+    });
+
+   function recDelete(e){
+        //e.preventDefault();
+        var url = e.attr("data-url");
+        swal({
+              title: "ต้องการลบรายการนี้ใช่หรือไม่",
+              text: "",
+              type: "error",
+              showCancelButton: true,
+              closeOnConfirm: false,
+              showLoaderOnConfirm: true
+            }, function () {
+              e.attr("href",url); 
+              e.trigger("click");        
+        });
+    }
+
+    ',static::POS_END);
+?>

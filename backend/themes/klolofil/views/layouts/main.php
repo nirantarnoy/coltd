@@ -169,7 +169,7 @@ $(function(){
                                 <li><a href="index.php?r=unit/index" class="unit">หน่วยนับ</a></li>
                                 <li><a href="index.php?r=warehouse/index" class="warehouse">คลังสินค้า</a></li>
 <!--                                <li><a href="index.php?r=location/index" class="location">ล๊อก</a></li>-->
-                                <li><a href="index.php?r=import/index" class="import">นำเข้าสินค้า</a></li>
+                                <li><a href="index.php?r=inboundinv/index" class="import">นำเข้าสินค้า</a></li>
 <!--                                <li><a href="index.php?r=productstock/index" class="productstock">สินค้าคงคลัง</a></li>-->
                             </ul>
                         </div>
