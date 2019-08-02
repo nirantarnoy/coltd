@@ -10,7 +10,7 @@ use kartik\time\TimePicker;
 /* @var $searchModel backend\models\SaleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'ขายสินค้า';
+$this->title = 'Invoice';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sale-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="panel panel-headline">
         <div class="panel-heading">
             <div class="btn-group">
-                <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างรายการขาย'), ['create'], ['class' => 'btn btn-success']) ?>
+                <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้าง Invoice'), ['create'], ['class' => 'btn btn-success']) ?>
             </div>
             <h4 class="pull-right"><?=$this->title?> <i class="fa fa-shopping-cart"></i><small></small></h4>
             <!-- <ul class="nav navbar-right panel_toolbox">

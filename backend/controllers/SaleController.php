@@ -269,7 +269,13 @@ class SaleController extends Controller
 
                 if($model->total_amount <= ($payamount + $model_paytrans)){
                     $model->payment_status = 1;
-                    $model->save(false);
+                    if($model->save(false)){
+                        $closeinv = \backend\models\Sale::find()->where(['id'=>$saleid])->one();
+                        if($closeinv){
+                            $closeinv->status = 2;
+                            $closeinv->save(false);
+                        }
+                    }
                 }
             }
         }

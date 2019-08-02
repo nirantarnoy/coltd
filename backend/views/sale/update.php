@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Sale */
 
-$this->title = 'แก้ไขรายการขาย: ' . $model->sale_no;
-$this->params['breadcrumbs'][] = ['label' => 'Sales', 'url' => ['index']];
+$this->title = 'แก้ไข Invoice: ' . $model->sale_no;
+$this->params['breadcrumbs'][] = ['label' => 'Invoice', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->sale_no, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'แก้ไข';
 ?>

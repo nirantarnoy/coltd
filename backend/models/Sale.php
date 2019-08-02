@@ -61,9 +61,9 @@ class Sale extends \common\models\Sale{
                 $prefix.="0";
             }
             $prefix.=$cnum + 1;
-            return 'SO'.$prefix;
+            return 'IV'.$prefix;
         }else{
-            $prefix ='SO'.substr(date("Y"),2,2);
+            $prefix ='IV'.substr(date("Y"),2,2);
             return $prefix.'000001';
         }
     }

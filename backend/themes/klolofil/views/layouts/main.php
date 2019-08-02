@@ -181,7 +181,7 @@ $(function(){
                                 <li><a href="index.php?r=customergroup/index" class="customergroup">กลุ่มลูกค้า</a></li>
                                 <li><a href="index.php?r=customer/index" class="customer">ลูกค้า</a></li>
                                 <li><a href="index.php?r=quotation/index" class="quotation">เสนอราคา</a></li>
-                                <li><a href="index.php?r=sale/index" class="sale">ขาย</a></li>
+                                <li><a href="index.php?r=sale/index" class="sale">Invoice</a></li>
 <!--                                <li><a href="index.php?r=invoice/index" class="invoice">เรียกเก็บเงิน</a></li>-->
                             </ul>
                         </div>

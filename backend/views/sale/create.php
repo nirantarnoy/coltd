@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Sale */
 
-$this->title = 'สร้างรายการขาย';
-$this->params['breadcrumbs'][] = ['label' => 'ขายสินค้า', 'url' => ['index']];
+$this->title = 'สร้าง Invoice';
+$this->params['breadcrumbs'][] = ['label' => 'Invoice', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sale-create">
