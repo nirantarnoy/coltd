@@ -23,7 +23,7 @@ class CurrencyrateController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
         ];
@@ -92,11 +92,16 @@ class CurrencyrateController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if($model->load(Yii::$app->request->post())){
+        $model->from_date = date('Y/m/d', strtotime($model->from_date));
+        $model->to_date = date('Y/m/d', strtotime($model->to_date));
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->save(false)) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+
+       }
         return $this->render('update', [
             'model' => $model,
         ]);

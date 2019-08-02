@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\Currencyrate */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Currencyrates', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'อัตราแลกเปลี่ยน', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
