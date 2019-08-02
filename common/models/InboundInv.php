@@ -36,7 +36,8 @@ class InboundInv extends \yii\db\ActiveRecord
         return [
             [['invoice_no'],'required'],
             [['invoice_date'], 'safe'],
-            [['delivery_term', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['delivery_term', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['status'],'safe'],
             [['invoice_no', 'sold_to','customer_ref','docin_no'], 'string', 'max' => 255],
         ];
     }
