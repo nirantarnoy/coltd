@@ -128,6 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => ['style' => 'text-align:center;','class' => 'activity-view-link',],
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => ['style' => 'text-align: right'],
+                'template' => '{view} {update} {inboundtrans} {delete}',
                 'buttons' => [
                     'view' => function($url, $data, $index) {
                         $options = [
@@ -147,6 +148,23 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]);
                         return $data->status == 1? Html::a(
                             '<span class="glyphicon glyphicon-pencil btn btn-xs btn-default"></span>', $url, [
+                            'id' => 'activity-view-link',
+                            //'data-toggle' => 'modal',
+                            // 'data-target' => '#modal',
+                            'data-id' => $index,
+                            'data-pjax' => '0',
+                            // 'style'=>['float'=>'rigth'],
+                        ]):'';
+                    },
+                    'inboundtrans' => function($url, $data, $index){
+                        $options = array_merge([
+                            'title' => Yii::t('yii', 'Update'),
+                            'aria-label' => Yii::t('yii', 'Update'),
+                            'data-pjax' => '0',
+                            'id'=>'modaledit',
+                        ]);
+                        return $data->status == 1? Html::a(
+                            '<span class="glyphicon glyphicon-link btn btn-xs btn-info"></span>', $url, [
                             'id' => 'activity-view-link',
                             //'data-toggle' => 'modal',
                             // 'data-target' => '#modal',

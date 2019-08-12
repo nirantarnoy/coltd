@@ -164,7 +164,16 @@ class InboundinvController extends Controller
 
         return $this->redirect(['index']);
     }
-
+    public function actionInboundtrans($id){
+        if($id){
+            //echo $id;return;
+            $model = \backend\models\Importline::find()->where(['import_id'=>$id])->all();
+            return $this->render('_inboundtrans', [
+                'model' => $model,
+                'invoice_no'=> $id,
+            ]);
+        }
+    }
     /**
      * Finds the Inboundinv model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
