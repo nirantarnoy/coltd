@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Url;
 ?>
 <div class="row">
     <div class="col-lg-12">
@@ -9,6 +10,7 @@
     <div class="col-lg-12">
         <div class="panel panel-body">
             <div class="table-responsive" style="overflow-x: scroll;">
+                <form id="form-recieve" action="<?=Url::to(['inboundinv/recieve'],true)?>" method="post">
                 <table class="table table-importline" >
                     <thead>
                     <tr>
@@ -70,6 +72,7 @@
                         <?php endforeach;?>
                     </tbody>
                 </table>
+                </form>
             </div>
             <br>
             <div class="btn btn-warning btn-success btn-approve" onclick="approve($(this))"> ยืนยันยอดรับเข้า</div>
@@ -82,9 +85,7 @@ $this->registerCssFile( '@web/css/sweetalert.css');
 
 $js=<<<JS
 $(function() {
-  $('.btn-approve').click(function() {
-    
-  });
+ 
 });
 
 function approve(e){
@@ -98,8 +99,7 @@ function approve(e){
               closeOnConfirm: false,
               showLoaderOnConfirm: true
             }, function () {
-              e.attr("href",url); 
-              e.trigger("click");        
+              $("#form-recieve").submit();     
         });
     }
 JS;

@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Inboundinv;
 use backend\models\InboundinvSearch;
+use yii\base\Request;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -172,6 +173,25 @@ class InboundinvController extends Controller
                 'model' => $model,
                 'invoice_no'=> $id,
             ]);
+        }
+    }
+    public function actionRecieve(){
+        $productid = Yii::$app->request->post('product_id');
+        $refid = Yii::$app->request->post('recid');
+        $pack1 = Yii::$app->request->post('product_pack1');
+        $pack2 = Yii::$app->request->post('product_pack2');
+        $lineqty = Yii::$app->request->post('line_qty');
+        $linepacking = Yii::$app->request->post('line_packing');
+        $linepriceper = Yii::$app->request->post('line_price_per');
+        $linetotalamount = Yii::$app->request->post('line_total_amount');
+        $linetransportno = Yii::$app->request->post('line_transport_in_no');
+        $linenum = Yii::$app->request->post('line_num');
+        $linepermitno = Yii::$app->request->post('line_permit_no');
+        $linepermitdate = Yii::$app->request->post('line_permit_date');
+
+        if(count($productid)>0){
+            $data = [];
+
         }
     }
     /**
