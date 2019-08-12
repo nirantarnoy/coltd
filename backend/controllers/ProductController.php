@@ -343,6 +343,11 @@ class ProductController extends Controller
                             continue;
                         }
 
+//                        if($rowData[14] == ''){
+//                            continue;
+//                        }
+//                        echo date('Y-d-m',strtotime($rowData[14]));
+//                        return;
 
                         $catid = 0;
                         $qty = 0;
@@ -376,15 +381,15 @@ class ProductController extends Controller
                                     'warehouse_id'=>$whid,
                                     'trans_type'=>TransType::TRANS_ADJUST_IN,
                                     'permit_no' => $rowData[16],
-                                    'permit_date' => date('Y-m-d',strtotime($rowData[17])),
+                                    'permit_date' => date('Y-d-m',strtotime($rowData[17])),
                                     'transport_in_no' => $rowData[13],
-                                    'transport_in_date' => date('Y-m-d',strtotime($rowData[14])),
+                                    'transport_in_date' => date('Y-d-m',strtotime($rowData[14])),
                                     'excise_no' => '',
                                     'invoice_no' => $rowData[11],
-                                    'invoice_date' => date('Y-m-d',strtotime($rowData[12])),
+                                    'invoice_date' => date('Y-d-m',strtotime($rowData[12])),
                                     'sequence' => $rowData[15],
                                     'kno_no_in' => $rowData[18],
-                                    'kno_in_date' => date('Y-m-d',strtotime($rowData[19])),
+                                    'kno_in_date' => date('Y-d-m',strtotime($rowData[19])),
                                     'out_qty' => 0,
                                     'usd_rate' => $usd,
                                     'thb_amount' => $thb,
@@ -415,7 +420,7 @@ class ProductController extends Controller
                         $modelx->volumn_content = $rowData[4];
                         $modelx->excise_no = $rowData[8];
                         $modelx->all_qty = $qty;
-                        $modelx->excise_date = date('Y-m-d',strtotime($rowData[9]));
+                        $modelx->excise_date = date('Y-d-m',strtotime($rowData[9]));
 
                         $this->updatePositiongroup($catid,$rowData[5]);
                       //  $modelx->all_qty = str_replace(',','', $rowData[8]);
@@ -442,15 +447,15 @@ class ProductController extends Controller
                                  'warehouse_id'=>$whid,
                                  'trans_type'=>TransType::TRANS_ADJUST_IN,
                                  'permit_no' => $rowData[16],
-                                 'permit_date' => date('Y-m-d',strtotime($rowData[17])),
+                                 'permit_date' => date('Y-d-m',strtotime($rowData[17])),
                                  'transport_in_no' => $rowData[13],
-                                 'transport_in_date' => date('Y-m-d',strtotime($rowData[14])),
+                                 'transport_in_date' => date('Y-d-m',strtotime($rowData[14])),
                                  'excise_no' => $excise_no,
                                  'invoice_no' => $rowData[11],
-                                 'invoice_date' => date('Y-m-d',strtotime($rowData[12])),
+                                 'invoice_date' => date('Y-d-m',strtotime($rowData[12])),
                                  'sequence' => $rowData[15],
                                  'kno_no_in' => $rowData[18],
-                                 'kno_in_date' => date('Y-m-d',strtotime($rowData[19])),
+                                 'kno_in_date' => date('Y-d-m',strtotime($rowData[19])),
                                  'out_qty' => 0,
                                  'usd_rate' => $usd,
                                  'thb_amount' => $thb,
