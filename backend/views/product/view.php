@@ -106,6 +106,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                 }
                             ],
                             [
+                                'attribute'=>'price_carton_usd',
+                                'value'=>function($data){
+                                    return $data->price_carton_usd!=''?number_format($data->price_carton_usd,0):0;
+                                }
+                            ],
+                            [
+                                'attribute'=>'price_carton_thb',
+                                'value'=>function($data){
+                                    return $data->price_carton_thb!=''?number_format($data->price_carton_thb,0):0;
+                                }
+                            ],
+                            [
                                 'attribute'=>'status',
                                 'format' => 'html',
                                 'value'=>function($data){
