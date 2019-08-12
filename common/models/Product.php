@@ -81,7 +81,7 @@ class Product extends \yii\db\ActiveRecord
             'price' => Yii::t('app', 'ราคา'),
             'price_carton_thb' => Yii::t('app', 'ราคาต่อลัง/USD'),
             'price_carton_usd' => Yii::t('app', 'ราคาค่อลัง/THB'),
-            'volumn' => Yii::t('app', 'ปริมาณต่อขวด(ลิตร)'),
+            'volumn' => Yii::t('app', 'ปริมาณลิตรต่อขวด'),
             'volumn_content' => Yii::t('app', 'Acohol Content'),
             'unit_factor' => Yii::t('app', 'ปริมาณขวดต่อลัง'),
             'status' => Yii::t('app', 'สถานะ'),

@@ -114,12 +114,12 @@ class TransCalculate extends \yii\base\Model
                   $modelstock->product_id = $param[0]['prod_id'];
                   $modelstock->warehouse_id = $param[0]['warehouse_id'];
                   $modelstock->invoice_no = $param[0]['invoice_no'];
-                  $modelstock->invoice_date = date('Y-m-d',strtotime($param[0]['invoice_date']));
+                  $modelstock->invoice_date = $param[0]['invoice_date']; //date('Y-m-d',strtotime($param[0]['invoice_date']));
                   $modelstock->transport_in_no = $param[0]['transport_in_no'];
-                  $modelstock->transport_in_date = date('Y-m-d',strtotime( $param[0]['transport_in_date']));
+                  $modelstock->transport_in_date = $param[0]['transport_in_date'];//date('Y-m-d',strtotime( $param[0]['transport_in_date']));
                  // $modelstock->sequence = $rowData[15];
                   $modelstock->permit_no = $param[0]['permit_no'];
-                  $modelstock->permit_date = date('Y-m-d',strtotime($param[0]['permit_date']));
+                  $modelstock->permit_date = $param[0]['permit_date'];//date('Y-m-d',strtotime($param[0]['permit_date']));
                   //$modelstock->kno_no_in = $rowData[18];
                  // $modelstock->kno_in_date = date('Y-m-d',strtotime($rowData[19]));
                   $modelstock->in_qty = $param[0]['qty'];

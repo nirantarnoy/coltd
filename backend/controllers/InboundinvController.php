@@ -87,6 +87,7 @@ class InboundinvController extends Controller
                         $modelline->product_id = $prodid[$i];
                         $modelline->line_qty = $lineqty[$i];
                         $modelline->line_price = $lineprice[$i];
+                        $modelline->line_num = $i+1;
                        // $modelline->stock_id = $stockid[$i];
                         $modelline->save();
                     }
@@ -116,6 +117,8 @@ class InboundinvController extends Controller
                     $modelimport->product_id = $value->product_id;
                     $modelimport->qty = $value->line_qty;
                     $modelimport->price_per = $value->line_price;
+                    $modelimport->price_pack1 = $prodinfo->price_carton_usd;
+                    $modelimport->price_pack2 = $prodinfo->price_carton_thb;
                     $modelimport->total_price = ($value->line_price * $value->line_qty);
                     $modelimport->total_qty = $value->line_qty;
                     $modelimport->line_num = $value->line_num;
@@ -161,6 +164,7 @@ class InboundinvController extends Controller
     public function actionDelete($id)
     {
         \backend\models\Inboundinvline::deleteAll(['invoice_id'=>$id]);
+        \backend\models\Importline::deleteAll(['import_id'=>$id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

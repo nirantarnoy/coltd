@@ -127,17 +127,17 @@ use kartik\date\DatePicker;
                                          </div>
                                      </div>
                                      <div class="form-group">
-                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ปริมาณต่อลัง <span class="required"></span>
-                                         </label>
-                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                             <?= $form->field($model, 'volumn')->textInput()->label(false) ?>
-                                         </div>
-                                     </div>
-                                     <div class="form-group">
-                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ปริมาณต่อขวด/ลิตร <span class="required"></span>
+                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">จำนวนขวดต่อลัง <span class="required"></span>
                                          </label>
                                          <div class="col-md-6 col-sm-6 col-xs-12">
                                              <?= $form->field($model, 'unit_factor')->textInput()->label(false) ?>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ปริมาณลิตรต่อขวด <span class="required"></span>
+                                         </label>
+                                         <div class="col-md-6 col-sm-6 col-xs-12">
+                                             <?= $form->field($model, 'volumn')->textInput()->label(false) ?>
                                          </div>
                                      </div>
                                      <div class="form-group">

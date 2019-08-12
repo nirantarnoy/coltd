@@ -342,20 +342,61 @@ class ProductController extends Controller
                         if ($rowData[1] == '' || $i == 0) {
                             continue;
                         }
-                        $modelprod = \backend\models\Product::find()->where(['name' => $rowData[1]])->one();
-                        if (count($modelprod) > 0) {
-                            // $data_all +=1;
-                            // array_push($data_fail,['name'=>$rowData[0][1]]);
-                            continue;
-                        }
+
+
                         $catid = 0;
                         $qty = 0;
                         $price = 0;
 
-                        $qty = str_replace(",","",$rowData[24]);
-                        $price = str_replace(",","",$rowData[21]);
+                        $qty_separate = ['xx',''];
+                        if($rowData[24]!=''){
+                            $qty_separate = explode(' ',$rowData[24]);
+                        }
+
+
+                        $qty = $qty_separate[1]==NULL || $qty_separate[1] =='' ?0:str_replace(",","",$qty_separate[1]);
+                        $price = $rowData[21]==NULL || $rowData[21] ==''?0:str_replace(",","",$rowData[21]);
                         $catid = $this->checkCat($rowData[6]);
                         $whid = $this->checkWarehouse($rowData[10]);
+
+                        $modelprod = \backend\models\Product::find()->where(['name' => $rowData[1]])->one();
+                        if (count($modelprod) > 0) {
+                           // echo "oo";return;
+                            // $data_all +=1;
+                            // array_push($data_fail,['name'=>$rowData[0][1]]);
+                            $modelstock = \backend\models\Productstock::find()->where(['product_id'=>$modelprod->id,'invoice_no'=>$rowData[11],'transport_in_no'=>$rowData[13]])->one();
+                            if($modelstock){
+                                continue;
+                            }else{
+                                $usd = str_replace(",","",$rowData[21]);
+                                $thb = str_replace(",","",$rowData[22]);
+                                array_push($data,[
+                                    'prod_id'=>$modelprod->id,
+                                    'qty'=>$qty,
+                                    'warehouse_id'=>$whid,
+                                    'trans_type'=>TransType::TRANS_ADJUST_IN,
+                                    'permit_no' => $rowData[16],
+                                    'permit_date' => date('Y-m-d',strtotime($rowData[17])),
+                                    'transport_in_no' => $rowData[13],
+                                    'transport_in_date' => date('Y-m-d',strtotime($rowData[14])),
+                                    'excise_no' => '',
+                                    'invoice_no' => $rowData[11],
+                                    'invoice_date' => date('Y-m-d',strtotime($rowData[12])),
+                                    'sequence' => $rowData[15],
+                                    'kno_no_in' => $rowData[18],
+                                    'kno_in_date' => date('Y-m-d',strtotime($rowData[19])),
+                                    'out_qty' => 0,
+                                    'usd_rate' => $usd,
+                                    'thb_amount' => $thb,
+
+
+                                ]);
+                                $update_stock = TransCalculate::createJournal($data);
+                            }
+                            continue;
+                        }
+
+
 
 
                         $modelx = new \backend\models\Product();
