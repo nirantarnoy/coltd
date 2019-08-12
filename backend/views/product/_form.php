@@ -68,6 +68,20 @@ use kartik\date\DatePicker;
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ราคาต่อลัง/USD <span class="required"></span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <?= $form->field($model, 'price_carton_usd')->textInput(['maxlength' => true,'class'=>'form-control','value'=>$model->price_carton_usd!=""?$model->price_carton_usd:0])->label(false) ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ราคาต่อลัง/THB <span class="required"></span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <?= $form->field($model, 'price_carton_thb')->textInput(['maxlength' => true,'class'=>'form-control','value'=>$model->price_carton_usd!=""?$model->price_carton_usd:0])->label(false) ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สถานะ <span class="required"></span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">

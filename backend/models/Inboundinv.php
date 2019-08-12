@@ -70,6 +70,10 @@ class Inboundinv extends \common\models\InboundInv
         $model = Inboundinv::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->invoice_no:'';
     }
+    public function findTrans($id){
+        $model = \backend\models\Importline::find()->where(['import_id'=>$id])->one();
+        return count($model)>0?1:0;
+    }
 //    public function findName($id){
 //        $model = Customer::find()->where(['id'=>$id])->one();
 //        return count($model)>0?$model->name:'';

@@ -168,7 +168,7 @@ class InboundinvController extends Controller
     public function actionInboundtrans($id){
         if($id){
             //echo $id;return;
-            $model = \backend\models\Importline::find()->where(['import_id'=>$id])->all();
+            $model = \backend\models\Importline::find()->where(['import_id'=>$id])->orderBy(['line_num'=>SORT_ASC])->all();
             return $this->render('_inboundtrans', [
                 'model' => $model,
                 'invoice_no'=> $id,

@@ -3,7 +3,7 @@ use yii\helpers\Url;
 ?>
 <div class="row">
     <div class="col-lg-12">
-        <h1>Invoice No: <?=$invoice_no;?></h1>
+        <h1>Invoice No: <?=\backend\models\Inboundinv::findNum($invoice_no);?></h1>
     </div>
 </div>
 <div class="row">
@@ -39,10 +39,11 @@ use yii\helpers\Url;
                     </tr>
                     </thead>
                     <tbody>
-
+                        <?php $i=0;?>
                         <?php foreach ($model as $value):?>
+                        <?php $i+=1;?>
                             <tr>
-                                <td></td>
+                                <td style="text-align: center;vertical-align: middle"><?=$i;?></td>
                                 <td>
                                     <input type="hidden" class="productcode" name="product_id[]" value="<?=$value->product_id?>">
                                     <input type="hidden" class="recid" name="recid[]" value="<?=$value->id?>">
@@ -61,7 +62,7 @@ use yii\helpers\Url;
                                 <td><input type="text" class="form-control line_transport_in_no" name="line_transport_in_no[]" value="<?=$value->transport_in_no?>"></td>
                                 <td><input type="text" class="form-control line_num" name="line_num[]" value="<?=$value->line_num?>"></td>
                                 <td><input style="width: 75px" type="text" class="form-control line_geo" name="line_geo[]" value="<?=$value->position?>" readonly></td>
-                                <td><input type="text" class="form-control line_origin" name="line_origin[]" value="<?=$value->position?>" readonly></td>
+                                <td><input type="text" class="form-control line_origin" name="line_origin[]" value="<?=$value->origin?>" readonly></td>
                                 <td><input type="text" class="form-control line_excise_no" name="line_excise_no[]" value="<?=$value->excise_no?>"></td>
                                 <td><input type="text" class="form-control line_excise_date" name="line_excise_date[]" value="<?=$value->excise_date?>"></td>
                                 <td><input type="text" class="form-control line_kno_no" name="line_kno_no[]" value="<?=$value->kno?>"></td>

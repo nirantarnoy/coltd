@@ -163,7 +163,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-pjax' => '0',
                             'id'=>'modaledit',
                         ]);
-                        return $data->status == 1? Html::a(
+                        return \backend\models\Inboundinv::findTrans($data->id)? Html::a(
                             '<span class="glyphicon glyphicon-link btn btn-xs btn-info"></span>', $url, [
                             'id' => 'activity-view-link',
                             //'data-toggle' => 'modal',
