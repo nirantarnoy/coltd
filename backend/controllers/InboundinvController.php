@@ -132,6 +132,7 @@ class InboundinvController extends Controller
                 }
             }
         }
+        return $this->redirect(['index']);
     }
 
     /**
