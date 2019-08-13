@@ -54,5 +54,9 @@ class Warehouse extends \common\models\Warehouse
             $model = Warehouse::find()->where(['id'=>$id])->one();
             return count($model)>0?$model:null;
         }
+        public function getDefault(){
+           $model = Warehouse::find()->where(['is_primary'=>1])->one();
+           return count($model)>0?$model->id:0;
+        }
 
 }

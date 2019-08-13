@@ -15,6 +15,7 @@ use yii\filters\VerbFilter;
  */
 class InboundinvController extends Controller
 {
+    public $enableCsrfValidation =false;
     /**
      * {@inheritdoc}
      */
@@ -172,15 +173,20 @@ class InboundinvController extends Controller
     public function actionInboundtrans($id){
         if($id){
             //echo $id;return;
+            $modelinv = \backend\models\Inboundinv::find()->where(['id'=>$id])->one();
             $model = \backend\models\Importline::find()->where(['import_id'=>$id])->orderBy(['line_num'=>SORT_ASC])->all();
             return $this->render('_inboundtrans', [
                 'model' => $model,
                 'invoice_no'=> $id,
+                'modelinv' => $modelinv
             ]);
         }
     }
     public function actionRecieve(){
         $productid = Yii::$app->request->post('product_id');
+        $invoiceid = Yii::$app->request->post('invoice_id');
+        $invoiceno = Yii::$app->request->post('invoice_no');
+        $invoicedate = Yii::$app->request->post('invoice_date');
         $refid = Yii::$app->request->post('recid');
         $pack1 = Yii::$app->request->post('product_pack1');
         $pack2 = Yii::$app->request->post('product_pack2');
@@ -192,9 +198,73 @@ class InboundinvController extends Controller
         $linenum = Yii::$app->request->post('line_num');
         $linepermitno = Yii::$app->request->post('line_permit_no');
         $linepermitdate = Yii::$app->request->post('line_permit_date');
+        $lineexciseno= Yii::$app->request->post('line_excise_no');
+        $lineexcisedate = Yii::$app->request->post('line_excise_date');
 
         if(count($productid)>0){
-            $data = [];
+            for($i=0;$i<=count($productid)-1;$i++){
+                $model = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$invoiceid,'product_id'=>$productid[$i]])->one();
+                if($model){
+                    $model->transport_in_no = $linetransportno[$i];
+                    $model->transport_in_date = date('d-m-Y');
+                    if($model->save(false)){
+                        $modeltrans = \backend\models\Importline::find()->where(['import_id'=>$refid[$i]])->one();
+                        if($modeltrans){
+                            $modeltrans->transport_in_no = $linetransportno[$i];
+                            $modeltrans->transport_in_date = date('d-m-Y');
+                            $modeltrans->posted = 1;
+                            if($modeltrans->save(false)){
+
+                            }
+                        }
+                    }
+
+                }
+
+                //$catid = $this->checkCat($rowData[6]);
+                $whid = \backend\models\Warehouse::getDefault();
+
+                $data = [];
+                $usd = 100;//str_replace(",","",$rowData[21]);
+                $thb = 100;//str_replace(",","",$rowData[22]);
+                array_push($data,[
+                    'prod_id'=>$productid[$i],
+                    'qty'=>$lineqty[$i],
+                    'warehouse_id'=>$whid,
+                    'trans_type'=>\backend\helpers\TransType::TRANS_ADJUST_IN,
+                    'permit_no' => $linepermitno[$i],
+                    'permit_date' => date('Y-d-m',strtotime($linepermitdate[$i])),
+                    'transport_in_no' => $linetransportno[$i],
+                    'transport_in_date' => date('Y-d-m'),//date('Y-d-m',strtotime($rowData[14])),
+                    'excise_no' => $lineexciseno[$i],
+                    'excise_date' => date('Y-d-m',strtotime($lineexcisedate[$i])),
+                    'invoice_no' => $invoiceno,
+                    'invoice_date' => date('Y-d-m',strtotime($invoicedate)),//date('Y-d-m',strtotime($rowData[12])),
+                    'sequence' => $linenum[$i],
+                    'kno_no_in' => 1,
+                    'kno_in_date' => date('Y-d-m'),//date('Y-d-m',strtotime($rowData[19])),
+                    'out_qty' => 0,
+                    'usd_rate' => $usd,
+                    'thb_amount' => $thb,
+
+
+                ]);
+
+
+
+            }
+
+            $update_stock = \backend\models\TransCalculate::createJournal($data);
+            if($update_stock){
+                $session = Yii::$app->session;
+                $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
+                return $this->redirect(['index']);
+            }else{
+                $session = Yii::$app->session;
+                $session->setFlash('msg-error','พบข้อมผิดพลาด');
+                return $this->redirect(['index']);
+            }
+
 
         }
     }

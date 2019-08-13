@@ -3,7 +3,7 @@ use yii\helpers\Url;
 ?>
 <div class="row">
     <div class="col-lg-12">
-        <h1>Invoice No: <?=\backend\models\Inboundinv::findNum($invoice_no);?></h1>
+        <h1>Invoice No: <?=$modelinv->invoice_no;?></h1>
     </div>
 </div>
 <div class="row">
@@ -11,7 +11,10 @@ use yii\helpers\Url;
         <div class="panel panel-body">
             <div class="table-responsive" style="overflow-x: scroll;">
                 <form id="form-recieve" action="<?=Url::to(['inboundinv/recieve'],true)?>" method="post">
-                <table class="table table-importline" >
+                    <input type="hidden" name="invoice_no" value="<?=$modelinv->invoice_no;?>">
+                    <input type="hidden" name="invoice_id" value="<?=$modelinv->id;?>">
+                    <input type="hidden" name="invoice_date" value="<?=$modelinv->invoice_date;?>">
+                    <table class="table table-importline" >
                     <thead>
                     <tr>
                         <th>#</th>
@@ -27,6 +30,7 @@ use yii\helpers\Url;
                         <th>น้ำหนัก</th>
                         <th>น้ำหนักรวมหีบห่อ</th>
                         <th>เลขที่ใบขนขาเข้า</th>
+                        <th>วันที่ใบขน</th>
                         <th>รายการที่</th>
                         <th>พิกัด</th>
                         <th>ประเทศต้นกำเนิด</th>
@@ -60,15 +64,16 @@ use yii\helpers\Url;
                                 <td><input type="text" style="width: 100px" class="form-control line_net" name="line_net[]" value="<?=number_format($value->netweight * $value->total_qty,2)?>" readonly></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_gross" name="line_gross[]" value="<?=number_format($value->grossweight * $value->total_qty,2)?>" readonly></td>
                                 <td><input type="text" style="width: 200px" class="form-control line_transport_in_no" name="line_transport_in_no[]" value="<?=$value->transport_in_no?>"></td>
+                                <td><input type="date" id="cut_date_<?=$i?>" style="width: 200px" class="form-control line_transport_in_date" name="line_transport_in_date[]" value="<?=$value->transport_in_date =='' || $value->transport_in_date == Null? date('d-m-Y'):date('d-m-Y',strtotime($value->transport_in_date))?>"></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_num" name="line_num[]" value="<?=$value->line_num?>"></td>
                                 <td><input style="width: 100px" type="text" class="form-control line_geo" name="line_geo[]" value="<?=$value->position?>" readonly></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_origin" name="line_origin[]" value="<?=$value->origin?>" readonly></td>
                                 <td><input type="text" style="width: 300px" class="form-control line_excise_no" name="line_excise_no[]" value="<?=$value->excise_no?>"></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_excise_date" name="line_excise_date[]" value="<?=$value->excise_date?>"></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_excise_date" name="line_excise_date[]" value="<?=$value->excise_date?>" readonly></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_kno_no" name="line_kno_no[]" value="<?=$value->kno?>"></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_kno_date" name="line_kno_date[]" value="<?=$value->kno_date?>"></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_kno_date" name="line_kno_date[]" value="<?=$value->kno_date?>" readonly></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_permit_no" name="line_permit_no[]" value="<?=$value->permit_no?>"></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_permit_date" name="line_permit_date[]" value="<?=$value->permit_date?>"></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_permit_date" name="line_permit_date[]" value="<?=$value->permit_date?>" readonly></td>
                             </tr>
                         <?php endforeach;?>
                     </tbody>
@@ -76,7 +81,9 @@ use yii\helpers\Url;
                 </form>
             </div>
             <br>
+            <?php //if(!$modelinv->posted):?>
             <div class="btn btn-warning btn-success btn-approve" onclick="approve($(this))"> ยืนยันยอดรับเข้า</div>
+            <?php //endif;?>
         </div>
     </div>
 </div>
