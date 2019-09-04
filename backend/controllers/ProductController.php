@@ -364,6 +364,10 @@ class ProductController extends Controller
                         $catid = $this->checkCat($rowData[6]);
                         $whid = $this->checkWarehouse($rowData[10]);
 
+                        if(!$whid){
+                            $whid = \backend\models\Warehouse::getDefault();
+                        }
+
                         $modelprod = \backend\models\Product::find()->where(['name' => $rowData[1]])->one();
                         if (count($modelprod) > 0) {
                            // echo "oo";return;
