@@ -48,6 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['attribute' => 'product_id','value'=>function($data){
                                 return \backend\models\Product::findCode($data->product_id);
                             }],
+                            ['attribute' => 'product_id','value'=>function($data){
+                                return \backend\models\Product::findName($data->product_id);
+                            }],
                             ['attribute' => 'warehouse_id','value'=>function($data){
                                 return \backend\models\Warehouse::findWarehousename($data->warehouse_id);
                             }],
@@ -145,6 +148,9 @@ $this->params['breadcrumbs'][] = $this->title;
            // 'id',
             ['attribute' => 'product_id','value'=>function($data){
                 return \backend\models\Product::findCode($data->product_id);
+            }],
+            ['attribute' => 'product_id','value'=>function($data){
+                return \backend\models\Product::findName($data->product_id);
             }],
             ['attribute' => 'warehouse_id','value'=>function($data){
                 return \backend\models\Warehouse::findWarehousename($data->warehouse_id);
