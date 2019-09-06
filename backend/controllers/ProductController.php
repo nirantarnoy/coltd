@@ -323,6 +323,7 @@ class ProductController extends Controller
     public function actionImportproduct(){
 
         $model = new \backend\models\Uploadfile();
+        $qty_text = [];
         if(Yii::$app->request->post()){
             $uploaded = UploadedFile::getInstance($model, 'file');
             if(!empty($uploaded)) {
@@ -339,6 +340,9 @@ class ProductController extends Controller
                     $data = [];
                     while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE) {
                         $i += 1;
+                        $catid = 0;
+                        $qty = 0;
+                        $price = 0;
                         if ($rowData[1] == '' || $i == 0) {
                             continue;
                         }
@@ -349,17 +353,19 @@ class ProductController extends Controller
 //                        echo date('Y-d-m',strtotime($rowData[14]));
 //                        return;
 
-                        $catid = 0;
-                        $qty = 0;
-                        $price = 0;
 
-                        $qty_separate = ['xx',''];
-                        if($rowData[24]!=''){
+
+                        //$qty_separate = ['xx',''];
+
+                        if($rowData[24]!='' && $rowData[24] != null){
                             $qty_separate = explode(' ',$rowData[24]);
+                            if(count($qty_separate)>1){
+                                $qty = $qty_separate[1]==NULL || $qty_separate[1] =='' ?0:str_replace(",","",$qty_separate[1]);
+                            }else{
+                                $qty = $rowData[24];
+                            }
                         }
-
-
-                        $qty = $qty_separate[1]==NULL || $qty_separate[1] =='' ?0:str_replace(",","",$qty_separate[1]);
+                       // array_push($qty_text, $rowData[24]);continue;
                         $price = $rowData[21]==NULL || $rowData[21] ==''?0:str_replace(",","",$rowData[21]);
                         $catid = $this->checkCat($rowData[6]);
                         $whid = $this->checkWarehouse($rowData[10]);
@@ -423,7 +429,7 @@ class ProductController extends Controller
                         $modelx->volumn = $rowData[3];
                         $modelx->volumn_content = $rowData[4];
                         $modelx->excise_no = $rowData[8];
-                        $modelx->all_qty = $qty;
+                        $modelx->all_qty = (int)$qty;
                         $modelx->excise_date = date('Y-d-m',strtotime($rowData[9]));
 
                         $this->updatePositiongroup($catid,$rowData[5]);
@@ -468,6 +474,7 @@ class ProductController extends Controller
                              ]);
                         }
                     }
+                //    print_r($qty_text);return;
                      $update_stock = TransCalculate::createJournal($data);
                     if($res > 0 && $update_stock){
                         $session = Yii::$app->session;
