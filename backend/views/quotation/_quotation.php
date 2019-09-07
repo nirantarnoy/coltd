@@ -12,12 +12,12 @@
         <table class="table" border="0" style="width: 100%;border-collapse: collapse;">
             <thead>
             <tr colspan="">
-                <td colspan="6" style="text-align: center">
+                <td colspan="9" style="text-align: center">
                     <img src="<?= \yii\helpers\Url::to('@web/uploads/images/logo.png', true) ?>" width="20%" alt="logo" /><br>
                 </td>
             </tr>
             <tr colspan="4">
-                <td colspan="6" style="text-align: center">
+                <td colspan="9" style="text-align: center">
                     <small>230 CHALONGKRUNG LUMPRATIEW LATKRABANG BANGKOK 10520 THAILAND</small>
                     <br>
                     <h4 style="color: #0d69af">
@@ -29,16 +29,16 @@
                     <small>CO. REG. NO. : 0105557061401</small>
                 </td>
             </tr>
-            <tr rowspan="4"></tr>
-            <tr colspan="4">
-                <td colspan="4" style="text-align: center;font-size: 14px;font-weight: bold;border: none;">
+            <tr rowspan="7"></tr>
+            <tr colspan="7">
+                <td colspan="7" style="text-align: center;font-size: 14px;font-weight: bold;border: none;">
 
                 </td>
                 <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">
 
                 </td>
             </tr><br>
-            <tr colspan="4">
+            <tr colspan="7">
                 <td colspan="4" style="text-align: center;font-size: 14px;font-weight: bold;border: none;">
 
                 </td>
@@ -48,7 +48,7 @@
             </tr><br><br>
             <tr >
                 <td colspan="2" style="border: none;font-size: 14px;font-weight: bold">Prepared For: </td>
-                <td colspan="2" style="border: none;font-size: 14px;font-weight: bold">
+                <td colspan="5" style="border: none;font-size: 14px;font-weight: bold">
 
                 </td>
 
@@ -77,15 +77,27 @@
             </thead>
             <tbody style="top: 10px;">
             <tr>
-                <td colspan="6" style="text-align: center;font-size: 14px">QUOTATION</td>
+                <td colspan="9" style="text-align: center;font-size: 16px;font-weight: bold;">ใบเสนอราคา</td>
             </tr>
-            <tr style="background: #c3c3c3">
-                <td style="padding: 10px;border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 9%">No.</td>
-                <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Description</td>
-                <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Origin Country</td>
-                <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Qty</td>
-                <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 15%">Price</td>
-                <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 15%">Total</td>
+            <tr style="background: #c3c3c3;" rowspan="2">
+                <td  style="padding: 10px;border: 0.2px solid grey;border-bottom: 0px;font-size: 13px;font-weight: bold;text-align: center;width: 9%">No.</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 13px;font-weight: bold;text-align: center">Description</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 13px;font-weight: bold;text-align: center">Qty</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 13px;font-weight: bold;text-align: center">Origin Country</td>
+                <td  colspan="3" style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Packing</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 13px;font-weight: bold;text-align: center;width: 15%">Price</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 13px;font-weight: bold;text-align: center;width: 15%">Total</td>
+            </tr>
+            <tr style="background: #c3c3c3; row-span: 2">
+                <td  style="padding: 10px;border-left: 0.2px solid grey;"></td>
+                <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center"></td>
+                <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center"></td>
+                <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center"></td>
+                <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Bottle</td>
+                <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Litre</td>
+                <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Alkohol</td>
+                <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 15%"></td>
+                <td  style="border-left: 0.2px solid grey;border-right: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 15%"></td>
             </tr>
             <?php $rows = 0; ?>
             <?php $sumqty = 0; ?>
@@ -101,11 +113,14 @@
                 <tr style="border: 0.5px solid black;border-bottom:none;border-collapse: collapse;">
                     <td style="padding: 5px;font-size: 13px;font-weight: normal;text-align: center;"><?=$rows?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;padding-left: 5px;text-align: left"><?=\backend\models\Product::findProductinfo($value->product_id)->engname;?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->origin;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($value->qty,0)?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: right;padding-right: 10px;"><?=number_format($value->price,0)?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->origin;?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->unit_factor;?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->volumn;?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->volumn_content.'%';?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($value->price,0)?></td>
 
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: right;padding-right: 10px;"><?=number_format($value->qty * $value->price,0)?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($value->qty * $value->price,0)?></td>
 
                 </tr>
             <?php endforeach; ?>
@@ -114,6 +129,9 @@
                     <tr style="border: 0.1px solid black;border-top: none;border-bottom:none;">
                         <td style="padding: 5px;font-size: 14px;font-weight: bold;text-align: left;"></td>
                         <td style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: left"></td>
+                        <td style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"></td>
+                        <td style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"></td>
+                        <td style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"></td>
                         <td style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"></td>
                         <td style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"></td>
                         <td style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"></td>
@@ -134,10 +152,13 @@
                 <!--            <tr>-->
                 <td style="padding: 15px 15px 15px 15px;font-size: 14px;text-align: left" colspan="2">TOTAL</td>
 
+                <td style="text-align: center"><?=number_format($sumqty,0)?></td>
                 <td></td>
-                <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($sumqty,0)?></td>
-                <td style="font-size: 14px;font-weight: normal;text-align: right;padding-right: 10px;"></td>
-                <td style="font-size: 14px;font-weight: normal;text-align: right;padding-right: 10px;"><?=number_format($sumgross,0)?></td>
+                <td></td>
+                <td></td>
+                <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"></td>
+                <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"></td>
+                <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($sumgross,0)?></td>
 
             </tr>
 
