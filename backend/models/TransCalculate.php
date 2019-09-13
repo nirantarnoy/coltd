@@ -44,29 +44,32 @@ class TransCalculate extends \yii\base\Model
               $model_journalline->stock_type = $stocktype;
               $model_journalline->trans_date = date('Y-m-d');
               if($model_journalline->save()){
-                  array_push($param,[
-                      'prod_id'=>$data[$i]['prod_id'],
-                      'warehouse_id'=>$data[$i]['warehouse_id'],
-                      'qty'=>$data[$i]['qty'],
-                      'trans_type'=>$data[$i]['trans_type'],
-                      'invoice_no' => $data[$i]['invoice_no'],
-                      'invoice_date' => $data[$i]['invoice_date'],
-                      'permit_no' => $data[$i]['permit_no'],
-                      'permit_date' => $data[$i]['permit_date'],
-                      'transport_in_no' => $data[$i]['transport_in_no'],
-                      'transport_in_date' => $data[$i]['transport_in_date'],
-                      'excise_no' => $data[$i]['excise_no'],
-                      'stock_type' => $stocktype,
-                      'thb_amount' => $data[$i]['thb_amount'],
-                      'usd_rate' =>$data[$i]['usd_rate'],
-                  ]);
-                self::createStocksum($param);
+     //             array_push($param,[
+//                      'prod_id'=>$data[$i]['prod_id'],
+//                      'warehouse_id'=>$data[$i]['warehouse_id'],
+//                      'qty'=>$data[$i]['qty'],
+//                      'trans_type'=>$data[$i]['trans_type'],
+//                      'invoice_no' => $data[$i]['invoice_no'],
+//                      'invoice_date' => $data[$i]['invoice_date'],
+//                      'permit_no' => $data[$i]['permit_no'],
+//                      'permit_date' => $data[$i]['permit_date'],
+//                      'transport_in_no' => $data[$i]['transport_in_no'],
+//                      'transport_in_date' => $data[$i]['transport_in_date'],
+//                      'excise_no' => $data[$i]['excise_no'],
+//                      'stock_type' => $stocktype,
+//                      'sequence' => $data[$i]['sequence'],
+//                      'kno_no_in' =>$data[$i]['kno_no_in'],
+//                      'kno_in_date' =>$data[$i]['kno_in_date'],
+//                      'thb_amount' => $data[$i]['thb_amount'],
+//                      'usd_rate' =>$data[$i]['usd_rate'],
+ //                 ]);
+                self::createStocksum($data[$i],$stocktype);
               }
           }
 
       }
     }
-    public static function createStocksum($param){
+    public static function createStocksum($param,$stocktype){
        if($param){
 //          $model_stock = Stockbalance::find()
 //              ->where(['product_id'=>$param[0]['prod_id'],
@@ -77,27 +80,27 @@ class TransCalculate extends \yii\base\Model
 //              ])
 //              ->one();
            $model_stock = Productstock::find()
-               ->where(['product_id'=>$param[0]['prod_id'],
-                   'warehouse_id'=>$param[0]['warehouse_id'],
-                   'invoice_no'=>$param[0]['invoice_no'],
-                   'transport_in_no'=>$param[0]['transport_in_no']
+               ->where(['product_id'=>$param['prod_id'],
+                   'warehouse_id'=>$param['warehouse_id'],
+                   'invoice_no'=>$param['invoice_no'],
+                   'transport_in_no'=>$param['transport_in_no']
                ])
                ->one();
           if($model_stock){
-              if($param[0]['stock_type']==1){ // picking
-                  $model_stock->qty = $model_stock->qty - $param[0]['qty'];
+              if($stocktype==1){ // picking
+                  $model_stock->qty = $model_stock->qty - $param['qty'];
               }else{
-                  $model_stock->qty = $model_stock->qty + $param[0]['qty'];
+                  $model_stock->qty = $model_stock->qty + $param['qty'];
               }
 
               if($model_stock->save(false)){
-                  self::updateProductInvent($param[0]['prod_id']);
+                  self::updateProductInvent($param['prod_id']);
               }else{
                  return false;
               }
 
           }else{
-              if($param[0]['stock_type']==1){
+              if($stocktype==1){
 
               }else{
 //                  $model = new Stockbalance();
@@ -111,23 +114,23 @@ class TransCalculate extends \yii\base\Model
 //                      self::updateProductInvent($param[0]['prod_id']);
 //                  }
                   $modelstock = new Productstock();
-                  $modelstock->product_id = $param[0]['prod_id'];
-                  $modelstock->warehouse_id = $param[0]['warehouse_id'];
-                  $modelstock->invoice_no = $param[0]['invoice_no'];
-                  $modelstock->invoice_date = date('Y-d-m',strtotime($param[0]['invoice_date']));
-                  $modelstock->transport_in_no = $param[0]['transport_in_no'];
-                  $modelstock->transport_in_date = date('Y-d-m',strtotime( $param[0]['transport_in_date']));
-                 // $modelstock->sequence = $rowData[15];
-                  $modelstock->permit_no = $param[0]['permit_no'];
-                  $modelstock->permit_date = date('Y-d-m',strtotime($param[0]['permit_date']));
-                  //$modelstock->kno_no_in = $rowData[18];
-                 // $modelstock->kno_in_date = date('Y-m-d',strtotime($rowData[19]));
-                  $modelstock->in_qty = $param[0]['qty'];
+                  $modelstock->product_id = $param['prod_id'];
+                  $modelstock->warehouse_id = $param['warehouse_id'];
+                  $modelstock->invoice_no = $param['invoice_no'];
+                  $modelstock->invoice_date = date('Y-d-m',strtotime($param['invoice_date']));
+                  $modelstock->transport_in_no = $param['transport_in_no'];
+                  $modelstock->transport_in_date = date('Y-d-m',strtotime( $param['transport_in_date']));
+                  $modelstock->sequence = $param['sequence'];
+                  $modelstock->permit_no = $param['permit_no'];
+                  $modelstock->permit_date = date('Y-d-m',strtotime($param['permit_date']));
+                  $modelstock->kno_no_in = $param['kno_no_in'];
+                  $modelstock->kno_in_date = date('Y-m-d',strtotime($param['kno_in_date']));
+                  $modelstock->in_qty = $param['qty'];
                   $modelstock->out_qty = 0;
-                  $modelstock->usd_rate = $param[0]['usd_rate'];
-                  $modelstock->thb_amount =  $param[0]['thb_amount'];
+                  $modelstock->usd_rate = $param['usd_rate'];
+                  $modelstock->thb_amount =  $param['thb_amount'];
                   if($modelstock->save(false)){
-                      self::updateProductInvent($param[0]['prod_id']);
+                      self::updateProductInvent($param['prod_id']);
                   }
               }
               //self::updateProductInvent($param[0]['prod_id']);
