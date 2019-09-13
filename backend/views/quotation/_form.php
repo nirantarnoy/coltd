@@ -565,7 +565,7 @@ $js =<<<JS
               'url': "$url_to_find",
               'data': {'txt': "*"},
               'success': function(data) {
-                 alert(data[0]['warehouse_name']);return;
+                // alert(data[0]['warehouse_name']);return;
                  if(data.length == 0){
                       $(".table-list").hide();
                      $(".modal-error").show();
