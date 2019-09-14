@@ -778,11 +778,19 @@ $js =<<<JS
                      $(".modal-error").hide();
                      $(".table-list").show();
                      var html = "";
-                     for(var i =0;i<=data.length -1;i++){
-                            var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
+                      for(var i =0;i<=data.length -1;i++){
+                         var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
                          var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
+                         
+                          var inv_date = data[i]['invoice_date'].substr(6,4)==1970?'': data[i]['invoice_date'];
+                          var permit_date = data[i]['permit_date'].substr(6,4)==1970?'': data[i]['permit_date'];
+                          var transport_date = data[i]['transport_in_date'].substr(6,4)==1970?'': data[i]['transport_in_date'];
+                          var kno_date = data[i]['kno_in_date'].substr(6,4)==1970?'': data[i]['kno_in_date'];
+                     
+                         
+                         
                          html +="<tr ondblclick='getitem($(this));'>" +
-                          "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td>"+
+                         "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td>"+
                           "<td style='vertical-align: middle'>"+
                          data[i]['product_code']+"</td><td style='vertical-align: middle'>"+
                          data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
@@ -795,27 +803,27 @@ $js =<<<JS
                           "<input type='hidden' class='unitfactor' value='"+data[i]['unit_factor']+"'/>" +
                           "<input type='hidden' class='volumn' value='"+data[i]['volumn']+"'/>" +
                           "<input type='hidden' class='volumn_content' value='"+data[i]['volumn_content']+"'/>" +
-                           "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
-                           "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
+                          "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
+                          "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
                            "</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
-                           "<td>"+data[i]['warehouse_name']+"</td>"+
+                             "<td>"+data[i]['warehouse_name']+"</td>"+
                            "<td>"+data[i]['invoice_no']+"</td>"+
-                           "<td>"+data[i]['invoice_date']+"</td>" +
-                           "<td>"+data[i]['permit_no']+"</td>" +
-                           "<td>"+data[i]['permit_date']+"</td>" +
-                             "<td>"+data[i]['transport_in_no']+"</td>" +
-                           "<td>"+data[i]['transport_in_date']+"</td>" +
-                                     "<td>"+data[i]['sequence']+"</td>" +
+                           "<td>"+inv_date+"</td>"+
+                          "<td>"+data[i]['permit_no']+"</td>"+
+                          "<td>"+permit_date+"</td>"+
+                            "<td>"+data[i]['transport_in_no']+"</td>" +
+                           "<td>"+transport_date+"</td>" +
+                           "<td>"+data[i]['sequence']+"</td>" +
                            "<td>"+data[i]['excise_no']+"</td>" +
                            "<td>"+data[i]['kno_no_in']+"</td>" +
-                           "<td>"+data[i]['kno_in_date']+"</td>" +
-                            "<td style='color:green;text-align: right;'>"+parseFloat(in_q).toLocaleString()+"</td>" +
+                           "<td>"+kno_date+"</td>" +
+                           "<td style='color:green;text-align: right;'>"+parseFloat(in_q).toLocaleString()+"</td>" +
                            "<td style='color:red;text-align: right;'>"+parseFloat(out_q).toLocaleString()+"</td>" +
                            "<td style='font-weight: bold;text-align: right;'>"+ parseFloat(in_q).toLocaleString()+"</td>" +
                            "</tr>"
-                          
-                       }
+                           
+                     }
                      $(".table-list tbody").html(html);
                      
                  }
