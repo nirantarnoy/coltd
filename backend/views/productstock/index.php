@@ -136,6 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         // 'filterModel' => $searchModel,
         'emptyCell'=>'-',
+        'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => ''],
         'layout'=>"{items}\n{summary}\n<div class='text-left'>{pager}</div>",
         'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
         'showOnEmpty'=>false,
@@ -171,22 +172,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
             'invoice_no',
             ['attribute' => 'invoice_date','value'=>function($data){
-               return date('d-m-Y',strtotime($data->invoice_date));
+               return date('Y',strtotime($data->invoice_date)) == 1970?'': date('d-m-Y',strtotime($data->invoice_date));
             }],
             'transport_in_no',
             ['attribute' => 'transport_in_date','value'=>function($data){
-                return date('d-m-Y',strtotime($data->transport_in_date));
+                return date('Y',strtotime($data->transport_in_date)) == 1970?'':date('d-m-Y',strtotime($data->transport_in_date));
             }],
             ['attribute' => 'sequence','value'=>function($data){
                 return $data->sequence!=null?$data->sequence:0;
             }],
             'permit_no',
             ['attribute' => 'permit_date','value'=>function($data){
-                return date('d-m-Y',strtotime($data->permit_date));
+                return date('Y',strtotime($data->permit_date)) == 1970?'':date('d-m-Y',strtotime($data->permit_date));
             }],
             'kno_no_in',
             ['attribute' => 'kno_in_date','value'=>function($data){
-                return date('d-m-Y',strtotime($data->kno_in_date));
+                return date('Y',strtotime($data->kno_in_date)) == 1970?'':date('d-m-Y',strtotime($data->kno_in_date));
             }],
             'usd_rate',
             'thb_amount',

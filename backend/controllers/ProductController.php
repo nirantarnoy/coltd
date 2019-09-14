@@ -350,8 +350,8 @@ class ProductController extends Controller
 //                        if($rowData[14] == ''){
 //                            continue;
 //                        }
-//                        echo date('Y-d-m',strtotime($rowData[14]));
-//                        return;
+                      //  echo date('Y-d-m',strtotime(trim($rowData[12])));
+                      //  return;
 
 
 
@@ -391,15 +391,15 @@ class ProductController extends Controller
                                     'warehouse_id'=>$whid,
                                     'trans_type'=>TransType::TRANS_ADJUST_IN,
                                     'permit_no' => $rowData[16],
-                                    'permit_date' => date('Y-d-m',strtotime($rowData[17])),
+                                    'permit_date' => trim($rowData[17]),
                                     'transport_in_no' => $rowData[13],
-                                    'transport_in_date' => date('Y-d-m',strtotime($rowData[14])),
+                                    'transport_in_date' => trim($rowData[14]),
                                     'excise_no' => '',
                                     'invoice_no' => $rowData[11],
-                                    'invoice_date' => date('Y-d-m',strtotime($rowData[12])),
+                                    'invoice_date' => trim($rowData[12]),
                                     'sequence' => $rowData[15],
                                     'kno_no_in' => $rowData[18],
-                                    'kno_in_date' => date('Y-d-m',strtotime($rowData[19])),
+                                    'kno_in_date' => trim($rowData[19]),
                                     'out_qty' => 0,
                                     'usd_rate' => $usd,
                                     'thb_amount' => $thb,
