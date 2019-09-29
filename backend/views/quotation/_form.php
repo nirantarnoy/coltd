@@ -49,7 +49,7 @@ $this->registerCss('
                 <div class="col-lg-9">
                     <div class="row">
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'quotation_no')->textInput(['maxlength' => true,'readonly'=>'readonly','value'=>$model->isNewRecord?$runno:$model->quotation_no]) ?>
+                            <?= $form->field($model, 'quotation_no')->textInput(['maxlength' => true,'value'=>$model->isNewRecord?$runno:$model->quotation_no]) ?>
                         </div>
                         <div class="col-lg-3">
                             <?php $model->require_date = $model->isNewRecord?date('d/m/Y'):date('d/m/Y',$model->require_date);?>

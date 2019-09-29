@@ -428,7 +428,7 @@ class SaleController extends Controller
             $uptrans = TransCalculate::createJournal($data);
         }
     }
-    public function actionPrintpicking(){
+    public function actionPrint(){
         if(Yii::$app->request->isPost) {
             $id = Yii::$app->request->post('sale_id');
             if ($id) {
