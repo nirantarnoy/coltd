@@ -26,6 +26,8 @@ $this->title = "Packing List";
                     <tr>
                         <th style="text-align: center">#</th>
                         <th style="text-align: center">รายการสินค้า</th>
+                        <th>NW</th>
+                        <th>GW</th>
                         <th>ราคาต่อลัง(บาท)</th>
                         <th >จำนวน</th>
                         <th >หน่วยนับ</th>
@@ -61,8 +63,14 @@ $this->title = "Packing List";
                                 <?=\backend\models\Product::findEng($query[$i]['product_id'])?>
                                 <input type="hidden" name="product_id[]" class="productid" value="<?=$query[$i]['product_id']?>" >
                             </td>
+                            <td style="vertical-align: middle">
+                                <?=number_format(\backend\models\Product::findProductInfo($query[$i]['product_id'])->netweight, 2)?>
+                            </td>
+                            <td style="vertical-align: middle">
+                                <?=number_format(\backend\models\Product::findProductInfo($query[$i]['product_id'])->grossweight,2)?>
+                            </td>
                             <td style="vertical-align: middle;text-align: right">
-                                <?=number_format((float)$query[$i]['price'],2);?>
+                                <input type="text" class="form-control" name="line_per_carton[]" value="<?=number_format((float)$query[$i]['price'],2);?>">
                             </td>
                             <td style="vertical-align: middle">
                                 <input type="text" class="form-control line_qty" name="line_qty[]" value="<?=$query[$i]['qty']?>">
@@ -84,7 +92,7 @@ $this->title = "Packing List";
                             </td>
 
                             <td style="vertical-align: middle">
-                                <input type="text" class="form-control" name="" readonly value="  <?=\backend\models\Product::findGeo($query[$i]['product_id'])?>">
+                                <input type="text" style="width: 200px;" class="form-control" name="" readonly value="  <?=\backend\models\Product::findGeo($query[$i]['product_id'])?>">
                             </td>
 
                             <td style="text-align: center;vertical-align: middle">
@@ -109,7 +117,7 @@ $this->title = "Packing List";
                                 <?=date('d-m-Y',strtotime($query[$i]['permit_date']))?>
                             </td>
                             <td style="vertical-align: middle">
-                                <?=$query[$i]['kno_no_in']?>
+                                <input type="text" style="width: 200px;" class="form-control line_kno_in" name="line_kno_in[]" value="<?=$query[$i]['kno_no_in']?>">
                             </td>
                             <td style="vertical-align: middle">
                                 <?=date('d-m-Y',strtotime($query[$i]['kno_in_date']))?>

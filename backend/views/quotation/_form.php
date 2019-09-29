@@ -334,6 +334,9 @@ $this->registerCss('
                             <th>รหัสสินค้า</th>
                             <th>รายละเอียด</th>
                             <th>Origin</th>
+                            <th>ปริมาณ/ลัง</th>
+                            <th>ลิตร/ขวด</th>
+                            <th>%</th>
                             <th>คลัง</th>
                             <th>inv</th>
                             <th>inv.date</th>
@@ -491,6 +494,9 @@ $js =<<<JS
                            "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
                            "</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
+                          "<td>"+data[i]['unit_factor']+"</td>"+
+                          "<td>"+data[i]['volumn']+"</td>"+
+                          "<td>"+data[i]['volumn_content']+"</td>"+
                            "<td>"+data[i]['warehouse_name']+"</td>"+
                            "<td>"+data[i]['invoice_no']+"</td>"+
                            "<td>"+data[i]['invoice_date']+"</td>" +
@@ -603,6 +609,9 @@ $js =<<<JS
                           "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
                            "</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
+                        "<td>"+data[i]['unit_factor']+"</td>"+
+                          "<td>"+data[i]['volumn']+"</td>"+
+                          "<td>"+data[i]['volumn_content']+"</td>"+
                              "<td>"+data[i]['warehouse_name']+"</td>"+
                            "<td>"+data[i]['invoice_no']+"</td>"+
                            "<td>"+inv_date+"</td>"+
