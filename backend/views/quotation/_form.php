@@ -675,7 +675,7 @@ $js =<<<JS
               $(this).closest('tr').find(".stock-id").val(stock_id);
               $(this).closest('tr').find(".line_cost").val(prodcost);
               $(this).closest('tr').find(".line_origin").val(prodorigin);
-              $(this).closest('tr').find(".line_price").val(stock_price);
+              $(this).closest('tr').find(".line_price").val(prodcost);
               $(this).closest('tr').find(".line_packper").val(unitfactor);
               $(this).closest('tr').find(".line_litre").val(volumn);
               $(this).closest('tr').find(".line_percent").val(volumn_content);

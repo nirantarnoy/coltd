@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Sale */
 
@@ -31,7 +31,7 @@ $this->registerCss('
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('<i class="fa fa-print"></i> พิมพ์', ['print', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?php //echo Html::a('<i class="fa fa-print"></i> พิมพ์', ['bill', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
     </p>
 
 
@@ -159,7 +159,7 @@ $this->registerCss('
                                 <?php foreach ($modelline as $value):?>
                                 <?php
                                     $i+=1;
-                                    $total_all+=$value->line_amount;
+                                    $total_all+=$value->price * $value->qty;
                                 ?>
                                 <tr data-var="<?=$value->id?>">
                                     <td style="vertical-align: middle;text-align: center">
@@ -203,52 +203,88 @@ $this->registerCss('
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="panel panel-headline">
-            <div class="panel-heading">
-                <h3><i class="fa fa-truck"></i> Picking Slip <small></small></h3>
-                <div class="clearfix"></div>
-            </div>
-            <div class="panel-body">
-            </div>
+<!--    <div class="row">-->
+<!--        <div class="panel panel-headline">-->
+<!--            <div class="panel-heading">-->
+<!--                <h3><i class="fa fa-truck"></i> Picking Slip <small></small></h3>-->
+<!--                <div class="clearfix"></div>-->
+<!--            </div>-->
+<!--            <div class="panel-body">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="panel">
+        <div class="panel-heading">
+            <h3><i class="fa fa-truck"></i> ประวัติ packing</h3>
         </div>
-    </div>
-    <div class="row">
-        <div class="panel panel-headline">
-            <div class="panel-heading">
-                <h3><i class="fa fa-money"></i> Packing Slip <small></small></h3>
-                <div class="clearfix"></div>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>วันที่</th>
-                        <th>เวลา</th>
-                        <th>จำนวนเงิน</th>
-                        <th>หลักฐาน</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php if(count($payment)):?>
-                    <?php $i=0;?>
-                    <?php foreach ($payment as $value):?>
-                            <?php $i+=1;?>
-                            <tr>
-                                <td><?=$i?></td>
-                                <td><?=date('d-m-Y',strtotime($value->trans_date))?></td>
-                                <td><?=date('H:i:s',strtotime($value->trans_time))?></td>
-                                <td><?=number_format($value->amount,0)?></td>
-                                <td><a href="../web/uploads/slip/<?=$value->slip?>" target="_blank"><?=$value->slip?></a> </td>
-                            </tr>
-                    <?php endforeach;?>
-                    <?php endif;?>
-                    </tbody>
-                </table>
-            </div>
-            <div class="panel-body">
+        <div class="panel-body">
+            <div class="panel-group" id="accordion">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#home">รายการ</a></li>
+                    <!--                <li><a data-toggle="tab" href="#menu1">รายละอียด</a></li>-->
+                </ul>
+
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade in active">
+                        <?php if(!$model->isNewRecord):?>
+                            <?php if(count($modelpick) > 0):?>
+                                <?php $i = 0;?>
+                                <?php foreach ($modelpick as $value):?>
+                                    <?php $i+=1;?>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?=$i?>">
+                                                    <?=$value->picking_no?> <label class="label label-success"><?=date('d/m/Y',$value->trans_date)?></label></a> <span class="pull-right"><div data-var="<?=$value->id?>" class="btn btn-pincking-invoice btn-danger" onclick="pickinginv($(this))"><i class='fa fa-print'></i>  พิมพ์</div></span>
+                                            </h4>
+                                            <form id="form-<?=$value->id?>" method="post" action="<?=Url::to(['sale/bill','id'=>$value->id],true)?>" target="_blank"></form>
+                                        </div>
+                                        <div id="collapse<?=$i?>" class="panel-collapse collapse out">
+                                            <div class="panel-body">
+                                                <table>
+                                                    <?php foreach ($modelpickline as $val):?>
+                                                        <?php if($value->id == $val->picking_id):?>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td><?=$val->product_id?></td>
+                                                                <td><?=$val->qty?></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        <?php endif;?>
+                                                    <?php endforeach;?>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+
+                            <?php endif;?>
+                        <?php endif;?>
+                    </div>
+                    <div id="menu1" class="tab-pane fade">
+                        <h3>Menu 1</h3>
+                        <p>Some content in menu 1.</p>
+                    </div>
+
+                </div>
+
+
+
+
             </div>
         </div>
     </div>
 
 
 </div>
+<?php
+$js=<<<JS
+function pickinginv(e){
+     var x = "#form-"+e.attr('data-var');
+   
+     $(x).submit();
+    
+ }
+JS;
+$this->registerJs($js,static::POS_END);
+?>

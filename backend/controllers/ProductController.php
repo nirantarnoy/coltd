@@ -343,6 +343,7 @@ class ProductController extends Controller
                         $catid = 0;
                         $qty = 0;
                         $price = 0;
+                        $cost = 0;
                         if ($rowData[1] == '' || $i == 0) {
                             continue;
                         }

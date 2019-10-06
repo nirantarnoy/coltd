@@ -64,10 +64,21 @@ class SaleController extends Controller
     {
         $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
         $paymenttrans = \backend\models\Paymenttrans::find()->where(['sale_id'=>$id])->all();
+
+        $pickinglist = [];
+        $modelpick = \backend\models\Picking::find()->where(['sale_id'=>$id])->all();
+        if($modelpick){
+            foreach ($modelpick as $value){
+                array_push($pickinglist,$value->id);
+            }
+        }
+        $modelpickline = \backend\models\Pickingline::find()->where(['picking_id'=>$pickinglist])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'modelline' => $modelline,
             'payment' => $paymenttrans,
+            'modelpick' => $modelpick,
+            'modelpickline' => $modelpickline
         ]);
     }
 
@@ -429,11 +440,14 @@ class SaleController extends Controller
         }
     }
     public function actionPrint(){
-        if(Yii::$app->request->isPost) {
-            $id = Yii::$app->request->post('sale_id');
+        if(Yii::$app->request->isGet) {
+          //  echo "ok";
+            $id = Yii::$app->request->get('id');
             if ($id) {
                $this->redirect(['bill','id'=>$id,['target'=>'_blank']]);
             }
+        }else{
+           // echo "no";
         }
     }
     public function actionBill($id){
