@@ -12,12 +12,12 @@
         <table class="table" border="0" style="width: 100%;border-collapse: collapse;">
             <thead>
             <tr colspan="">
-                <td colspan="6" style="text-align: center">
+                <td colspan="9" style="text-align: center">
                     <img src="<?= \yii\helpers\Url::to('@web/uploads/images/logo.png', true) ?>" width="20%" alt="logo" /><br>
                 </td>
             </tr>
             <tr colspan="4">
-                <td colspan="6" style="text-align: center">
+                <td colspan="9" style="text-align: center">
                     <small>230 CHALONGKRUNG LUMPRATIEW LATKRABANG BANGKOK 10520 THAILAND</small>
                     <br>
                     <h4 style="color: #0d69af">
@@ -48,7 +48,7 @@
             </tr><br><br>
             <tr >
                 <td colspan="2" style="border: none;font-size: 14px;font-weight: bold">Prepared For: </td>
-                <td colspan="2" style="border: none;font-size: 14px;font-weight: bold">
+                <td colspan="5" style="border: none;font-size: 14px;font-weight: bold">
 
                 </td>
 
@@ -77,7 +77,7 @@
             </thead>
             <tbody style="top: 10px;">
             <tr>
-                <td colspan="6" style="text-align: center;font-size: 14px">PACKING LIST</td>
+                <td colspan="9" style="text-align: center;font-size: 16px;font-weight: bold">PACKING LIST</td>
             </tr>
 <!--            <tr style="background: #c3c3c3">-->
 <!--                <td style="padding: 10px;border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 9%">No.</td>-->
@@ -88,48 +88,54 @@
 <!--                <td style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 15%">Gross weight</td>-->
 <!--            </tr>-->
             <tr style="background: #c3c3c3;" rowspan="2">
-                <td  style="padding: 10px;border: 0.2px solid grey;border-bottom: 0px;font-size: 13px;font-weight: bold;text-align: center;width: 9%">No.</td>
-                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 13px;font-weight: bold;text-align: center">Description</td>
-                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 13px;font-weight: bold;text-align: center">Qty</td>
-                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 13px;font-weight: bold;text-align: center">Origin Country</td>
-                <td  colspan="3" style="border: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Packing</td>
-                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 13px;font-weight: bold;text-align: center;width: 15%">Net weight</td>
-                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 13px;font-weight: bold;text-align: center;width: 15%">Gross weight</td>
-               
+                <td  style="padding: 10px;border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 9%">No.</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Description</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Qty</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Origin Country</td>
+                <td  colspan="3" style="border: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: center">Packing</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 15%">Net weight</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 15%">Gross weight</td>
+
             </tr>
             <tr style="background: #c3c3c3; row-span: 2">
                 <td  style="padding: 10px;border-left: 0.2px solid grey;"></td>
                 <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center"></td>
                 <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center"></td>
                 <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center"></td>
-                <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Bottle</td>
-                <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Litre</td>
-                <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Alkohol</td>
+                <td  style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: center">Bottle</td>
+                <td  style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: center">Litre</td>
+                <td  style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: center">Alkohol</td>
                 <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 15%"></td>
                 <td  style="border-left: 0.2px solid grey;border-right: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center;width: 15%"></td>
             </tr>
             <?php $rows = 0; ?>
             <?php $sumqty = 0; ?>
+
             <?php $sumnet = 0; ?>
             <?php $sumgross = 0; ?>
             <?php foreach ($modelline as $value):?>
+                <?php $linenet = 0; ?>
+                <?php $linegross = 0; ?>
                 <?php
                    $sumqty = $sumqty + $value->qty;
-                   $sumnet = $sumnet + \backend\models\Product::findProductinfo($value->product_id)->netweight;
-                   $sumgross = $sumgross + \backend\models\Product::findProductinfo($value->product_id)->grossweight;
-                ?>
+                   $productinfo = \backend\models\Product::findProductinfo($value->product_id);
+                    $linenet = ($value->qty * $productinfo->unit_factor * $productinfo->volumn);
+                    $linegross = ((0.25 + $productinfo->volumn) * ($value->qty * $productinfo->unit_factor));
+                    $sumnet = $sumnet + $linenet;
+                    $sumgross = $sumgross + $linegross;
+                 ?>
                 <?php $rows +=1; ?>
                 <tr style="border: 0.5px solid black;border-bottom:none;border-collapse: collapse;">
-                    <td style="padding: 5px;font-size: 13px;font-weight: normal;text-align: center;"><?=$rows?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;padding-left: 5px;text-align: left"><?=\backend\models\Product::findProductinfo($value->product_id)->engname;?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($value->qty,0)?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->origin;?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->unit_factor;?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->volumn;?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->volumn_content.'%';?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: right;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->netweight;?></td>
+                    <td style="padding: 5px;font-size: 12px;font-weight: normal;text-align: center;"><?=$rows?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;padding-left: 5px;text-align: left"><?=\backend\models\Product::findProductinfo($value->product_id)->engname;?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($value->qty,0)?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=$productinfo->origin;?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=$productinfo->unit_factor * $value->qty;?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=$productinfo->volumn;?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=$productinfo->volumn_content.'%';?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: right;padding-right: 10px;"><?=number_format($linenet,2); ?></td>
 
-                    <td style="border-left: 0.2px solid grey;font-size: 13px;font-weight: normal;text-align: right;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->grossweight;?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: right;padding-right: 10px;"><?=number_format($linegross,2);?></td>
 
                 </tr>
             <?php endforeach; ?>
@@ -159,16 +165,16 @@
             <?php //endfor; ?>
             <tr style="border: 1px solid black;border-left:none;border-right: none ">
 <!--            <tr>-->
-                <td style="padding: 15px 15px 15px 15px;font-size: 14px;text-align: left" colspan="2">TOTAL</td>
+                <td style="padding: 15px 15px 15px 15px;font-size: 14px;text-align: left;font-weight: bold" colspan="2">TOTAL</td>
 
-                <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($sumqty,0)?></td>
+                <td style="font-size: 14px;font-weight: bold;text-align: center;padding-right: 10px;"><?=number_format($sumqty,0)?></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
 
-                <td style="font-size: 14px;font-weight: normal;text-align: right;padding-right: 10px;"><?=number_format($sumnet,0)?></td>
-                <td style="font-size: 14px;font-weight: normal;text-align: right;padding-right: 10px;"><?=number_format($sumgross,0)?></td>
+                <td style="font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"><?=number_format($sumnet,2)?></td>
+                <td style="font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"><?=number_format($sumgross,2)?></td>
 
             </tr>
 
