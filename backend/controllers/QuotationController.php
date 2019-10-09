@@ -10,7 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use kartik\mpdf\Pdf;
-
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
 /**
  * QuotationController implements the CRUD actions for Quotation model.
  */
@@ -316,6 +317,29 @@ class QuotationController extends Controller
                 'marginBottom' => 10,
                 'marginFooter' => 5
 
+            ]);
+
+            $defaultConfig = (new ConfigVariables())->getDefaults();
+            $fontDirs = $defaultConfig['fontDir'];
+
+            $defaultFontConfig = (new FontVariables())->getDefaults();
+            $fontData = $defaultFontConfig['fontdata'];
+
+
+//            $pdf->options['fontDir'] = array_merge($fontDirs, [
+//               // Yii::getAlias('@backend').'/web/fonts'
+//                Yii::$app->basePath
+//            ]);
+
+            $pdf->options = array_merge($pdf->options , [
+                'fontDir' => array_merge($fontDirs, [ Yii::$app->basePath . '/web/fonts']),  // make sure you refer the right physical path
+                'fontdata' => array_merge($fontData, [
+                    'angsana' => [
+                        'R' => 'angsa.ttf',
+//                        'I' => 'THSarabunNew Italic.ttf',
+//                        'B' => 'THSarabunNew Bold.ttf',
+                    ]
+                ])
             ]);
             //return $this->redirect(['genbill']);
             Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;

@@ -14,6 +14,9 @@ use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
 use backend\helpers\TransType;
 use yii\web\UploadedFile;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
+
 /**
  * SaleController implements the CRUD actions for Sale model.
  */
@@ -41,6 +44,7 @@ class SaleController extends Controller
      */
     public function actionIndex()
     {
+        //echo Yii::$app->basePath;return;
         $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new SaleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -625,7 +629,45 @@ class SaleController extends Controller
                 'marginFooter' => 5
 
             ]);
-            //return $this->redirect(['genbill']);
+
+            $defaultConfig = (new ConfigVariables())->getDefaults();
+            $fontDirs = $defaultConfig['fontDir'];
+
+            $defaultFontConfig = (new FontVariables())->getDefaults();
+            $fontData = $defaultFontConfig['fontdata'];
+
+
+//            $pdf->options['fontDir'] = array_merge($fontDirs, [
+//               // Yii::getAlias('@backend').'/web/fonts'
+//                Yii::$app->basePath
+//            ]);
+
+            $pdf->options = array_merge($pdf->options , [
+                'fontDir' => array_merge($fontDirs, [ Yii::$app->basePath . '/web/fonts']),  // make sure you refer the right physical path
+                'fontdata' => array_merge($fontData, [
+                    'angsana' => [
+                        'R' => 'angsa.ttf',
+//                        'I' => 'THSarabunNew Italic.ttf',
+//                        'B' => 'THSarabunNew Bold.ttf',
+                    ]
+                ])
+            ]);
+
+
+
+//            $pdf->options['fontdata'] = $fontData + [
+//                    'angsana' => [
+//                        'R' => 'angsa.ttf',
+//                        'TTCfontID' => [
+//                            'R' => 1,
+//                        ],
+//                    ],
+//                    'sarabun' => [
+//                        'R' => 'Sarabun.ttf',
+//                    ]
+//                ];
+
+
             Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
             Yii::$app->response->headers->add('Content-Type', 'application/pdf');
             return $pdf->render();
