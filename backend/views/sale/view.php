@@ -31,7 +31,7 @@ $this->registerCss('
                 'method' => 'post',
             ],
         ]) ?>
-        <?php //echo Html::a('<i class="fa fa-print"></i> พิมพ์', ['bill', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?php echo Html::a('<i class="fa fa-print"></i> พิมพ์', ['printinvoice', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
     </p>
 
 
