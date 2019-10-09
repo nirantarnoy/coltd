@@ -110,12 +110,12 @@
                 $sumqty = $sumqty + $value->qty;
                 //$sumnet = $sumnet + \backend\models\Product::findProductinfo($value->product_id)->netweight;
                 //$sumline = number_format($value->qty * $value->price,0);
-                $sumtotal = $sumtotal + number_format($value->qty * $value->price,0);
+                $sumtotal = $sumtotal + $value->qty * $value->price;
                 ?>
                 <?php $rows +=1; ?>
                 <tr style="border: 0.5px solid black;border-bottom:none;border-collapse: collapse;">
                     <td style="padding: 5px;font-size: 12px;font-weight: normal;text-align: center;"><?=$rows?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;padding-left: 5px;text-align: left"><?=\backend\models\Product::findProductinfo($value->product_id)->product_code;?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;padding-left: 5px;text-align: center"><?=\backend\models\Product::findProductinfo($value->product_id)->product_code;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;padding-left: 5px;text-align: left"><?=\backend\models\Product::findProductinfo($value->product_id)->engname;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($value->qty,0)?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->origin;?></td>

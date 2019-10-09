@@ -618,6 +618,11 @@ class SaleController extends Controller
                     //  'SetFooter' => ['|Page {PAGENO}|'],
                     //'SetFooter'=>'niran',
                 ],
+                'marginLeft' => 5,
+                'marginRight' => 5,
+                'marginTop' => 10,
+                'marginBottom' => 10,
+                'marginFooter' => 5
 
             ]);
             //return $this->redirect(['genbill']);

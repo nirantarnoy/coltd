@@ -130,7 +130,7 @@
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;padding-left: 5px;text-align: left"><?=\backend\models\Product::findProductinfo($value->product_id)->engname;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($value->qty,0)?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=$productinfo->origin;?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=$productinfo->unit_factor * $value->qty;?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=$productinfo->unit_factor;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=$productinfo->volumn;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=$productinfo->volumn_content.'%';?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: right;padding-right: 10px;"><?=number_format($linenet,2); ?></td>

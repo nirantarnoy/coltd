@@ -82,8 +82,8 @@
             <tr style="background: #c3c3c3;" rowspan="2">
                 <td  style="padding: 10px;border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 9%">No.</td>
                 <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Description</td>
-                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Qty</td>
-                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Origin Country</td>
+                <td  style="padding: 5px;border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Qty</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Origin</td>
                 <td  colspan="3" style="border: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: center">Packing</td>
                 <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 15%">Price</td>
                 <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 15%">Total</td>
@@ -92,7 +92,7 @@
                 <td  style="padding: 10px;border-left: 0.2px solid grey;"></td>
                 <td  style="border-left: 0.2px solid grey;font-size: 12px;font-weight: bold;text-align: center"></td>
                 <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center"></td>
-                <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center"></td>
+                <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Country</td>
                 <td  style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: center">Bottle</td>
                 <td  style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: center">Litre</td>
                 <td  style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: center">Alkohol</td>
@@ -102,12 +102,12 @@
             <?php $rows = 0; ?>
             <?php $sumqty = 0; ?>
             <?php $sumnet = 0; ?>
-            <?php $sumgross = 0; ?>
+            <?php $sumtotal = 0; ?>
             <?php foreach ($modelline as $value):?>
                 <?php
                 $sumqty = $sumqty + $value->qty;
                 //$sumnet = $sumnet + \backend\models\Product::findProductinfo($value->product_id)->netweight;
-                $sumgross = $sumgross + number_format($value->qty * $value->price,0);
+                $sumtotal = $sumtotal + $value->qty * $value->price;
                 ?>
                 <?php $rows +=1; ?>
                 <tr style="border: 0.5px solid black;border-bottom:none;border-collapse: collapse;">
@@ -158,7 +158,7 @@
                 <td></td>
                 <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"></td>
                 <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"></td>
-                <td style="font-size: 14px;font-weight: bold;text-align: center;padding-right: 10px;"><?=number_format($sumgross,0)?></td>
+                <td style="font-size: 14px;font-weight: bold;text-align: center;padding-right: 10px;"><?=number_format($sumtotal,0)?></td>
 
             </tr>
 
