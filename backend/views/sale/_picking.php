@@ -54,7 +54,7 @@
 
                 <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">
                     Date: <?=date('d/m/Y',$model->trans_date)?><br />
-                    Invoice: <?=$model->picking_no?>
+                    Invoice: <?=\backend\models\Sale::findName($model->sale_id)?>
                 </td>
             </tr>
             <tr >
