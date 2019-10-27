@@ -121,8 +121,8 @@ $this->registerCss('
                             <th>%</th>
                             <th style="width: 10%">จำนวน</th>
                             <th style="width: 10%">ทุน</th>
-                            <th>ราคา</th>
-                            <th>รวม</th>
+                            <th>ราคา/ลัง(Bath)</th>
+                            <th>ราคารวม</th>
                             <th>-</th>
 
                         </tr>
@@ -202,7 +202,7 @@ $this->registerCss('
                                             <input type="text" class="form-control line_percent" value="<?=\backend\models\Product::findProductInfo($value->product_id)->volumn?>" readonly>
                                         </td>
                                         <td>
-                                            <input type="number" min="0" class="form-control line_qty" name="qty[]" value="<?=$value->qty?>" onchange="cal_num($(this));">
+                                            <input type="number" min="0" style="text-align: right" class="form-control line_qty" name="qty[]" value="<?=$value->qty?>" onchange="cal_num($(this));">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control line_cost" name="cost[]" value="<?=\backend\models\Product::findProductinfo($value->product_id)!=null?\backend\models\Product::findProductinfo($value->product_id)->cost:0?>" readonly>
@@ -244,7 +244,7 @@ $this->registerCss('
                                         <input type="text" class="form-control line_percent" value="" readonly>
                                     </td>
                                     <td>
-                                        <input type="number" min="0" class="form-control line_qty" name="qty[]" value="" onchange="cal_num($(this));">
+                                        <input type="number" min="0" style="text-align: right" class="form-control line_qty" name="qty[]" value="" onchange="cal_num($(this));">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control line_cost" name="cost[]" value="" readonly>
@@ -265,8 +265,10 @@ $this->registerCss('
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="9"></td>
+                            <td colspan="6"></td>
                             <td style="text-align: right;font-weight: bold">ยอดรวม</td>
+                            <td style="text-align: right;font-weight: bold" class="qty-sum">0.00</td>
+                            <td colspan="2"></td>
                             <td style="text-align: right;font-weight: bold" class="total-sum">0.00</td>
                             <td></td>
                         </tr>
@@ -891,13 +893,18 @@ $js =<<<JS
  }
  function cal_all(){
       var totalall = 0;
+      var totalqty = 0;
       $(".table-quotation tbody tr").each(function() {
           var linetotal = $(this).closest("tr").find(".line_total").val();
+          var lineqty = $(this).closest("tr").find(".line_qty").val();
           
           if(linetotal == ''){linetotal = 0;}
+          if(lineqty == ''){lineqty = 0;}
           
+          totalqty = parseFloat(totalqty) + parseFloat(lineqty);
           totalall = parseFloat(totalall) + parseFloat(linetotal);
       });
+      $(".qty-sum").text(parseFloat(totalqty).toFixed(2));
       $(".total-sum").text(parseFloat(totalall).toFixed(2));
  }
  

@@ -8,13 +8,13 @@ class CustomerType
     const STATUS_INACTIVE = 2;
 
     private static $data = [
-        1 => 'ลูกค้าต่างประเภท',
+        1 => 'ลูกค้าต่างประเทศ',
         2 => 'ลูกค้าในประเทศ'
 
     ];
 
     private static $dataobj = [
-        ['id'=>1,'name' => 'ลูกค้าต่างประเภท'],
+        ['id'=>1,'name' => 'ลูกค้าต่างประเทศ'],
         ['id'=>2,'name' => 'ลูกค้าในประเทศ'],
 
     ];

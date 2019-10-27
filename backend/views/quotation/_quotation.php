@@ -82,6 +82,7 @@
             </tr>
             <tr style="background: #c3c3c3;" rowspan="2">
                 <td  style="padding: 10px;border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 9%">No.</td>
+                <td  style="padding: 10px;border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 9%">Code</td>
                 <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Description</td>
                 <td  style="padding: 5px;border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Qty</td>
                 <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Origin</td>
@@ -91,6 +92,7 @@
             </tr>
             <tr style="background: #c3c3c3; row-span: 2">
                 <td  style="padding: 10px;border-left: 0.2px solid grey;"></td>
+                <td  style="border-left: 0.2px solid grey;font-size: 12px;font-weight: bold;text-align: center"></td>
                 <td  style="border-left: 0.2px solid grey;font-size: 12px;font-weight: bold;text-align: center"></td>
                 <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center"></td>
                 <td  style="border-left: 0.2px solid grey;font-size: 13px;font-weight: bold;text-align: center">Country</td>
@@ -113,6 +115,7 @@
                 <?php $rows +=1; ?>
                 <tr style="border: 0.5px solid black;border-bottom:none;border-collapse: collapse;">
                     <td style="padding: 5px;font-size: 12px;font-weight: normal;text-align: center;"><?=$rows?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;padding-left: 5px;text-align: center"><?=\backend\models\Product::findProductinfo($value->product_id)->product_code;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;padding-left: 5px;text-align: left"><?=\backend\models\Product::findProductinfo($value->product_id)->engname;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($value->qty,0)?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->origin;?></td>
