@@ -43,7 +43,7 @@ $this->registerCss('
     <div class="panel panel-headline">
         <div class="panel-body">
             <div class="form-group pull-right">
-                <input type="hidden" class="current-id" value="<?=$model->id?>">
+                <input type="hidden" class="current-id" value="<?= $model->id ?>">
                 <?= Html::Button("<i class='fa fa-list-alt'></i> packing list", ['class' => 'btn btn-info btn-gen-packing']) ?>
                 <?php //echo Html::Button("<i class='fa fa-check-circle'></i> สร้างเอกสารเรียกเก็บเงิน", ['class' => 'btn btn-danger btn-gen-invoice']) ?>
             </div>
@@ -53,20 +53,30 @@ $this->registerCss('
                 <div class="col-lg-9">
                     <div class="row">
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'sale_no')->textInput(['maxlength' => true,'value'=>$model->isNewRecord?$runno:$model->sale_no]) ?>
+                            <?= $form->field($model, 'sale_no')->textInput(['maxlength' => true, 'value' => $model->isNewRecord ? $runno : $model->sale_no]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?php $model->require_date = $model->isNewRecord?date('d/m/Y'):date('d/m/Y',$model->require_date);?>
-                            <?= $form->field($model, 'require_date')->widget(DatePicker::className()) ?>
-                        </div>
-                        <div class="col-lg-3">
-                            <?= $form->field($model, 'customer_id')->widget(Select2::className(),[
-                                'data'=>ArrayHelper::map(\backend\models\Customer::find()->all(),'id','name'),
-                                'options'=>[
-                                    'placeholder'=>'เลือกลูกค้า'
+                            <?php $model->require_date = $model->isNewRecord ? date('d/m/Y') : date('d/m/Y', $model->require_date); ?>
+                            <?= $form->field($model, 'require_date')->widget(DatePicker::className(),
+                                ['options' => [
+                                    'style' => 'font-weight: bold'
                                 ],
-                                'pluginOptions'=>[
-                                    'allowClear'=>true
+                                    'pluginOptions' => [
+                                        'format' => 'dd/mm/yyyy',
+                                        'todayHighlight' => true,
+                                        'todayBtn' => true,
+                                    ]
+                                ]
+                            ) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($model, 'customer_id')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map(\backend\models\Customer::find()->all(), 'id', 'name'),
+                                'options' => [
+                                    'placeholder' => 'เลือกลูกค้า'
+                                ],
+                                'pluginOptions' => [
+                                    'allowClear' => true
                                 ]
                             ]) ?>
                         </div>
@@ -75,26 +85,26 @@ $this->registerCss('
                         </div>
                     </div>
                     <div class="row">
-<!--                        <div class="col-lg-3">-->
-<!--                            --><?php ////echo $form->field($model, 'delvery_to')->textInput() ?>
-<!--                        </div>-->
+                        <!--                        <div class="col-lg-3">-->
+                        <!--                            --><?php ////echo $form->field($model, 'delvery_to')->textInput() ?>
+                        <!--                        </div>-->
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'currency')->widget(Select2::className(),[
-                                'data'=>ArrayHelper::map(\backend\helpers\Currency::asArrayObject(),'id','name'),
-                                'options'=>[
-                                    'placeholder'=>'เลือกสกุลเงิน'
+                            <?= $form->field($model, 'currency')->widget(Select2::className(), [
+                                'data' => ArrayHelper::map(\backend\helpers\Currency::asArrayObject(), 'id', 'name'),
+                                'options' => [
+                                    'placeholder' => 'เลือกสกุลเงิน'
                                 ],
-                                'pluginOptions'=>[
-                                    'allowClear'=>true
+                                'pluginOptions' => [
+                                    'allowClear' => true
                                 ]
                             ]) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?php $xstatus = $model->isNewRecord?'open':\backend\helpers\SaleStatus::getTypeById($model->status);?>
-                            <?= $form->field($model, 'status')->textInput(['value'=>$xstatus,'readonly'=>'readonly']) ?>
+                            <?php $xstatus = $model->isNewRecord ? 'open' : \backend\helpers\SaleStatus::getTypeById($model->status); ?>
+                            <?= $form->field($model, 'status')->textInput(['value' => $xstatus, 'readonly' => 'readonly']) ?>
                         </div>
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'quotation_id')->textInput(['value'=>\backend\models\Quotation::findNum($model->quotation_id),'readonly'=>'readonly']) ?>
+                            <?= $form->field($model, 'quotation_id')->textInput(['value' => \backend\models\Quotation::findNum($model->quotation_id), 'readonly' => 'readonly']) ?>
                         </div>
                     </div>
 
@@ -128,7 +138,7 @@ $this->registerCss('
                         </tr>
                         </thead>
                         <tbody>
-                        <?php if($model->isNewRecord):?>
+                        <?php if ($model->isNewRecord): ?>
                             <tr>
                                 <td style="vertical-align: middle;text-align: center">
 
@@ -138,10 +148,13 @@ $this->registerCss('
                                 </td>
                                 <td>
                                     <input type="hidden" class="productid" name="productid[]">
-                                    <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                    <input type="text" autocomplete="off" class="form-control productcode"
+                                           name="prodcode[]" value="" onchange="itemchange($(this));"
+                                           ondblclick="showfind($(this))">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control productname" name="prodname[]" value="" readonly>
+                                    <input type="text" class="form-control productname" name="prodname[]" value=""
+                                           readonly>
                                 </td>
                                 <td>
                                     <input type="text" class="form-control line_packper" value="" readonly>
@@ -153,73 +166,100 @@ $this->registerCss('
                                     <input type="text" class="form-control line_percent" value="" readonly>
                                 </td>
                                 <td>
-                                    <input type="number" min="0" class="form-control line_qty" name="qty[]" value="" onchange="cal_num($(this))">
+                                    <input type="number" min="0" class="form-control line_qty" name="qty[]" value=""
+                                           onchange="cal_num($(this))">
                                 </td>
                                 <td>
-                                    <input style="text-align: right" type="text" class="form-control line_cost" name="cost[]" value="" readonly>
+                                    <input style="text-align: right" type="text" class="form-control line_cost"
+                                           name="cost[]" value="" readonly>
                                 </td>
                                 <td>
-                                    <input style="text-align: right" type="text" class="form-control line_price" name="price[]" value="" onchange="cal_num($(this));">
+                                    <input style="text-align: right" type="text" class="form-control line_price"
+                                           name="price[]" value="" onchange="cal_num($(this));">
                                 </td>
                                 <td>
-                                    <input style="text-align: right" type="text" class="form-control line_total" name="linetotal[]" value="" readonly>
+                                    <input style="text-align: right" type="text" class="form-control line_total"
+                                           name="linetotal[]" value="" readonly>
                                 </td>
                                 <td>
-                                    <div class="btn btn-sm btn-danger btn-removeline" onclick="return removeline($(this));"><i class="fa fa-trash-o"></i></div>
+                                    <div class="btn btn-sm btn-danger btn-removeline"
+                                         onclick="return removeline($(this));"><i class="fa fa-trash-o"></i></div>
                                 </td>
                             </tr>
-                        <?php else:?>
-                            <?php if(count($modelline) >0):?>
-                                <?php $i=0;?>
-                                <?php foreach ($modelline as $value):?>
-                                    <?php $i+=1;?>
-                                    <tr data-var="<?=$value->id?>">
+                        <?php else: ?>
+                            <?php if (count($modelline) > 0): ?>
+                                <?php $i = 0; ?>
+                                <?php foreach ($modelline as $value): ?>
+                                    <?php $i += 1; ?>
+                                    <tr data-var="<?= $value->id ?>">
                                         <td style="vertical-align: middle;text-align: center">
-                                            <?=$i?>
+                                            <?= $i ?>
                                         </td>
                                         <td style="vertical-align: middle;text-align: left">
                                             <?php
-                                            if(\backend\models\Product::findImg($value->product_id) == ''):?>
+                                            if (\backend\models\Product::findImg($value->product_id) == ''):?>
                                                 <i class="fa fa-image"></i>
-                                            <?php else:?>
-                                                <?=Html::img('../web/uploads/images/'.\backend\models\Product::findImg($value->product_id),['style'=>'width: 100%;left: 0px;top: 0px','class'=>'popover1'])?>
-                                            <?php endif;?>
+                                            <?php else: ?>
+                                                <?= Html::img('../web/uploads/images/' . \backend\models\Product::findImg($value->product_id), ['style' => 'width: 100%;left: 0px;top: 0px', 'class' => 'popover1']) ?>
+                                            <?php endif; ?>
                                         </td>
                                         <td>
-                                            <input type="hidden" class="productid" name="productid[]" value="<?=$value->product_id?>">
-                                            <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findProductInfo($value->product_id)->product_code?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                            <input type="hidden" class="productid" name="productid[]"
+                                                   value="<?= $value->product_id ?>">
+                                            <input type="text" autocomplete="off" class="form-control productcode"
+                                                   name="prodcode[]"
+                                                   value="<?= \backend\models\Product::findProductInfo($value->product_id)->product_code ?>"
+                                                   onchange="itemchange($(this));" ondblclick="showfind($(this))">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control productname" name="prodname[]" value="<?=\backend\models\Product::findName($value->product_id)?>" readonly>
+                                            <input type="text" class="form-control productname" name="prodname[]"
+                                                   value="<?= \backend\models\Product::findName($value->product_id) ?>"
+                                                   readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_packper" value="<?=\backend\models\Product::findProductInfo($value->product_id)->unit_factor?>" readonly>
+                                            <input type="text" class="form-control line_packper"
+                                                   value="<?= \backend\models\Product::findProductInfo($value->product_id)->unit_factor ?>"
+                                                   readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_litre" value="<?=\backend\models\Product::findProductInfo($value->product_id)->volumn_content?>" readonly>
+                                            <input type="text" class="form-control line_litre"
+                                                   value="<?= \backend\models\Product::findProductInfo($value->product_id)->volumn_content ?>"
+                                                   readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_percent" value="<?=\backend\models\Product::findProductInfo($value->product_id)->volumn?>" readonly>
+                                            <input type="text" class="form-control line_percent"
+                                                   value="<?= \backend\models\Product::findProductInfo($value->product_id)->volumn ?>"
+                                                   readonly>
                                         </td>
                                         <td>
-                                            <input type="number" min="0" style="text-align: right" class="form-control line_qty" name="qty[]" value="<?=$value->qty?>" onchange="cal_num($(this));">
+                                            <input type="number" min="0" style="text-align: right"
+                                                   class="form-control line_qty" name="qty[]" value="<?= $value->qty ?>"
+                                                   onchange="cal_num($(this));">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control line_cost" name="cost[]" value="<?=\backend\models\Product::findProductinfo($value->product_id)!=null?\backend\models\Product::findProductinfo($value->product_id)->cost:0?>" readonly>
+                                            <input type="text" class="form-control line_cost" name="cost[]"
+                                                   value="<?= \backend\models\Product::findProductinfo($value->product_id) != null ? \backend\models\Product::findProductinfo($value->product_id)->cost : 0 ?>"
+                                                   readonly>
                                         </td>
                                         <td>
-                                            <input style="text-align: right" type="text" class="form-control line_price" name="price[]" value="<?=$value->price?>" onchange="cal_num($(this));">
+                                            <input style="text-align: right" type="text" class="form-control line_price"
+                                                   name="price[]" value="<?= $value->price ?>"
+                                                   onchange="cal_num($(this));">
                                         </td>
                                         <td>
-                                            <input style="text-align: right" type="text" class="form-control line_total" name="linetotal[]" value="<?=$value->price * $value->qty?>" readonly>
+                                            <input style="text-align: right" type="text" class="form-control line_total"
+                                                   name="linetotal[]" value="<?= $value->price * $value->qty ?>"
+                                                   readonly>
                                         </td>
                                         <td>
-                                            <div class="btn btn-sm btn-danger btn-removeline" onclick="return removeline($(this));"><i class="fa fa-trash-o"></i></div>
+                                            <div class="btn btn-sm btn-danger btn-removeline"
+                                                 onclick="return removeline($(this));"><i class="fa fa-trash-o"></i>
+                                            </div>
                                         </td>
                                     </tr>
 
-                                <?php endforeach;?>
-                            <?php else:?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
                                 <tr>
                                     <td style="vertical-align: middle;text-align: center">
 
@@ -229,10 +269,13 @@ $this->registerCss('
                                     </td>
                                     <td>
                                         <input type="hidden" class="productid" name="productid[]">
-                                        <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                        <input type="text" autocomplete="off" class="form-control productcode"
+                                               name="prodcode[]" value="" onchange="itemchange($(this));"
+                                               ondblclick="showfind($(this))">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control productname" name="prodname[]" value="" readonly>
+                                        <input type="text" class="form-control productname" name="prodname[]" value=""
+                                               readonly>
                                     </td>
                                     <td>
                                         <input type="text" class="form-control line_packper" value="" readonly>
@@ -244,24 +287,30 @@ $this->registerCss('
                                         <input type="text" class="form-control line_percent" value="" readonly>
                                     </td>
                                     <td>
-                                        <input type="number" min="0" style="text-align: right" class="form-control line_qty" name="qty[]" value="" onchange="cal_num($(this));">
+                                        <input type="number" min="0" style="text-align: right"
+                                               class="form-control line_qty" name="qty[]" value=""
+                                               onchange="cal_num($(this));">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control line_cost" name="cost[]" value="" readonly>
+                                        <input type="text" class="form-control line_cost" name="cost[]" value=""
+                                               readonly>
                                     </td>
                                     <td>
-                                        <input style="text-align: right" type="text" class="form-control line_price" name="price[]" value="" onchange="cal_num($(this));">
+                                        <input style="text-align: right" type="text" class="form-control line_price"
+                                               name="price[]" value="" onchange="cal_num($(this));">
                                     </td>
                                     <td>
-                                        <input style="text-align: right" type="text" class="form-control line_total" name="linetotal[]" value="" readonly>
+                                        <input style="text-align: right" type="text" class="form-control line_total"
+                                               name="linetotal[]" value="" readonly>
                                     </td>
                                     <td>
-                                        <div class="btn btn-sm btn-danger btn-removeline" onclick="return removeline($(this));"><i class="fa fa-trash-o"></i></div>
+                                        <div class="btn btn-sm btn-danger btn-removeline"
+                                             onclick="return removeline($(this));"><i class="fa fa-trash-o"></i></div>
                                     </td>
                                 </tr>
-                            <?php endif;?>
+                            <?php endif; ?>
 
-                        <?php endif;?>
+                        <?php endif; ?>
                         </tbody>
                         <tfoot>
                         <tr>
@@ -278,11 +327,11 @@ $this->registerCss('
                 </div>
             </div>
 
-            <hr />
+            <hr/>
 
             <div class="form-group pull-right">
                 <?= Html::submitButton("<i class='fa fa-save'></i> บันทึก", ['class' => 'btn btn-success']) ?>
-               </div>
+            </div>
 
             <?php ActiveForm::end(); ?>
         </div>
@@ -297,45 +346,53 @@ $this->registerCss('
         <div class="panel-group" id="accordion">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#home">รายการ</a></li>
-<!--                <li><a data-toggle="tab" href="#menu1">รายละอียด</a></li>-->
+                <!--                <li><a data-toggle="tab" href="#menu1">รายละอียด</a></li>-->
             </ul>
 
             <div class="tab-content">
                 <div id="home" class="tab-pane fade in active">
-                    <?php if(!$model->isNewRecord):?>
-                        <?php if(count($modelpick) > 0):?>
-                            <?php $i = 0;?>
-                            <?php foreach ($modelpick as $value):?>
-                                <?php $i+=1;?>
+                    <?php if (!$model->isNewRecord): ?>
+                        <?php if (count($modelpick) > 0): ?>
+                            <?php $i = 0; ?>
+                            <?php foreach ($modelpick as $value): ?>
+                                <?php $i += 1; ?>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?=$i?>">
-                                                <?=$value->picking_no?> <label class="label label-success"><?=date('d/m/Y',$value->trans_date)?></label></a> <span class="pull-right"><div data-var="<?=$value->id?>" class="btn btn-pincking-invoice btn-danger" onclick="pickinginv($(this))"><i class='fa fa-print'></i>  พิมพ์</div></span>
+                                            <a data-toggle="collapse" data-parent="#accordion"
+                                               href="#collapse<?= $i ?>">
+                                                <?= $value->picking_no ?> <label
+                                                        class="label label-success"><?= date('d/m/Y', $value->trans_date) ?></label></a>
+                                            <span class="pull-right"><div data-var="<?= $value->id ?>"
+                                                                          class="btn btn-pincking-invoice btn-danger"
+                                                                          onclick="pickinginv($(this))"><i
+                                                            class='fa fa-print'></i>  พิมพ์</div></span>
                                         </h4>
-                                        <form id="form-<?=$value->id?>" method="post" action="<?=Url::to(['sale/bill','id'=>$value->id],true)?>" target="_blank"></form>
+                                        <form id="form-<?= $value->id ?>" method="post"
+                                              action="<?= Url::to(['sale/bill', 'id' => $value->id], true) ?>"
+                                              target="_blank"></form>
                                     </div>
-                                    <div id="collapse<?=$i?>" class="panel-collapse collapse out">
+                                    <div id="collapse<?= $i ?>" class="panel-collapse collapse out">
                                         <div class="panel-body">
                                             <table>
-                                                <?php foreach ($modelpickline as $val):?>
-                                                    <?php if($value->id == $val->picking_id):?>
+                                                <?php foreach ($modelpickline as $val): ?>
+                                                    <?php if ($value->id == $val->picking_id): ?>
                                                         <tr>
                                                             <td>1</td>
-                                                            <td><?=$val->product_id?></td>
-                                                            <td><?=$val->qty?></td>
+                                                            <td><?= $val->product_id ?></td>
+                                                            <td><?= $val->qty ?></td>
                                                             <td></td>
                                                         </tr>
-                                                    <?php endif;?>
-                                                <?php endforeach;?>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
 
-                        <?php endif;?>
-                    <?php endif;?>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </div>
                 <div id="menu1" class="tab-pane fade">
                     <h3>Menu 1</h3>
@@ -343,8 +400,6 @@ $this->registerCss('
                 </div>
 
             </div>
-
-
 
 
         </div>
@@ -357,32 +412,33 @@ $this->registerCss('
     <div class="panel-body">
         <table class="table">
             <thead>
-                <tr>
-                    <th>#</th>
-                    <th>วันที่</th>
-                    <th>จำนวน</th>
-                    <th>Note</th>
-                    <th>slip</th>
-                </tr>
+            <tr>
+                <th>#</th>
+                <th>วันที่</th>
+                <th>จำนวน</th>
+                <th>Note</th>
+                <th>slip</th>
+            </tr>
             </thead>
             <tbody>
-            <?php if(!$model->isNewRecord):?>
-                <?php if(count($modelpayment) > 0):?>
-                    <?php $i = 0;?>
-                    <?php foreach ($modelpayment as $value):?>
-                        <?php $i +=1;?>
+            <?php if (!$model->isNewRecord): ?>
+                <?php if (count($modelpayment) > 0): ?>
+                    <?php $i = 0; ?>
+                    <?php foreach ($modelpayment as $value): ?>
+                        <?php $i += 1; ?>
                         <tr>
-                            <th><?=$i?></th>
-                            <th><?=$value->trans_date?></th>
-                            <th><?=$value->amount?></th>
-                            <th><?=$value->note?></th>
+                            <th><?= $i ?></th>
+                            <th><?= $value->trans_date ?></th>
+                            <th><?= $value->amount ?></th>
+                            <th><?= $value->note ?></th>
                             <th>
-                                <a href="../web/uploads/slip/<?=trim($value->slip)?>" target="_blank"><?=trim($value->slip)?></a>
+                                <a href="../web/uploads/slip/<?= trim($value->slip) ?>"
+                                   target="_blank"><?= trim($value->slip) ?></a>
                             </th>
                         </tr>
-                    <?php endforeach;?>
-                <?php endif;?>
-            <?php endif;?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            <?php endif; ?>
             </tbody>
         </table>
     </div>
@@ -398,7 +454,7 @@ $this->registerCss('
                     <div class="col-sm-6">
                         <div id="imaginary_container">
                             <div class="input-group stylish-input-group">
-                                <input type="text" class="form-control search-item"  placeholder="ค้นหาสินค้า" >
+                                <input type="text" class="form-control search-item" placeholder="ค้นหาสินค้า">
                                 <span class="input-group-addon">
                                         <button type="submit" class="btn-search-submit">
                                             <span class="fa fa-search"></span>
@@ -445,7 +501,9 @@ $this->registerCss('
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close text-danger"></i> ปิดหน้าต่าง</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                            class="fa fa-close text-danger"></i> ปิดหน้าต่าง
+                </button>
             </div>
         </div>
 
@@ -462,7 +520,7 @@ $this->registerCss('
                 <h3 class="text-primary"><i class="fa fa-plus-circle"></i> ทำรายการ packing list</h3>
             </div>
             <div class="modal-body">
-                <form id="form-picking" action="<?=Url::to(['sale/createpicking'],true)?>" method="post">
+                <form id="form-picking" action="<?= Url::to(['sale/createpicking'], true) ?>" method="post">
                     <input type="hidden" name="sale_id" class="sale-id" value="">
                     <table class="table table-bordered table-striped table-picking">
                         <thead>
@@ -481,8 +539,11 @@ $this->registerCss('
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-warning btn-save-picking"><i class="fa fa-save"></i> บันทึกรายการ</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close text-danger"></i> ปิดหน้าต่าง</button>
+                <button type="button" class="btn btn-warning btn-save-picking"><i class="fa fa-save"></i> บันทึกรายการ
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                            class="fa fa-close text-danger"></i> ปิดหน้าต่าง
+                </button>
             </div>
         </div>
 
@@ -490,15 +551,15 @@ $this->registerCss('
 </div>
 
 <?php
-$url_to_find = Url::to(['quotation/finditem'],true);
-$url_to_find_product = Url::to(['product/searchitem'],true);
-$url_to_find_wh = Url::to(['sale/findwarehouse'],true);
-$url_to_find_permit = Url::to(['sale/findpermit'],true);
-$url_to_find_transport = Url::to(['sale/findtransport'],true);
-$url_to_createinvoice = Url::to(['sale/createinvoice'],true);
-$url_to_printpicking = Url::to(['sale/printpicking'],true);
-$url_to_createpacking = Url::to(['sale/createpacking'],true);
-$js =<<<JS
+$url_to_find = Url::to(['quotation/finditem'], true);
+$url_to_find_product = Url::to(['product/searchitem'], true);
+$url_to_find_wh = Url::to(['sale/findwarehouse'], true);
+$url_to_find_permit = Url::to(['sale/findpermit'], true);
+$url_to_find_transport = Url::to(['sale/findtransport'], true);
+$url_to_createinvoice = Url::to(['sale/createinvoice'], true);
+$url_to_printpicking = Url::to(['sale/printpicking'], true);
+$url_to_createpacking = Url::to(['sale/createpacking'], true);
+$js = <<<JS
  var currow = 0;
  var  removelist = [];
  var quote = '$model->id';
@@ -909,6 +970,6 @@ $js =<<<JS
  }
  
 JS;
-$this->registerJs($js,static::POS_END);
+$this->registerJs($js, static::POS_END);
 ?>
 

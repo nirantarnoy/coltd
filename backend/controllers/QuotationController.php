@@ -79,7 +79,10 @@ class QuotationController extends Controller
             $lineprice = Yii::$app->request->post('price');
             $stockid = Yii::$app->request->post('stock_id');
 
-            $model->require_date = strtotime(date('m-d-Y',strtotime($model->require_date)));
+            $tdate = explode('/',$model->require_date);
+            $t_date = $tdate[2].'/'.$tdate[1].'/'.$tdate[0];
+
+            $model->require_date = strtotime($t_date);
             $model->status = 1;
             if($model->save()){
                 if(count($prodid)>0){
@@ -124,8 +127,15 @@ class QuotationController extends Controller
             $removelist = Yii::$app->request->post('removelist');
 
             //print_r($removelist);return;
+            $tdate = explode('/',$model->require_date);
+            $t_date = $tdate[2].'/'.$tdate[1].'/'.$tdate[0];
 
-            $model->require_date = strtotime(date('m-d-Y',strtotime($model->require_date)));
+            //print $t_date.'<br />';
+            //print strtotime(date('Y-m-d',$t_date)).'<br />';
+//            print strtotime(date('d-m-Y')).'<br />';
+//            print date('Y-m-d',strtotime($t_date));return;
+
+            $model->require_date = strtotime($t_date);
             $model->status = 1;
             if($model->save()){
                 if(count($prodid)>0){

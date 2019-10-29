@@ -103,8 +103,9 @@ class SaleController extends Controller
 
 
             //echo date('m-d-Y',strtotime($model->require_date));return;
-
-            $model->require_date = strtotime(date('m-d-Y',strtotime($model->require_date)));
+            $tdate = explode('/',$model->require_date);
+            $t_date = $tdate[2].'/'.$tdate[1].'/'.$tdate[0];
+            $model->require_date = strtotime($t_date);
             $model->status = 1;
             $model->payment_status = 0;
             if($model->save(false)){
@@ -191,7 +192,10 @@ class SaleController extends Controller
             $lineprice = Yii::$app->request->post('price');
             $removelist = Yii::$app->request->post('removelist');
 
-            $model->require_date = strtotime(date('m-d-Y',strtotime($model->require_date)));
+            $tdate = explode('/',$model->require_date);
+            $t_date = $tdate[2].'/'.$tdate[1].'/'.$tdate[0];
+
+            $model->require_date = strtotime($t_date);
             $model->status = 1;
             if($model->save()){
                 if(count($prodid)>0){

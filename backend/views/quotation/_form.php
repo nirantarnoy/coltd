@@ -53,7 +53,16 @@ $this->registerCss('
                         </div>
                         <div class="col-lg-3">
                             <?php $model->require_date = $model->isNewRecord ? date('d/m/Y') : date('d/m/Y', $model->require_date); ?>
-                            <?= $form->field($model, 'require_date')->widget(DatePicker::className()) ?>
+                            <?= $form->field($model, 'require_date')->widget(DatePicker::className(), [
+                                'options' => [
+                                    'style' => 'font-weight: bold'
+                                ],
+                                'pluginOptions' => [
+                                    'format' => 'dd/mm/yyyy',
+                                    'todayHighlight' => true,
+                                    'todayBtn' => true,
+                                ]
+                            ]) ?>
                         </div>
                         <div class="col-lg-3">
                             <?= $form->field($model, 'customer_id')->widget(Select2::className(), [
@@ -226,7 +235,8 @@ $this->registerCss('
                                                        readonly>
                                             </td>
                                             <td>
-                                                <input type="number" min="0" style="text-align: right" class="form-control line_qty" name="qty[]"
+                                                <input type="number" min="0" style="text-align: right"
+                                                       class="form-control line_qty" name="qty[]"
                                                        value="<?= $value->qty ?>" onchange="cal_num($(this));">
                                             </td>
                                             <td>
@@ -236,8 +246,10 @@ $this->registerCss('
                                                        readonly>
                                             </td>
                                             <td>
-                                                <input style="text-align: right" type="text" class="form-control line_cost"
-                                                       name="cost[]" value="<?= \backend\models\Product::findProductinfo($value->product_id) != null ? \backend\models\Product::findProductinfo($value->product_id)->cost : 0 ?>">
+                                                <input style="text-align: right" type="text"
+                                                       class="form-control line_cost"
+                                                       name="cost[]"
+                                                       value="<?= \backend\models\Product::findProductinfo($value->product_id) != null ? \backend\models\Product::findProductinfo($value->product_id)->cost : 0 ?>">
                                             </td>
                                             <td>
                                                 <input style="text-align: right" type="text"
@@ -286,7 +298,8 @@ $this->registerCss('
                                             <input type="text" class="form-control line_percent" value="" readonly>
                                         </td>
                                         <td>
-                                            <input type="number" min="0" style="text-align: right" class="form-control line_qty" name="qty[]"
+                                            <input type="number" min="0" style="text-align: right"
+                                                   class="form-control line_qty" name="qty[]"
                                                    value="" onchange="cal_num($(this));">
                                         </td>
                                         <td>
