@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Url;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
@@ -11,7 +12,9 @@ $this->title = 'รายงานสินค้าคงเหลือ';
 ?>
 <div class="x_panel">
     <div class="x_title">
-        <h3><i class="fa fa-bar-chart-o"></i> <?=$this->title?> <small></small></h3>
+        <h3><i class="fa fa-bar-chart-o"></i> <?= $this->title ?>
+            <small></small>
+        </h3>
 
         <div class="clearfix"></div>
     </div>
@@ -43,7 +46,7 @@ $this->title = 'รายงานสินค้าคงเหลือ';
                         ],
                         'product_code',
                         'engname',
-                       // 'name',
+                        // 'name',
                         'volumn',
                         'unit_factor',
                         'volumn_content',
@@ -56,22 +59,25 @@ $this->title = 'รายงานสินค้าคงเหลือ';
                         [
                             'attribute' => 'stock_out',
                             'contentOptions' => [
-                                'style'=>'text-align: right'
+                                'style' => 'text-align: right'
                             ],
                             // 'format' => 'currency',
                             'format' => 'integer',
-                            'hAlign'=>'right',
+                            'hAlign' => 'right',
                             'pageSummary' => true,
                         ],
                         [
                             'attribute' => 'all_qty',
+                            'contentOptions' => [
+                                'id' => 'dd',
+                            ],
                             'label' => 'จำนวนคงเหลือ',
                             'contentOptions' => [
-                                'style'=>'text-align: right'
+                                'style' => 'text-align: right'
                             ],
                             // 'format' => 'currency',
                             'format' => 'integer',
-                            'hAlign'=>'right',
+                            'hAlign' => 'right',
                             'pageSummary' => true,
                         ],
 
@@ -92,86 +98,86 @@ $this->title = 'รายงานสินค้าคงเหลือ';
         </div>
         <br>
         <div class="panel panel-body">
-        <div class="table-responsive">
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'emptyCell'=>'-',
-                'layout'=>'{items}{summary}{pager}',
-                'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
-                'showOnEmpty'=>true,
-                //'showPageSummary'=>true,
-                'tableOptions' => ['class' => 'table table-hover'],
-                'emptyText' => '<br/><div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
-                'columns' => [
-                  //  ['class' => 'yii\grid\SerialColumn'],
+            <div class="table-responsive">
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'emptyCell' => '-',
+                    'layout' => '{items}{summary}{pager}',
+                    'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
+                    'showOnEmpty' => true,
+                    //'showPageSummary'=>true,
+                    'tableOptions' => ['class' => 'table table-hover'],
+                    'emptyText' => '<br/><div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
+                    'columns' => [
+                        //  ['class' => 'yii\grid\SerialColumn'],
 
-                    // 'id',
-                    [
-                        'attribute' => 'journal_date',
-                        'format' => 'raw',
-                        'options' => ['id'=>'jn_date'],
-                        'value' => function($data){
-                            return Yii::$app->formatter->asDate($data->journal_date, 'php:d/m/Y');
-                        },
-                        'filter'=> DatePicker::widget([
-                            'model'=> $searchModel,
+                        // 'id',
+                        [
                             'attribute' => 'journal_date',
-                            'clientOptions' => [
-                                'autoclose'=>false,
-                                'format'=>'yyyy/mm/dd',
-                            ],
-                            'options' => ['onchange'=>'window.location.reload();']
-                        ])
-                    ],
-                    'product_code',
-                    'engname',
-                    //'name',
-                    'volumn',
-                    'unit_factor',
-                    'volumn_content',
-                    [
-                        'attribute' => 'stock_in',
-                        // 'format' => 'currency',
-                        'format' => 'integer',
-
-                    ],
-                    [
-                        'attribute' => 'stock_out',
-                        'contentOptions' => [
-                               'style'=>'text-align: right'
-                            ],
-                        // 'format' => 'currency',
-                        'format' => 'integer',
-                        'hAlign'=>'right',
-                         'pageSummary' => true,
-                    ],
-                    [
-                        'attribute' => 'all_qty',
-                        'label' => 'จำนวนคงเหลือ',
-                        'contentOptions' => [
-                            'style'=>'text-align: right'
+                            'format' => 'raw',
+                            'options' => ['id' => 'jn_date'],
+                            'value' => function ($data) {
+                                return Yii::$app->formatter->asDate($data->journal_date, 'php:d/m/Y');
+                            },
+                            'filter' => DatePicker::widget([
+                                'model' => $searchModel,
+                                'attribute' => 'journal_date',
+                                'clientOptions' => [
+                                    'autoclose' => false,
+                                    'format' => 'yyyy/mm/dd',
+                                ],
+                                'options' => ['onchange' => 'window.location.reload();']
+                            ])
                         ],
-                        // 'format' => 'currency',
-                        'format' => 'integer',
-                        'hAlign'=>'right',
-                        'pageSummary' => true,
+                        'product_code',
+                        'engname',
+                        //'name',
+                        'volumn',
+                        'unit_factor',
+                        'volumn_content',
+                        [
+                            'attribute' => 'stock_in',
+                            // 'format' => 'currency',
+                            'format' => 'integer',
+
+                        ],
+                        [
+                            'attribute' => 'stock_out',
+                            'contentOptions' => [
+                                'style' => 'text-align: right'
+                            ],
+                            // 'format' => 'currency',
+                            'format' => 'integer',
+                            'hAlign' => 'right',
+                            'pageSummary' => true,
+                        ],
+                        [
+                            'attribute' => 'all_qty',
+                            'label' => 'จำนวนคงเหลือ',
+                            'contentOptions' => [
+                                'style' => 'text-align: right'
+                            ],
+                            // 'format' => 'currency',
+                            'format' => 'integer',
+                            'hAlign' => 'right',
+                            'pageSummary' => true,
+                        ],
+
+
                     ],
-
-
-                ],
-                'pjax' => true,
-                'bordered' => true,
-                'striped' => false,
-                'condensed' => false,
-                'responsive' => true,
-                'hover' => true,
-                //'floatHeader' => true,
-               // 'floatHeaderOptions' => ['scrollingTop' => $scrollingTop],
-                'showPageSummary' => true,
-               // 'showFooter' => true,
-            ]); ?>
-        </div>
+                    'pjax' => true,
+                    'bordered' => true,
+                    'striped' => false,
+                    'condensed' => false,
+                    'responsive' => true,
+                    'hover' => true,
+                    //'floatHeader' => true,
+                    // 'floatHeaderOptions' => ['scrollingTop' => $scrollingTop],
+                    'showPageSummary' => true,
+                    // 'showFooter' => true,
+                ]); ?>
+            </div>
         </div>
         <!--        <div class="row">-->
         <!--            <div class="col-lg-12">-->

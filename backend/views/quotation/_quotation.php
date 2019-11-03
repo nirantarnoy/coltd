@@ -140,6 +140,7 @@
                         <td style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"></td>
                         <td style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"></td>
                         <td style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"></td>
+                        <td style="border-left: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"></td>
                     </tr>
                 <?php endfor; ?>
             <?php endif; ?>
@@ -154,14 +155,14 @@
             <?php //endfor; ?>
             <tr style="border: 1px solid black;border-left:none;border-right: none ">
                 <!--            <tr>-->
-                <td style="padding: 15px 15px 15px 15px;font-size: 14px;font-weight: bold;text-align: left" colspan="2">TOTAL</td>
+                <td style="padding: 15px 15px 15px 15px;font-size: 14px;font-weight: bold;text-align: left" colspan="3">TOTAL</td>
 
                 <td style="text-align: center;font-size: 14px;font-weight: bold"><?=number_format($sumqty,0)?></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"></td>
-                <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"></td>
+                 <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"></td>
                 <td style="font-size: 14px;font-weight: bold;text-align: center;padding-right: 10px;"><?=number_format($sumtotal,0)?></td>
 
             </tr>
