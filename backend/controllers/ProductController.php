@@ -358,12 +358,12 @@ class ProductController extends Controller
 
                         //$qty_separate = ['xx',''];
 
-                        if($rowData[24]!='' && $rowData[24] != null){
+                        if($rowData[25]!='' && $rowData[25] != null){
                             $qty_separate = explode(' ',$rowData[24]);
                             if(count($qty_separate)>1){
                                 $qty = $qty_separate[1]==NULL || $qty_separate[1] =='' ?0:str_replace(",","",$qty_separate[1]);
                             }else{
-                                $qty = $rowData[24];
+                                $qty = $rowData[25];
                             }
                         }
                        // array_push($qty_text, $rowData[24]);continue;
@@ -431,6 +431,7 @@ class ProductController extends Controller
                         $modelx->volumn_content = $rowData[4];
                         $modelx->excise_no = $rowData[8];
                         $modelx->all_qty = (int)$qty;
+                        $modelx->price_carton_thb = str_replace(",","",$rowData[24]); //ราคาต่อลัง
                         $modelx->excise_date = date('Y-d-m',strtotime($rowData[9]));
 
                         $this->updatePositiongroup($catid,$rowData[5]);
