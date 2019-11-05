@@ -359,7 +359,7 @@ class ProductController extends Controller
                         //$qty_separate = ['xx',''];
 
                         if($rowData[25]!='' && $rowData[25] != null){
-                            $qty_separate = explode(' ',$rowData[24]);
+                            $qty_separate = explode(' ',$rowData[25]);
                             if(count($qty_separate)>1){
                                 $qty = $qty_separate[1]==NULL || $qty_separate[1] =='' ?0:str_replace(",","",$qty_separate[1]);
                             }else{
