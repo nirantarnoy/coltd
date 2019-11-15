@@ -147,8 +147,32 @@ class InboundinvController extends Controller
     {
         $model = $this->findModel($id);
         $modelline = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$id])->all();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $prodid = Yii::$app->request->post('productid');
+            $lineqty = Yii::$app->request->post('qty');
+            $lineprice = Yii::$app->request->post('price');
+            $stockid = Yii::$app->request->post('stock_id');
+
+            $model->invoice_date = date('Y-m-d',strtotime($model->invoice_date));
+            $model->status = 1;
+            if($model->save(false)){
+                if(count($prodid)>0){
+                    \backend\models\Inboundinvline::deleteAll(['id'=>$model->id]);
+                    for($i=0;$i<=count($prodid)-1;$i++){
+                        if($prodid[$i]==''){continue;}
+                        $modelline = new \backend\models\Inboundinvline();
+                        $modelline->invoice_id = $model->id;
+                        $modelline->product_id = $prodid[$i];
+                        $modelline->line_qty = $lineqty[$i];
+                        $modelline->line_price = $lineprice[$i];
+                        $modelline->line_num = $i+1;
+                        // $modelline->stock_id = $stockid[$i];
+                        $modelline->save();
+                    }
+                }
+                return $this->redirect(['index']);
+            }
+
         }
 
         return $this->render('update', [
