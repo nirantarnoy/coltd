@@ -54,7 +54,7 @@ class InboundInv extends \yii\db\ActiveRecord
             'delivery_term' => 'Delivery Term',
             'sold_to' => 'Sold To',
             'status' => 'สถานะ',
-            'customer_ref' => 'ลูกค้าอ้างอิง',
+            'customer_ref' => 'เลขที่อ้างอิงลูกค้า',
             'docin_no' =>'เลขที่นำเข้า',
             'created_at' => Yii::t('app', 'สร้างเมื่อ'),
             'updated_at' => Yii::t('app', 'แก้ไขเมื่อ'),

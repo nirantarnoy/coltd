@@ -34,9 +34,9 @@ use yii\helpers\Url;
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4">
-                <?= $form->field($model, 'delivery_term')->textInput(['maxlength' => true]) ?>
-            </div>
+<!--            <div class="col-lg-4">-->
+<!--                --><?php ////echo $form->field($model, 'delivery_term')->textInput(['maxlength' => true]) ?>
+<!--            </div>-->
             <div class="col-lg-4">
                 <?php $xstatus = $model->isNewRecord?'open':\backend\helpers\QuotationStatus::getTypeById($model->status);?>
                 <?= $form->field($model, 'status')->textInput(['value'=>$xstatus , 'readonly'=>'readonly']) ?>

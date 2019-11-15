@@ -104,7 +104,8 @@ $this->params['breadcrumbs'][] = $this->title;
            // 'id',
             'invoice_no',
             'invoice_date',
-            'delivery_term',
+            'customer_ref',
+            //'delivery_term',
             //'sold_to',
             [
                 'attribute'=>'status',

@@ -6,15 +6,12 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Inboundinv */
 
-$this->title = $model->id;
+$this->title = $model->invoice_no;
 $this->params['breadcrumbs'][] = ['label' => 'Inboundinvs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="inboundinv-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -29,16 +26,32 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+           // 'id',
             'invoice_no',
             'invoice_date',
-            'delivery_term',
+            'customer_ref',
             'sold_to',
-            'status',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+            [
+                'attribute'=>'status',
+                'format' => 'raw',
+                'value' => function($data){
+                    if($data->status == 1){
+                        return "<div class='label label-success'> Open</div>";
+                    }else if($data->status == 2){
+                        return "<div class='label label-danger'> Completed</div>";
+                    }
+                }
+            ],
+            [
+                    'attribute'=>'created_at',
+                'value'=>function($data){
+                    return date('d-m-Y',$data->created_at);
+                }
+            ]
+          //  'created_at',
+//            'updated_at',
+//            'created_by',
+//            'updated_by',
         ],
     ]) ?>
 
