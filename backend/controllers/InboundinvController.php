@@ -77,7 +77,7 @@ class InboundinvController extends Controller
             $lineprice = Yii::$app->request->post('price');
             $stockid = Yii::$app->request->post('stock_id');
 
-            $model->invoice_date = date('Y-d-m',strtotime($model->invoice_date));//date('Y-m-d H:i:s',strtotime($model->invoice_date));
+           // $model->invoice_date = date('Y-d-m',strtotime($model->invoice_date));//date('Y-m-d H:i:s',strtotime($model->invoice_date));
             $model->status = 1;
             if($model->save(false)){
                 if(count($prodid)>0){
