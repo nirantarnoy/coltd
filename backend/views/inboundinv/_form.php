@@ -21,7 +21,7 @@ use yii\helpers\Url;
             <div class="col-lg-4">
                 <?php $model->invoice_date = $model->isNewRecord?date('d/m/Y'):date('d/m/Y',strtotime($model->invoice_date));?>
                 <?= $form->field($model, 'invoice_date')->widget(DatePicker::className(),[
-                    'value' =>date('Y/m/d'),
+                    'value' =>date('d/m/Y'),
                     'pluginOptions' => [
                         'format' => 'dd/mm/yyyy',
                         'todayHighlight' => true,
