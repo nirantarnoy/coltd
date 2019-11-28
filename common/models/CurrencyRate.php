@@ -38,6 +38,8 @@ class CurrencyRate extends \yii\db\ActiveRecord
     {
         return [
             [['from_date','to_date'],'required'],
+            ['from_currency', 'compare', 'compareAttribute' => 'to_integer', 'operator' => '!='],
+            ['to_integer', 'compare', 'compareAttribute' => 'from_currency', 'operator' => '!='],
             [['from_currency', 'to_integer','rate_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['rate', 'rate_factor'], 'number'],
             [['from_date', 'to_date'], 'safe'],

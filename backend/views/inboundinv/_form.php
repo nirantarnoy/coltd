@@ -408,6 +408,7 @@ $js =<<<JS
                      for(var i =0;i<=data.length -1;i++){
                             var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
                          var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
+                         var line_price = data[i]['thb_amount'] == null?0:data[i]['thb_amount'];
                          html +="<tr ondblclick='getitem($(this));'>" +
                           "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td>"+
                           "<td style='vertical-align: middle'>"+
@@ -423,7 +424,7 @@ $js =<<<JS
                           "<input type='hidden' class='volumn' value='"+data[i]['volumn']+"'/>" +
                           "<input type='hidden' class='volumn_content' value='"+data[i]['volumn_content']+"'/>" +
                            "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
-                           "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
+                           "<input type='hidden' class='stock_price' value='"+line_price+"'/>" +
                            "</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
                            "<td>"+data[i]['warehouse_name']+"</td>"+
@@ -511,6 +512,7 @@ $js =<<<JS
                      for(var i =0;i<=data.length -1;i++){
                          var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
                          var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
+                         var line_price = data[i]['thb_amount'] == null?0:data[i]['thb_amount'];
                          html +="<tr ondblclick='getitem($(this));'>" +
                          "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td>"+
                           "<td style='vertical-align: middle'>"+
@@ -526,7 +528,7 @@ $js =<<<JS
                           "<input type='hidden' class='volumn' value='"+data[i]['volumn']+"'/>" +
                           "<input type='hidden' class='volumn_content' value='"+data[i]['volumn_content']+"'/>" +
                           "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
-                          "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
+                          "<input type='hidden' class='stock_price' value='"+line_price+"'/>" +
                            "</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
                              "<td>"+data[i]['warehouse_name']+"</td>"+

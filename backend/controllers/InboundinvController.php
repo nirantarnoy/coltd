@@ -157,7 +157,7 @@ class InboundinvController extends Controller
             $model->status = 1;
             if($model->save(false)){
                 if(count($prodid)>0){
-                    \backend\models\Inboundinvline::deleteAll(['id'=>$model->id]);
+                    \backend\models\Inboundinvline::deleteAll(['invoice_id'=>$model->id]);
                     for($i=0;$i<=count($prodid)-1;$i++){
                         if($prodid[$i]==''){continue;}
                         $modelline = new \backend\models\Inboundinvline();
