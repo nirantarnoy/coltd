@@ -229,7 +229,7 @@ use yii\helpers\Url;
     <div class="form-group pull-right">
         <?= Html::submitButton("<i class='fa fa-save'></i> บันทึก", ['class' => 'btn btn-success']) ?>
         <?php if(!$model->isNewRecord):?>
-            <?= Html::Button("<i class='fa fa-print'></i> พิมพ์", ['class' => 'btn btn-warning btn-quote-print']) ?>
+            <?= Html::Button("<i class='fa fa-print'></i> พิมพ์", ['class' => 'btn btn-warning btn-quote-print','data-id'=>$model->id]) ?>
             <?php //echo Html::Button("<i class='fa fa-print'></i> พิมพ์ PackingList", ['class' => 'btn btn-primary btn-firm-sale']) ?>
             <?= Html::a('สร้าง Form นำเข้า',['inboundinv/createtrans','id'=>$model->id],['class'=>'btn btn-default'])?>
 
@@ -328,7 +328,9 @@ $js =<<<JS
      });
      $(".btn-quote-print").click(function(){
          //alert($("#form-quote").attr("action"));
-        $("form#form-quote").submit(); 
+         var ids = $(this).attr("data-id");
+         alert(ids);
+        //$("form#form-quote").submit(); 
      });
      $(".btn-addline").click(function(){
           var tr = $(".table-quotation tbody tr:last");
