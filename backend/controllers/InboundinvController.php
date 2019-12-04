@@ -9,6 +9,8 @@ use yii\base\Request;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
+use kartik\mpdf\Pdf;
 
 /**
  * InboundinvController implements the CRUD actions for Inboundinv model.
@@ -308,5 +310,73 @@ class InboundinvController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionPrint($id){
+       // echo $id;return;
+        $model = \backend\models\Inboundinv::find()->where(['id' => $id])->one();
+        $modelline = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$id])->all();
+
+        if($model){
+            // return "nira";
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+                //  'format' => [150,236], //manaul
+                'format' =>  Pdf::FORMAT_A4,
+                //'format' =>  Pdf::FORMAT_A5,
+                'orientation' =>Pdf::ORIENT_PORTRAIT,
+                'destination' => Pdf::DEST_BROWSER,
+                'content' => $this->renderPartial('_print',[
+                    'model'=>$model,
+                    'modelline'=>$modelline,
+
+                ]),
+                //'content' => "nira",
+                // 'defaultFont' => '@backend/web/fonts/config.php',
+                'cssFile' => '@backend/web/css/pdf.css',
+                'options' => [
+                    'title' => 'PACKING LIST',
+                    'subject' => ''
+                ],
+                'methods' => [
+                    //  'SetHeader' => ['รายงานรหัสสินค้า||Generated On: ' . date("r")],
+                    //  'SetFooter' => ['|Page {PAGENO}|'],
+                    //'SetFooter'=>'niran',
+                ],
+                'marginLeft' => 5,
+                'marginRight' => 5,
+                'marginTop' => 10,
+                'marginBottom' => 10,
+                'marginFooter' => 5
+
+            ]);
+
+//            $defaultConfig = (new ConfigVariables())->getDefaults();
+//            $fontDirs = $defaultConfig['fontDir'];
+//
+//            $defaultFontConfig = (new FontVariables())->getDefaults();
+//            $fontData = $defaultFontConfig['fontdata'];
+
+
+//            $pdf->options['fontDir'] = array_merge($fontDirs, [
+//               // Yii::getAlias('@backend').'/web/fonts'
+//                Yii::$app->basePath
+//            ]);
+
+//            $pdf->options = array_merge($pdf->options , [
+//                'fontDir' => array_merge($fontDirs, [ Yii::$app->basePath . '/web/fonts']),  // make sure you refer the right physical path
+//                'fontdata' => array_merge($fontData, [
+//                    'angsana' => [
+//                        'R' => 'angsa.ttf',
+////                        'I' => 'THSarabunNew Italic.ttf',
+////                        'B' => 'THSarabunNew Bold.ttf',
+//                    ]
+//                ])
+//            ]);
+            //return $this->redirect(['genbill']);
+            Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+            Yii::$app->response->headers->add('Content-Type', 'application/pdf');
+            return $pdf->render();
+        }
     }
 }
