@@ -226,12 +226,12 @@ $this->registerCss('
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control line_litre"
-                                                       value="<?= \backend\models\Product::findProductInfo($value->product_id)->volumn_content ?>"
+                                                       value="<?= \backend\models\Product::findProductInfo($value->product_id)->volumn ?>"
                                                        readonly>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control line_percent"
-                                                       value="<?= \backend\models\Product::findProductInfo($value->product_id)->volumn ?>"
+                                                       value="<?= \backend\models\Product::findProductInfo($value->product_id)->volumn_content ?>"
                                                        readonly>
                                             </td>
                                             <td>
