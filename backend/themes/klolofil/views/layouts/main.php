@@ -224,7 +224,8 @@ $(function(){
                 <div class="container-fluid">
                     <?php
                     echo Breadcrumbs::widget([
-                        'options' => ['class'=>'breadcrumb-item','style'=>'margin-top: -10px;'],
+                        //'itemTemplate' => "<li><i>{link}</i></li>\n",
+                        //'options' => ['class'=>'breadcrumb-item','style'=>'margin-top: -10px;'],
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 
                     ]);
