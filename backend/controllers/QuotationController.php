@@ -357,4 +357,16 @@ class QuotationController extends Controller
             return $pdf->render();
         }
     }
+    public function actionCheckRate(){
+        $id = \Yii::$app->request->post('cur_id');
+       // echo $id;return;
+        $data = [];
+        if($id){
+            $model = \backend\models\Currencyrate::findRate($id);
+            if($model){
+              array_push($data,['exp_date'=>$model->to_date,'exc_rate'=>$model->rate]);
+            }
+        }
+        echo Json::encode($data);
+    }
 }

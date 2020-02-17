@@ -33,4 +33,9 @@ class Currencyrate extends \common\models\CurrencyRate
             ],
         ];
     }
+
+    public function findRate($cur){
+        $model = \backend\models\Currencyrate::find()->where(['from_currency'=>$cur])->one();
+        return $model!=null?$model:null;
+    }
 }

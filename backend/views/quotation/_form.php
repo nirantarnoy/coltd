@@ -68,7 +68,7 @@ $this->registerCss('
                             <?= $form->field($model, 'customer_id')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map(\backend\models\Customer::find()->all(), 'id', 'name'),
                                 'options' => [
-                                    'placeholder' => 'เลือกลูกค้า'
+                                    'placeholder' => 'เลือกลูกค้า',
                                 ],
                                 'pluginOptions' => [
                                     'allowClear' => true
@@ -87,12 +87,18 @@ $this->registerCss('
                             <?= $form->field($model, 'currency')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map(\backend\helpers\Currency::asArrayObject(), 'id', 'name'),
                                 'options' => [
-                                    'placeholder' => 'เลือกสกุลเงิน'
+                                    'placeholder' => 'เลือกสกุลเงิน',
+                                      'onchange'=>'checkRate($(this))',
                                 ],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ]
                             ]) ?>
+                            <div class="text-danger alert-currency" style="display: none"></div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="">อัตราแลกเปลี่ยน</label>
+                            <input type="text" class="form-control rate" name="rate" readonly value="">
                         </div>
                         <div class="col-lg-3">
                             <?php $xstatus = $model->isNewRecord ? 'open' : \backend\helpers\QuotationStatus::getTypeById($model->status); ?>
@@ -443,6 +449,7 @@ $this->registerCss('
 $url_to_find = Url::to(['quotation/finditem'], true);
 $url_to_firm = Url::to(['quotation/firmorder'], true);
 $url_to_find_product = Url::to(['product/searchitem'], true);
+$url_to_checkrate = Url::to(['quotation/check-rate'], true);
 $js = <<<JS
  var currow = 0;
  var  removelist = [];
@@ -768,6 +775,28 @@ $js = <<<JS
       });
       $(".qty-sum").text(parseFloat(totalqty).toFixed(2));
       $(".total-sum").text(parseFloat(totalall).toFixed(2));
+ }
+ 
+ function checkRate(e){
+     let id = e.val();
+     if(id){
+         $.ajax({
+              'type':'post',
+              'dataType': 'json',
+              'url': "$url_to_checkrate",
+              'data': {'cur_id': id},
+              'success': function(data) {
+                 // alert(data[0]['exp_date']);
+                  if(data.length > 0){
+                      $(".rate").val(data[0]['exc_rate']);
+                  }else{
+                      $(".alert-currency").html("ไม่พบข้อมูลอัตราแลกเปลี่ยน").show();
+                      $(".rate").val('');
+                      return false;
+                  }
+              }
+         });
+     }
  }
  
 JS;

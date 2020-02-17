@@ -202,7 +202,8 @@ class InboundinvController extends Controller
         if($id){
             //echo $id;return;
             $modelinv = \backend\models\Inboundinv::find()->where(['id'=>$id])->one();
-            $model = \backend\models\Importline::find()->where(['import_id'=>$id])->orderBy(['line_num'=>SORT_ASC])->all();
+          //  $model = \backend\models\Importline::find()->where(['import_id'=>$id])->orderBy(['line_num'=>SORT_ASC])->all();
+            $model = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$id])->orderBy(['line_num'=>SORT_ASC])->all();
             return $this->render('_inboundtrans', [
                 'model' => $model,
                 'invoice_no'=> $id,
@@ -230,9 +231,10 @@ class InboundinvController extends Controller
         $lineexcisedate = Yii::$app->request->post('line_excise_date');
 
         if(count($productid)>0){
+
             for($i=0;$i<=count($productid)-1;$i++){
                 $model = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$invoiceid,'product_id'=>$productid[$i]])->one();
-                if($model){
+                if($model){ echo "niran";return;
                     $model->transport_in_no = $linetransportno[$i];
                     $model->transport_in_date = date('d-m-Y');
                     if($model->save(false)){

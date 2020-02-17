@@ -321,7 +321,7 @@ class ProductController extends Controller
         ";
     }
     public function actionImportproduct(){
-
+       //echo "ok";return;
         $model = new \backend\models\Uploadfile();
         $qty_text = [];
         if(Yii::$app->request->post()){
@@ -344,28 +344,54 @@ class ProductController extends Controller
                         $qty = 0;
                         $price = 0;
                         $cost = 0;
+
+                        $permit_date = null;
+                        $inv_date = null;
+                        $trans_date = null;
+                        $kno_date = null;
+
+
                         if ($rowData[1] == '' || $i == 0) {
                             continue;
                         }
 
-//                        if($rowData[14] == ''){
-//                            continue;
-//                        }
-                      //  echo date('Y-d-m',strtotime(trim($rowData[12])));
-                      //  return;
+                        $per_origin = explode('/',$rowData[17]);
+                        if(count($per_origin) >0 && $per_origin[0] !=''){
+
+                            //print_r($per_origin);return;
+                            $permit_date = $per_origin[2]."/".$per_origin[1]."/".$per_origin[0];
+//                            if($rowData[0] =='C-007'){
+//                                echo $permit_date;return;
+//                            }
+                        }
+
+                        $trans_origin = explode('/',$rowData[14]);
+                        if(count($trans_origin)>0 && $trans_origin[0] !=''){
+                            $trans_date = $trans_origin[2]."/".$trans_origin[1]."/".$trans_origin[0];
+                        }
+
+                        $inv_origin = explode('/',$rowData[12]);
+                        if(count($inv_origin)>0 && $inv_origin[0] !=''){
+                            $inv_date = $inv_origin[2]."/".$inv_origin[1]."/".$inv_origin[0];
+                        }
+
+                        $kno_origin = explode('/',$rowData[19]);
+                        if(count($kno_origin)>0 && $kno_origin[0] !=''){
+                            $kno_date = $kno_origin[2]."/".$kno_origin[1]."/".$kno_origin[0];
+                        }
 
 
-
-                        //$qty_separate = ['xx',''];
-
-                        if($rowData[25]!='' && $rowData[25] != null){
-                            $qty_separate = explode(' ',$rowData[25]);
+                        if($rowData[24]!='' && $rowData[24] != null){
+                            $qty_separate = explode(' ',$rowData[24]);
                             if(count($qty_separate)>1){
                                 $qty = $qty_separate[1]==NULL || $qty_separate[1] =='' ?0:str_replace(",","",$qty_separate[1]);
                             }else{
-                                $qty = $rowData[25];
+                                $qty = $rowData[24];
                             }
                         }
+
+                      //  $permit_date = '02/08/2019';
+
                        // array_push($qty_text, $rowData[24]);continue;
                         $price = $rowData[21]==NULL || $rowData[21] ==''?0:str_replace(",","",$rowData[21]);
                         $catid = $this->checkCat($rowData[6]);
@@ -387,27 +413,50 @@ class ProductController extends Controller
                                 $usd = str_replace(",","",$rowData[21]);
                                 $thb = str_replace(",","",$rowData[22]);
                                 array_push($data,[
+//                                    'prod_id'=>$modelprod->id,
+//                                    'qty'=>$qty,
+//                                    'warehouse_id'=>$whid,
+//                                    'trans_type'=>TransType::TRANS_ADJUST_IN,
+//                                    'permit_no' => $rowData[16],
+//                                    'permit_date' => trim($rowData[17]),
+//                                    'transport_in_no' => $rowData[13],
+//                                    'transport_in_date' => trim($rowData[14]),
+//                                    'excise_no' => '',
+//                                    'invoice_no' => $rowData[11],
+//                                    'invoice_date' => trim($rowData[12]),
+//                                    'sequence' => $rowData[15],
+//                                    'kno_no_in' => $rowData[18],
+//                                    'kno_in_date' => trim($rowData[19]),
+//                                    'out_qty' => 0,
+//                                    'usd_rate' => $usd,
+//                                    'thb_amount' => $thb,
+
                                     'prod_id'=>$modelprod->id,
                                     'qty'=>$qty,
                                     'warehouse_id'=>$whid,
                                     'trans_type'=>TransType::TRANS_ADJUST_IN,
                                     'permit_no' => $rowData[16],
-                                    'permit_date' => trim($rowData[17]),
+//                                 'permit_date' => date('Y-m-d',strtotime($rowData[17])),
+                                    'permit_date' => $permit_date,
                                     'transport_in_no' => $rowData[13],
-                                    'transport_in_date' => trim($rowData[14]),
+                                    //  'transport_in_date' => date('Y-m-d',strtotime($rowData[14])),
+                                    'transport_in_date' => $trans_date,
                                     'excise_no' => '',
                                     'invoice_no' => $rowData[11],
-                                    'invoice_date' => trim($rowData[12]),
+                                    //'invoice_date' => date('Y-m-d',strtotime($rowData[12])),
+                                    'invoice_date' => $inv_date,
                                     'sequence' => $rowData[15],
                                     'kno_no_in' => $rowData[18],
-                                    'kno_in_date' => trim($rowData[19]),
+                                    //   'kno_in_date' => date('Y-m-d',strtotime($rowData[19])),
+                                    'kno_in_date' => $kno_date,
                                     'out_qty' => 0,
                                     'usd_rate' => $usd,
                                     'thb_amount' => $thb,
 
 
                                 ]);
-                                $update_stock = TransCalculate::createJournal($data);
+                               // print_r($data);return;
+                               // $update_stock = TransCalculate::createJournal($data);
                             }
                             continue;
                         }
@@ -432,7 +481,7 @@ class ProductController extends Controller
                         $modelx->excise_no = $rowData[8];
                         $modelx->all_qty = (int)$qty;
                         $modelx->price_carton_thb = str_replace(",","",$rowData[24]); //ราคาต่อลัง
-                        $modelx->excise_date = date('Y-d-m',strtotime($rowData[9]));
+                        $modelx->excise_date = date('Y-m-d',strtotime($rowData[9]));
 
                         $this->updatePositiongroup($catid,$rowData[5]);
                       //  $modelx->all_qty = str_replace(',','', $rowData[8]);
@@ -459,19 +508,22 @@ class ProductController extends Controller
                                  'warehouse_id'=>$whid,
                                  'trans_type'=>TransType::TRANS_ADJUST_IN,
                                  'permit_no' => $rowData[16],
-                                 'permit_date' => date('Y-d-m',strtotime($rowData[17])),
+//                                 'permit_date' => date('Y-m-d',strtotime($rowData[17])),
+                                 'permit_date' => $permit_date,
                                  'transport_in_no' => $rowData[13],
-                                 'transport_in_date' => date('Y-d-m',strtotime($rowData[14])),
+                               //  'transport_in_date' => date('Y-m-d',strtotime($rowData[14])),
+                                 'transport_in_date' => $trans_date,
                                  'excise_no' => $excise_no,
                                  'invoice_no' => $rowData[11],
-                                 'invoice_date' => date('Y-d-m',strtotime($rowData[12])),
+                                 //'invoice_date' => date('Y-m-d',strtotime($rowData[12])),
+                                 'invoice_date' => $inv_date,
                                  'sequence' => $rowData[15],
                                  'kno_no_in' => $rowData[18],
-                                 'kno_in_date' => date('Y-d-m',strtotime($rowData[19])),
+                              //   'kno_in_date' => date('Y-m-d',strtotime($rowData[19])),
+                                 'kno_in_date' => $kno_date,
                                  'out_qty' => 0,
                                  'usd_rate' => $usd,
                                  'thb_amount' => $thb,
-
 
                              ]);
                         }
