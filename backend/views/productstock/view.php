@@ -29,9 +29,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'product_id',
-            'warehouse_id',
+       //     'id',
+           [
+                   'attribute'=>'product_id',
+                   'value' => function($data){
+                     return \backend\models\Product::findName($data->product_id);
+                   }
+           ],
+            [
+                'attribute'=>'warehouse_id',
+                'value' => function($data){
+                    return \backend\models\Warehouse::findWarehousename($data->warehouse_id);
+                }
+            ],
             'in_qty',
             'out_qty',
             'invoice_no',
@@ -45,11 +55,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'kno_in_date',
             'usd_rate',
             'thb_amount',
-            'status',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+//            'status',
+//            'created_at',
+//            'updated_at',
+//            'created_by',
+//            'updated_by',
         ],
     ]) ?>
 
