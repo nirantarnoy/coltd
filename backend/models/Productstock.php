@@ -52,6 +52,17 @@ class Productstock extends \common\models\ProductStock
     public function getWarehouse(){
         return $this->hasOne(\backend\models\Warehouse::className(),['id'=>'warehouse_id']);
     }
+    public function findUSDPriceCarton($product_id)
+    {
+        $model = \backend\models\Productstock::find()->where(['product_id' => $product_id])->one();
+        return count($model) > 0 ? $model->usd_rate : 0;
+    }
+
+    public function findTHBPriceCarton($product_id)
+    {
+        $model = \backend\models\Productstock::find()->where(['product_id' => $product_id])->one();
+        return count($model) > 0 ? $model->thb_amount : 0;
+    }
 
 //    public function findLocationinfo($id){
 //        $model = Location::find()->where(['id'=>$id])->one();

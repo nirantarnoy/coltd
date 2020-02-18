@@ -59,7 +59,7 @@ class Quotation extends \yii\db\ActiveRecord
             'id' => 'ID',
             'quotation_no' => 'เลขที่',
             'revise' => 'Revise',
-            'require_date' => 'วันที่ต้องการ',
+            'require_date' => 'วันที',
             'customer_id' => 'ลูกค้า',
             'customer_ref' => 'อ้างอิงลูกค้า',
             'delvery_to' => 'ที่อยู่จัดส่ง',

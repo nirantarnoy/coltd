@@ -55,7 +55,8 @@ $this->registerCss('
                             <?php $model->require_date = $model->isNewRecord ? date('d/m/Y') : date('d/m/Y', $model->require_date); ?>
                             <?= $form->field($model, 'require_date')->widget(DatePicker::className(), [
                                 'options' => [
-                                    'style' => 'font-weight: bold'
+                                    'style' => 'font-weight: bold',
+                                    'class' =>'quotation_date',
                                 ],
                                 'pluginOptions' => [
                                     'format' => 'dd/mm/yyyy',
@@ -778,6 +779,12 @@ $js = <<<JS
  }
  
  function checkRate(e){
+      var q_date = new Date();
+                  var q_date_arr = $(".quotation_date").val().split('/');
+                  if(q_date_arr.length >0){
+                      q_date = q_date_arr[2] +'/'+q_date_arr[1]+'/'+q_date_arr[0];
+                  }
+                  
      let id = e.val();
      if(id){
          $.ajax({
@@ -786,7 +793,14 @@ $js = <<<JS
               'url': "$url_to_checkrate",
               'data': {'cur_id': id},
               'success': function(data) {
-                 // alert(data[0]['exp_date']);
+                //  alert(data[0]['exp_date']);
+                 var exp_date = data[0]['exp_date'];
+                 if(exp_date > q_date){
+                      $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว").show();
+                      $(".rate").val('');
+                      return false;
+                 }
+                 
                   if(data.length > 0){
                       $(".rate").val(data[0]['exc_rate']);
                   }else{

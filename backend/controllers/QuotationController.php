@@ -364,7 +364,12 @@ class QuotationController extends Controller
         if($id){
             $model = \backend\models\Currencyrate::findRate($id);
             if($model){
-              array_push($data,['exp_date'=>$model->to_date,'exc_rate'=>$model->rate]);
+                $final_date = '';
+                $xdate = explode('-',$model->to_date);
+                if(count($xdate)>0){
+                    $final_date = $xdate[2].'/'.$xdate[1].'/'.$xdate[0];
+                }
+              array_push($data,['exp_date'=>$final_date,'exc_rate'=>$model->rate]);
             }
         }
         echo Json::encode($data);

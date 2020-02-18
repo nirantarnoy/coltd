@@ -202,7 +202,7 @@ class InboundinvController extends Controller
         if($id){
             //echo $id;return;
             $modelinv = \backend\models\Inboundinv::find()->where(['id'=>$id])->one();
-          //  $model = \backend\models\Importline::find()->where(['import_id'=>$id])->orderBy(['line_num'=>SORT_ASC])->all();
+           // $model = \backend\models\Importline::find()->where(['import_id'=>$id])->orderBy(['line_num'=>SORT_ASC])->all();
             $model = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$id])->orderBy(['line_num'=>SORT_ASC])->all();
             return $this->render('_inboundtrans', [
                 'model' => $model,

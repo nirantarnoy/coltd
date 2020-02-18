@@ -45,6 +45,13 @@ use yii\helpers\Url;
                     <tbody>
                         <?php $i=0;?>
                         <?php foreach ($model as $value):?>
+                        <?php
+                            $product_data = \backend\models\Product::findProductinfo($value->product_id);
+                            $price_total = $value->line_qty * $value->line_price;
+                            $usd = \backend\models\Productstock::findUSDPriceCarton($value->product_id);
+                            $thb = \backend\models\Productstock::findTHBPriceCarton($value->product_id);
+                            $bottle_qty = $product_data->unit_factor * $value->line_qty;
+                            ?>
                         <?php $i+=1;?>
                             <tr>
                                 <td style="text-align: center;vertical-align: middle"><?=$i;?></td>
@@ -53,27 +60,27 @@ use yii\helpers\Url;
                                     <input type="hidden" class="recid" name="recid[]" value="<?=$value->id?>">
                                     <input type="text" style="width: 400px" class="form-control productname" name="" value="<?=\backend\models\Product::findName($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                                 </td>
-                                <td><input type="text" style="width: 100px" class="form-control product-pack1" name="product_pack1[]"  value="<?=$value->price_pack1?>"></td>
-                                <td><input type="text" style="width: 100px" class="form-control product-pack2" name="product_pack2[]" value="<?=$value->price_pack2?>"></td>
-                                <td><input style="width: 70px" style="width: 100px" type="number" class="form-control line_qty" name="line_qty[]" value="<?=$value->qty?>"></td>
-                                <td><input type="number" style="width: 100px" class="form-control line_packing" name="line_packing[]" value="<?=$value->product_packing?>"></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_price_per" name="line_price_per[]" value="<?=$value->price_per?>"></td>
-                                <td><input style="width: 100px" type="text" class="form-control line_total_amount" name="line_total_amount[]" value="<?=$value->total_price?>" readonly></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_bottle_qty" name="line_bottle_qty[]" value="<?=$value->total_qty?>"></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_litre" name="line_litre[]" value="<?=$value->weight_litre?>"></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_net" name="line_net[]" value="<?=number_format($value->netweight * $value->total_qty,2)?>" readonly></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_gross" name="line_gross[]" value="<?=number_format($value->grossweight * $value->total_qty,2)?>" readonly></td>
-                                <td><input type="text" style="width: 200px" class="form-control line_transport_in_no" name="line_transport_in_no[]" value="<?=$value->transport_in_no?>"></td>
-                                <td><input type="date" id="cut_date_<?=$i?>" style="width: 200px" class="form-control line_transport_in_date" name="line_transport_in_date[]" value="<?=$value->transport_in_date =='' || $value->transport_in_date == Null? date('d-m-Y'):date('d-m-Y',strtotime($value->transport_in_date))?>"></td>
+                                <td><input type="text" style="width: 100px" class="form-control product-pack1" name="product_pack1[]"  value="<?=number_format($usd)?>"></td>
+                                <td><input type="text" style="width: 100px" class="form-control product-pack2" name="product_pack2[]" value="<?=number_format($thb * $usd)?>"></td>
+                                <td><input style="width: 70px" style="width: 100px" type="number" class="form-control line_qty" name="line_qty[]" value="<?=$value->line_qty?>"></td>
+                                <td><input type="number" style="width: 100px" class="form-control line_packing" name="line_packing[]" value="<?=$product_data->unit_factor?>"></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_price_per" name="line_price_per[]" value="<?=$value->line_price?>"></td>
+                                <td><input style="width: 100px" type="text" class="form-control line_total_amount" name="line_total_amount[]" value="<?=number_format($price_total)?>" readonly></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_bottle_qty" name="line_bottle_qty[]" value="<?=number_format($bottle_qty)?>"></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_litre" name="line_litre[]" value="<?=$product_data->volumn?>"></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_net" name="line_net[]" value="<?=$product_data->netweight?>" readonly></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_gross" name="line_gross[]" value="<?=$product_data->grossweight?>" readonly></td>
+                                <td><input type="text" style="width: 200px" class="form-control line_transport_in_no" name="line_transport_in_no[]" value="" required></td>
+                                <td><input type="date" id="cut_date_<?=$i?>" style="width: 200px" class="form-control line_transport_in_date" name="line_transport_in_date[]" required value="<?=$value->transport_in_date =='' || $value->transport_in_date == Null? date('d-m-Y'):date('d-m-Y',strtotime($value->transport_in_date))?>"></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_num" name="line_num[]" value="<?=$value->line_num?>"></td>
-                                <td><input style="width: 100px" type="text" class="form-control line_geo" name="line_geo[]" value="<?=$value->position?>" readonly></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_origin" name="line_origin[]" value="<?=$value->origin?>" readonly></td>
-                                <td><input type="text" style="width: 300px" class="form-control line_excise_no" name="line_excise_no[]" value="<?=$value->excise_no?>"></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_excise_date" name="line_excise_date[]" value="<?=$value->excise_date?>" readonly></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_kno_no" name="line_kno_no[]" value="<?=$value->kno?>"></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_kno_date" name="line_kno_date[]" value="<?=$value->kno_date?>" readonly></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_permit_no" name="line_permit_no[]" value="<?=$value->permit_no?>"></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_permit_date" name="line_permit_date[]" value="<?=$value->permit_date?>" readonly></td>
+                                <td><input style="width: 100px" type="text" class="form-control line_geo" name="line_geo[]" value="" readonly></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_origin" name="line_origin[]" value="<?=$product_data->origin?>" readonly></td>
+                                <td><input type="text" style="width: 300px" class="form-control line_excise_no" name="line_excise_no[]" value="<?=$product_data->excise_no?>" readonly></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_excise_date" name="line_excise_date[]" value="<?=$product_data->excise_date?>" readonly></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_kno_no" name="line_kno_no[]" value=""></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_kno_date" name="line_kno_date[]" value="" readonly></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_permit_no" name="line_permit_no[]" value=""></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_permit_date" name="line_permit_date[]" value="" readonly></td>
                             </tr>
                         <?php endforeach;?>
                     </tbody>
