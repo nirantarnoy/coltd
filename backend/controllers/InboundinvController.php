@@ -79,6 +79,13 @@ class InboundinvController extends Controller
             $lineprice = Yii::$app->request->post('price');
             $stockid = Yii::$app->request->post('stock_id');
 
+            $x_date = explode('/',$model->invoice_date);
+            $inv_date = date('Y-m-d');
+            if(count($x_date)){
+                $inv_date = $x_date[2].'/'.$x_date[1].'/'.$x_date[0];
+            }
+            echo $inv_date;return;
+
            // $model->invoice_date = null;
             $model->invoice_date = date('Y-m-d',strtotime($model->invoice_date));//date('Y-m-d H:i:s',strtotime($model->invoice_date));
             $model->status = 1;
@@ -154,8 +161,12 @@ class InboundinvController extends Controller
             $lineqty = Yii::$app->request->post('qty');
             $lineprice = Yii::$app->request->post('price');
             $stockid = Yii::$app->request->post('stock_id');
-
-            $model->invoice_date = date('Y-m-d',strtotime($model->invoice_date));
+            $x_date = explode('/',$model->invoice_date);
+            $inv_date = date('Y-m-d');
+            if(count($x_date)){
+                $inv_date = $x_date[2].'/'.$x_date[1].'/'.$x_date[0];
+            }
+            $model->invoice_date = date('Y-m-d',strtotime($inv_date));
             $model->status = 1;
             if($model->save(false)){
                 if(count($prodid)>0){
@@ -234,7 +245,7 @@ class InboundinvController extends Controller
 
             for($i=0;$i<=count($productid)-1;$i++){
                 $model = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$invoiceid,'product_id'=>$productid[$i]])->one();
-                if($model){ echo "niran";return;
+                if($model){
                     $model->transport_in_no = $linetransportno[$i];
                     $model->transport_in_date = date('d-m-Y');
                     if($model->save(false)){

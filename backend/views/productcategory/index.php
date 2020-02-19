@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 "showMethod" => "fadeIn",
                 "hideMethod" => "fadeOut"
             ]
-        ]); ?> 
+        ]); ?>
         <?php endif; ?>
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -116,8 +116,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                  ],
                                  [
                                    'attribute'=>'description',
-                                   'contentOptions' => ['style' => 'vertical-align: middle'],                                 
+                                   'contentOptions' => ['style' => 'vertical-align: middle'],
                                  ],
+                                    [
+                                        'attribute'=>'geolocation',
+                                        'contentOptions' => ['style' => 'vertical-align: middle'],
+                                    ],
                                     [
                                                'attribute'=>'status',
                                                'contentOptions' => ['style' => 'vertical-align: middle;text-align: left;'],

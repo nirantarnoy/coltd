@@ -12,7 +12,7 @@ use yii\helpers\Url;
 
 <div class="inboundinv-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id'=>'form-inbound']); ?>
     <div class="panel panel-body">
         <div class="row">
             <div class="col-lg-4">
@@ -459,6 +459,23 @@ $js =<<<JS
             });
   });
     
+    $('form#form-inbound').on('submit', function(e){
+     let x = 0;
+    $(".table-quotation tbody tr").each(function() {
+       // alert();
+        if($(this).closest('tr').find(".productcode").val() != ''){
+            x+=1;
+        }
+      });
+    if(x==0){
+          alert("ต้องเลือกรายการสินค้าก่อนค่ะ");
+      e.preventDefault();
+      return false;
+    }else{
+        $("#form-inbound").submit();
+    }
+  });
+    
  });
 
  function itemchange(e) {
@@ -620,6 +637,7 @@ $js =<<<JS
       });
       $(".total-sum").text(parseFloat(totalall).toFixed(2));
  }
+ 
  
 JS;
 $this->registerJs($js,static::POS_END);

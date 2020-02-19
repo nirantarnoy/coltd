@@ -51,6 +51,7 @@ use yii\helpers\Url;
                             $usd = \backend\models\Productstock::findUSDPriceCarton($value->product_id);
                             $thb = \backend\models\Productstock::findTHBPriceCarton($value->product_id);
                             $bottle_qty = $product_data->unit_factor * $value->line_qty;
+                            $geo = \backend\models\Product::findGeo($value->product_id);
                             ?>
                         <?php $i+=1;?>
                             <tr>
@@ -62,18 +63,18 @@ use yii\helpers\Url;
                                 </td>
                                 <td><input type="text" style="width: 100px" class="form-control product-pack1" name="product_pack1[]"  value="<?=number_format($usd)?>"></td>
                                 <td><input type="text" style="width: 100px" class="form-control product-pack2" name="product_pack2[]" value="<?=number_format($thb * $usd)?>"></td>
-                                <td><input style="width: 70px" style="width: 100px" type="number" class="form-control line_qty" name="line_qty[]" value="<?=$value->line_qty?>"></td>
-                                <td><input type="number" style="width: 100px" class="form-control line_packing" name="line_packing[]" value="<?=$product_data->unit_factor?>"></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_price_per" name="line_price_per[]" value="<?=$value->line_price?>"></td>
-                                <td><input style="width: 100px" type="text" class="form-control line_total_amount" name="line_total_amount[]" value="<?=number_format($price_total)?>" readonly></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_bottle_qty" name="line_bottle_qty[]" value="<?=number_format($bottle_qty)?>"></td>
+                                <td><input style="width: 70px" style="width: 100px" type="number" class="form-control line_qty" name="line_qty[]" onchange="line_cal($(this))" value="<?=$value->line_qty?>"></td>
+                                <td><input type="number" style="width: 100px" class="form-control line_packing" name="line_packing[]" readonly value="<?=$product_data->unit_factor?>"></td>
+                                <td><input type="text" style="width: 100px;text-align: right" class="form-control line_price_per" name="line_price_per[]" value="<?=$value->line_price?>"></td>
+                                <td><input style="width: 100px;text-align: right" type="text" class="form-control line_total_amount" name="line_total_amount[]" value="<?=number_format($price_total,2)?>" readonly></td>
+                                <td><input type="text" style="width: 100px;text-align: right;" class="form-control line_bottle_qty" readonly name="line_bottle_qty[]" value="<?=number_format($bottle_qty)?>"></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_litre" name="line_litre[]" value="<?=$product_data->volumn?>"></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_net" name="line_net[]" value="<?=$product_data->netweight?>" readonly></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_gross" name="line_gross[]" value="<?=$product_data->grossweight?>" readonly></td>
                                 <td><input type="text" style="width: 200px" class="form-control line_transport_in_no" name="line_transport_in_no[]" value="" required></td>
                                 <td><input type="date" id="cut_date_<?=$i?>" style="width: 200px" class="form-control line_transport_in_date" name="line_transport_in_date[]" required value="<?=$value->transport_in_date =='' || $value->transport_in_date == Null? date('d-m-Y'):date('d-m-Y',strtotime($value->transport_in_date))?>"></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_num" name="line_num[]" value="<?=$value->line_num?>"></td>
-                                <td><input style="width: 100px" type="text" class="form-control line_geo" name="line_geo[]" value="" readonly></td>
+                                <td><input style="width: 100px" type="text" class="form-control line_geo" name="line_geo[]" value="<?=$geo?>" readonly></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_origin" name="line_origin[]" value="<?=$product_data->origin?>" readonly></td>
                                 <td><input type="text" style="width: 300px" class="form-control line_excise_no" name="line_excise_no[]" value="<?=$product_data->excise_no?>" readonly></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_excise_date" name="line_excise_date[]" value="<?=$product_data->excise_date?>" readonly></td>
@@ -102,7 +103,15 @@ $js=<<<JS
 $(function() {
  
 });
-
+function line_cal(e){
+   // alert();
+    let line_qty = e.val();
+    let line_price = e.closest("tr").find(".line_price_per").val();
+    let line_perpack = e.closest("tr").find(".line_packing").val();
+    
+    e.closest("tr").find(".line_total_amount").val(parseFloat(line_price * line_qty).toFixed(2));
+    e.closest("tr").find(".line_bottle_qty").val(parseFloat(line_perpack * line_qty).toFixed(0));
+}
 function approve(e){
         //e.preventDefault();
         var url = e.attr("data-url");

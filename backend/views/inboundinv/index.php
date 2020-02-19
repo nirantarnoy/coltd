@@ -103,7 +103,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
            // 'id',
             'invoice_no',
-            'invoice_date',
+            [
+                'attribute'=>'invoice_date',
+                'format' => 'raw',
+                'value' => function($data){
+                  return date('d/m/Y',strtotime($data->invoice_date));
+                }
+            ],
             'customer_ref',
             //'delivery_term',
             //'sold_to',
