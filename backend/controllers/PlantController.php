@@ -140,7 +140,7 @@ class PlantController extends Controller
             }
             $tdate = explode('/',$model->kno_date);
             $t_date = $tdate[2].'/'.$tdate[1].'/'.$tdate[0];
-
+            echo $tdate;return;
             $model->kno_date = date('Y-m-d',strtotime($t_date));
             if($model->save()){
                 $model_address->save(false);
