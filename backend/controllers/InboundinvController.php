@@ -17,7 +17,8 @@ use kartik\mpdf\Pdf;
  */
 class InboundinvController extends Controller
 {
-    public $enableCsrfValidation =false;
+    public $enableCsrfValidation = false;
+
     /**
      * {@inheritdoc}
      */
@@ -27,7 +28,7 @@ class InboundinvController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST','GET'],
+                    'delete' => ['POST', 'GET'],
                 ],
             ],
         ];
@@ -79,18 +80,20 @@ class InboundinvController extends Controller
             $lineprice = Yii::$app->request->post('price');
             $stockid = Yii::$app->request->post('stock_id');
 
-            $x_date = explode('/',$model->invoice_date);
+            $x_date = explode('/', $model->invoice_date);
             $inv_date = date('Y-m-d');
-            if(count($x_date)){
-                $inv_date = $x_date[2].'/'.$x_date[1].'/'.$x_date[0];
+            if (count($x_date)) {
+                $inv_date = $x_date[2] . '/' . $x_date[1] . '/' . $x_date[0];
             }
 
-            $model->invoice_date = date('Y-m-d',strtotime($inv_date));
+            $model->invoice_date = date('Y-m-d', strtotime($inv_date));
             $model->status = 1;
-            if($model->save(false)){
-                if(count($prodid)>0){
-                    for($i=0;$i<=count($prodid)-1;$i++){
-                        if($prodid[$i]==''){continue;}
+            if ($model->save(false)) {
+                if (count($prodid) > 0) {
+                    for ($i = 0; $i <= count($prodid) - 1; $i++) {
+                        if ($prodid[$i] == '') {
+                            continue;
+                        }
                         $modelline = new \backend\models\Inboundinvline();
                         $modelline->invoice_id = $model->id;
                         $modelline->product_id = $prodid[$i];
@@ -98,8 +101,8 @@ class InboundinvController extends Controller
                         $modelline->line_price = $lineprice[$i];
                         $modelline->kno_no_in = \backend\models\Plant::findKnoNo();
                         $modelline->kno_in_date = \backend\models\Plant::findKnoDate();
-                        $modelline->line_num = $i+1;
-                       // $modelline->stock_id = $stockid[$i];
+                        $modelline->line_num = $i + 1;
+                        // $modelline->stock_id = $stockid[$i];
                         $modelline->save();
                     }
                 }
@@ -114,14 +117,15 @@ class InboundinvController extends Controller
         ]);
     }
 
-    public function actionCreatetrans($id){
-        if($id){
-            $model = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$id])->all();
+    public function actionCreatetrans($id)
+    {
+        if ($id) {
+            $model = \backend\models\Inboundinvline::find()->where(['invoice_id' => $id])->all();
 
-            \backend\models\Importline::deleteAll(['import_id'=>$id]);
+            \backend\models\Importline::deleteAll(['import_id' => $id]);
 
-            if($model){
-                foreach ($model as $value){
+            if ($model) {
+                foreach ($model as $value) {
                     $prodinfo = \backend\models\Product::findProductinfo($value->product_id);
                     $modelimport = new \backend\models\Importline();
                     $modelimport->import_id = $value->invoice_id;
@@ -157,25 +161,27 @@ class InboundinvController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelline = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$id])->all();
+        $modelline = \backend\models\Inboundinvline::find()->where(['invoice_id' => $id])->all();
         if ($model->load(Yii::$app->request->post())) {
             $prodid = Yii::$app->request->post('productid');
             $lineqty = Yii::$app->request->post('qty');
             $lineprice = Yii::$app->request->post('price');
             $stockid = Yii::$app->request->post('stock_id');
-            $x_date = explode('/',$model->invoice_date);
+            $x_date = explode('/', $model->invoice_date);
             $inv_date = date('Y-m-d');
-            if(count($x_date)){
-                $inv_date = $x_date[2].'/'.$x_date[1].'/'.$x_date[0];
+            if (count($x_date)) {
+                $inv_date = $x_date[2] . '/' . $x_date[1] . '/' . $x_date[0];
             }
 
-            $model->invoice_date = date('Y-m-d',strtotime($inv_date));
+            $model->invoice_date = date('Y-m-d', strtotime($inv_date));
             $model->status = 1;
-            if($model->save(false)){
-                if(count($prodid)>0){
-                    \backend\models\Inboundinvline::deleteAll(['invoice_id'=>$model->id]);
-                    for($i=0;$i<=count($prodid)-1;$i++){
-                        if($prodid[$i]==''){continue;}
+            if ($model->save(false)) {
+                if (count($prodid) > 0) {
+                    \backend\models\Inboundinvline::deleteAll(['invoice_id' => $model->id]);
+                    for ($i = 0; $i <= count($prodid) - 1; $i++) {
+                        if ($prodid[$i] == '') {
+                            continue;
+                        }
                         $modelline = new \backend\models\Inboundinvline();
                         $modelline->invoice_id = $model->id;
                         $modelline->product_id = $prodid[$i];
@@ -183,7 +189,7 @@ class InboundinvController extends Controller
                         $modelline->line_price = $lineprice[$i];
                         $modelline->kno_no_in = \backend\models\Plant::findKnoNo();
                         $modelline->kno_in_date = \backend\models\Plant::findKnoDate();
-                        $modelline->line_num = $i+1;
+                        $modelline->line_num = $i + 1;
                         // $modelline->stock_id = $stockid[$i];
                         $modelline->save();
                     }
@@ -195,7 +201,7 @@ class InboundinvController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'modelline'=> $modelline,
+            'modelline' => $modelline,
         ]);
     }
 
@@ -208,26 +214,30 @@ class InboundinvController extends Controller
      */
     public function actionDelete($id)
     {
-        \backend\models\Inboundinvline::deleteAll(['invoice_id'=>$id]);
-        \backend\models\Importline::deleteAll(['import_id'=>$id]);
+        \backend\models\Inboundinvline::deleteAll(['invoice_id' => $id]);
+        \backend\models\Importline::deleteAll(['import_id' => $id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
-    public function actionInboundtrans($id){
-        if($id){
+
+    public function actionInboundtrans($id)
+    {
+        if ($id) {
             //echo $id;return;
-            $modelinv = \backend\models\Inboundinv::find()->where(['id'=>$id])->one();
-           // $model = \backend\models\Importline::find()->where(['import_id'=>$id])->orderBy(['line_num'=>SORT_ASC])->all();
-            $model = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$id])->orderBy(['line_num'=>SORT_ASC])->all();
+            $modelinv = \backend\models\Inboundinv::find()->where(['id' => $id])->one();
+            // $model = \backend\models\Importline::find()->where(['import_id'=>$id])->orderBy(['line_num'=>SORT_ASC])->all();
+            $model = \backend\models\Inboundinvline::find()->where(['invoice_id' => $id])->orderBy(['line_num' => SORT_ASC])->all();
             return $this->render('_inboundtrans', [
                 'model' => $model,
-                'invoice_no'=> $id,
+                'invoice_no' => $id,
                 'modelinv' => $modelinv
             ]);
         }
     }
-    public function actionRecieve(){
+
+    public function actionRecieve()
+    {
         $productid = Yii::$app->request->post('product_id');
         $invoiceid = Yii::$app->request->post('invoice_id');
         $invoiceno = Yii::$app->request->post('invoice_no');
@@ -240,19 +250,19 @@ class InboundinvController extends Controller
         $linepriceper = Yii::$app->request->post('line_price_per');
         $linetotalamount = Yii::$app->request->post('line_total_amount');
         $linetransportno = Yii::$app->request->post('line_transport_in_no');
+        $linetransportdate = Yii::$app->request->post('line_transport_in_date');
         $linenum = Yii::$app->request->post('line_num');
         $linepermitno = Yii::$app->request->post('line_permit_no');
         $linepermitdate = Yii::$app->request->post('line_permit_date');
-        $lineexciseno= Yii::$app->request->post('line_excise_no');
+        $lineexciseno = Yii::$app->request->post('line_excise_no');
         $lineexcisedate = Yii::$app->request->post('line_excise_date');
 
 
         $permit_date = null;
+        $transport_date = null;
         $inv_date = null;
         $trans_date = null;
         $kno_date = null;
-
-
 
 
 //        $trans_origin = explode('/',$rowData[14]);
@@ -271,29 +281,36 @@ class InboundinvController extends Controller
 //        }
 
 
-        if(count($productid)>0){
+        if (count($productid) > 0) {
 
-            for($i=0;$i<=count($productid)-1;$i++){
-                $model = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$invoiceid,'product_id'=>$productid[$i]])->one();
+            for ($i = 0; $i <= count($productid) - 1; $i++) {
+                $model = \backend\models\Inboundinvline::find()->where(['invoice_id' => $invoiceid, 'product_id' => $productid[$i]])->one();
 
-                if($linepermitdate[$i] !=''){
-                  //  echo  $linepermitdate[$i];return;
-                    $per_origin = explode('-',$linepermitdate);
-                    if(count($per_origin) >0 && $per_origin[0] !=''){
-                        $permit_date = $per_origin[2]."/".$per_origin[1]."/".$per_origin[0];
+                if ($linepermitdate[$i] != '') {
+                    //  echo  $linepermitdate[$i];return;
+                    $per_origin = explode('-', $linepermitdate[$i]);
+                    if (count($per_origin) > 0 && $per_origin[0] != '') {
+                        $permit_date = $per_origin[2] . "/" . $per_origin[1] . "/" . $per_origin[0];
+                    }
+                }
+                if ($linetransportdate[$i] != '') {
+                    //  echo  $linepermitdate[$i];return;
+                    $trans_date = explode('-', $linetransportdate[$i]);
+                    if (count($trans_date) > 0 && $trans_date[0] != '') {
+                        $transport_date = $trans_date[2] . "/" . $trans_date[1] . "/" . $trans_date[0];
                     }
                 }
 
-                if($model){
+                if ($model) {
                     $model->transport_in_no = $linetransportno[$i];
-                    $model->transport_in_date = date('d-m-Y');
-                    if($model->save(false)){
-                        $modeltrans = \backend\models\Importline::find()->where(['import_id'=>$refid[$i]])->one();
-                        if($modeltrans){
+                    $model->transport_in_date = date('Y-m-d',strtotime($transport_date));
+                    if ($model->save(false)) {
+                        $modeltrans = \backend\models\Importline::find()->where(['import_id' => $refid[$i]])->one();
+                        if ($modeltrans) {
                             $modeltrans->transport_in_no = $linetransportno[$i];
                             $modeltrans->transport_in_date = date('d-m-Y');
                             $modeltrans->posted = 1;
-                            if($modeltrans->save(false)){
+                            if ($modeltrans->save(false)) {
 
                             }
                         }
@@ -307,19 +324,19 @@ class InboundinvController extends Controller
                 $data = [];
                 $usd = 100;//str_replace(",","",$rowData[21]);
                 $thb = 100;//str_replace(",","",$rowData[22]);
-                array_push($data,[
-                    'prod_id'=>$productid[$i],
-                    'qty'=>$lineqty[$i],
-                    'warehouse_id'=>$whid,
-                    'trans_type'=>\backend\helpers\TransType::TRANS_ADJUST_IN,
+                array_push($data, [
+                    'prod_id' => $productid[$i],
+                    'qty' => $lineqty[$i],
+                    'warehouse_id' => $whid,
+                    'trans_type' => \backend\helpers\TransType::TRANS_ADJUST_IN,
                     'permit_no' => $linepermitno[$i],
                     'permit_date' => $permit_date,//date('Y-d-m',strtotime($linepermitdate[$i])),
                     'transport_in_no' => $linetransportno[$i],
                     'transport_in_date' => date('Y-d-m'),//date('Y-d-m',strtotime($rowData[14])),
                     'excise_no' => $lineexciseno[$i],
-                    'excise_date' => date('Y-d-m',strtotime($lineexcisedate[$i])),
+                    'excise_date' => date('Y-d-m', strtotime($lineexcisedate[$i])),
                     'invoice_no' => $invoiceno,
-                    'invoice_date' => date('Y-d-m',strtotime($invoicedate)),//date('Y-d-m',strtotime($rowData[12])),
+                    'invoice_date' => date('Y-d-m', strtotime($invoicedate)),//date('Y-d-m',strtotime($rowData[12])),
                     'sequence' => $linenum[$i],
                     'kno_no_in' => 1,
                     'kno_in_date' => date('Y-d-m'),//date('Y-d-m',strtotime($rowData[19])),
@@ -331,23 +348,23 @@ class InboundinvController extends Controller
                 ]);
 
 
-
             }
 
             $update_stock = \backend\models\TransCalculate::createJournal($data);
-            if($update_stock){
+            if ($update_stock) {
                 $session = Yii::$app->session;
-                $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
+                $session->setFlash('msg', 'นำเข้าข้อมูลสินค้าเรียบร้อย');
                 return $this->redirect(['index']);
-            }else{
+            } else {
                 $session = Yii::$app->session;
-                $session->setFlash('msg-error','พบข้อมผิดพลาด');
+                $session->setFlash('msg-error', 'พบข้อมผิดพลาด');
                 return $this->redirect(['index']);
             }
 
 
         }
     }
+
     /**
      * Finds the Inboundinv model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -364,23 +381,24 @@ class InboundinvController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionPrint($id){
-       // echo $id;return;
+    public function actionPrint($id)
+    {
+        // echo $id;return;
         $model = \backend\models\Inboundinv::find()->where(['id' => $id])->one();
-        $modelline = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$id])->all();
+        $modelline = \backend\models\Inboundinvline::find()->where(['invoice_id' => $id])->all();
 
-        if($model){
+        if ($model) {
             // return "nira";
             $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
                 //  'format' => [150,236], //manaul
-                'format' =>  Pdf::FORMAT_A4,
+                'format' => Pdf::FORMAT_A4,
                 //'format' =>  Pdf::FORMAT_A5,
-                'orientation' =>Pdf::ORIENT_PORTRAIT,
+                'orientation' => Pdf::ORIENT_PORTRAIT,
                 'destination' => Pdf::DEST_BROWSER,
-                'content' => $this->renderPartial('_print',[
-                    'model'=>$model,
-                    'modelline'=>$modelline,
+                'content' => $this->renderPartial('_print', [
+                    'model' => $model,
+                    'modelline' => $modelline,
 
                 ]),
                 //'content' => "nira",
@@ -431,23 +449,25 @@ class InboundinvController extends Controller
             return $pdf->render();
         }
     }
-    public function actionPrintinv($id){
+
+    public function actionPrintinv($id)
+    {
         // echo $id;return;
         $model = \backend\models\Inboundinv::find()->where(['id' => $id])->one();
-        $modelline = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$id])->all();
+        $modelline = \backend\models\Inboundinvline::find()->where(['invoice_id' => $id])->all();
 
-        if($model){
+        if ($model) {
             // return "nira";
             $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
                 //  'format' => [150,236], //manaul
-                'format' =>  Pdf::FORMAT_A4,
+                'format' => Pdf::FORMAT_A4,
                 //'format' =>  Pdf::FORMAT_A5,
-                'orientation' =>Pdf::ORIENT_PORTRAIT,
+                'orientation' => Pdf::ORIENT_PORTRAIT,
                 'destination' => Pdf::DEST_BROWSER,
-                'content' => $this->renderPartial('_printinv',[
-                    'model'=>$model,
-                    'modelline'=>$modelline,
+                'content' => $this->renderPartial('_printinv', [
+                    'model' => $model,
+                    'modelline' => $modelline,
 
                 ]),
                 //'content' => "nira",
