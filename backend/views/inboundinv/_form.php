@@ -230,8 +230,9 @@ use yii\helpers\Url;
         <?= Html::submitButton("<i class='fa fa-save'></i> บันทึก", ['class' => 'btn btn-success']) ?>
         <?php if(!$model->isNewRecord):?>
 
-                <?= Html::Button("<i class='fa fa-print'></i> พิมพ์", ['class' => 'btn btn-warning btn-quote-print','data-id'=>$model->id]) ?>
-                <?php //echo Html::Button("<i class='fa fa-print'></i> พิมพ์ PackingList", ['class' => 'btn btn-primary btn-firm-sale']) ?>
+            <?= Html::Button("<i class='fa fa-print'></i> พิมพ์ Invoice", ['class' => 'btn btn-warning btn-quote-print','data-id'=>$model->id]) ?>
+            <?= Html::Button("<i class='fa fa-print'></i> พิมพ์ Packing", ['class' => 'btn btn-info btn-quote-print-packing','data-id'=>$model->id]) ?>
+            <?php //echo Html::Button("<i class='fa fa-print'></i> พิมพ์ PackingList", ['class' => 'btn btn-primary btn-firm-sale']) ?>
                 <?= Html::a('สร้าง Form นำเข้า',['inboundinv/createtrans','id'=>$model->id],['class'=>'btn btn-default'])?>
 
 
@@ -240,7 +241,8 @@ use yii\helpers\Url;
     </div>
 
     <?php ActiveForm::end(); ?>
-    <form id="form-print" action="<?=Url::to(['inboundinv/print','id'=>$model->id],true)?>" method="post" target="_blank"></form>
+    <form id="form-print-invoice" action="<?=Url::to(['inboundinv/printinv','id'=>$model->id],true)?>" method="post" target="_blank"></form>
+    <form id="form-print-packing" action="<?=Url::to(['inboundinv/print','id'=>$model->id],true)?>" method="post" target="_blank"></form>
 </div>
 
 <div id="findModal" class="modal fade" role="dialog">
@@ -330,10 +332,10 @@ $js =<<<JS
         } 
      });
      $(".btn-quote-print").click(function(){
-         //alert($("#form-quote").attr("action"));
-         // var ids = $(this).attr("data-id");
-         // alert(ids);
-        $("form#form-print").submit(); 
+        $("form#form-print-invoice").submit(); 
+     });
+      $(".btn-quote-print-packing").click(function(){
+        $("form#form-print-packing").submit(); 
      });
      $(".btn-addline").click(function(){
           var tr = $(".table-quotation tbody tr:last");
