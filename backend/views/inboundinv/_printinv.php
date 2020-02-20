@@ -142,8 +142,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
-                <td style="font-size: 14px;font-weight: normal;text-align: left;padding-right: 10px;">TOTAL (USD)</td>
+                <td colspan="2" style="font-size: 14px;font-weight: normal;text-align: left;padding-right: 10px;">TOTAL (USD)</td>
 
                 <td style="font-size: 14px;font-weight: bold;text-align: center;padding-right: 10px;"><?=number_format($total_all,0)?></td>
 
