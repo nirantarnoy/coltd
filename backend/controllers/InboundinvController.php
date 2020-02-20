@@ -349,7 +349,7 @@ class InboundinvController extends Controller
 
             }
 
-            print_r($data);return;
+           // print_r($data);return;
 
             $update_stock = \backend\models\TransCalculate::createJournal($data);
             if ($update_stock) {
