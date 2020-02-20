@@ -357,6 +357,7 @@ class InboundinvController extends Controller
                 $session->setFlash('msg', 'นำเข้าข้อมูลสินค้าเรียบร้อย');
                 return $this->redirect(['index']);
             } else {
+                echo 'no';return;
                 $session = Yii::$app->session;
                 $session->setFlash('msg-error', 'พบข้อมผิดพลาด');
                 return $this->redirect(['index']);
