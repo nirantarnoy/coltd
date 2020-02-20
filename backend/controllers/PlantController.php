@@ -141,7 +141,7 @@ class PlantController extends Controller
             $tdate = explode('/',$model->kno_date);
             $t_date = $tdate[2].'/'.$tdate[1].'/'.$tdate[0];
 
-            $model->kno_date = date('d/m/Y',strtotime($t_date));
+            $model->kno_date = date('Y-m-d',strtotime($t_date));
             if($model->save()){
                 $model_address->save(false);
                   $session = Yii::$app->session;
