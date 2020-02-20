@@ -332,7 +332,7 @@ class InboundinvController extends Controller
                     'permit_no' => $linepermitno[$i],
                     'permit_date' => $permit_date,//date('Y-d-m',strtotime($linepermitdate[$i])),
                     'transport_in_no' => $linetransportno[$i],
-                    'transport_in_date' => date('Y-d-m'),//date('Y-d-m',strtotime($rowData[14])),
+                    'transport_in_date' => $linetransportdate[$i],//date('Y-d-m',strtotime($rowData[14])),
                     'excise_no' => $lineexciseno[$i],
                     'excise_date' => date('Y-d-m', strtotime($lineexcisedate[$i])),
                     'invoice_no' => $invoiceno,
@@ -344,11 +344,12 @@ class InboundinvController extends Controller
                     'usd_rate' => $usd,
                     'thb_amount' => $thb,
 
-
                 ]);
 
 
             }
+
+            print_r($data);return;
 
             $update_stock = \backend\models\TransCalculate::createJournal($data);
             if ($update_stock) {
