@@ -44,4 +44,12 @@ class Plant extends \common\models\Plant{
             ],
         ];
     }
+    public function findKnoNo(){
+        $model = Plant::find()->one();
+        return count($model)>0?$model->kno_no:'';
+    }
+    public function findKnoDate(){
+        $model = Plant::find()->one();
+        return count($model)>0?$model->kno_date:'';
+    }
 }

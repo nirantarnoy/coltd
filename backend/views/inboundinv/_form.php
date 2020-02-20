@@ -605,9 +605,9 @@ $js =<<<JS
     
     //alert(volumn);
     $(".table-quotation tbody tr").each(function() {
-        if($(this).closest('tr').find(".productcode").val() == prodcode){
-          alert("รายการสินค้านี้ซ้ำ");return false;   
-        }
+        // if($(this).closest('tr').find(".productcode").val() == prodcode){
+        //   alert("รายการสินค้านี้ซ้ำ");return false;   
+       //  }
         if($(this).index() == currow){
               $(this).closest('tr').find(".productcode").val(prodcode);
               $(this).closest('tr').find(".productname").val(prodname);

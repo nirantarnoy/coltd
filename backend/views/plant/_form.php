@@ -12,6 +12,7 @@ use common\models\Bank;
 use yii\helpers\Url;
 use lavrentiev\widgets\toastr\Notification;
 use yii2mod\alert\Alert;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Plant */
@@ -270,6 +271,34 @@ $dist = District::find()->all();
                                    <?php endif;?>
 
                                 </div>
+                              </div>
+                              <div class="form-group" style="margin-top: -10px">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','เลขที่ กนอ.')?>
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <div class="col-md-6 col-sm-6 col-xs-12">
+                                          <?= $form->field($model, 'kno_no')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group" style="margin-top: -10px">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','วันที่ กนอ.')?>
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <div class="col-md-6 col-sm-6 col-xs-12">
+                                          <?php $model->kno_date = $model->isNewRecord ? date('d/m/Y') : date('d/m/Y', strtotime($model->kno_date)); ?>
+                                          <?= $form->field($model, 'kno_date')->widget(DatePicker::className(), [
+                                              'options' => [
+                                                  'style' => 'font-weight: bold',
+                                                  'class' =>'kno_date',
+                                              ],
+                                              'pluginOptions' => [
+                                                  'format' => 'dd/mm/yyyy',
+                                                  'todayHighlight' => true,
+                                                  'todayBtn' => true,
+                                              ]
+                                          ])->label(false) ?></div>
+                                  </div>
                               </div>
                           </div>
                         </div>

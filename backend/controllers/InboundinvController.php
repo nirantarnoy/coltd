@@ -84,7 +84,7 @@ class InboundinvController extends Controller
             if(count($x_date)){
                 $inv_date = $x_date[2].'/'.$x_date[1].'/'.$x_date[0];
             }
-            echo $inv_date;return;
+          //  echo $inv_date;return;
 
            // $model->invoice_date = null;
             $model->invoice_date = date('Y-m-d',strtotime($model->invoice_date));//date('Y-m-d H:i:s',strtotime($model->invoice_date));
@@ -98,6 +98,8 @@ class InboundinvController extends Controller
                         $modelline->product_id = $prodid[$i];
                         $modelline->line_qty = $lineqty[$i];
                         $modelline->line_price = $lineprice[$i];
+                        $modelline->kno_no_in = \backend\models\Plant::findKnoNo();
+                        $modelline->kno_in_date = \backend\models\Plant::findKnoDate();
                         $modelline->line_num = $i+1;
                        // $modelline->stock_id = $stockid[$i];
                         $modelline->save();
@@ -166,6 +168,7 @@ class InboundinvController extends Controller
             if(count($x_date)){
                 $inv_date = $x_date[2].'/'.$x_date[1].'/'.$x_date[0];
             }
+
             $model->invoice_date = date('Y-m-d',strtotime($inv_date));
             $model->status = 1;
             if($model->save(false)){
@@ -241,10 +244,44 @@ class InboundinvController extends Controller
         $lineexciseno= Yii::$app->request->post('line_excise_no');
         $lineexcisedate = Yii::$app->request->post('line_excise_date');
 
+
+        $permit_date = null;
+        $inv_date = null;
+        $trans_date = null;
+        $kno_date = null;
+
+
+
+
+//        $trans_origin = explode('/',$rowData[14]);
+//        if(count($trans_origin)>0 && $trans_origin[0] !=''){
+//            $trans_date = $trans_origin[2]."/".$trans_origin[1]."/".$trans_origin[0];
+//        }
+//
+//        $inv_origin = explode('/',$rowData[12]);
+//        if(count($inv_origin)>0 && $inv_origin[0] !=''){
+//            $inv_date = $inv_origin[2]."/".$inv_origin[1]."/".$inv_origin[0];
+//        }
+//
+//        $kno_origin = explode('/',$rowData[19]);
+//        if(count($kno_origin)>0 && $kno_origin[0] !=''){
+//            $kno_date = $kno_origin[2]."/".$kno_origin[1]."/".$kno_origin[0];
+//        }
+
+
         if(count($productid)>0){
 
             for($i=0;$i<=count($productid)-1;$i++){
                 $model = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$invoiceid,'product_id'=>$productid[$i]])->one();
+
+                if($linepermitdate[$i] !=''){
+                  //  echo  $linepermitdate[$i];return;
+                    $per_origin = explode('-',$linepermitdate);
+                    if(count($per_origin) >0 && $per_origin[0] !=''){
+                        $permit_date = $per_origin[2]."/".$per_origin[1]."/".$per_origin[0];
+                    }
+                }
+
                 if($model){
                     $model->transport_in_no = $linetransportno[$i];
                     $model->transport_in_date = date('d-m-Y');
@@ -274,7 +311,7 @@ class InboundinvController extends Controller
                     'warehouse_id'=>$whid,
                     'trans_type'=>\backend\helpers\TransType::TRANS_ADJUST_IN,
                     'permit_no' => $linepermitno[$i],
-                    'permit_date' => date('Y-d-m',strtotime($linepermitdate[$i])),
+                    'permit_date' => $permit_date,//date('Y-d-m',strtotime($linepermitdate[$i])),
                     'transport_in_no' => $linetransportno[$i],
                     'transport_in_date' => date('Y-d-m'),//date('Y-d-m',strtotime($rowData[14])),
                     'excise_no' => $lineexciseno[$i],

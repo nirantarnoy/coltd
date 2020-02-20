@@ -78,8 +78,8 @@ use yii\helpers\Url;
                                 <td><input type="text" style="width: 100px" class="form-control line_origin" name="line_origin[]" value="<?=$product_data->origin?>" readonly></td>
                                 <td><input type="text" style="width: 300px" class="form-control line_excise_no" name="line_excise_no[]" value="<?=$product_data->excise_no?>" readonly></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_excise_date" name="line_excise_date[]" value="<?=$product_data->excise_date?>" readonly></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_kno_no" name="line_kno_no[]" value=""></td>
-                                <td><input type="text" style="width: 100px" class="form-control line_kno_date" name="line_kno_date[]" value="" readonly></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_kno_no" name="line_kno_no[]" readonly value="<?=$value->kno_no_in?>"></td>
+                                <td><input type="text" style="width: 100px" class="form-control line_kno_date" name="line_kno_date[]" value="<?=date('d/m/Y',strtotime($value->kno_in_date))?>" readonly></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_permit_no" name="line_permit_no[]" value=""></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_permit_date" name="line_permit_date[]" value="" readonly></td>
                             </tr>

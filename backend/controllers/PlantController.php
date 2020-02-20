@@ -128,6 +128,7 @@ class PlantController extends Controller
         $model = new Plant();
         $model_address_plant = \backend\models\Addressbook::find()->where(['party_type_id'=>-1])->one();
         $model_address = new AddressBook();
+
         if ($model->load(Yii::$app->request->post())&& $model_address->load(Yii::$app->request->post())) {
             $uploaded = UploadedFile::getInstance($model, 'logo');
             if(!empty($uploaded)){
@@ -137,6 +138,10 @@ class PlantController extends Controller
                     $model->logo = $upfiles;
                 }
             }
+            $tdate = explode('/',$model->kno_date);
+            $t_date = $tdate[2].'/'.$tdate[1].'/'.$tdate[0];
+
+            $model->kno_date = date('Y/m/d',strtotime($t_date));
             if($model->save()){
                 $model_address->save(false);
                   $session = Yii::$app->session;
@@ -191,7 +196,11 @@ class PlantController extends Controller
                     }
 
 
-            //print_r($accountno);return;
+        //    print_r($model->kno_date);return;
+            $tdate = explode('/',$model->kno_date);
+            $t_date = $tdate[2].'/'.$tdate[1].'/'.$tdate[0];
+
+            $model->kno_date = date('Y/m/d',strtotime($t_date));
             if($model->save()){
 
                if(count($bankid)>0){
