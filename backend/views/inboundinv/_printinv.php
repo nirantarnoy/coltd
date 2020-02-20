@@ -51,13 +51,13 @@
             <tbody style="top: 10px;">
             <tr style="background: #c3c3c3;" rowspan="2">
                 <td  style="padding: 10px;border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 9%">No.</td>
-                <td  style="padding: 10px;border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 9%">Code</td>
-                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Description</td>
-                <td  style="padding: 5px;border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">Quantity</td>
+                <td  style="padding: 10px;border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 9%">CODE</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">DESCRIPTION</td>
+                <td  style="padding: 5px;border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">QUANTITY</td>
                 <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center">COUNTRY</td>
-                <td  colspan="3" style="border: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: center">Packing</td>
-                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 15%">Net weight</td>
-                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 15%">Gross weight</td>
+                <td  colspan="3" style="border: 0.2px solid grey;font-size: 14px;font-weight: bold;text-align: center">PACKING</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 15%">UNIT PRICE</td>
+                <td  style="border: 0.2px solid grey;border-bottom: 0px;font-size: 14px;font-weight: bold;text-align: center;width: 15%">TOTAL AMT</td>
             </tr>
             <tr style="background: #c3c3c3; row-span: 2">
                 <td  style="padding: 10px;border-left: 0.2px solid grey;"></td>
@@ -85,10 +85,12 @@
                 <?php
                 $sumqty = $sumqty + $value->line_qty;
                 //$sumnet = $sumnet + \backend\models\Product::findProductinfo($value->product_id)->netweight;
-                $sumnw = $sumnw + (\backend\models\Product::findProductinfo($value->product_id)->netweight * $value->line_qty);
-                $sumgw = $sumgw + (\backend\models\Product::findProductinfo($value->product_id)->grossweight * $value->line_qty);
-                $nw = (\backend\models\Product::findProductinfo($value->product_id)->netweight * $value->line_qty);
-                $qw = (\backend\models\Product::findProductinfo($value->product_id)->grossweight * $value->line_qty);
+//                $sumnw = $sumnw + (\backend\models\Product::findProductinfo($value->product_id)->netweight * $value->line_qty);
+//                $sumgw = $sumgw + (\backend\models\Product::findProductinfo($value->product_id)->grossweight * $value->line_qty);
+//                $nw = (\backend\models\Product::findProductinfo($value->product_id)->netweight * $value->line_qty);
+//             //   $qw = (\backend\models\Product::findProductinfo($value->product_id)->grossweight * $value->line_qty);
+                $total = ($value->line_price * $value->line_qty);
+                $total_all = $total +($value->line_price * $value->line_qty);
 
                 ?>
                 <?php $rows +=1; ?>
@@ -101,9 +103,9 @@
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->unit_factor;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->volumn;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Product::findProductinfo($value->product_id)->volumn_content.'%';?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($nw,2)?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($value->line_price,2)?></td>
 
-                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($gw,2)?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($total,2)?></td>
 
                 </tr>
             <?php endforeach; ?>
@@ -134,15 +136,16 @@
             <?php //endfor; ?>
             <tr style="border: 1px solid black;border-left:none;border-right: none ">
                 <!--            <tr>-->
-                <td style="padding: 15px 15px 15px 15px;font-size: 14px;font-weight: bold;text-align: left" colspan="3"></td>
+                <td style="padding: 15px 15px 15px 15px;font-size: 14px;font-weight: bold;text-align: right" colspan="3">CTN</td>
 
                 <td style="text-align: center;font-size: 14px;font-weight: bold"><?=number_format($sumqty,0)?></td>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td style="font-size: 14px;font-weight: normal;text-align: left;padding-right: 10px;">TOTAL</td>
-                <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($sumnw,0)?></td>
-                <td style="font-size: 14px;font-weight: bold;text-align: center;padding-right: 10px;"><?=number_format($sumgw,0)?></td>
+                <td></td>
+                <td style="font-size: 14px;font-weight: normal;text-align: left;padding-right: 10px;">TOTAL (USD)</td>
+
+                <td style="font-size: 14px;font-weight: bold;text-align: center;padding-right: 10px;"><?=number_format($total_all,0)?></td>
 
             </tr>
 
