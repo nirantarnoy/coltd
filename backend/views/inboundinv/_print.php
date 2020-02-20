@@ -25,7 +25,7 @@
                 </td>
 
                 <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">
-                    Invoice No: <?=$model->invoice_no?>
+                    Invoice No: <?=$model->docin_no?>
                     Invoice Date: <?=date('d/m/Y', strtotime($model->invoice_date))?> <br>
 
                 </td>
