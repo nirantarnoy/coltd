@@ -81,7 +81,7 @@ use yii\helpers\Url;
                                 <td><input type="text" style="width: 100px" class="form-control line_kno_no" name="line_kno_no[]" readonly value="<?=$value->kno_no_in?>"></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_kno_date" name="line_kno_date[]" value="<?=date('d/m/Y',strtotime($value->kno_in_date))?>" readonly></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_permit_no" name="line_permit_no[]" value=""></td>
-                                <td><input type="date" id="permit_date_<?=$i?>" style="width: 100px" class="form-control line_permit_date" name="line_permit_date[]" value="<?=$value->permit_date =='' || $value->permit_date == Null? date('d-m-Y'):date('d-m-Y',strtotime($value->permit_date))?>"></td>
+                                <td><input type="date" id="permit_date_<?=$i?>" style="width: 200px" class="form-control line_permit_date" name="line_permit_date[]" value="<?=$value->permit_date =='' || $value->permit_date == Null? date('d-m-Y'):date('d-m-Y',strtotime($value->permit_date))?>"></td>
                             </tr>
                         <?php endforeach;?>
                     </tbody>
