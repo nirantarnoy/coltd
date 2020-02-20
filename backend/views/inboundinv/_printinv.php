@@ -79,6 +79,7 @@
             $sumgw = 0;
             $nw = 0;
             $gw = 0;
+            $total_all = 0;
 
             ?>
             <?php foreach ($modelline as $value):?>
@@ -90,7 +91,7 @@
 //                $nw = (\backend\models\Product::findProductinfo($value->product_id)->netweight * $value->line_qty);
 //             //   $qw = (\backend\models\Product::findProductinfo($value->product_id)->grossweight * $value->line_qty);
                 $total = ($value->line_price * $value->line_qty);
-                $total_all = $total +($value->line_price * $value->line_qty);
+                $total_all = $total_all +($value->line_price * $value->line_qty);
 
                 ?>
                 <?php $rows +=1; ?>
