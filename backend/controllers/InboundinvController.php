@@ -84,10 +84,8 @@ class InboundinvController extends Controller
             if(count($x_date)){
                 $inv_date = $x_date[2].'/'.$x_date[1].'/'.$x_date[0];
             }
-          //  echo $inv_date;return;
 
-           // $model->invoice_date = null;
-            $model->invoice_date = date('Y-m-d',strtotime($model->invoice_date));//date('Y-m-d H:i:s',strtotime($model->invoice_date));
+            $model->invoice_date = date('Y-m-d',strtotime($inv_date));
             $model->status = 1;
             if($model->save(false)){
                 if(count($prodid)>0){
