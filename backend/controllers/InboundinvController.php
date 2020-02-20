@@ -138,6 +138,8 @@ class InboundinvController extends Controller
                     $modelimport->netweight = $prodinfo->netweight;;
                     $modelimport->grossweight = $prodinfo->grossweight;
                     $modelimport->excise_no = $prodinfo->excise_no;
+                    $modelimport->kno_no_in = \backend\models\Plant::findKnoNo();
+                    $modelimport->kno_in_date = \backend\models\Plant::findKnoDate();
                     $modelimport->save(false);
                 }
             }
@@ -179,6 +181,8 @@ class InboundinvController extends Controller
                         $modelline->product_id = $prodid[$i];
                         $modelline->line_qty = $lineqty[$i];
                         $modelline->line_price = $lineprice[$i];
+                        $modelline->kno_no_in = \backend\models\Plant::findKnoNo();
+                        $modelline->kno_in_date = \backend\models\Plant::findKnoDate();
                         $modelline->line_num = $i+1;
                         // $modelline->stock_id = $stockid[$i];
                         $modelline->save();
