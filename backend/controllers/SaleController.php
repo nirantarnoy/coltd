@@ -559,7 +559,10 @@ class SaleController extends Controller
             $stock_id = Yii::$app->request->post('stock_id');
             $line_qty = Yii::$app->request->post('line_qty');
 
-            $qty = 0;
+        $sale_no = \backend\models\Sale::findSaleNo($sale_id);
+        $sale_date = \backend\models\Sale::findSaleDate($sale_id);
+
+        $qty = 0;
             $price = 0;
             if(count($stock_id)){
                 $picking = new \backend\models\Picking();
@@ -569,6 +572,7 @@ class SaleController extends Controller
                 $picking->picking_date = date('Y-m-d');
                 if($picking->save()){
                     if(count($stock_id)>0) {
+                        $data = [];
                         for($i=0;$i<=count($stock_id)-1;$i++){
                            // echo "kkdkd";return;
                             $stock_info = \common\models\ProductStock::find()->where(['id'=>$stock_id[$i]])->one();
@@ -587,7 +591,43 @@ class SaleController extends Controller
                               //  $pickline->excise_date = $stock_info->excise_date;
                                 $pickline->save(false);
 
+
+
+                                array_push($data, [
+                                    'prod_id' => $stock_info->product_id,
+                                    'qty' => $line_qty[$i],
+                                    'warehouse_id' => $stock_info->warehouse_id,
+                                    'trans_type' => \backend\helpers\TransType::TRANS_ADJUST_OUT,
+                                    'permit_no' => $stock_info->permit_no,
+                                    'permit_date' => $stock_info->permit_date,//date('Y-d-m',strtotime($linepermitdate[$i])),
+                                    'transport_in_no' => $stock_info->transport_in_no,
+                                    'transport_in_date' => $stock_info->transport_in_date,//date('Y-d-m',strtotime($rowData[14])),
+                                    'excise_no' => '',
+                                    'excise_date' => date('Y-m-d'),
+                                    'invoice_no' => $sale_no,
+                                    'invoice_date' => date('Y-d-m', strtotime($sale_date)),//date('Y-d-m',strtotime($rowData[12])),
+                                    'sequence' => $stock_info->sequence,
+                                    'kno_no_in' => $stock_info->kno_no_in,
+                                    'kno_in_date' => $stock_info->kno_in_date,//date('Y-d-m',strtotime($rowData[19])),
+                                    'out_qty' => 0,
+                                    'usd_rate' => $stock_info->usd_rate,
+                                    'thb_amount' => $stock_info->usd_rate,
+
+                                ]);
+
                             }
+                        }
+                      //  print_r($data);return;
+                        $update_stock = \backend\models\TransCalculate::createJournal($data);
+                        if ($update_stock) {
+                            $session = Yii::$app->session;
+                            $session->setFlash('msg', 'นำเข้าข้อมูลสินค้าเรียบร้อย');
+                            return $this->redirect(['index']);
+                        } else {
+                            echo 'no';return;
+                            $session = Yii::$app->session;
+                            $session->setFlash('msg-error', 'พบข้อมผิดพลาด');
+                            return $this->redirect(['index']);
                         }
                     }
 

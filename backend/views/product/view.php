@@ -242,6 +242,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <?php $i = 0;?>
                                         <?php foreach ($modelcost as $value):?>
                                             <?php $i +=1;?>
+                                        <?php
+                                            $html = '';
+                                            if($value->qty > -1){
+                                                $html = '<div class="label label-success">'.number_format($value->qty,0).'</div>';
+                                            }else{
+                                                $html = '<div class="label label-danger">'.number_format($value->qty,0).'</div>';
+                                            }
+                                            ?>
                                             <tr>
                                                 <td><?=$i?></td>
                                                 <td><?=$value->transport_in_no?></td>
@@ -250,7 +258,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <td><?=date('d-m-Y',strtotime($value->permit_date))?></td>
                                                 <td><?php echo $value->invoice_no?></td>
                                                 <td><?php echo date('d-m-Y',strtotime($value->invoice_date))?></td>
-                                                <td><?php echo number_format($value->qty,0)?></td>
+                                                <td><?php echo $html ?></td>
                                                 <td><?php echo $value->thb_amount?></td>
                                             </tr>
                                         <?php endforeach;?>

@@ -48,6 +48,14 @@ class Sale extends \common\models\Sale{
         $model = Sale::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->sale_no:'';
     }
+    public function findSaleNo($id){
+        $model = Sale::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model->sale_no:'';
+    }
+    public function findSaleDate($id){
+        $model = Sale::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model->require_date:'';
+    }
     public function getLastNo(){
         $model = \backend\models\Sale::find()->MAX('sale_no');
 //        $pre = \backend\models\Sequence::find()->where(['module_id'=>$trans_type])->one();

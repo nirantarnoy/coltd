@@ -56,14 +56,6 @@ class TransCalculate extends \yii\base\Model
     }
     public static function createStocksum($param,$stocktype){
        if($param){
-//          $model_stock = Stockbalance::find()
-//              ->where(['product_id'=>$param[0]['prod_id'],
-//                       'warehouse_id'=>$param[0]['warehouse_id'],
-//                       'permit_no'=>$param[0]['permit_no'],
-//                       'transport_in_no'=>$param[0]['transport_in_no'],
-//                       'excise_no'=>$param[0]['excise_no'],
-//              ])
-//              ->one();
            $model_stock = Productstock::find()
                ->where(['product_id'=>$param['prod_id'],
                    'warehouse_id'=>$param['warehouse_id'],
@@ -86,19 +78,20 @@ class TransCalculate extends \yii\base\Model
               }
 
           }else{
-              if($stocktype==1){
+//              if($stocktype==1){
+//
+//              }else{
+                  $qty_in = 0;
+                  $qty = 0;
+                  $qty_out = 0;
+                  if($stocktype==1){ // picking out
+                      $qty_out = $param['qty'];
+                      $qty = ((int)$param['qty'] * -1);
+                  }else{
+                      $qty_in = $param['qty'];
+                      $qty = $param['qty'];
+                  }
 
-              }else{
-//                  $model = new Stockbalance();
-//                  $model->product_id = $param[0]['prod_id'];
-//                  $model->warehouse_id = $param[0]['warehouse_id'];
-//                  $model->permit_no = $param[0]['permit_no'];
-//                  $model->transport_in_no = $param[0]['transport_no'];
-//                  $model->excise_no = $param[0]['excise_no'];
-//                  $model->qty = $param[0]['qty'];
-//                  if($model->save()){
-//                      self::updateProductInvent($param[0]['prod_id']);
-//                  }
                   $modelstock = new Productstock();
                   $modelstock->product_id = $param['prod_id'];
                   $modelstock->warehouse_id = $param['warehouse_id'];
@@ -111,9 +104,9 @@ class TransCalculate extends \yii\base\Model
                   $modelstock->permit_date = date('Y-m-d',strtotime($param['permit_date']));
                   $modelstock->kno_no_in = $param['kno_no_in'];
                   $modelstock->kno_in_date = date('Y-m-d',strtotime($param['kno_in_date']));
-                  $modelstock->in_qty = $param['qty'];
-                  $modelstock->qty = $param['qty'];
-                  $modelstock->out_qty = 0;
+                  $modelstock->in_qty = $qty_in;
+                  $modelstock->qty = $qty;
+                  $modelstock->out_qty = $qty_out;
                   $modelstock->usd_rate = $param['usd_rate'];
                   $modelstock->thb_amount =  $param['thb_amount'];
                   if($modelstock->save(false)){
@@ -121,7 +114,7 @@ class TransCalculate extends \yii\base\Model
                   }else{
                       return false;
                   }
-              }
+//              }
               //self::updateProductInvent($param[0]['prod_id']);
           }
        }else{
