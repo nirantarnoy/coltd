@@ -55,11 +55,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return \backend\models\Warehouse::findWarehousename($data->warehouse_id);
                             }],
                             [
-                                'attribute' => 'in_qty',
+                                'attribute' => 'qty',
                                 'headerOptions' => ['style'=>'background-color: green;color: white'],
                                 'contentOptions' => ['style'=>'background-color: green;color: white;text-align: right'],
                                 'value'=>function($data){
-                                    return $data->in_qty!=null?$data->in_qty:0;
+                                    return $data->qty!=null?$data->qty:0;
                                 }],
                             [
                                 'attribute' => 'out_qty',
@@ -150,18 +150,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute' => 'product_id','value'=>function($data){
                 return \backend\models\Product::findCode($data->product_id);
             }],
-            ['attribute' => 'product_id','value'=>function($data){
-                return \backend\models\Product::findName($data->product_id);
+            ['attribute' => 'product_id','format'=> 'html','value'=>function($data){
+                return '<a href="'.Url::to(['product/view','id'=>$data->product_id],true).'">'.\backend\models\Product::findName($data->product_id).'</a>';
             }],
             ['attribute' => 'warehouse_id','value'=>function($data){
                 return \backend\models\Warehouse::findWarehousename($data->warehouse_id);
             }],
             [
-                    'attribute' => 'in_qty',
+                    'attribute' => 'qty',
                 'headerOptions' => ['style'=>'background-color: green;color: white'],
                 'contentOptions' => ['style'=>'background-color: green;color: white;text-align: right'],
                 'value'=>function($data){
-                return $data->in_qty!=null?$data->in_qty:0;
+                return $data->qty!=null?$data->qty:0;
             }],
             [
                 'attribute' => 'out_qty',

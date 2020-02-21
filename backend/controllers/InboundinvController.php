@@ -142,8 +142,8 @@ class InboundinvController extends Controller
                     $modelimport->netweight = $prodinfo->netweight;;
                     $modelimport->grossweight = $prodinfo->grossweight;
                     $modelimport->excise_no = $prodinfo->excise_no;
-                    $modelimport->kno_no_in = \backend\models\Plant::findKnoNo();
-                    $modelimport->kno_in_date = \backend\models\Plant::findKnoDate();
+//                    $modelimport->kno_no_in = \backend\models\Plant::findKnoNo();
+//                    $modelimport->kno_in_date = \backend\models\Plant::findKnoDate();
                     $modelimport->save(false);
                 }
             }
@@ -256,7 +256,8 @@ class InboundinvController extends Controller
         $linepermitdate = Yii::$app->request->post('line_permit_date');
         $lineexciseno = Yii::$app->request->post('line_excise_no');
         $lineexcisedate = Yii::$app->request->post('line_excise_date');
-
+        $linekno_no = Yii::$app->request->post('line_kno_no');
+        $linekno_date = Yii::$app->request->post('line_kno_date');
 
         $permit_date = null;
         $transport_date = null;
@@ -300,20 +301,28 @@ class InboundinvController extends Controller
                         $transport_date = $trans_date[2] . "/" . $trans_date[1] . "/" . $trans_date[0];
                     }
                 }
+                if ($linekno_date[$i] != '') {
+                    //  echo  $linepermitdate[$i];return;
+                    $kno_date_arr = explode('/', $linekno_date[$i]);
+                    //print_r($kno_date_arr[0]);return;
+                    if (count($kno_date_arr) > 0 && $kno_date_arr[0] != '') {
+                        $kno_date = $kno_date_arr[2] . "/" . $kno_date_arr[1] . "/" . $kno_date_arr[0];
+                    }
+                }
 
                 if ($model) {
                     $model->transport_in_no = $linetransportno[$i];
                     $model->transport_in_date = date('Y-m-d',strtotime($transport_date));
                     if ($model->save(false)) {
-                        $modeltrans = \backend\models\Importline::find()->where(['import_id' => $refid[$i]])->one();
-                        if ($modeltrans) {
-                            $modeltrans->transport_in_no = $linetransportno[$i];
-                            $modeltrans->transport_in_date = date('d-m-Y');
-                            $modeltrans->posted = 1;
-                            if ($modeltrans->save(false)) {
-
-                            }
-                        }
+//                        $modeltrans = \backend\models\Importline::find()->where(['import_id' => $refid[$i]])->one();
+//                        if ($modeltrans) {
+//                            $modeltrans->transport_in_no = $linetransportno[$i];
+//                            $modeltrans->transport_in_date = date('d-m-Y');
+//                            $modeltrans->posted = 1;
+//                            if ($modeltrans->save(false)) {
+//
+//                            }
+//                        }
                     }
 
                 }
@@ -338,8 +347,8 @@ class InboundinvController extends Controller
                     'invoice_no' => $invoiceno,
                     'invoice_date' => date('Y-d-m', strtotime($invoicedate)),//date('Y-d-m',strtotime($rowData[12])),
                     'sequence' => $linenum[$i],
-                    'kno_no_in' => 1,
-                    'kno_in_date' => date('Y-d-m'),//date('Y-d-m',strtotime($rowData[19])),
+                    'kno_no_in' => $linekno_no[$i],
+                    'kno_in_date' => $kno_date,//date('Y-d-m',strtotime($rowData[19])),
                     'out_qty' => 0,
                     'usd_rate' => $usd,
                     'thb_amount' => $thb,
@@ -349,7 +358,7 @@ class InboundinvController extends Controller
 
             }
 
-           // print_r($data);return;
+          //  print_r($data);return;
 
             $update_stock = \backend\models\TransCalculate::createJournal($data);
             if ($update_stock) {

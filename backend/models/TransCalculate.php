@@ -63,7 +63,7 @@ class TransCalculate extends \yii\base\Model
 //                      'thb_amount' => $data[$i]['thb_amount'],
 //                      'usd_rate' =>$data[$i]['usd_rate'],
  //                 ]);
-                self::createStocksum($data[$i],$stocktype);
+               return self::createStocksum($data[$i],$stocktype);
               }
           }
 
@@ -83,18 +83,19 @@ class TransCalculate extends \yii\base\Model
                ->where(['product_id'=>$param['prod_id'],
                    'warehouse_id'=>$param['warehouse_id'],
                    'invoice_no'=>$param['invoice_no'],
-                   'transport_in_no'=>$param['transport_in_no']
+                   'transport_in_no'=>$param['transport_in_no'],
+                   'permit_no' => $param['permit_no']
                ])
                ->one();
           if($model_stock){
-              if($stocktype==1){ // picking
-                  $model_stock->qty = $model_stock->qty - $param['qty'];
+              if($stocktype==1){ // picking out
+                  $model_stock->qty = (int)$model_stock->qty - (int)$param['qty'];
               }else{
-                  $model_stock->qty = $model_stock->qty + $param['qty'];
+                  $model_stock->qty = (int)$model_stock->qty + (int)$param['qty'];
               }
 
               if($model_stock->save(false)){
-                  self::updateProductInvent($param['prod_id']);
+                 return self::updateProductInvent($param['prod_id']);
               }else{
                  return false;
               }
@@ -117,7 +118,7 @@ class TransCalculate extends \yii\base\Model
                   $modelstock->product_id = $param['prod_id'];
                   $modelstock->warehouse_id = $param['warehouse_id'];
                   $modelstock->invoice_no = $param['invoice_no'];
-                  $modelstock->invoice_date = date('Y-m-d',strtotime($param['invoice_date']));
+                  $modelstock->invoice_date = date('Y-m-d');
                   $modelstock->transport_in_no = $param['transport_in_no'];
                   $modelstock->transport_in_date = date('Y-m-d',strtotime( $param['transport_in_date']));
                   $modelstock->sequence = $param['sequence'];
@@ -130,7 +131,9 @@ class TransCalculate extends \yii\base\Model
                   $modelstock->usd_rate = $param['usd_rate'];
                   $modelstock->thb_amount =  $param['thb_amount'];
                   if($modelstock->save(false)){
-                      self::updateProductInvent($param['prod_id']);
+                     return self::updateProductInvent($param['prod_id']);
+                  }else{
+                      return false;
                   }
               }
               //self::updateProductInvent($param[0]['prod_id']);
@@ -140,7 +143,7 @@ class TransCalculate extends \yii\base\Model
        }
     }
     public static function updateProductInvent($product_id){
-        $sum_all = Productstock::find()->where(['product_id'=>$product_id])->sum('in_qty');
+        $sum_all = Productstock::find()->where(['product_id'=>$product_id])->sum('qty');
        // $sum_all = Stockbalance::find()->where(['product_id'=>$product_id])->sum('qty');
         // $sum_reserve = Stockbalance::find()->where(['product_id'=>$product_id])->sum('quantity');
 
