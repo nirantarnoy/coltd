@@ -157,18 +157,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 return \backend\models\Warehouse::findWarehousename($data->warehouse_id);
             }],
             [
-                    'attribute' => 'qty',
+                'attribute' => 'qty',
                 'headerOptions' => ['style'=>'background-color: green;color: white'],
                 'contentOptions' => ['style'=>'background-color: green;color: white;text-align: right'],
                 'value'=>function($data){
-                return $data->qty!=null?$data->qty:0;
+                    if ($data->qty < 0) {
+                        return 0;
+                    } else {
+                        return $data->qty != null ? $data->qty : 0;
+                    }
+
             }],
             [
                 'attribute' => 'out_qty',
                 'headerOptions' => ['style'=>'background-color: orange;color: white'],
                 'contentOptions' => ['style'=>'background-color: orange;color: white;text-align: right'],
                 'value'=>function($data){
-                    return $data->out_qty!=null?$data->out_qty:0;
+                    if ($data->qty > 0) {
+                        return 0;
+                    } else {
+                        return $data->out_qty!=null?($data->out_qty * -1):0;
+                    }
                 }],
             'invoice_no',
             ['attribute' => 'invoice_date','value'=>function($data){
