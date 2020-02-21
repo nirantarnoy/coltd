@@ -76,7 +76,7 @@ $this->title = "Packing List";
                                 <input type="text" class="form-control line_qty" name="line_qty[]" value="<?=$query[$i]['qty']?>">
                             </td>
                             <td style="vertical-align: middle">
-                                <?=\backend\models\Product::findProductInfo($query[$i]['product_id'])->unit_id?>
+                                <?=\backend\models\Unit::findName(\backend\models\Product::findProductInfo($query[$i]['product_id'])->unit_id)?>
                             </td>
                             <td style="vertical-align: middle;text-align: right;background-color: #1b6d85;color: white">
 <?=number_format((float)$query[$i]['qty'] * (float)$query[$i]['price'],2);?>
