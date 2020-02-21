@@ -27,6 +27,7 @@ class TransCalculate extends \yii\base\Model
 
     }
     public static function createJournalline($jour_id,$data){
+        $res = false;
       if($data){
           for($i=0;$i<=count($data)-1;$i++){
               $param = [];
@@ -44,30 +45,14 @@ class TransCalculate extends \yii\base\Model
               $model_journalline->stock_type = $stocktype;
               $model_journalline->trans_date = date('Y-m-d');
               if($model_journalline->save()){
-     //             array_push($param,[
-//                      'prod_id'=>$data[$i]['prod_id'],
-//                      'warehouse_id'=>$data[$i]['warehouse_id'],
-//                      'qty'=>$data[$i]['qty'],
-//                      'trans_type'=>$data[$i]['trans_type'],
-//                      'invoice_no' => $data[$i]['invoice_no'],
-//                      'invoice_date' => $data[$i]['invoice_date'],
-//                      'permit_no' => $data[$i]['permit_no'],
-//                      'permit_date' => $data[$i]['permit_date'],
-//                      'transport_in_no' => $data[$i]['transport_in_no'],
-//                      'transport_in_date' => $data[$i]['transport_in_date'],
-//                      'excise_no' => $data[$i]['excise_no'],
-//                      'stock_type' => $stocktype,
-//                      'sequence' => $data[$i]['sequence'],
-//                      'kno_no_in' =>$data[$i]['kno_no_in'],
-//                      'kno_in_date' =>$data[$i]['kno_in_date'],
-//                      'thb_amount' => $data[$i]['thb_amount'],
-//                      'usd_rate' =>$data[$i]['usd_rate'],
- //                 ]);
-               return self::createStocksum($data[$i],$stocktype);
+                if(self::createStocksum($data[$i],$stocktype)){
+                    $res = true;
+                }
               }
           }
 
       }
+      return $res;
     }
     public static function createStocksum($param,$stocktype){
        if($param){
@@ -127,6 +112,7 @@ class TransCalculate extends \yii\base\Model
                   $modelstock->kno_no_in = $param['kno_no_in'];
                   $modelstock->kno_in_date = date('Y-m-d',strtotime($param['kno_in_date']));
                   $modelstock->in_qty = $param['qty'];
+                  $modelstock->qty = $param['qty'];
                   $modelstock->out_qty = 0;
                   $modelstock->usd_rate = $param['usd_rate'];
                   $modelstock->thb_amount =  $param['thb_amount'];

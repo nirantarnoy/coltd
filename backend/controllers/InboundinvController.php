@@ -283,7 +283,7 @@ class InboundinvController extends Controller
 
 
         if (count($productid) > 0) {
-
+            $data = [];
             for ($i = 0; $i <= count($productid) - 1; $i++) {
                 $model = \backend\models\Inboundinvline::find()->where(['invoice_id' => $invoiceid, 'product_id' => $productid[$i]])->one();
 
@@ -330,9 +330,9 @@ class InboundinvController extends Controller
                 //$catid = $this->checkCat($rowData[6]);
                 $whid = \backend\models\Warehouse::getDefault();
 
-                $data = [];
-                $usd = 100;//str_replace(",","",$rowData[21]);
-                $thb = 100;//str_replace(",","",$rowData[22]);
+
+                $usd = str_replace(",","",$linepriceper[$i]);
+                $thb = str_replace(",","",$linepriceper[$i]);
                 array_push($data, [
                     'prod_id' => $productid[$i],
                     'qty' => $lineqty[$i],
@@ -358,7 +358,7 @@ class InboundinvController extends Controller
 
             }
 
-          //  print_r($data);return;
+           // print_r($data);return;
 
             $update_stock = \backend\models\TransCalculate::createJournal($data);
             if ($update_stock) {

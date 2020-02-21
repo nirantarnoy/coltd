@@ -190,7 +190,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 return date('Y',strtotime($data->kno_in_date)) == 1970?'':date('d-m-Y',strtotime($data->kno_in_date));
             }],
             'usd_rate',
-            'thb_amount',
+//            'thb_amount',
             //'status',
             //'created_at',
             //'updated_at',
