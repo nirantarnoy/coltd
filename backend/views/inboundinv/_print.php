@@ -12,6 +12,18 @@
 
         <table class="table" border="0" style="width: 100%;border-collapse: collapse;">
             <thead>
+            <thead>
+            <tr colspan="">
+                <td colspan="5" style="text-align: left;">
+                    <h1><?=\backend\models\Vendor::findName($model->supplier_id)?></h1>
+                </td>
+            </tr>
+            <tr colspan="">
+                <td colspan="5" style="text-align: left;">
+                    <h4><?=\backend\models\Vendor::findDetail($model->supplier_id)?></h4>
+                </td>
+            </tr>
+            <br>
             <tr colspan="">
                 <td colspan="10" style="text-align: center;background-color: black;color: white;height: 25px;">
                    <h3>PACKING LIST</h3>

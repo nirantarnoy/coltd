@@ -56,7 +56,7 @@ $this->registerCss('
                             <?= $form->field($model, 'require_date')->widget(DatePicker::className(), [
                                 'options' => [
                                     'style' => 'font-weight: bold',
-                                    'class' =>'quotation_date',
+                                    'class' => 'quotation_date',
                                 ],
                                 'pluginOptions' => [
                                     'format' => 'dd/mm/yyyy',
@@ -89,7 +89,7 @@ $this->registerCss('
                                 'data' => ArrayHelper::map(\backend\helpers\Currency::asArrayObject(), 'id', 'name'),
                                 'options' => [
                                     'placeholder' => 'เลือกสกุลเงิน',
-                                      'onchange'=>'checkRate($(this))',
+                                    'onchange' => 'checkRate($(this))',
                                 ],
                                 'pluginOptions' => [
                                     'allowClear' => true
@@ -149,6 +149,7 @@ $this->registerCss('
                                     </td>
                                     <td>
                                         <input type="hidden" class="productid" name="productid[]">
+                                        <input type="hidden" class="stock_qty" value="0">
                                         <input type="hidden" class="stock-id" name="stock_id[]" value="">
                                         <input type="text" autocomplete="off" class="form-control productcode"
                                                name="prodcode[]" value="" onchange="itemchange($(this));"
@@ -213,6 +214,7 @@ $this->registerCss('
                                             <td>
                                                 <input type="hidden" class="productid" name="productid[]"
                                                        value="<?= $value->product_id ?>">
+                                                <input type="hidden" class="stock_qty" value="0">
                                                 <input type="hidden" class="stock-id" name="stock_id[]"
                                                        value="<?= $value->stock_id ?>">
                                                 <input type="text" autocomplete="off" class="form-control productcode"
@@ -286,6 +288,7 @@ $this->registerCss('
                                         </td>
                                         <td>
                                             <input type="hidden" class="productid" name="productid[]">
+                                            <input type="hidden" class="stock_qty" value="0">
                                             <input type="hidden" class="stock-id" name="stock_id[]" value="">
                                             <input type="text" autocomplete="off" class="form-control productcode"
                                                    name="prodcode[]" value="" onchange="itemchange($(this));"
@@ -550,6 +553,7 @@ $js = <<<JS
                      $(".table-list").show();
                      var html = "";
                      for(var i =0;i<=data.length -1;i++){
+                           var all_qty = data[i]['all_qty'] == null?0:data[i]['all_qty'];
                             var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
                          var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
                          html +="<tr ondblclick='getitem($(this));'>" +
@@ -568,6 +572,7 @@ $js = <<<JS
                           "<input type='hidden' class='volumn_content' value='"+data[i]['volumn_content']+"'/>" +
                            "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
                            "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
+                             "<input type='hidden' class='stock_qty' value='"+all_qty+"'/>" +
                            "</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
                           "<td>"+data[i]['unit_factor']+"</td>"+
@@ -640,7 +645,7 @@ $js = <<<JS
      currow = 0;
      currow = e.parent().parent().index();
    //  alert(currow);
-     $("#findModal").modal("show");
+    
      $.ajax({
               'type':'post',
               'dataType': 'json',
@@ -657,15 +662,28 @@ $js = <<<JS
                     
                      var html = "";
                      for(var i =0;i<=data.length -1;i++){
+                         var all_qty = data[i]['all_qty'] == null?0:data[i]['all_qty'];
                          var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
                          var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
                          
-                          var inv_date = data[i]['invoice_date'].substr(6,4)==1970?'': data[i]['invoice_date'];
-                          var permit_date = data[i]['permit_date'].substr(6,4)==1970?'': data[i]['permit_date'];
-                          var transport_date = data[i]['transport_in_date'].substr(6,4)==1970?'': data[i]['transport_in_date'];
-                          var kno_date = data[i]['kno_in_date'].substr(6,4)==1970?'': data[i]['kno_in_date'];
-                     
-                         
+                          var inv_date = '';
+                          var permit_date = '';
+                          var transport_date = '';
+                          var kno_date = '';
+                          
+                          if(data[i]['invoice_date']!='' && data[i]['invoice_date'] != null){
+                              //alert(data[i]['invoice_date'].length);
+                              inv_date = data[i]['invoice_date'].substr(6,4)==1970?'': data[i]['invoice_date'];
+                          }
+                        if(data[i]['permit_date']!='' && data[i]['permit_date'] != null){
+                             permit_date = data[i]['permit_date'].substr(6,4)==1970?'': data[i]['permit_date'];
+                        }
+                         if( data[i]['transport_in_date']!='' && data[i]['transport_in_date'] != null){
+                              transport_date = data[i]['transport_in_date'].substr(6,4)==1970?'': data[i]['transport_in_date'];
+                         }
+                         if(data[i]['kno_in_date']!='' && data[i]['kno_in_date'] != null){
+                              kno_date = data[i]['kno_in_date'].substr(6,4)==1970?'': data[i]['kno_in_date'];
+                         }
                          
                          html +="<tr ondblclick='getitem($(this));'>" +
                          "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td>"+
@@ -683,6 +701,7 @@ $js = <<<JS
                           "<input type='hidden' class='volumn_content' value='"+data[i]['volumn_content']+"'/>" +
                           "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
                           "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
+                          "<input type='hidden' class='stock_qty' value='"+all_qty+"'/>" +
                            "</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
                         "<td>"+data[i]['unit_factor']+"</td>"+
@@ -710,13 +729,22 @@ $js = <<<JS
                  }
               }
             });
+      $("#findModal").modal("show");
  }
  function cal_num(e){
      var qty = e.closest("tr").find(".line_qty").val();
+     var stock_qty = e.closest("tr").find(".stock_qty").val();
      var price = e.closest("tr").find(".line_price").val();
-     
+     // alert(stock_qty);
      if(qty == ""){qty = 0;}
      if(price == ""){price = 0;}
+     if(stock_qty == ""){stock_qty = 0;}
+     
+     if(qty > stock_qty){
+         alert("จำนวนที่ต้องการมากกว่าจำนวนคงเหลือ");
+         e.closest("tr").find(".line_qty").val(stock_qty);
+         return false;
+     }
      
      var total = parseFloat(qty).toFixed(2) * parseFloat(price).toFixed(2);
      e.closest("tr").find(".line_total").val("");
@@ -737,14 +765,16 @@ $js = <<<JS
     var stock_price = e.closest("tr").find(".stock_price").val();
     var volumn = e.closest("tr").find(".volumn").val();
     var volumn_content = e.closest("tr").find(".volumn_content").val();
+    var stock_qty = e.closest("tr").find(".stock_qty").val();
     
-    //alert(volumn);
+   // alert(stock_qty);
     $(".table-quotation tbody tr").each(function() {
         // if($(this).closest('tr').find(".productcode").val() == prodcode){
         //   alert("รายการสินค้านี้ซ้ำ");return false;   
         // }
         if($(this).index() == currow){
               $(this).closest('tr').find(".productcode").val(prodcode);
+              $(this).closest('tr').find(".stock_qty").val(stock_qty);
               $(this).closest('tr').find(".productname").val(prodname);
               $(this).closest('tr').find(".productid").val(prodid);
               $(this).closest('tr').find(".line_qty").val(1);

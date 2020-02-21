@@ -44,6 +44,14 @@ use yii\helpers\Url;
             <div class="col-lg-4">
                 <?= $form->field($model, 'docin_no')->textInput(['maxlength' => true]) ?>
             </div>
+            <div class="col-lg-4">
+                <?= $form->field($model, 'supplier_id')->widget(\kartik\select2\Select2::className(),[
+                        'data'=>ArrayHelper::map(\backend\models\Vendor::find()->all(),'id','name'),
+                        'options' => [
+                                'placeholder'=>'เลือก'
+                        ]
+                ])->label('ผู้ขาย') ?>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12">

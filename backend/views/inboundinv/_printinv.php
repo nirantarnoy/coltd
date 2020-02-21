@@ -13,6 +13,17 @@
         <table class="table" border="0" style="width: 100%;border-collapse: collapse;">
             <thead>
             <tr colspan="">
+                <td colspan="5" style="text-align: left;">
+                    <h1><?=\backend\models\Vendor::findName($model->supplier_id)?></h1>
+                </td>
+            </tr>
+            <tr colspan="">
+                <td colspan="5" style="text-align: left;">
+                    <h4><?=\backend\models\Vendor::findDetail($model->supplier_id)?></h4>
+                </td>
+            </tr>
+            <br>
+            <tr colspan="">
                 <td colspan="10" style="text-align: center;background-color: black;color: white;height: 25px;">
                     <h3>INVOICE</h3>
                 </td>
@@ -24,9 +35,18 @@
                     <small>JLD BEVERAGE Co.,Ltd.(USD)<br/>230 CHALONGKRUNG LUMPRATIEW LATKRABANG BANGKOK 10520 THAILAND</small>
                 </td>
 
-                <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">
-                    Invoice No: <?=$model->docin_no?>
-                    Invoice Date: <?=date('d/m/Y', strtotime($model->invoice_date))?> <br>
+                <td colspan="3" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">
+                    <table width="100%">
+                        <tr>
+                            <td style="text-align: right;font-size: 13px;font-weight: bold">Invoice No: </td>
+                            <td style="text-align: left;font-size: 13px;font-weight: bold"><?=$model->docin_no?></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;font-size: 13px;font-weight: bold">Invoice Date: </td>
+                            <td style="text-align: left;font-size: 13px;font-weight: bold"><?=date('d/m/Y', strtotime($model->invoice_date))?></td>
+                        </tr>
+                    </table>
+                    <br>
 
                 </td>
             </tr>

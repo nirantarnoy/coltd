@@ -37,4 +37,8 @@ class Vendor extends \common\models\Vendor
         $model = Vendor::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->name:'';
     }
+    public function findDetail($id){
+        $model = Vendor::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model->description:'';
+    }
 }
