@@ -97,10 +97,10 @@
                 <?php
                 $sumqty = $sumqty + $value->line_qty;
                 //$sumnet = $sumnet + \backend\models\Product::findProductinfo($value->product_id)->netweight;
-                $sumnw = $sumnw + (\backend\models\Product::findProductinfo($value->product_id)->netweight * $value->line_qty);
-                $sumgw = $sumgw + (\backend\models\Product::findProductinfo($value->product_id)->grossweight * $value->line_qty);
-                $nw = (\backend\models\Product::findProductinfo($value->product_id)->netweight * $value->line_qty);
-                $qw = (\backend\models\Product::findProductinfo($value->product_id)->grossweight * $value->line_qty);
+                $sumnw = $sumnw + (\backend\models\Product::findProductinfo($value->product_id)->netweight);
+                $sumgw = $sumgw + (\backend\models\Product::findProductinfo($value->product_id)->grossweight);
+                $nw = (\backend\models\Product::findProductinfo($value->product_id)->netweight);
+                $gw = (\backend\models\Product::findProductinfo($value->product_id)->grossweight);
 
                 ?>
                 <?php $rows +=1; ?>
@@ -153,8 +153,8 @@
                 <td></td>
                 <td></td>
                 <td style="font-size: 14px;font-weight: normal;text-align: left;padding-right: 10px;">TOTAL</td>
-                <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($sumnw,0)?></td>
-                <td style="font-size: 14px;font-weight: bold;text-align: center;padding-right: 10px;"><?=number_format($sumgw,0)?></td>
+                <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"><?=number_format($sumnw,2)?></td>
+                <td style="font-size: 14px;font-weight: bold;text-align: center;padding-right: 10px;"><?=number_format($sumgw,2)?></td>
 
             </tr>
 
