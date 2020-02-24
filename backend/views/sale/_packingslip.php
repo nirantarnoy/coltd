@@ -99,7 +99,7 @@ $this->title = "Packing List";
                                 <?=$query[$i]['origin']?>
                             </td>
                             <td style="vertical-align: middle">
-                                <input type="text" class="form-control" name="" value="">
+                                <input type="text" class="form-control" name="trans_out_no" style="width: 100px;" value="">
                             </td>
                             <td style="vertical-align: middle">
                                 <?=$query[$i]['invoice_no']?>
@@ -108,7 +108,7 @@ $this->title = "Packing List";
                                 <?=date('d-m-Y',strtotime($query[$i]['invoice_date']))?>
                             </td>
                             <td style="vertical-align: middle">
-                                <input type="text" class="form-control" name="" value="">
+                                <input type="text" class="form-control" name="line_amount" style="width: 100px;" value="">
                             </td>
                             <td style="vertical-align: middle">
                                 <?=$query[$i]['permit_no']?>
