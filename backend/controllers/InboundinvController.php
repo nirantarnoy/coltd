@@ -312,6 +312,7 @@ class InboundinvController extends Controller
                         $permit_date = $per_origin[2] . "/" . $per_origin[1] . "/" . $per_origin[0];
                     }
                 }
+               // echo $permit_date;return;
                 if ($linetransportdate[$i] != '') {
                     //  echo  $linepermitdate[$i];return;
                     $trans_date = explode('-', $linetransportdate[$i]);
@@ -357,7 +358,7 @@ class InboundinvController extends Controller
                     'warehouse_id' => $whid,
                     'trans_type' => \backend\helpers\TransType::TRANS_ADJUST_IN,
                     'permit_no' => $linepermitno[$i],
-                    'permit_date' => $permit_date,//date('Y-d-m',strtotime($linepermitdate[$i])),
+                    'permit_date' => date('Y-m-d',strtotime($permit_date)),// $permit_date,//date('Y-d-m',strtotime($linepermitdate[$i])),
                     'transport_in_no' => $linetransportno[$i],
                     'transport_in_date' => $linetransportdate[$i],//date('Y-d-m',strtotime($rowData[14])),
                     'excise_no' => $lineexciseno[$i],

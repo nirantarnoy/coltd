@@ -616,7 +616,7 @@ class SaleController extends Controller
                             $pickline->permit_date = $stock_info->permit_date;
                             //   $pickline->excise_no = $stock_info->excise_no;
                             $pickline->price = $stock_info->usd_rate;
-                            $pickline->trans_out_no = $
+                            $pickline->trans_out_no = $trans_out_no;
                                 //  $pickline->excise_date = $stock_info->excise_date;
                             $pickline->save(false);
 
@@ -640,6 +640,7 @@ class SaleController extends Controller
                                 'out_qty' => 0,
                                 'usd_rate' => $stock_info->usd_rate,
                                 'thb_amount' => $stock_info->usd_rate,
+                                'inbound_id' =>''
 
                             ]);
 
