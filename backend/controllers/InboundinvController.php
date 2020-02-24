@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Productstock;
 use Yii;
 use backend\models\Inboundinv;
 use backend\models\InboundinvSearch;
@@ -215,12 +216,29 @@ class InboundinvController extends Controller
     public function actionDelete($id)
     {
         \backend\models\Inboundinvline::deleteAll(['invoice_id' => $id]);
+        $this->recalStock($id);
+        \backend\models\Productstock::deleteAll(['inbound_id'=>$id]);
         \backend\models\Importline::deleteAll(['import_id' => $id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
+    public function recalStock($id){
+            $product_stock = \backend\models\Productstock::find()->where(['inbound_id'=>$id])->all();
+            foreach ($product_stock as $value){
+                //$sum_all = Productstock::find()->where(['product_id'=>$value->product_id])->sum('qty');
+                $in_qty =$value->in_qty;
+                $model_product = \backend\models\Product::find()->where(['id'=>$value->product_id])->one();
+                if($model_product){
+                    $model_product->all_qty = $model_product->all_qty - $in_qty ;
+                    $model_product->available_qty = $model_product->available_qty - $in_qty;
+                    //    $model_product->available_qty = $model_product->all_qty - (int)$model_product->reserved_qty;
+                    $model_product->save(false);
+                }
+            }
 
+
+    }
     public function actionInboundtrans($id)
     {
         if ($id) {
@@ -352,6 +370,7 @@ class InboundinvController extends Controller
                     'out_qty' => 0,
                     'usd_rate' => $usd,
                     'thb_amount' => $thb,
+                    'inbound_id' => $model->invoice_id
 
                 ]);
 

@@ -201,7 +201,6 @@ $js=<<<JS
                      }
                      $(".table-list tbody").html(html);
                      
-                 
               }
             });
       $("#packModal").modal("show");
