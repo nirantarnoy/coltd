@@ -162,7 +162,8 @@ class QuotationController extends Controller
                     }
                 }
                 if(count($removelist)){
-                    print_r($removelist);return;
+                    count($removelist);return;
+                   // $rec_del = explode(','$re)
                     \backend\models\Quotationline::deleteAll(['id'=>$removelist]);
                 }
                 return $this->redirect(['index']);
