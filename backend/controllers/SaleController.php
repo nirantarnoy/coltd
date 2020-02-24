@@ -23,6 +23,7 @@ use Mpdf\Config\FontVariables;
 class SaleController extends Controller
 {
     public $enableCsrfValidation = false;
+
     /**
      * {@inheritdoc}
      */
@@ -32,7 +33,7 @@ class SaleController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST','GET'],
+                    'delete' => ['POST', 'GET'],
                 ],
             ],
         ];
@@ -66,17 +67,17 @@ class SaleController extends Controller
      */
     public function actionView($id)
     {
-        $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
-        $paymenttrans = \backend\models\Paymenttrans::find()->where(['sale_id'=>$id])->all();
+        $modelline = \backend\models\Saleline::find()->where(['sale_id' => $id])->all();
+        $paymenttrans = \backend\models\Paymenttrans::find()->where(['sale_id' => $id])->all();
 
         $pickinglist = [];
-        $modelpick = \backend\models\Picking::find()->where(['sale_id'=>$id])->all();
-        if($modelpick){
-            foreach ($modelpick as $value){
-                array_push($pickinglist,$value->id);
+        $modelpick = \backend\models\Picking::find()->where(['sale_id' => $id])->all();
+        if ($modelpick) {
+            foreach ($modelpick as $value) {
+                array_push($pickinglist, $value->id);
             }
         }
-        $modelpickline = \backend\models\Pickingline::find()->where(['picking_id'=>$pickinglist])->all();
+        $modelpickline = \backend\models\Pickingline::find()->where(['picking_id' => $pickinglist])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'modelline' => $modelline,
@@ -103,23 +104,25 @@ class SaleController extends Controller
 
 
             //echo date('m-d-Y',strtotime($model->require_date));return;
-            $tdate = explode('/',$model->require_date);
-            $t_date = $tdate[2].'/'.$tdate[1].'/'.$tdate[0];
+            $tdate = explode('/', $model->require_date);
+            $t_date = $tdate[2] . '/' . $tdate[1] . '/' . $tdate[0];
             $model->require_date = strtotime($t_date);
             $model->status = 1;
             $model->payment_status = 0;
-            if($model->save(false)){
-                if(count($prodid)>0){
-                    for($i=0;$i<=count($prodid)-1;$i++){
-                        if($prodid[$i]==''){continue;}
+            if ($model->save(false)) {
+                if (count($prodid) > 0) {
+                    for ($i = 0; $i <= count($prodid) - 1; $i++) {
+                        if ($prodid[$i] == '') {
+                            continue;
+                        }
 
-                        $modelcheck = \backend\models\Saleline::find()->where(['sale_id'=>$model->id,'product_id'=>$prodid[$i]])->one();
-                        if($modelcheck){
+                        $modelcheck = \backend\models\Saleline::find()->where(['sale_id' => $model->id, 'product_id' => $prodid[$i]])->one();
+                        if ($modelcheck) {
                             $modelcheck->qty = $lineqty[$i];
                             $modelcheck->price = $lineprice[$i];
                             $modelcheck->line_amount = $lineqty[$i] * $lineprice[$i];
                             $modelcheck->save();
-                        }else{
+                        } else {
                             $modelline = new \backend\models\Saleline();
                             $modelline->sale_id = $model->id;
                             $modelline->product_id = $prodid[$i];
@@ -130,8 +133,8 @@ class SaleController extends Controller
                         }
                     }
                 }
-                if(count($removelist)){
-                    \backend\models\Quotationline::deleteAll(['id'=>$removelist]);
+                if (count($removelist)) {
+                    \backend\models\Quotationline::deleteAll(['id' => $removelist]);
                 }
                 return $this->redirect(['index']);
             }
@@ -154,22 +157,21 @@ class SaleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
-        $modelpayment = \backend\models\Paymenttrans::find()->where(['sale_id'=>$id])->all();
-
+        $modelline = \backend\models\Saleline::find()->where(['sale_id' => $id])->all();
+        $modelpayment = \backend\models\Paymenttrans::find()->where(['sale_id' => $id])->all();
 
 
         $pickinglist = [];
 
 
-        $modelpick = \backend\models\Picking::find()->where(['sale_id'=>$id])->all();
+        $modelpick = \backend\models\Picking::find()->where(['sale_id' => $id])->all();
 
-        if($modelpick){
-            foreach ($modelpick as $value){
-                array_push($pickinglist,$value->id);
+        if ($modelpick) {
+            foreach ($modelpick as $value) {
+                array_push($pickinglist, $value->id);
             }
         }
-        $modelpickline = \backend\models\Pickingline::find()->where(['picking_id'=>$pickinglist])->all();
+        $modelpickline = \backend\models\Pickingline::find()->where(['picking_id' => $pickinglist])->all();
 //        if($modelpick){
 //            foreach($modelpick as $value){
 //                array_push($pickinglist,$value->id);
@@ -192,23 +194,25 @@ class SaleController extends Controller
             $lineprice = Yii::$app->request->post('price');
             $removelist = Yii::$app->request->post('removelist');
 
-            $tdate = explode('/',$model->require_date);
-            $t_date = $tdate[2].'/'.$tdate[1].'/'.$tdate[0];
+            $tdate = explode('/', $model->require_date);
+            $t_date = $tdate[2] . '/' . $tdate[1] . '/' . $tdate[0];
 
             $model->require_date = strtotime($t_date);
             $model->status = 1;
-            if($model->save()){
-                if(count($prodid)>0){
-                    for($i=0;$i<=count($prodid)-1;$i++){
-                        if($prodid[$i]==''){continue;}
+            if ($model->save()) {
+                if (count($prodid) > 0) {
+                    for ($i = 0; $i <= count($prodid) - 1; $i++) {
+                        if ($prodid[$i] == '') {
+                            continue;
+                        }
 
-                        $modelcheck = \backend\models\Saleline::find()->where(['sale_id'=>$id,'product_id'=>$prodid[$i]])->one();
-                        if($modelcheck){
+                        $modelcheck = \backend\models\Saleline::find()->where(['sale_id' => $id, 'product_id' => $prodid[$i]])->one();
+                        if ($modelcheck) {
                             $modelcheck->qty = $lineqty[$i];
                             $modelcheck->price = $lineprice[$i];
                             $modelcheck->line_amount = $lineqty[$i] * $lineprice[$i];
                             $modelcheck->save();
-                        }else{
+                        } else {
                             $modelline = new \backend\models\Saleline();
                             $modelline->sale_id = $model->id;
                             $modelline->product_id = $prodid[$i];
@@ -219,8 +223,8 @@ class SaleController extends Controller
                         }
                     }
                 }
-                if(count($removelist)){
-                    \backend\models\Quotationline::deleteAll(['id'=>$removelist]);
+                if (count($removelist)) {
+                    \backend\models\Quotationline::deleteAll(['id' => $removelist]);
                 }
                 return $this->redirect(['index']);
             }
@@ -245,13 +249,14 @@ class SaleController extends Controller
      */
     public function actionDelete($id)
     {
-        \backend\models\Saleline::deleteAll(['sale_id'=>$id]);
+        \backend\models\Saleline::deleteAll(['sale_id' => $id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    public function actionPayment(){
+    public function actionPayment()
+    {
         $saleid = \Yii::$app->request->post('saleid');
         $pdate = \Yii::$app->request->post('payment_date');
         $ptime = \Yii::$app->request->post('payment_time');
@@ -259,43 +264,45 @@ class SaleController extends Controller
         $note = \Yii::$app->request->post('note');
         $uploaded = UploadedFile::getInstanceByName('payment_slip');
         $file = '';
-        if($uploaded){
+        if ($uploaded) {
             $file = $uploaded->name;
-            $uploaded->saveAs(Yii::getAlias('@backend') .'/web/uploads/slip/'.$uploaded->name);
+            $uploaded->saveAs(Yii::getAlias('@backend') . '/web/uploads/slip/' . $uploaded->name);
         }
 
 
-        if($pdate != ''){
-            if($pamount!='' && $pamount > 0){
-              $model = new \backend\models\Paymenttrans();
-              $model->sale_id = $saleid;
-                $model->trans_date = date('Y-m-d' , strtotime($pdate));
-                $model->trans_time = date('H:i:s' , strtotime($ptime));
+        if ($pdate != '') {
+            if ($pamount != '' && $pamount > 0) {
+                $model = new \backend\models\Paymenttrans();
+                $model->sale_id = $saleid;
+                $model->trans_date = date('Y-m-d', strtotime($pdate));
+                $model->trans_time = date('H:i:s', strtotime($ptime));
                 $model->amount = $pamount;
-              $model->note = $note;
-              $model->status = 1;
-              $model->slip = $file;
+                $model->note = $note;
+                $model->status = 1;
+                $model->slip = $file;
 
-              if($model->save()){
-                 self::updatePayment($saleid,$model->amount);
-              }
+                if ($model->save()) {
+                    self::updatePayment($saleid, $model->amount);
+                }
             }
         }
 
 
         return $this->redirect(['index']);
     }
-    public function updatePayment($saleid,$payamount){
-        if($saleid){
-            $model = \backend\models\Sale::find()->where(['id'=>$saleid])->one();
-            if($model){
-                $model_paytrans = \backend\models\Paymenttrans::find()->where(['sale_id'=>$saleid])->sum('amount');
 
-                if($model->total_amount <= ($payamount + $model_paytrans)){
+    public function updatePayment($saleid, $payamount)
+    {
+        if ($saleid) {
+            $model = \backend\models\Sale::find()->where(['id' => $saleid])->one();
+            if ($model) {
+                $model_paytrans = \backend\models\Paymenttrans::find()->where(['sale_id' => $saleid])->sum('amount');
+
+                if ($model->total_amount <= ($payamount + $model_paytrans)) {
                     $model->payment_status = 1;
-                    if($model->save(false)){
-                        $closeinv = \backend\models\Sale::find()->where(['id'=>$saleid])->one();
-                        if($closeinv){
+                    if ($model->save(false)) {
+                        $closeinv = \backend\models\Sale::find()->where(['id' => $saleid])->one();
+                        if ($closeinv) {
                             $closeinv->status = 2;
                             $closeinv->save(false);
                         }
@@ -321,30 +328,31 @@ class SaleController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionCreateinvoice(){
-        if(Yii::$app->request->isPost){
+    public function actionCreateinvoice()
+    {
+        if (Yii::$app->request->isPost) {
             $id = Yii::$app->request->post('sale_id');
-            if($id){
-                $model = \backend\models\Picking::find()->where(['id'=>$id])->one();
-                $modelline = \backend\models\Pickingline::find()->where(['picking_id'=>$id])->all();
+            if ($id) {
+                $model = \backend\models\Picking::find()->where(['id' => $id])->one();
+                $modelline = \backend\models\Pickingline::find()->where(['picking_id' => $id])->all();
 
-                if($model){
+                if ($model) {
                     $order = new \backend\models\Invoice();
                     $order->sale_id = $model->id;
                     $order->invoice_no = $order::getLastNo();
                     $order->status = 1;
                     $order->picking_id = $id;
                     $order->note = $model->note;
-                    if($order->save()){
-                        if(count($modelline)>0){
-                            foreach($modelline as $value){
+                    if ($order->save()) {
+                        if (count($modelline) > 0) {
+                            foreach ($modelline as $value) {
                                 $orderline = new \backend\models\Invoiceline();
                                 $orderline->invoice_id = $order->id;
                                 $orderline->product_id = $value->product_id;
                                 $orderline->qty = $value->qty;
                                 $orderline->price = $value->price;
-                              //  $orderline->disc_amount = $value->disc_amount;
-                              //  $orderline->line_amount = $value->line_amount;
+                                //  $orderline->disc_amount = $value->disc_amount;
+                                //  $orderline->line_amount = $value->line_amount;
                                 $orderline->save();
                             }
                         }
@@ -354,48 +362,56 @@ class SaleController extends Controller
         }
         return $this->redirect(['invoice/index']);
     }
-    public function actionFindwarehouse(){
+
+    public function actionFindwarehouse()
+    {
         $prod = \Yii::$app->request->post("prod");
-        if($prod !=''){
+        if ($prod != '') {
             $model = \backend\models\Warehouse::find()->all();
-            if($model){
-                foreach($model as $val){
+            if ($model) {
+                foreach ($model as $val) {
                     echo "<option value='" . $val->id . "'>$val->name</option>";
                 }
             }
-        }else{
+        } else {
             echo "";
         }
     }
-    public function actionFindpermit(){
+
+    public function actionFindpermit()
+    {
         $prod = \Yii::$app->request->post("prod");
-        if($prod !=''){
-            $model = \backend\models\Stockbalance::find()->where(['product_id'=>$prod])->andFilterWhere(['!=','qty',0])->all();
-            if($model){
-                foreach($model as $val){
+        if ($prod != '') {
+            $model = \backend\models\Stockbalance::find()->where(['product_id' => $prod])->andFilterWhere(['!=', 'qty', 0])->all();
+            if ($model) {
+                foreach ($model as $val) {
                     echo "<option value='" . $val->id . "'>$val->permit_no</option>";
                 }
             }
-        }else{
+        } else {
             echo "";
         }
     }
-    public function actionFindtransport(){
+
+    public function actionFindtransport()
+    {
         $prod = \Yii::$app->request->post("prod");
-        if($prod !=''){
-            $model = \backend\models\Stockbalance::find()->where(['product_id'=>$prod])->andFilterWhere(['!=','qty',0])->all();
-            if($model){
-                foreach($model as $val){
+        if ($prod != '') {
+            $model = \backend\models\Stockbalance::find()->where(['product_id' => $prod])->andFilterWhere(['!=', 'qty', 0])->all();
+            if ($model) {
+                foreach ($model as $val) {
                     echo "<option value='" . $val->id . "'>$val->transport_in_no</option>";
                 }
             }
-        }else{
+        } else {
             echo "";
         }
     }
-    public function actionCreatepicking(){
+
+    public function actionCreatepicking()
+    {
         $sale = \Yii::$app->request->post("sale_id");
-        if($sale){
+        if ($sale) {
             $prod = \Yii::$app->request->post("product_id");
             $qty = \Yii::$app->request->post("line_qty");
             $price = \Yii::$app->request->post("line_price");
@@ -408,10 +424,10 @@ class SaleController extends Controller
             $model->picking_no = $model::getLastNo();
             $model->sale_id = $sale;
             $model->trans_date = strtotime(date('d/m/Y'));
-            $model->status= 1;
-            if($model->save(false)){
-                if(count($prod)>0){
-                    for($i=0;$i<=count($prod)-1;$i++){
+            $model->status = 1;
+            if ($model->save(false)) {
+                if (count($prod) > 0) {
+                    for ($i = 0; $i <= count($prod) - 1; $i++) {
                         $modelline = new \backend\models\Pickingline();
                         $modelline->picking_id = $model->id;
                         $modelline->product_id = $prod[$i];
@@ -429,56 +445,62 @@ class SaleController extends Controller
 
             $this->updateStock($model->id);
 
-            return $this->redirect(['update','id'=>$sale]);
+            return $this->redirect(['update', 'id' => $sale]);
         }
         return "";
 
     }
-    public function updateStock($pickingid){
-        $modelline = \backend\models\Pickingline::find()->where(['picking_id'=>$pickingid])->all();
-        if($modelline){
+
+    public function updateStock($pickingid)
+    {
+        $modelline = \backend\models\Pickingline::find()->where(['picking_id' => $pickingid])->all();
+        if ($modelline) {
             $data = [];
-            foreach($modelline as $value){
-                array_push($data,[
-                    'prod_id'=>$value->product_id,
-                    'qty'=>$value->qty,
-                    'warehouse_id'=>$value->warehouse_id,
-                    'trans_type'=>TransType::TRANS_PICKING,
+            foreach ($modelline as $value) {
+                array_push($data, [
+                    'prod_id' => $value->product_id,
+                    'qty' => $value->qty,
+                    'warehouse_id' => $value->warehouse_id,
+                    'trans_type' => TransType::TRANS_PICKING,
                     'permit_no' => $value->permit_no,
                     'transport_no' => $value->transport_in_no,
-                    'excise_no'=> $value->excise_no,
+                    'excise_no' => $value->excise_no,
                 ]);
             }
             $uptrans = TransCalculate::createJournal($data);
         }
     }
-    public function actionPrint(){
-        if(Yii::$app->request->isGet) {
-          //  echo "ok";
+
+    public function actionPrint()
+    {
+        if (Yii::$app->request->isGet) {
+            //  echo "ok";
             $id = Yii::$app->request->get('id');
             if ($id) {
-               $this->redirect(['bill','id'=>$id,['target'=>'_blank']]);
+                $this->redirect(['bill', 'id' => $id, ['target' => '_blank']]);
             }
-        }else{
-           // echo "no";
+        } else {
+            // echo "no";
         }
     }
-    public function actionBill($id){
-        $model = \backend\models\Picking::find()->where(['id' => $id])->one();
-        $modelline = \backend\models\Pickingline::find()->where(['picking_id'=>$id])->all();
 
-        if($model){
+    public function actionBill($id)
+    {
+        $model = \backend\models\Picking::find()->where(['id' => $id])->one();
+        $modelline = \backend\models\Pickingline::find()->where(['picking_id' => $id])->all();
+
+        if ($model) {
             // return "nira";
             $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
                 //  'format' => [150,236], //manaul
-                'format' =>  Pdf::FORMAT_A4,
+                'format' => Pdf::FORMAT_A4,
                 //'format' =>  Pdf::FORMAT_A5,
-                'orientation' =>Pdf::ORIENT_PORTRAIT,
+                'orientation' => Pdf::ORIENT_PORTRAIT,
                 'destination' => Pdf::DEST_BROWSER,
-                'content' => $this->renderPartial('_picking',[
-                    'model'=>$model,
-                    'modelline'=>$modelline,
+                'content' => $this->renderPartial('_picking', [
+                    'model' => $model,
+                    'modelline' => $modelline,
 
                 ]),
                 //'content' => "nira",
@@ -501,48 +523,51 @@ class SaleController extends Controller
             return $pdf->render();
         }
     }
-    public function actionCreatepacking(){
+
+    public function actionCreatepacking()
+    {
         $id = \Yii::$app->request->post('saleid');
 
-        if($id){
-            return $this->redirect(['sale/showcreate','id'=>$id]);
+        if ($id) {
+            return $this->redirect(['sale/showcreate', 'id' => $id]);
         }
     }
-    public function actionShowcreate($id){
-        if($id){
-            $model = \backend\models\Sale::find()->where(['id'=>$id])->one();
-            $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
+
+    public function actionShowcreate($id)
+    {
+        if ($id) {
+            $model = \backend\models\Sale::find()->where(['id' => $id])->one();
+            $modelline = \backend\models\Saleline::find()->where(['sale_id' => $id])->all();
             $data = [];
-            if($modelline){
-               foreach ($modelline as $value){
-                   array_push($data, $value->product_id);
-               }
+            if ($modelline) {
+                foreach ($modelline as $value) {
+                    array_push($data, $value->product_id);
+                }
             }
 
-            $sql = "SELECT t1.product_id,t1.qty,t1.price,t2.invoice_no,t2.invoice_date,t2.transport_in_no,".
-                   "t2.transport_in_date,t2.sequence,t2.permit_no,t2.permit_date,t2.kno_no_in,t2.kno_in_date,t3.origin,".
-                "t2.thb_amount,t2.usd_rate,t1.stock_id,t1.sale_id,t1.id as sale_line_id".
-                   " FROM sale_line as t1 left join product_stock as t2 on t1.stock_id = t2.id inner join product as t3 on ".
-                   "t3.id = t1.product_id".
-                   " WHERE sale_id=".$model->id;
+            $sql = "SELECT t1.product_id,t1.qty,t1.price,t2.invoice_no,t2.invoice_date,t2.transport_in_no," .
+                "t2.transport_in_date,t2.sequence,t2.permit_no,t2.permit_date,t2.kno_no_in,t2.kno_in_date,t3.origin," .
+                "t2.thb_amount,t2.usd_rate,t1.stock_id,t1.sale_id,t1.id as sale_line_id" .
+                " FROM sale_line as t1 left join product_stock as t2 on t1.stock_id = t2.id inner join product as t3 on " .
+                "t3.id = t1.product_id" .
+                " WHERE sale_id=" . $model->id;
 
             $query = Yii::$app->db->createCommand($sql)->queryAll();
 
             //print_r($query);return;
 
 
-
             $searchModel = new \backend\models\ProductstockSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            $dataProvider->query->andFilterWhere(['product_id'=>$data]);
+            $dataProvider->query->andFilterWhere(['product_id' => $data]);
 
-            return $this->render('_packingslip',[
-               'model'=>$model,
-               'modelline'=>$modelline,
-               'query' => $query
-               // 'searchModel'=> $searchModel,
-               // 'dataProvider' => $dataProvider,
-              //  'order_no' => $model->sale_no,
+            return $this->render('_packingslip', [
+                'model' => $model,
+                'modelline' => $modelline,
+                'query' => $query
+                // 'searchModel'=> $searchModel,
+                // 'dataProvider' => $dataProvider,
+                //  'order_no' => $model->sale_no,
             ]);
 //            return $this->render('_packingslip',[
 //                'model'=>$model,
@@ -550,108 +575,114 @@ class SaleController extends Controller
 //            ]);
         }
     }
-    public function actionSavepicking(){
-        //if(Yii::$app->request->isAjax){
-           // $list = Yii::$app->request->post('list');
 
-            $sale_id = Yii::$app->request->post('sale_id');
-            $sale_line_id = Yii::$app->request->post('sale_line_id');
-            $stock_id = Yii::$app->request->post('stock_id');
-            $line_qty = Yii::$app->request->post('line_qty');
+    public function actionSavepicking()
+    {
+        //if(Yii::$app->request->isAjax){
+        // $list = Yii::$app->request->post('list');
+
+        $sale_id = Yii::$app->request->post('sale_id');
+        $sale_line_id = Yii::$app->request->post('sale_line_id');
+        $stock_id = Yii::$app->request->post('stock_id');
+        $line_qty = Yii::$app->request->post('line_qty');
+        $trans_out_no = Yii::$app->request->post('trans_out_no');
 
         $sale_no = \backend\models\Sale::findSaleNo($sale_id);
         $sale_date = \backend\models\Sale::findSaleDate($sale_id);
 
         $qty = 0;
-            $price = 0;
-            if(count($stock_id)){
-                $picking = new \backend\models\Picking();
-                $picking->sale_id = $sale_id[0];
-                $picking->getLastNo();
-                $picking->trans_date = strtotime(date('Y-m-d'));
-                $picking->picking_date = date('Y-m-d');
-                if($picking->save()){
-                    if(count($stock_id)>0) {
-                        $data = [];
-                        for($i=0;$i<=count($stock_id)-1;$i++){
-                           // echo "kkdkd";return;
-                            $stock_info = \common\models\ProductStock::find()->where(['id'=>$stock_id[$i]])->one();
-                            if($stock_info) {
-                                $pickline = new \backend\models\Pickingline();
-                                $pickline->picking_id = $picking->id;
-                                $pickline->product_id = $stock_info->product_id;
-                                $pickline->qty = $line_qty[$i];
-                                $pickline->warehouse_id = $stock_info->warehouse_id;
-                                $pickline->inv_no = $stock_info->invoice_no;
-                                $pickline->inv_date = $stock_info->invoice_date;
-                                $pickline->permit_no = $stock_info->permit_no;
-                                $pickline->permit_date = $stock_info->permit_date;
-                             //   $pickline->excise_no = $stock_info->excise_no;
-                                $pickline->price = $stock_info->usd_rate;
-                              //  $pickline->excise_date = $stock_info->excise_date;
-                                $pickline->save(false);
+        $price = 0;
+        if (count($stock_id)) {
+            $picking = new \backend\models\Picking();
+            $picking->sale_id = $sale_id[0];
+            $picking->getLastNo();
+            $picking->trans_date = strtotime(date('Y-m-d'));
+            $picking->picking_date = date('Y-m-d');
+            if ($picking->save()) {
+                if (count($stock_id) > 0) {
+                    $data = [];
+                    for ($i = 0; $i <= count($stock_id) - 1; $i++) {
+                        // echo "kkdkd";return;
+                        $stock_info = \common\models\ProductStock::find()->where(['id' => $stock_id[$i]])->one();
+                        if ($stock_info) {
+                            $pickline = new \backend\models\Pickingline();
+                            $pickline->picking_id = $picking->id;
+                            $pickline->product_id = $stock_info->product_id;
+                            $pickline->qty = $line_qty[$i];
+                            $pickline->warehouse_id = $stock_info->warehouse_id;
+                            $pickline->inv_no = $stock_info->invoice_no;
+                            $pickline->inv_date = $stock_info->invoice_date;
+                            $pickline->permit_no = $stock_info->permit_no;
+                            $pickline->permit_date = $stock_info->permit_date;
+                            //   $pickline->excise_no = $stock_info->excise_no;
+                            $pickline->price = $stock_info->usd_rate;
+                            $pickline->trans_out_no = $
+                                //  $pickline->excise_date = $stock_info->excise_date;
+                            $pickline->save(false);
 
 
+                            array_push($data, [
+                                'prod_id' => $stock_info->product_id,
+                                'qty' => $line_qty[$i],
+                                'warehouse_id' => $stock_info->warehouse_id,
+                                'trans_type' => \backend\helpers\TransType::TRANS_ADJUST_OUT,
+                                'permit_no' => $stock_info->permit_no,
+                                'permit_date' => $stock_info->permit_date,//date('Y-d-m',strtotime($linepermitdate[$i])),
+                                'transport_in_no' => $stock_info->transport_in_no,
+                                'transport_in_date' => $stock_info->transport_in_date,//date('Y-d-m',strtotime($rowData[14])),
+                                'excise_no' => '',
+                                'excise_date' => date('Y-m-d'),
+                                'invoice_no' => $sale_no,
+                                'invoice_date' => date('Y-d-m', strtotime($sale_date)),//date('Y-d-m',strtotime($rowData[12])),
+                                'sequence' => $stock_info->sequence,
+                                'kno_no_in' => $stock_info->kno_no_in,
+                                'kno_in_date' => $stock_info->kno_in_date,//date('Y-d-m',strtotime($rowData[19])),
+                                'out_qty' => 0,
+                                'usd_rate' => $stock_info->usd_rate,
+                                'thb_amount' => $stock_info->usd_rate,
 
-                                array_push($data, [
-                                    'prod_id' => $stock_info->product_id,
-                                    'qty' => $line_qty[$i],
-                                    'warehouse_id' => $stock_info->warehouse_id,
-                                    'trans_type' => \backend\helpers\TransType::TRANS_ADJUST_OUT,
-                                    'permit_no' => $stock_info->permit_no,
-                                    'permit_date' => $stock_info->permit_date,//date('Y-d-m',strtotime($linepermitdate[$i])),
-                                    'transport_in_no' => $stock_info->transport_in_no,
-                                    'transport_in_date' => $stock_info->transport_in_date,//date('Y-d-m',strtotime($rowData[14])),
-                                    'excise_no' => '',
-                                    'excise_date' => date('Y-m-d'),
-                                    'invoice_no' => $sale_no,
-                                    'invoice_date' => date('Y-d-m', strtotime($sale_date)),//date('Y-d-m',strtotime($rowData[12])),
-                                    'sequence' => $stock_info->sequence,
-                                    'kno_no_in' => $stock_info->kno_no_in,
-                                    'kno_in_date' => $stock_info->kno_in_date,//date('Y-d-m',strtotime($rowData[19])),
-                                    'out_qty' => 0,
-                                    'usd_rate' => $stock_info->usd_rate,
-                                    'thb_amount' => $stock_info->usd_rate,
+                            ]);
 
-                                ]);
-
-                            }
-                        }
-                      //  print_r($data);return;
-                        $update_stock = \backend\models\TransCalculate::createJournal($data);
-                        if ($update_stock) {
-                            $session = Yii::$app->session;
-                            $session->setFlash('msg', 'นำเข้าข้อมูลสินค้าเรียบร้อย');
-                            return $this->redirect(['index']);
-                        } else {
-                            echo 'no';return;
-                            $session = Yii::$app->session;
-                            $session->setFlash('msg-error', 'พบข้อมผิดพลาด');
-                            return $this->redirect(['index']);
                         }
                     }
-
+                    //  print_r($data);return;
+                    $update_stock = \backend\models\TransCalculate::createJournal($data);
+                    if ($update_stock) {
+                        $session = Yii::$app->session;
+                        $session->setFlash('msg', 'นำเข้าข้อมูลสินค้าเรียบร้อย');
+                        return $this->redirect(['index']);
+                    } else {
+                        echo 'no';
+                        return;
+                        $session = Yii::$app->session;
+                        $session->setFlash('msg-error', 'พบข้อมผิดพลาด');
+                        return $this->redirect(['index']);
+                    }
                 }
+
             }
-            return $this->redirect(['sale/update','id'=>$sale_id[0]]);
+        }
+        return $this->redirect(['sale/update', 'id' => $sale_id[0]]);
         //}
     }
-    public function actionPrintinvoice($id){
-        $model = \backend\models\Sale::find()->where(['id' => $id])->one();
-        $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
 
-        if($model){
+    public function actionPrintinvoice($id)
+    {
+        $model = \backend\models\Sale::find()->where(['id' => $id])->one();
+        $modelline = \backend\models\Saleline::find()->where(['sale_id' => $id])->all();
+
+        if ($model) {
             // return "nira";
             $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
                 //  'format' => [150,236], //manaul
-                'format' =>  Pdf::FORMAT_A4,
+                'format' => Pdf::FORMAT_A4,
                 //'format' =>  Pdf::FORMAT_A5,
-                'orientation' =>Pdf::ORIENT_PORTRAIT,
+                'orientation' => Pdf::ORIENT_PORTRAIT,
                 'destination' => Pdf::DEST_BROWSER,
-                'content' => $this->renderPartial('_invoice',[
-                    'model'=>$model,
-                    'modelline'=>$modelline,
+                'content' => $this->renderPartial('_invoice', [
+                    'model' => $model,
+                    'modelline' => $modelline,
 
                 ]),
                 //'content' => "nira",
@@ -686,8 +717,8 @@ class SaleController extends Controller
 //                Yii::$app->basePath
 //            ]);
 
-            $pdf->options = array_merge($pdf->options , [
-                'fontDir' => array_merge($fontDirs, [ Yii::$app->basePath . '/web/fonts']),  // make sure you refer the right physical path
+            $pdf->options = array_merge($pdf->options, [
+                'fontDir' => array_merge($fontDirs, [Yii::$app->basePath . '/web/fonts']),  // make sure you refer the right physical path
                 'fontdata' => array_merge($fontData, [
                     'angsana' => [
                         'R' => 'angsa.ttf',
@@ -696,7 +727,6 @@ class SaleController extends Controller
                     ]
                 ])
             ]);
-
 
 
 //            $pdf->options['fontdata'] = $fontData + [

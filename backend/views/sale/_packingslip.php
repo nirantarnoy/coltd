@@ -108,7 +108,7 @@ $this->title = "Packing List";
                                 <?=date('d-m-Y',strtotime($query[$i]['invoice_date']))?>
                             </td>
                             <td style="vertical-align: middle">
-                                <input type="text" class="form-control" name="line_amount" style="width: 100px;" value="">
+                                <input type="text" class="form-control" name="line_amount" style="width: 100px;" value="<?=number_format((float)$query[$i]['qty'] * (float)$query[$i]['price'],2);?>">
                             </td>
                             <td style="vertical-align: middle">
                                 <?=$query[$i]['permit_no']?>
