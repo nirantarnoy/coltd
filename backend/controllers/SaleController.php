@@ -659,7 +659,7 @@ class SaleController extends Controller
                                 $kno_out_date_ok = $kno_date[2] . "/" . $kno_date[1] . "/" . $kno_date[0];
                             }
                         }
-                        echo $trans_out_date_ok;return;
+                        echo $trans_out_date_ok.'   '.$trans_out_date[0];return;
                         $stock_info = \common\models\ProductStock::find()->where(['id' => $stock_id[$i]])->one();
                         if ($stock_info) {
                             $pickline = new \backend\models\Pickingline();
