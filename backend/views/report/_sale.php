@@ -103,7 +103,7 @@ $this->title = 'รายงานยอดขาย';
                         ],
                         [
                             'attribute' => 'picking_date',
-                            'contentOptions' => ['style' => 'vertical-align: middle'],
+                            'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
                             'hAlign' => 'left',
                             'format' => 'raw',
                             'filterType' => GridView::FILTER_DATE_RANGE,
@@ -139,7 +139,7 @@ $this->title = 'รายงานยอดขาย';
                         ],
                         [
                             'attribute' => 'transport_out_no',
-                            'contentOptions' => ['style' => 'vertical-align: middle'],
+                            'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
                             'label' => 'เลขที่ใบขน'
                         ],
                         [
