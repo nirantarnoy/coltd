@@ -289,10 +289,10 @@ class InboundinvController extends Controller
 //            $trans_date = $trans_origin[2]."/".$trans_origin[1]."/".$trans_origin[0];
 //        }
 //
-//        $inv_origin = explode('/',$rowData[12]);
-//        if(count($inv_origin)>0 && $inv_origin[0] !=''){
-//            $inv_date = $inv_origin[2]."/".$inv_origin[1]."/".$inv_origin[0];
-//        }
+        $inv_date_x = explode('-',$invoicedate);
+        if(count($inv_date_x)>0 && $inv_date_x[0] !=''){
+            $inv_date = $inv_date_x[2]."/".$inv_date_x[1]."/".$inv_date_x[0];
+        }
 //
 //        $kno_origin = explode('/',$rowData[19]);
 //        if(count($kno_origin)>0 && $kno_origin[0] !=''){
@@ -328,7 +328,7 @@ class InboundinvController extends Controller
                         $kno_date = $kno_date_arr[2] . "/" . $kno_date_arr[1] . "/" . $kno_date_arr[0];
                     }
                 }
-//                echo $permit_date.' '.$kno_date.' '.$transport_date;return;
+               // echo $inv_date.' '.$kno_date;return;
 
                 if ($model) {
                     $model->transport_in_no = $linetransportno[$i];
@@ -365,7 +365,7 @@ class InboundinvController extends Controller
                     'excise_no' => $lineexciseno[$i],
                     'excise_date' => date('Y-d-m', strtotime($lineexcisedate[$i])),
                     'invoice_no' => $invoiceno,
-                    'invoice_date' => date('Y-d-m', strtotime($invoicedate)),//date('Y-d-m',strtotime($rowData[12])),
+                    'invoice_date' => $inv_date,//date('Y-d-m', strtotime($invoicedate)),//date('Y-d-m',strtotime($rowData[12])),
                     'sequence' => $linenum[$i],
                     'kno_no_in' => $linekno_no[$i],
                     'kno_in_date' => $kno_date,//date('Y-d-m',strtotime($rowData[19])),

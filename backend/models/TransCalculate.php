@@ -123,7 +123,7 @@ class TransCalculate extends \yii\base\Model
                 $modelstock->product_id = $param['prod_id'];
                 $modelstock->warehouse_id = $param['warehouse_id'];
                 $modelstock->invoice_no = $param['invoice_no'];
-                $modelstock->invoice_date = date('Y-m-d');
+                $modelstock->invoice_date = date('Y-m-d',strtotime($param['invoice_date']));
                 $modelstock->transport_in_no = $trans_no;
                 $modelstock->transport_in_date = $trans_date;
                 $modelstock->sequence = $param['sequence'];
