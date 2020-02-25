@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Url;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
@@ -11,7 +12,9 @@ $this->title = 'รายงานยอดขาย';
 ?>
 <div class="x_panel">
     <div class="x_title">
-        <h3><i class="fa fa-bar-chart-o"></i> <?=$this->title?> <small></small></h3>
+        <h3><i class="fa fa-bar-chart-o"></i> <?= $this->title ?>
+            <small></small>
+        </h3>
 
         <div class="clearfix"></div>
     </div>
@@ -28,8 +31,8 @@ $this->title = 'รายงานยอดขาย';
                         // 'id',
                         [
                             'attribute' => 'month',
-                            'value' => function($data){
-                              return \backend\helpers\Month::getTypeById($data->month);
+                            'value' => function ($data) {
+                                return \backend\helpers\Month::getTypeById($data->month);
                             },
                             'group' => true,
                         ],
@@ -51,11 +54,11 @@ $this->title = 'รายงานยอดขาย';
 //                                ]
 //                            ])
                         ],
-                        'transport_in_no',
+                        'transport_out_no',
                         'qty',
                         'unit_name',
                         'product_group',
-                       //'name',
+                        //'name',
                         'price',
                         'country_name',
                         'customer_name',
@@ -80,10 +83,10 @@ $this->title = 'รายงานยอดขาย';
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
-                    'emptyCell'=>'-',
-                    'layout'=>'{items}{summary}{pager}',
+                    'emptyCell' => '-',
+                    'layout' => '{items}{summary}{pager}',
                     'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
-                    'showOnEmpty'=>true,
+                    'showOnEmpty' => true,
                     //'showPageSummary'=>true,
                     'tableOptions' => ['class' => 'table table-hover'],
                     'emptyText' => '<br/><div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
@@ -92,7 +95,7 @@ $this->title = 'รายงานยอดขาย';
                         ['class' => 'kartik\grid\SerialColumn'],
                         [
                             'attribute' => 'month',
-                            'value' => function($data){
+                            'value' => function ($data) {
                                 return \backend\helpers\Month::getTypeById($data->month);
                             },
                             'group' => true,
@@ -132,7 +135,17 @@ $this->title = 'รายงานยอดขาย';
 //                            ]),
 
                         ],
-                        'transport_in_no',
+                        [
+                            'attribute' => 'transport_out_no',
+                            'label' => 'เลขที่ใบขน'
+                        ],
+                        [
+                            'attribute' => 'transport_out_date',
+                            'label' => 'วันที่',
+                            'value'=>function($data){
+                               return date('d/m/Y',strtotime($data->transport_out_date));
+                            }
+                        ],
                         [
                             'attribute' => 'qty',
                             'hAlign' => 'right',
@@ -142,21 +155,22 @@ $this->title = 'รายงานยอดขาย';
                         ],
                         'unit_name',
                         [
-                                'attribute'=>'product_group',
-                                'filterType' => GridView::FILTER_SELECT2,
-                                'filter' => ArrayHelper::map(\backend\models\Productcategory::find()->orderBy('name')->asArray()->all(), 'name', 'name'),
-                                'filterWidgetOptions' => [
-                                    'pluginOptions' => ['allowClear' => true],
-                                ],
-                                'filterInputOptions' => ['placeholder' => 'เลือกประเภทสินค้า']
+                            'attribute' => 'product_group',
+                            'label' => 'ประเภทสินค้า',
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filter' => ArrayHelper::map(\backend\models\Productcategory::find()->orderBy('name')->asArray()->all(), 'name', 'name'),
+                            'filterWidgetOptions' => [
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
+                            'filterInputOptions' => ['placeholder' => 'เลือกประเภทสินค้า']
                         ],
                         //'name',
                         [
-                                'attribute' => 'price',
-                                'hAlign' => 'right',
-                                'format' => ['decimal', 2],
-                                'pageSummary' => true,
-                                'pageSummaryFunc' => GridView::F_SUM
+                            'attribute' => 'price',
+                            'hAlign' => 'right',
+                            'format' => ['decimal', 2],
+                            'pageSummary' => true,
+                            'pageSummaryFunc' => GridView::F_SUM
                         ],
                         'country_name',
                         'customer_name',
