@@ -640,9 +640,9 @@ class SaleController extends Controller
                             $pickline->permit_date = $stock_info->permit_date;
                             //   $pickline->excise_no = $stock_info->excise_no;
                             $pickline->price = $stock_info->usd_rate;
-                            $pickline->trans_out_no = $trans_out_no;
+                            $pickline->trans_out_no = $trans_out_no[$i];
                             $pickline->transport_out_date = date('Y-m-d',strtotime($trans_out_date_ok));
-                            $pickline->kno_out_no = $kno_out_no;
+                            $pickline->kno_out_no = $kno_out_no[$i];
                             $pickline->kno_out_date = date('Y-m-d',strtotime($kno_out_date_ok));
                             //  $pickline->excise_date = $stock_info->excise_date;
                             $pickline->save(false);
