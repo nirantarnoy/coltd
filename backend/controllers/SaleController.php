@@ -249,12 +249,30 @@ class SaleController extends Controller
      */
     public function actionDelete($id)
     {
+       // echo $id;return;
         \backend\models\Saleline::deleteAll(['sale_id' => $id]);
+        $this->recalStock($id);
+        \backend\models\Productstock::deleteAll(['outbound_id'=>$id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
+    public function recalStock($id){
+        $product_stock = \backend\models\Productstock::find()->where(['outbound_id'=>$id])->all();
+        foreach ($product_stock as $value){
+            //$sum_all = Productstock::find()->where(['product_id'=>$value->product_id])->sum('qty');
+            $out_qty =$value->out_qty;
+            $model_product = \backend\models\Product::find()->where(['id'=>$value->product_id])->one();
+            if($model_product){
+                $model_product->all_qty = $model_product->all_qty + $out_qty ;
+                $model_product->available_qty = $model_product->available_qty + $out_qty;
+                //    $model_product->available_qty = $model_product->all_qty - (int)$model_product->reserved_qty;
+                $model_product->save(false);
+            }
+        }
 
+
+    }
     public function actionPayment()
     {
         $saleid = \Yii::$app->request->post('saleid');
@@ -597,6 +615,7 @@ class SaleController extends Controller
         $qty = 0;
         $price = 0;
 
+       // print_r($sale_id);return;
 
         if (count($stock_id)) {
             $picking = new \backend\models\Picking();
@@ -667,10 +686,11 @@ class SaleController extends Controller
                                 'out_qty' => 0,
                                 'usd_rate' => $stock_info->usd_rate,
                                 'thb_amount' => $stock_info->usd_rate,
-                                'inbound_id' => '',
-                                'transport_out_no' => $trans_out_no,
+                                'inbound_id' => 0,
+                                'outbound_id' => $sale_id[0],
+                                'transport_out_no' => $trans_out_no[$i],
                                 'transport_out_date'=>date('Y-m-d',strtotime($trans_out_date_ok)),
-                                'kno_out_no'=>$kno_out_no,
+                                'kno_out_no'=>$kno_out_no[$i],
                                 'kno_out_date'=>date('Y-m-d',strtotime($kno_out_date_ok))
 
                             ]);
