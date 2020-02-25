@@ -84,12 +84,27 @@ class TransCalculate extends \yii\base\Model
                   $qty_in = 0;
                   $qty = 0;
                   $qty_out = 0;
+                  $trans_no = '';
+                  $trans_date = '';
+                  $kno_no = '';
+                  $kno_date = '';
+
                   if($stocktype==1){ // picking out
                       $qty_out = $param['qty'];
                       $qty = ((int)$param['qty'] * -1);
+
+                      $trans_no = $param['transport_out_no'];
+                      $trans_date = date('Y-m-d',strtotime( $param['transport_out_date']));
+                      $kno_no = $param['kno_out_no'];
+                      $kno_date = date('Y-m-d',strtotime($param['kno_out_date']));
                   }else{
                       $qty_in = $param['qty'];
                       $qty = $param['qty'];
+
+                      $trans_no = $param['transport_in_no'];
+                      $trans_date = date('Y-m-d',strtotime( $param['transport_in_date']));
+                      $kno_no = $param['kno_no_in'];
+                      $kno_date = date('Y-m-d',strtotime($param['kno_in_date']));
                   }
 
                   $modelstock = new Productstock();
@@ -97,13 +112,13 @@ class TransCalculate extends \yii\base\Model
                   $modelstock->warehouse_id = $param['warehouse_id'];
                   $modelstock->invoice_no = $param['invoice_no'];
                   $modelstock->invoice_date = date('Y-m-d');
-                  $modelstock->transport_in_no = $param['transport_in_no'];
-                  $modelstock->transport_in_date = date('Y-m-d',strtotime( $param['transport_in_date']));
+                  $modelstock->transport_in_no = $trans_no;
+                  $modelstock->transport_in_date = $trans_date;
                   $modelstock->sequence = $param['sequence'];
                   $modelstock->permit_no = $param['permit_no'];
                   $modelstock->permit_date = date('Y-m-d',strtotime($param['permit_date']));
-                  $modelstock->kno_no_in = $param['kno_no_in'];
-                  $modelstock->kno_in_date = date('Y-m-d',strtotime($param['kno_in_date']));
+                  $modelstock->kno_no_in = $kno_no;
+                  $modelstock->kno_in_date = $kno_date;
                   $modelstock->in_qty = $qty_in;
                   $modelstock->qty = $qty;
                   $modelstock->out_qty = $qty_out;

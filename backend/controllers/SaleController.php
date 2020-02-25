@@ -585,13 +585,19 @@ class SaleController extends Controller
         $sale_line_id = Yii::$app->request->post('sale_line_id');
         $stock_id = Yii::$app->request->post('stock_id');
         $line_qty = Yii::$app->request->post('line_qty');
-        $trans_out_no = Yii::$app->request->post('trans_out_no');
+
+        $trans_out_no = Yii::$app->request->post('line_trans_out_no');
+        $trans_out_date = Yii::$app->request->post('line_trans_out_date');
+        $kno_out_no = Yii::$app->request->post('line_kno_out_no');
+        $kno_out_date = Yii::$app->request->post('line_kno_out_date');
 
         $sale_no = \backend\models\Sale::findSaleNo($sale_id);
         $sale_date = \backend\models\Sale::findSaleDate($sale_id);
 
         $qty = 0;
         $price = 0;
+
+
         if (count($stock_id)) {
             $picking = new \backend\models\Picking();
             $picking->sale_id = $sale_id[0];
@@ -602,7 +608,25 @@ class SaleController extends Controller
                 if (count($stock_id) > 0) {
                     $data = [];
                     for ($i = 0; $i <= count($stock_id) - 1; $i++) {
-                        // echo "kkdkd";return;
+
+                        $trans_out_date_ok = null;
+                        $kno_out_date_ok = null;
+
+                        if ($trans_out_date[$i] != '') {
+                            //  echo  $linepermitdate[$i];return;
+                            $trans_date = explode('-', $trans_out_date[$i]);
+                            if (count($trans_date) > 0 && $trans_date[0] != '') {
+                                $trans_out_date_ok = $trans_date[2] . "/" . $trans_date[1] . "/" . $trans_date[0];
+                            }
+                        }
+                        if ($kno_out_date[$i] != '') {
+                            //  echo  $linepermitdate[$i];return;
+                            $kno_date = explode('-', $kno_out_date[$i]);
+                            if (count($kno_date) > 0 && $kno_date[0] != '') {
+                                $kno_out_date_ok = $kno_date[2] . "/" . $kno_date[1] . "/" . $kno_date[0];
+                            }
+                        }
+
                         $stock_info = \common\models\ProductStock::find()->where(['id' => $stock_id[$i]])->one();
                         if ($stock_info) {
                             $pickline = new \backend\models\Pickingline();
@@ -617,7 +641,10 @@ class SaleController extends Controller
                             //   $pickline->excise_no = $stock_info->excise_no;
                             $pickline->price = $stock_info->usd_rate;
                             $pickline->trans_out_no = $trans_out_no;
-                                //  $pickline->excise_date = $stock_info->excise_date;
+                            $pickline->transport_out_date = date('Y-m-d',strtotime($trans_out_date_ok));
+                            $pickline->kno_out_no = $kno_out_no;
+                            $pickline->kno_out_date = date('Y-m-d',strtotime($kno_out_date_ok));
+                            //  $pickline->excise_date = $stock_info->excise_date;
                             $pickline->save(false);
 
 
@@ -640,7 +667,11 @@ class SaleController extends Controller
                                 'out_qty' => 0,
                                 'usd_rate' => $stock_info->usd_rate,
                                 'thb_amount' => $stock_info->usd_rate,
-                                'inbound_id' =>''
+                                'inbound_id' => '',
+                                'transport_out_no' => $trans_out_no,
+                                'transport_out_date'=>date('Y-m-d',strtotime($trans_out_date_ok)),
+                                'kno_out_no'=>$kno_out_no,
+                                'kno_out_date'=>date('Y-m-d',strtotime($kno_out_date_ok))
 
                             ]);
 

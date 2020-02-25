@@ -38,6 +38,7 @@ $this->title = "Packing List";
                         <th style="text-align: center">พิกัด</th>
                         <th style="text-align: center">ประเทศต้นกำเหนิด</th>
                         <th style="text-align: center">ใบขนขาออก</th>
+                        <th style="text-align: center">วันที่</th>
                         <th style="text-align: center">invoice</th>
                         <th style="text-align: center">invoice/date</th>
                         <th style="text-align: center">จำนวนเงิน</th>
@@ -99,7 +100,10 @@ $this->title = "Packing List";
                                 <?=$query[$i]['origin']?>
                             </td>
                             <td style="vertical-align: middle">
-                                <input type="text" class="form-control" name="trans_out_no" style="width: 100px;" value="">
+                                <input type="text" class="form-control" name="line_transport_out_no[]" style="width: 100px;" value="">
+                            </td>
+                            <td style="vertical-align: middle">
+                                <input type="date" class="form-control" name="line_transport_out_date[]" value="">
                             </td>
                             <td style="vertical-align: middle">
                                 <?=$query[$i]['invoice_no']?>
@@ -108,19 +112,21 @@ $this->title = "Packing List";
                                 <?=date('d-m-Y',strtotime($query[$i]['invoice_date']))?>
                             </td>
                             <td style="vertical-align: middle">
-                                <input type="text" class="form-control" name="line_amount" style="width: 100px;" value="<?=number_format((float)$query[$i]['qty'] * (float)$query[$i]['price'],2);?>">
+                                <input type="text" class="form-control" name="line_amount[]" style="width: 100px;" value="<?=number_format((float)$query[$i]['qty'] * (float)$query[$i]['price'],2);?>">
                             </td>
                             <td style="vertical-align: middle">
                                 <?=$query[$i]['permit_no']?>
+<!--                                <input type="text" style="width: 200px;" class="form-control line_permit_no" name="line_permit_no[]" value="">-->
                             </td>
                             <td style="vertical-align: middle">
+<!--                                <input type="date" class="form-control" name="permit_date[]" value=" --><?//=date('d-m-Y',strtotime($query[$i]['permit_date']))?><!--">-->
                                 <?=date('d-m-Y',strtotime($query[$i]['permit_date']))?>
                             </td>
                             <td style="vertical-align: middle">
-                                <input type="text" style="width: 200px;" class="form-control line_kno_in" name="line_kno_in[]" value="<?=$query[$i]['kno_no_in']?>">
+                                <input type="text" style="width: 200px;" class="form-control line_kno_out" name="line_kno_out_no[]" value="">
                             </td>
                             <td style="vertical-align: middle">
-                                <input type="date" class="form-control" name="kno_in_date" value="<?=date('d-m-Y',strtotime($query[$i]['kno_in_date']))?>">
+                                <input type="date" class="form-control" name="line_kno_out_date[]" value="">
                             </td>
                         </tr>
                       <?php endfor;?>
