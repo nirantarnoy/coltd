@@ -599,6 +599,7 @@ class SaleController extends Controller
 
     public function actionSavepicking()
     {
+       // echo 'niran';return;
         //if(Yii::$app->request->isAjax){
         // $list = Yii::$app->request->post('list');
 
@@ -627,7 +628,7 @@ class SaleController extends Controller
                 $pick_date = $sale_date_x[2] . "/" . $sale_date_x[1] . "/" . $sale_date_x[0];
             }
         }
-        // echo $pick_date;return;
+       //print_r($trans_out_no);return;
 
         if (count($stock_id)) {
 
@@ -636,11 +637,11 @@ class SaleController extends Controller
             $picking->getLastNo();
             $picking->trans_date = strtotime(date('Y-m-d'));
             $picking->picking_date = date('Y-m-d', strtotime($pick_date));
-            if ($picking->save()) {
+            if ($picking->save(false)) {
                 if (count($stock_id) > 0) {
                     $data = [];
                     for ($i = 0; $i <= count($stock_id) - 1; $i++) {
-
+                       echo $trans_out_no[$i];return;
                         $trans_out_date_ok = null;
                         $kno_out_date_ok = null;
 
