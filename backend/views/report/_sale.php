@@ -176,6 +176,7 @@ $this->title = 'รายงานยอดขาย';
                         //'name',
                         [
                             'attribute' => 'price',
+                            'label'=> 'Total Amount',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                             'hAlign' => 'right',
                             'format' => ['decimal', 2],
