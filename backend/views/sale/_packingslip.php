@@ -57,6 +57,7 @@ $this->title = "Packing List";
                             <td style="vertical-align: middle">
                                 <input type="hidden" name="stock_id[]" value="<?=$query[$i]['stock_id']?>">
                                 <input type="hidden" name="sale_id[]" value="<?=$query[$i]['sale_id']?>">
+                                <input type="hidden" name="sale_date" value="<?=date('d-m-Y',$query[$i]['require_date']);?>">
                                 <input type="hidden" name="sale_line_id[]" value="<?=$query[$i]['sale_line_id']?>">
                                 <?=$i+1?>
                             </td>

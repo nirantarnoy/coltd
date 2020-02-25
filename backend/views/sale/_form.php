@@ -362,7 +362,7 @@ $this->registerCss('
                                             <a data-toggle="collapse" data-parent="#accordion"
                                                href="#collapse<?= $i ?>">
                                                 <?= $value->picking_no ?> <label
-                                                        class="label label-success"><?= date('d/m/Y', $value->trans_date) ?></label></a>
+                                                        class="label label-success"><?= date('d/m/Y', strtotime($value->picking_date)) ?></label></a>
                                             <span class="pull-right"><div data-var="<?= $value->id ?>"
                                                                           class="btn btn-pincking-invoice btn-danger"
                                                                           onclick="pickinginv($(this))"><i

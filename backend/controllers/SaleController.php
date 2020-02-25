@@ -565,10 +565,10 @@ class SaleController extends Controller
 
             $sql = "SELECT t1.product_id,t1.qty,t1.price,t2.invoice_no,t2.invoice_date,t2.transport_in_no," .
                 "t2.transport_in_date,t2.sequence,t2.permit_no,t2.permit_date,t2.kno_no_in,t2.kno_in_date,t3.origin," .
-                "t2.thb_amount,t2.usd_rate,t1.stock_id,t1.sale_id,t1.id as sale_line_id" .
+                "t2.thb_amount,t2.usd_rate,t1.stock_id,t1.sale_id,t1.id as sale_line_id,t4.require_date" .
                 " FROM sale_line as t1 left join product_stock as t2 on t1.stock_id = t2.id inner join product as t3 on " .
-                "t3.id = t1.product_id" .
-                " WHERE sale_id=" . $model->id;
+                "t3.id = t1.product_id inner join sale as t4 on t1.sale_id = t4.id" .
+                " WHERE t1.sale_id=" . $model->id;
 
             $query = Yii::$app->db->createCommand($sql)->queryAll();
 
@@ -600,6 +600,7 @@ class SaleController extends Controller
         // $list = Yii::$app->request->post('list');
 
         $sale_id = Yii::$app->request->post('sale_id');
+        $sale_date = Yii::$app->request->post('sale_date');
         $sale_line_id = Yii::$app->request->post('sale_line_id');
         $stock_id = Yii::$app->request->post('stock_id');
         $line_qty = Yii::$app->request->post('line_qty');
@@ -610,19 +611,28 @@ class SaleController extends Controller
         $kno_out_date = Yii::$app->request->post('line_kno_out_date');
 
         $sale_no = \backend\models\Sale::findSaleNo($sale_id);
-        $sale_date = \backend\models\Sale::findSaleDate($sale_id);
+       // $sale_date = \backend\models\Sale::findSaleDate($sale_id);
 
         $qty = 0;
         $price = 0;
+        $pick_date = null;
 
-       // print_r($sale_id);return;
+        if ($sale_date != '') {
+            //  echo  $linepermitdate[$i];return;
+            $sale_date_x = explode('-', $sale_date);
+            if (count($sale_date_x) > 0 && $sale_date_x[0] != '') {
+                $pick_date = $sale_date_x[2] . "/" . $sale_date_x[1] . "/" . $sale_date_x[0];
+            }
+        }
+       // echo $pick_date;return;
 
         if (count($stock_id)) {
+
             $picking = new \backend\models\Picking();
             $picking->sale_id = $sale_id[0];
             $picking->getLastNo();
             $picking->trans_date = strtotime(date('Y-m-d'));
-            $picking->picking_date = date('Y-m-d');
+            $picking->picking_date = date('Y-m-d',strtotime($pick_date));
             if ($picking->save()) {
                 if (count($stock_id) > 0) {
                     $data = [];
@@ -679,7 +689,7 @@ class SaleController extends Controller
                                 'excise_no' => '',
                                 'excise_date' => date('Y-m-d'),
                                 'invoice_no' => $sale_no,
-                                'invoice_date' => date('Y-d-m', strtotime($sale_date)),//date('Y-d-m',strtotime($rowData[12])),
+                                'invoice_date' => date('Y-d-m', strtotime($pick_date)),//date('Y-d-m',strtotime($rowData[12])),
                                 'sequence' => $stock_info->sequence,
                                 'kno_no_in' => $stock_info->kno_no_in,
                                 'kno_in_date' => $stock_info->kno_in_date,//date('Y-d-m',strtotime($rowData[19])),
