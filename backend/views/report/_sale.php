@@ -138,6 +138,11 @@ $this->title = 'รายงานยอดขาย';
 
                         ],
                         [
+                            'attribute' => 'inv_no',
+                            'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
+                            'label' => 'INV No.'
+                        ],
+                        [
                             'attribute' => 'transport_out_no',
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
                             'label' => 'เลขที่ใบขน'

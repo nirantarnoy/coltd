@@ -656,7 +656,7 @@ class SaleController extends Controller
                             //  echo  $linepermitdate[$i];return;
                             $kno_date = explode('-', $kno_out_date[$i]);
                             if (count($kno_date) > 0 && $kno_date[0] != '') {
-                                $kno_out_date_ok = $kno_date[2] . "/" . $kno_date[1] . "/" . $kno_date[0];
+                                $kno_out_date_ok = $kno_date[0] . "/" . $kno_date[1] . "/" . $kno_date[2];
                             }
                         }
                        // echo $trans_out_date_ok.'   '.$trans_out_date[0];return;
