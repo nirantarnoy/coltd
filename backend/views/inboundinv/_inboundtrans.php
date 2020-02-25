@@ -3,7 +3,7 @@ use yii\helpers\Url;
 ?>
 <div class="row">
     <div class="col-lg-12">
-        <h1>Invoice No: <?=$modelinv->invoice_no;?></h1>
+        <h1>Invoice No: <?=$modelinv->docin_no;?></h1>
     </div>
 </div>
 <div class="row">
@@ -11,7 +11,7 @@ use yii\helpers\Url;
         <div class="panel panel-body">
             <div class="table-responsive" style="overflow-x: scroll;">
                 <form id="form-recieve" action="<?=Url::to(['inboundinv/recieve'],true)?>" method="post">
-                    <input type="hidden" name="invoice_no" value="<?=$modelinv->invoice_no;?>">
+                    <input type="hidden" name="invoice_no" value="<?=$modelinv->docin_no;?>">
                     <input type="hidden" name="invoice_id" value="<?=$modelinv->id;?>">
                     <input type="hidden" name="invoice_date" value="<?=$modelinv->invoice_date;?>">
                     <table class="table table-importline" >

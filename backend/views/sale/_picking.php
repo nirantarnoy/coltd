@@ -120,9 +120,10 @@
                    $sumqty = $sumqty + $value->qty;
                    $productinfo = \backend\models\Product::findProductinfo($value->product_id);
                     $linenet = ($value->qty * $productinfo->unit_factor * $productinfo->volumn);
-                    $linegross = ((0.25 + $productinfo->volumn) * ($value->qty * $productinfo->unit_factor));
+                 //   $linegross = ((0.25 + $productinfo->volumn) * ($value->qty * $productinfo->unit_factor));
                     $sumnet = $sumnet + $linenet;
                     $sumgross = $sumgross + $linegross;
+                $linegross= \backend\models\Product::findProductInfo($query[$i]['product_id'])->grossweight;
                  ?>
                 <?php $rows +=1; ?>
                 <tr style="border: 0.5px solid black;border-bottom:none;border-collapse: collapse;">

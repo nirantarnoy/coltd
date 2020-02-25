@@ -34,7 +34,7 @@ class InboundInv extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['invoice_no'],'required'],
+            [['invoice_no','supplier_id'],'required'],
             [['invoice_date'], 'safe'],
             [['delivery_term', 'created_at','supplier_id', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['status'],'safe'],

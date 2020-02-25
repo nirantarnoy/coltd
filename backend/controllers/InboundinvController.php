@@ -305,21 +305,21 @@ class InboundinvController extends Controller
             for ($i = 0; $i <= count($productid) - 1; $i++) {
                 $model = \backend\models\Inboundinvline::find()->where(['invoice_id' => $invoiceid, 'product_id' => $productid[$i]])->one();
 
-                if ($linepermitdate[$i] != '') {
-                    //  echo  $linepermitdate[$i];return;
-                    $per_origin = explode('-', $linepermitdate[$i]);
-                    if (count($per_origin) > 0 && $per_origin[0] != '') {
-                        $permit_date = $per_origin[2] . "/" . $per_origin[1] . "/" . $per_origin[0];
-                    }
-                }
+//                if ($linepermitdate[$i] != '') {
+//                    //  echo  $linepermitdate[$i];return;
+//                    $per_origin = explode('-', $linepermitdate[$i]);
+//                    if (count($per_origin) > 0 && $per_origin[0] != '') {
+//                        $permit_date = $per_origin[2] . "/" . $per_origin[1] . "/" . $per_origin[0];
+//                    }
+//                }
                // echo $permit_date;return;
-                if ($linetransportdate[$i] != '') {
-                    //  echo  $linepermitdate[$i];return;
-                    $trans_date = explode('-', $linetransportdate[$i]);
-                    if (count($trans_date) > 0 && $trans_date[0] != '') {
-                        $transport_date = $trans_date[2] . "/" . $trans_date[1] . "/" . $trans_date[0];
-                    }
-                }
+//                if ($linetransportdate[$i] != '') {
+//                    //  echo  $linepermitdate[$i];return;
+//                    $trans_date = explode('-', $linetransportdate[$i]);
+//                    if (count($trans_date) > 0 && $trans_date[0] != '') {
+//                        $transport_date = $trans_date[2] . "/" . $trans_date[1] . "/" . $trans_date[0];
+//                    }
+//                }
                 if ($linekno_date[$i] != '') {
                     //  echo  $linepermitdate[$i];return;
                     $kno_date_arr = explode('/', $linekno_date[$i]);
@@ -328,6 +328,7 @@ class InboundinvController extends Controller
                         $kno_date = $kno_date_arr[2] . "/" . $kno_date_arr[1] . "/" . $kno_date_arr[0];
                     }
                 }
+//                echo $permit_date.' '.$kno_date.' '.$transport_date;return;
 
                 if ($model) {
                     $model->transport_in_no = $linetransportno[$i];
@@ -358,7 +359,7 @@ class InboundinvController extends Controller
                     'warehouse_id' => $whid,
                     'trans_type' => \backend\helpers\TransType::TRANS_ADJUST_IN,
                     'permit_no' => $linepermitno[$i],
-                    'permit_date' => date('Y-m-d',strtotime($permit_date)),// $permit_date,//date('Y-d-m',strtotime($linepermitdate[$i])),
+                    'permit_date' =>$linepermitdate[$i],// date('Y-m-d',strtotime($permit_date)),// $permit_date,//date('Y-d-m',strtotime($linepermitdate[$i])),
                     'transport_in_no' => $linetransportno[$i],
                     'transport_in_date' => $linetransportdate[$i],//date('Y-d-m',strtotime($rowData[14])),
                     'excise_no' => $lineexciseno[$i],
