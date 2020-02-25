@@ -1,0 +1,7 @@
+CREATE 
+ALGORITHM=UNDEFINED 
+DEFINER=`root`@`localhost` 
+SQL SECURITY DEFINER 
+VIEW `NewView`AS 
+select `picking`.`picking_no` AS `picking_no`,month(`picking`.`picking_date`) AS `month`,`picking`.`picking_date` AS `picking_date`,`picking_line`.`product_id` AS `product_id`,`product`.`product_code` AS `product_code`,`product`.`name` AS `name`,`picking_line`.`qty` AS `qty`,`unit`.`name` AS `unit_name`,`picking_line`.`permit_no` AS `permit_no`,`picking_line`.`permit_date` AS `permit_date`,`picking_line`.`inv_no` AS `inv_no`,`picking_line`.`price` AS `price`,`picking_line`.`inv_date` AS `inv_date`,`picking_line`.`trans_out_no` AS `trans_out_no`,`picking_line`.`kno_out_no` AS `kno_out_no`,`picking_line`.`kno_out_date` AS `kno_out_date`,`picking_line`.`transport_out_no` AS `transport_out_no`,`picking_line`.`transport_out_date` AS `transport_out_date`,`customer`.`name` AS `customer_name`,`customer`.`customer_country` AS `customer_country`,`countries`.`country_name` AS `country_name`,`product_category`.`name` AS `product_group` from (((((((`picking` join `picking_line` on((`picking`.`id` = `picking_line`.`picking_id`))) join `product` on((`picking_line`.`product_id` = `product`.`id`))) left join `unit` on((`product`.`unit_id` = `unit`.`id`))) join `sale` on((`picking`.`sale_id` = `sale`.`id`))) left join `customer` on((`sale`.`customer_id` = `customer`.`id`))) join `countries` on((`customer`.`customer_country` = `countries`.`id`))) left join `product_category` on((`product`.`category_id` = `product_category`.`id`))) ;
+
