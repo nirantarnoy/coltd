@@ -249,22 +249,24 @@ class SaleController extends Controller
      */
     public function actionDelete($id)
     {
-       // echo $id;return;
+        // echo $id;return;
         \backend\models\Saleline::deleteAll(['sale_id' => $id]);
         $this->recalStock($id);
-        \backend\models\Productstock::deleteAll(['outbound_id'=>$id]);
+        \backend\models\Productstock::deleteAll(['outbound_id' => $id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
-    public function recalStock($id){
-        $product_stock = \backend\models\Productstock::find()->where(['outbound_id'=>$id])->all();
-        foreach ($product_stock as $value){
+
+    public function recalStock($id)
+    {
+        $product_stock = \backend\models\Productstock::find()->where(['outbound_id' => $id])->all();
+        foreach ($product_stock as $value) {
             //$sum_all = Productstock::find()->where(['product_id'=>$value->product_id])->sum('qty');
-            $out_qty =$value->out_qty;
-            $model_product = \backend\models\Product::find()->where(['id'=>$value->product_id])->one();
-            if($model_product){
-                $model_product->all_qty = $model_product->all_qty + $out_qty ;
+            $out_qty = $value->out_qty;
+            $model_product = \backend\models\Product::find()->where(['id' => $value->product_id])->one();
+            if ($model_product) {
+                $model_product->all_qty = $model_product->all_qty + $out_qty;
                 $model_product->available_qty = $model_product->available_qty + $out_qty;
                 //    $model_product->available_qty = $model_product->all_qty - (int)$model_product->reserved_qty;
                 $model_product->save(false);
@@ -273,6 +275,7 @@ class SaleController extends Controller
 
 
     }
+
     public function actionPayment()
     {
         $saleid = \Yii::$app->request->post('saleid');
@@ -611,7 +614,7 @@ class SaleController extends Controller
         $kno_out_date = Yii::$app->request->post('line_kno_out_date');
 
         $sale_no = \backend\models\Sale::findSaleNo($sale_id);
-       // $sale_date = \backend\models\Sale::findSaleDate($sale_id);
+        // $sale_date = \backend\models\Sale::findSaleDate($sale_id);
 
         $qty = 0;
         $price = 0;
@@ -624,7 +627,7 @@ class SaleController extends Controller
                 $pick_date = $sale_date_x[2] . "/" . $sale_date_x[1] . "/" . $sale_date_x[0];
             }
         }
-       // echo $pick_date;return;
+        // echo $pick_date;return;
 
         if (count($stock_id)) {
 
@@ -632,7 +635,7 @@ class SaleController extends Controller
             $picking->sale_id = $sale_id[0];
             $picking->getLastNo();
             $picking->trans_date = strtotime(date('Y-m-d'));
-            $picking->picking_date = date('Y-m-d',strtotime($pick_date));
+            $picking->picking_date = date('Y-m-d', strtotime($pick_date));
             if ($picking->save()) {
                 if (count($stock_id) > 0) {
                     $data = [];
@@ -669,10 +672,10 @@ class SaleController extends Controller
                             $pickline->permit_date = $stock_info->permit_date;
                             //   $pickline->excise_no = $stock_info->excise_no;
                             $pickline->price = $stock_info->usd_rate;
-                            $pickline->trans_out_no = $trans_out_no[$i];
-                            $pickline->transport_out_date = date('Y-m-d',strtotime($trans_out_date_ok));
+                            $pickline->transport_out_no = $trans_out_no[$i];
+                            $pickline->transport_out_date = date('Y-m-d', strtotime($trans_out_date_ok));
                             $pickline->kno_out_no = $kno_out_no[$i];
-                            $pickline->kno_out_date = date('Y-m-d',strtotime($kno_out_date_ok));
+                            $pickline->kno_out_date = date('Y-m-d', strtotime($kno_out_date_ok));
                             //  $pickline->excise_date = $stock_info->excise_date;
                             $pickline->save(false);
 
@@ -699,9 +702,9 @@ class SaleController extends Controller
                                 'inbound_id' => 0,
                                 'outbound_id' => $sale_id[0],
                                 'transport_out_no' => $trans_out_no[$i],
-                                'transport_out_date'=>date('Y-m-d',strtotime($trans_out_date_ok)),
-                                'kno_out_no'=>$kno_out_no[$i],
-                                'kno_out_date'=>date('Y-m-d',strtotime($kno_out_date_ok))
+                                'transport_out_date' => date('Y-m-d', strtotime($trans_out_date_ok)),
+                                'kno_out_no' => $kno_out_no[$i],
+                                'kno_out_date' => date('Y-m-d', strtotime($kno_out_date_ok))
 
                             ]);
 
