@@ -628,7 +628,7 @@ class SaleController extends Controller
                 $pick_date = $sale_date_x[2] . "/" . $sale_date_x[1] . "/" . $sale_date_x[0];
             }
         }
-       //print_r($trans_out_no);return;
+       print_r($trans_out_no);return;
 
         if (count($stock_id)) {
 
