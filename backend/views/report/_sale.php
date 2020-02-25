@@ -95,7 +95,7 @@ $this->title = 'รายงานยอดขาย';
                         ['class' => 'kartik\grid\SerialColumn'],
                         [
                             'attribute' => 'month',
-                            'contentOptions' => ['style'=>'vertical-align: middle'],
+                            'contentOptions' => ['style'=>'vertical-align: middle;font-weight: bold;'],
                             'value' => function ($data) {
                                 return \backend\helpers\Month::getTypeById($data->month);
                             },
