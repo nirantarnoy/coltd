@@ -609,8 +609,8 @@ class SaleController extends Controller
         $stock_id = Yii::$app->request->post('stock_id');
         $line_qty = Yii::$app->request->post('line_qty');
 
-        $trans_out_no = Yii::$app->request->post('line_trans_out_no');
-        $trans_out_date = Yii::$app->request->post('line_trans_out_date');
+        $trans_out_no = Yii::$app->request->post('line_transport_out_no');
+        $trans_out_date = Yii::$app->request->post('line_transport_out_date');
         $kno_out_no = Yii::$app->request->post('line_kno_out_no');
         $kno_out_date = Yii::$app->request->post('line_kno_out_date');
 
@@ -628,7 +628,7 @@ class SaleController extends Controller
                 $pick_date = $sale_date_x[2] . "/" . $sale_date_x[1] . "/" . $sale_date_x[0];
             }
         }
-       print_r($trans_out_no);return;
+    //   print_r($trans_out_no);return;
 
         if (count($stock_id)) {
 
@@ -641,7 +641,7 @@ class SaleController extends Controller
                 if (count($stock_id) > 0) {
                     $data = [];
                     for ($i = 0; $i <= count($stock_id) - 1; $i++) {
-                       echo $trans_out_no[$i];return;
+                      // echo $trans_out_no[$i];return;
                         $trans_out_date_ok = null;
                         $kno_out_date_ok = null;
 
