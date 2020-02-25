@@ -120,7 +120,7 @@ $this->title = "Packing List";
                                 <input type="text" style="width: 200px;" class="form-control line_kno_in" name="line_kno_in[]" value="<?=$query[$i]['kno_no_in']?>">
                             </td>
                             <td style="vertical-align: middle">
-                                <?=date('d-m-Y',strtotime($query[$i]['kno_in_date']))?>
+                                <input type="date" class="form-control" name="kno_in_date" value="<?=date('d-m-Y',strtotime($query[$i]['kno_in_date']))?>">
                             </td>
                         </tr>
                       <?php endfor;?>
