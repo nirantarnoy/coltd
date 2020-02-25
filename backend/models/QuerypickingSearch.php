@@ -18,11 +18,11 @@ class QuerypickingSearch extends Querypicking
     public function rules()
     {
         return [
-            [['created_at', 'require_date', 'currency', 'customer_id', 'trans_date', 'product_id', 'status', 'warehouse_id', 'category_id', 'currency_id'], 'integer'],
+            [['picking_date', 'permit_date', 'inv_date', 'kno_out_date', 'transport_out_date'], 'safe'],
+            [['product_id', 'customer_country'], 'integer'],
             [['qty', 'price'], 'number'],
-            [['permit_date', 'transport_in_date', 'excise_date'], 'safe'],
-            [['picking_date'],'date'],
-            [['sale_no', 'permit_no', 'transport_in_no', 'excise_no', 'name', 'engname', 'product_group', 'customer_name', 'currency_name'], 'string', 'max' => 255],
+            [['picking_no', 'product_code', 'name', 'unit_name', 'permit_no', 'inv_no', 'trans_out_no', 'kno_out_no', 'transport_out_no', 'customer_name'], 'string', 'max' => 255],
+            [['country_name'], 'string', 'max' => 100],
         ];
     }
 
@@ -62,7 +62,7 @@ class QuerypickingSearch extends Querypicking
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+           // 'id' => $this->id,
             //'sale_no' => $this->sale_no,
            // 'product_id' => $this->product_id,
             //'picking_date' => $this->picking_date,

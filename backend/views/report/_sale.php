@@ -95,6 +95,7 @@ $this->title = 'รายงานยอดขาย';
                         ['class' => 'kartik\grid\SerialColumn'],
                         [
                             'attribute' => 'month',
+                            'contentOptions' => ['style'=>'vertical-align: middle'],
                             'value' => function ($data) {
                                 return \backend\helpers\Month::getTypeById($data->month);
                             },
@@ -102,6 +103,7 @@ $this->title = 'รายงานยอดขาย';
                         ],
                         [
                             'attribute' => 'picking_date',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
                             'hAlign' => 'left',
                             'format' => 'raw',
                             'filterType' => GridView::FILTER_DATE_RANGE,
@@ -137,25 +139,32 @@ $this->title = 'รายงานยอดขาย';
                         ],
                         [
                             'attribute' => 'transport_out_no',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
                             'label' => 'เลขที่ใบขน'
                         ],
                         [
                             'attribute' => 'transport_out_date',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
                             'label' => 'วันที่',
-                            'value'=>function($data){
-                               return date('d/m/Y',strtotime($data->transport_out_date));
+                            'value' => function ($data) {
+                                return date('d/m/Y', strtotime($data->transport_out_date));
                             }
                         ],
                         [
                             'attribute' => 'qty',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
                             'hAlign' => 'right',
                             'format' => ['decimal', 2],
                             'pageSummary' => true,
                             'pageSummaryFunc' => GridView::F_SUM
                         ],
-                        'unit_name',
+                        [
+                                'attribute' => 'unit_name',
+                                'contentOptions' => ['style' => 'vertical-align: middle'],
+                        ],
                         [
                             'attribute' => 'product_group',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
                             'label' => 'ประเภทสินค้า',
                             'filterType' => GridView::FILTER_SELECT2,
                             'filter' => ArrayHelper::map(\backend\models\Productcategory::find()->orderBy('name')->asArray()->all(), 'name', 'name'),
@@ -167,14 +176,20 @@ $this->title = 'รายงานยอดขาย';
                         //'name',
                         [
                             'attribute' => 'price',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
                             'hAlign' => 'right',
                             'format' => ['decimal', 2],
                             'pageSummary' => true,
                             'pageSummaryFunc' => GridView::F_SUM
                         ],
-                        'country_name',
-                        'customer_name',
-
+                        [
+                                'attribute' => 'country_name',
+                                'contentOptions' => ['style'=>'vertical-align: middle'],
+                        ],
+                        [
+                                'attribute' => 'customer_name',
+                                'contentOptions' => ['style'=>'vertical-align: middle'],
+                        ]
                     ],
                     'pjax' => true,
                     'bordered' => true,
