@@ -192,7 +192,8 @@ $(function(){
                             <ul class="nav">
 <!--                                <li><a href="index.php?r=report/balance" class="report">รายงานยอดคงคลัง</a></li>-->
                                 <li><a href="index.php?r=productstock/index" class="report">รายงานยอดคงคลัง</a></li>
-                                <li><a href="index.php?r=report/sale" class="report">รายงานยอดขาย</a></li>
+                                <li><a href="index.php?r=report/inbound" class="report">รายงานสรุปนำเข้า</a></li>
+                                <li><a href="index.php?r=report/sale" class="report">รายงานสรุปส่งออก</a></li>
                             </ul>
                         </div>
                     </li>

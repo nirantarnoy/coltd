@@ -7,7 +7,7 @@ use yii\helpers\Html;
 use dosamigos\datepicker\DatePicker;
 use kartik\export\ExportMenu;
 
-$this->title = 'รายงานยอดขาย';
+$this->title = 'รายงานสรุปส่งออก';
 
 ?>
 <div class="x_panel">
