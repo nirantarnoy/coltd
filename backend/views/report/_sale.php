@@ -155,6 +155,7 @@ $this->title = 'รายงานยอดขาย';
                             'attribute' => 'qty',
                             'label' => 'จำนวน',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
+
                             'hAlign' => 'right',
                             'format' => ['decimal', 2],
                             'pageSummary' => true,
@@ -190,10 +191,38 @@ $this->title = 'รายงานยอดขาย';
                             }
                         ],
                         [
-                            'label' => 'ราคาสินค้า(USD)'
+                            'label' => 'ราคาสินค้า(USD)',
+                            'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],
+                             'value' => function($data){
+                                $amt = 0;
+                                $cur = \backend\models\Currency::findName($data->currency);
+                                if($cur =='USD'){
+                                    return $data->qty * $data->price;
+                                }else{
+                                    return 0;
+                                }
+                            },
+                            'hAlign' => 'right',
+                            'format' => ['decimal', 2],
+                            'pageSummary' => true,
+                            'pageSummaryFunc' => GridView::F_SUM
                         ],
                         [
-                            'label' => 'ราคาสินค้า(THB)'
+                            'label' => 'ราคาสินค้า(THB)',
+                            'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],
+                            'value' => function($data){
+                                $amt = 0;
+                                $cur = \backend\models\Currency::findName($data->currency);
+                                if($cur =='THB'){
+                                    return $data->qty * ($data->price * $data->rate);
+                                }else{
+                                    return 0;
+                                }
+                            },
+                            'hAlign' => 'right',
+                            'format' => ['decimal', 2],
+                            'pageSummary' => true,
+                            'pageSummaryFunc' => GridView::F_SUM
                         ],
                         //'name',
 //                        [
