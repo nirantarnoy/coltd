@@ -94,7 +94,8 @@ class QuotationController extends Controller
                         $modelline->qty = $lineqty[$i];
                         $modelline->price = $lineprice[$i];
                         $modelline->stock_id = $stockid[$i];
-                        $modelline->save();
+                        $modelline->line_amount = $lineqty[$i] * $lineprice[$i];
+                        $modelline->save(false);
                     }
                 }
                 return $this->redirect(['index']);
@@ -233,8 +234,8 @@ class QuotationController extends Controller
 //            }
             if($txt == "*"){
                 $model = \common\models\QueryProduct::find()
-//                    ->where(['>','all_qty',0])
-//                    ->andFilterWhere(['!=','stock_id',''])
+                    ->where(['>','all_qty',0])
+                    ->andFilterWhere(['!=','stock_id',''])
                     ->asArray()
                     ->all();
                 return Json::encode($model);
@@ -242,9 +243,9 @@ class QuotationController extends Controller
             }else{
                 $model = \common\models\QueryProduct::find()->where(['or',['Like','product_code',$txt],['Like','name',$txt]])
                     ->orFilterWhere(['like','product_code',$txt])
-//                    ->orFilterWhere(['like','name',$txt])
-//                    ->andFilterWhere(['>','all_qty',0])
-//                    ->andFilterWhere(['!=','stock_id',''])
+                    ->orFilterWhere(['like','name',$txt])
+                    ->andFilterWhere(['>','all_qty',0])
+                    ->andFilterWhere(['!=','stock_id',''])
                     ->asArray()
                     ->all();
                 return Json::encode($model);

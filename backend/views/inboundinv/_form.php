@@ -48,7 +48,8 @@ use yii\helpers\Url;
                 <?= $form->field($model, 'supplier_id')->widget(\kartik\select2\Select2::className(),[
                         'data'=>ArrayHelper::map(\backend\models\Vendor::find()->all(),'id','name'),
                         'options' => [
-                                'placeholder'=>'เลือก'
+                                'placeholder'=>'เลือก',
+                                'id' => 'supplier_id',
                         ]
                 ])->label('ผู้ขาย') ?>
             </div>
@@ -470,6 +471,12 @@ $js =<<<JS
   });
     
     $('form#form-inbound').on('submit', function(e){
+     let sup = $("#supplier_id").val();   
+      if(sup <=0){
+          alert("ต้องเลือกข้อมูลผู้ขายก่อนค่ะ");
+         e.preventDefault();
+         return false;
+      }
      let x = 0;
     $(".table-quotation tbody tr").each(function() {
        // alert();
