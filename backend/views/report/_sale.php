@@ -182,12 +182,15 @@ $this->title = 'รายงานยอดขาย';
                             'label' => 'INV No.'
                         ],
                         [
-                            'attribute' => 'rate_factor',
+                            'attribute' => 'rate',
                             'label' => 'อัตราแลกเปลี่ยน',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
+                            'value' => function ($data) {
+                                return number_format($data->rate, 4);
+                            }
                         ],
                         [
-                          'label' => 'ราคาสินค้า(USD)'
+                            'label' => 'ราคาสินค้า(USD)'
                         ],
                         [
                             'label' => 'ราคาสินค้า(THB)'
