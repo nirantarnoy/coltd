@@ -206,13 +206,9 @@ $this->title = 'รายงานยอดขาย';
 //                            'pageSummaryFunc' => GridView::F_SUM
 //                        ],
                         [
-<<<<<<< HEAD
                             'attribute' => 'country_name',
                             'label' => 'ขายไปยัง',
-=======
-                            'attribute' => 'price',
-                            'label'=> 'Total Amount',
->>>>>>> 8599959843dd2a2eee6a05f431259448e21e00ef
+
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                         ],
                         [
