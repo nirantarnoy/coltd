@@ -197,7 +197,7 @@ $this->title = 'รายงานสรุปส่งออก';
                                 $amt = 0;
                                 $cur = \backend\models\Currency::findName($data->currency);
                                 if($cur =='USD'){
-                                    return $data->qty * $data->price;
+                                    return $data->price;
                                 }else{
                                     return 0;
                                 }
@@ -212,12 +212,12 @@ $this->title = 'รายงานสรุปส่งออก';
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],
                             'value' => function($data){
                                 $amt = 0;
-                                $cur = \backend\models\Currency::findName($data->currency);
-                                if($cur =='THB'){
-                                    return $data->qty * ($data->price * $data->rate);
-                                }else{
-                                    return 0;
-                                }
+                               // $cur = \backend\models\Currency::findName($data->currency);
+                              // if($cur =='THB'){
+                                    return ($data->price * $data->rate);
+                               // }else{
+                               //     return 0;
+                               // }
                             },
                             'hAlign' => 'right',
                             'format' => ['decimal', 2],
