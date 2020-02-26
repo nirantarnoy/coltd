@@ -137,11 +137,7 @@ $this->title = 'รายงานยอดขาย';
 //                            ]),
 
                         ],
-                        [
-                            'attribute' => 'inv_no',
-                            'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
-                            'label' => 'INV No.'
-                        ],
+
                         [
                             'attribute' => 'transport_out_no',
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
@@ -181,9 +177,9 @@ $this->title = 'รายงานยอดขาย';
                             'filterInputOptions' => ['placeholder' => 'เลือกประเภทสินค้า']
                         ],
                         [
-                            'attribute' => 'sale_no',
-                            'label' => 'ส่งออก',
-                            'contentOptions' => ['style' => 'vertical-align: middle'],
+                            'attribute' => 'inv_no',
+                            'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
+                            'label' => 'INV No.'
                         ],
                         [
                             'attribute' => 'rate_factor',
