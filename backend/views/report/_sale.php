@@ -138,6 +138,11 @@ $this->title = 'รายงานยอดขาย';
 
                         ],
                         [
+                            'attribute' => 'inv_no',
+                            'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
+                            'label' => 'INV No.'
+                        ],
+                        [
                             'attribute' => 'transport_out_no',
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
                             'label' => 'เลขที่ใบขน'
@@ -201,8 +206,13 @@ $this->title = 'รายงานยอดขาย';
 //                            'pageSummaryFunc' => GridView::F_SUM
 //                        ],
                         [
+<<<<<<< HEAD
                             'attribute' => 'country_name',
                             'label' => 'ขายไปยัง',
+=======
+                            'attribute' => 'price',
+                            'label'=> 'Total Amount',
+>>>>>>> 8599959843dd2a2eee6a05f431259448e21e00ef
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                         ],
                         [

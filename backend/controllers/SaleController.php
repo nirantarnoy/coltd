@@ -599,6 +599,7 @@ class SaleController extends Controller
 
     public function actionSavepicking()
     {
+       // echo 'niran';return;
         //if(Yii::$app->request->isAjax){
         // $list = Yii::$app->request->post('list');
 
@@ -608,8 +609,8 @@ class SaleController extends Controller
         $stock_id = Yii::$app->request->post('stock_id');
         $line_qty = Yii::$app->request->post('line_qty');
 
-        $trans_out_no = Yii::$app->request->post('line_trans_out_no');
-        $trans_out_date = Yii::$app->request->post('line_trans_out_date');
+        $trans_out_no = Yii::$app->request->post('line_transport_out_no');
+        $trans_out_date = Yii::$app->request->post('line_transport_out_date');
         $kno_out_no = Yii::$app->request->post('line_kno_out_no');
         $kno_out_date = Yii::$app->request->post('line_kno_out_date');
 
@@ -627,7 +628,7 @@ class SaleController extends Controller
                 $pick_date = $sale_date_x[2] . "/" . $sale_date_x[1] . "/" . $sale_date_x[0];
             }
         }
-        // echo $pick_date;return;
+    //   print_r($trans_out_no);return;
 
         if (count($stock_id)) {
 
@@ -636,11 +637,11 @@ class SaleController extends Controller
             $picking->getLastNo();
             $picking->trans_date = strtotime(date('Y-m-d'));
             $picking->picking_date = date('Y-m-d', strtotime($pick_date));
-            if ($picking->save()) {
+            if ($picking->save(false)) {
                 if (count($stock_id) > 0) {
                     $data = [];
                     for ($i = 0; $i <= count($stock_id) - 1; $i++) {
-
+                      // echo $trans_out_no[$i];return;
                         $trans_out_date_ok = null;
                         $kno_out_date_ok = null;
 
@@ -648,17 +649,17 @@ class SaleController extends Controller
                             //  echo  $linepermitdate[$i];return;
                             $trans_date = explode('-', $trans_out_date[$i]);
                             if (count($trans_date) > 0 && $trans_date[0] != '') {
-                                $trans_out_date_ok = $trans_date[2] . "/" . $trans_date[1] . "/" . $trans_date[0];
+                                $trans_out_date_ok = $trans_date[0] . "/" . $trans_date[1] . "/" . $trans_date[2];
                             }
                         }
                         if ($kno_out_date[$i] != '') {
                             //  echo  $linepermitdate[$i];return;
                             $kno_date = explode('-', $kno_out_date[$i]);
                             if (count($kno_date) > 0 && $kno_date[0] != '') {
-                                $kno_out_date_ok = $kno_date[2] . "/" . $kno_date[1] . "/" . $kno_date[0];
+                                $kno_out_date_ok = $kno_date[0] . "/" . $kno_date[1] . "/" . $kno_date[2];
                             }
                         }
-
+                       // echo $trans_out_date_ok.'   '.$trans_out_date[0];return;
                         $stock_info = \common\models\ProductStock::find()->where(['id' => $stock_id[$i]])->one();
                         if ($stock_info) {
                             $pickline = new \backend\models\Pickingline();
