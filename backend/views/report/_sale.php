@@ -95,7 +95,7 @@ $this->title = 'รายงานยอดขาย';
                         ['class' => 'kartik\grid\SerialColumn'],
                         [
                             'attribute' => 'month',
-                            'contentOptions' => ['style'=>'vertical-align: middle;font-weight: bold;'],
+                            'contentOptions' => ['style' => 'vertical-align: middle;font-weight: bold;'],
                             'value' => function ($data) {
                                 return \backend\helpers\Month::getTypeById($data->month);
                             },
@@ -142,16 +142,17 @@ $this->title = 'รายงานยอดขาย';
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
                             'label' => 'เลขที่ใบขน'
                         ],
-                        [
-                            'attribute' => 'transport_out_date',
-                            'contentOptions' => ['style' => 'vertical-align: middle'],
-                            'label' => 'วันที่',
-                            'value' => function ($data) {
-                                return date('d/m/Y', strtotime($data->transport_out_date));
-                            }
-                        ],
+//                        [
+//                            'attribute' => 'transport_out_date',
+//                            'contentOptions' => ['style' => 'vertical-align: middle'],
+//                            'label' => 'วันที่',
+//                            'value' => function ($data) {
+//                                return date('d/m/Y', strtotime($data->transport_out_date));
+//                            }
+//                        ],
                         [
                             'attribute' => 'qty',
+                            'label' => 'จำนวน',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                             'hAlign' => 'right',
                             'format' => ['decimal', 2],
@@ -159,8 +160,9 @@ $this->title = 'รายงานยอดขาย';
                             'pageSummaryFunc' => GridView::F_SUM
                         ],
                         [
-                                'attribute' => 'unit_name',
-                                'contentOptions' => ['style' => 'vertical-align: middle'],
+                            'attribute' => 'unit_name',
+                            'label' => 'หน่วย',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
                         ],
                         [
                             'attribute' => 'product_group',
@@ -173,23 +175,52 @@ $this->title = 'รายงานยอดขาย';
                             ],
                             'filterInputOptions' => ['placeholder' => 'เลือกประเภทสินค้า']
                         ],
-                        //'name',
                         [
-                            'attribute' => 'price',
+                            'attribute' => 'sale_no',
+                            'label' => 'ส่งออก',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
-                            'hAlign' => 'right',
-                            'format' => ['decimal', 2],
-                            'pageSummary' => true,
-                            'pageSummaryFunc' => GridView::F_SUM
                         ],
                         [
-                                'attribute' => 'country_name',
-                                'contentOptions' => ['style'=>'vertical-align: middle'],
+                            'attribute' => 'rate_factor',
+                            'label' => 'อัตราแลกเปลี่ยน',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
                         ],
                         [
-                                'attribute' => 'customer_name',
-                                'contentOptions' => ['style'=>'vertical-align: middle'],
+                          'label' => 'ราคาสินค้า(USD)'
+                        ],
+                        [
+                            'label' => 'ราคาสินค้า(THB)'
+                        ],
+                        //'name',
+//                        [
+//                            'attribute' => 'price',
+//                            'contentOptions' => ['style' => 'vertical-align: middle'],
+//                            'hAlign' => 'right',
+//                            'format' => ['decimal', 2],
+//                            'pageSummary' => true,
+//                            'pageSummaryFunc' => GridView::F_SUM
+//                        ],
+                        [
+                            'attribute' => 'country_name',
+                            'label' => 'ขายไปยัง',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
+                        ],
+                        [
+                            'attribute' => 'customer_name',
+                            'label' => 'ชื่อลูกค้า/ลูกหนี้',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
+                        ],
+                        [
+                            'attribute' => 'payment_status',
+                            'label' => 'หลักฐานการโอนเงิน',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
+                        ],
+                        [
+                            'attribute' => 'note',
+                            'label' => 'หมายเหตุ',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
                         ]
+
                     ],
                     'pjax' => true,
                     'bordered' => true,
