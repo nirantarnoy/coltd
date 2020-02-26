@@ -8,10 +8,8 @@ use Yii;
  * This is the model class for table "query_picking".
  *
  * @property string $picking_no
+ * @property int $month
  * @property string $picking_date
- * @property int $product_id
- * @property string $product_code
- * @property string $name
  * @property double $qty
  * @property string $unit_name
  * @property string $permit_no
@@ -27,6 +25,14 @@ use Yii;
  * @property string $customer_name
  * @property int $customer_country
  * @property string $country_name
+ * @property string $product_group
+ * @property int $payment_status
+ * @property string $note
+ * @property int $currency
+ * @property string $currency_name
+ * @property double $rate_factor
+ * @property string $sale_no
+ * @property double $rate
  */
 class QueryPicking extends \yii\db\ActiveRecord
 {
@@ -44,10 +50,10 @@ class QueryPicking extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['month', 'customer_country', 'payment_status', 'currency'], 'integer'],
             [['picking_date', 'permit_date', 'inv_date', 'kno_out_date', 'transport_out_date'], 'safe'],
-            [['product_id', 'customer_country'], 'integer'],
-            [['qty', 'price'], 'number'],
-            [['picking_no', 'product_code', 'name', 'unit_name', 'permit_no', 'inv_no', 'trans_out_no', 'kno_out_no', 'transport_out_no', 'customer_name'], 'string', 'max' => 255],
+            [['qty', 'price', 'rate_factor', 'rate'], 'number'],
+            [['picking_no', 'unit_name', 'permit_no', 'inv_no', 'trans_out_no', 'kno_out_no', 'transport_out_no', 'customer_name', 'product_group', 'note', 'currency_name', 'sale_no'], 'string', 'max' => 255],
             [['country_name'], 'string', 'max' => 100],
         ];
     }
@@ -59,10 +65,8 @@ class QueryPicking extends \yii\db\ActiveRecord
     {
         return [
             'picking_no' => 'Picking No',
+            'month' => 'Month',
             'picking_date' => 'Picking Date',
-            'product_id' => 'Product ID',
-            'product_code' => 'Product Code',
-            'name' => 'Name',
             'qty' => 'Qty',
             'unit_name' => 'Unit Name',
             'permit_no' => 'Permit No',
@@ -78,6 +82,14 @@ class QueryPicking extends \yii\db\ActiveRecord
             'customer_name' => 'Customer Name',
             'customer_country' => 'Customer Country',
             'country_name' => 'Country Name',
+            'product_group' => 'Product Group',
+            'payment_status' => 'Payment Status',
+            'note' => 'Note',
+            'currency' => 'Currency',
+            'currency_name' => 'Currency Name',
+            'rate_factor' => 'Rate Factor',
+            'sale_no' => 'Sale No',
+            'rate' => 'Rate',
         ];
     }
 }

@@ -413,7 +413,50 @@ class InboundinvController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    public function actionFinditem(){
+        $txt = \Yii::$app->request->post('txt');
+        $list = [];
+        if($txt == ''){
+            return Json::encode($list);
+            //return 'no';
+        }else {
 
+//            if($txt == "*"){
+//                $model = \backend\models\Product::find()
+//                    ->asArray()
+//                    ->all();
+//                return Json::encode($model);
+//            }else{
+//                $model = \backend\models\Product::find()->where(['or',['Like','engname',$txt],['Like','name',$txt]])
+//                    ->orFilterWhere(['like','engname',$txt])
+//                    ->orFilterWhere(['like','name',$txt])
+//                    ->asArray()
+//                    ->all();
+//                return Json::encode($mode`l);
+//            }
+            if($txt == "*"){
+                $model = \common\models\QueryProduct::find()
+//                    ->where(['>','all_qty',0])
+//                    ->andFilterWhere(['!=','stock_id',''])
+                    ->asArray()
+                    ->all();
+                return Json::encode($model);
+                //   }
+            }else{
+                $model = \common\models\QueryProduct::find()->where(['or',['Like','product_code',$txt],['Like','name',$txt]])
+                    ->orFilterWhere(['like','product_code',$txt])
+                    ->orFilterWhere(['like','name',$txt])
+//                    ->andFilterWhere(['>','all_qty',0])
+//                    ->andFilterWhere(['!=','stock_id',''])
+                    ->asArray()
+                    ->all();
+                return Json::encode($model);
+            }
+
+
+        }
+
+    }
     public function actionPrint($id)
     {
         // echo $id;return;

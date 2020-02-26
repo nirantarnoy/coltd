@@ -234,8 +234,8 @@ class QuotationController extends Controller
 //            }
             if($txt == "*"){
                 $model = \common\models\QueryProduct::find()
-//                    ->where(['>','all_qty',0])
-//                    ->andFilterWhere(['!=','stock_id',''])
+                    ->where(['>','all_qty',0])
+                    ->andFilterWhere(['!=','stock_id',''])
                     ->asArray()
                     ->all();
                 return Json::encode($model);
@@ -244,8 +244,8 @@ class QuotationController extends Controller
                 $model = \common\models\QueryProduct::find()->where(['or',['Like','product_code',$txt],['Like','name',$txt]])
                     ->orFilterWhere(['like','product_code',$txt])
                     ->orFilterWhere(['like','name',$txt])
-//                    ->andFilterWhere(['>','all_qty',0])
-//                    ->andFilterWhere(['!=','stock_id',''])
+                    ->andFilterWhere(['>','all_qty',0])
+                    ->andFilterWhere(['!=','stock_id',''])
                     ->asArray()
                     ->all();
                 return Json::encode($model);

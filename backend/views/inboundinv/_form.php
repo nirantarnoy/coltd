@@ -317,7 +317,7 @@ use yii\helpers\Url;
 </div>
 
 <?php
-$url_to_find = Url::to(['quotation/finditem'],true);
+$url_to_find = Url::to(['inboundinv/finditem'],true);
 $url_to_firm = Url::to(['inboundinv/genpacking'],true);
 $url_to_find_product = Url::to(['product/searchitem'],true);
 $js =<<<JS

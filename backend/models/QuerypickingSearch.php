@@ -19,9 +19,9 @@ class QuerypickingSearch extends Querypicking
     {
         return [
             [['picking_date', 'permit_date', 'inv_date', 'kno_out_date', 'transport_out_date'], 'safe'],
-            [['product_id', 'customer_country'], 'integer'],
+            [['customer_country'], 'integer'],
             [['qty', 'price'], 'number'],
-            [['picking_no', 'product_code', 'name', 'unit_name', 'permit_no', 'inv_no', 'trans_out_no', 'kno_out_no', 'transport_out_no', 'customer_name'], 'string', 'max' => 255],
+            [['picking_no', 'unit_name', 'permit_no', 'inv_no', 'trans_out_no', 'kno_out_no', 'transport_out_no', 'customer_name'], 'string', 'max' => 255],
             [['country_name'], 'string', 'max' => 100],
         ];
     }
