@@ -235,12 +235,12 @@ $this->title = 'รายงานสรุปนำเข้า';
 //                        ],
 
                         [
-                            'attribute' => 'customer_name',
+                            'attribute' => 'name',
                             'label' => 'ชื่อเจ้าหนี้',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                         ],
                         [
-                            'attribute' => 'payment_status',
+                            //'attribute' => 'payment_status',
                             'label' => 'หลักฐานการโอนเงิน',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                         ],
