@@ -67,7 +67,7 @@ use yii\helpers\Url;
                     'pluginOptions' => [
                         'allowClear' => true
                     ]
-                ]) ?>
+                ])->label('สกุลเงิน') ?>
                 <div class="text-danger alert-currency" style="display: none"></div>
             </div>
             <div class="col-lg-3">
@@ -75,6 +75,7 @@ use yii\helpers\Url;
                 <input type="text" class="form-control rate" name="rate" readonly value="">
             </div>
         </div>
+        <br>
         <div class="row">
             <div class="col-lg-12">
                 <table class="table table-bordered table-quotation">
