@@ -195,8 +195,8 @@ $this->title = 'รายงานสรุปนำเข้า';
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],
                             'value' => function($data){
                                 $amt = 0;
-                                $cur = \backend\models\Currency::findName($data->currency);
-                                if($cur =='USD'){
+                                //$cur = \backend\models\Currency::findName($data->currency);
+                                if($data->currency_name =='USD'){
                                     return $data->line_price;
                                 }else{
                                     return 0;
