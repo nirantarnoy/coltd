@@ -88,11 +88,13 @@ class InboundinvController extends Controller
             }
 
             $cur = 1;
-            if($model->currency_id == '' || $model->currency_id != null){
-                $cur = $model->currency_id;
-            }else{
+            if($model->currency_id == '' || $model->currency_id == null){
                 $cur = 1;
+            }else{
+                $cur = $model->currency_id;
             }
+
+         //   echo $cur;return;
 
             $model->invoice_date = date('Y-m-d', strtotime($inv_date));
             $model->status = 1;
