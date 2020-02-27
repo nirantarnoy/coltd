@@ -152,7 +152,7 @@ $this->title = 'รายงานสรุปนำเข้า';
 //                            }
 //                        ],
                         [
-                            'attribute' => 'qty',
+                            'attribute' => 'line_qty',
                             'label' => 'จำนวน',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
 
@@ -197,7 +197,7 @@ $this->title = 'รายงานสรุปนำเข้า';
                                 $amt = 0;
                                 $cur = \backend\models\Currency::findName($data->currency);
                                 if($cur =='USD'){
-                                    return $data->price;
+                                    return $data->line_price;
                                 }else{
                                     return 0;
                                 }
@@ -214,7 +214,7 @@ $this->title = 'รายงานสรุปนำเข้า';
                                 $amt = 0;
                                 // $cur = \backend\models\Currency::findName($data->currency);
                                 // if($cur =='THB'){
-                                return ($data->price * $data->rate);
+                                return ($data->line_price * $data->rate);
                                 // }else{
                                 //     return 0;
                                 // }
