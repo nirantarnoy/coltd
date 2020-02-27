@@ -55,6 +55,25 @@ use yii\helpers\Url;
             </div>
         </div>
         <div class="row">
+            <div class="col-lg-3">
+                <?= $form->field($model, 'currency_id')->widget(Select2::className(), [
+                    'data' => ArrayHelper::map(\backend\helpers\Currency::asArrayObject(), 'id', 'name'),
+                    'options' => [
+                        'placeholder' => 'เลือกสกุลเงิน',
+                        'onchange' => 'checkRate($(this))',
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ]
+                ]) ?>
+                <div class="text-danger alert-currency" style="display: none"></div>
+            </div>
+            <div class="col-lg-3">
+                <label for="">อัตราแลกเปลี่ยน</label>
+                <input type="text" class="form-control rate" name="rate" readonly value="">
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-12">
                 <table class="table table-bordered table-quotation">
                     <thead>
@@ -320,6 +339,7 @@ use yii\helpers\Url;
 $url_to_find = Url::to(['inboundinv/finditem'],true);
 $url_to_firm = Url::to(['inboundinv/genpacking'],true);
 $url_to_find_product = Url::to(['product/searchitem'],true);
+$url_to_checkrate = Url::to(['quotation/check-rate'], true);
 $js =<<<JS
  var currow = 0;
  var  removelist = [];
@@ -654,7 +674,40 @@ $js =<<<JS
       });
       $(".total-sum").text(parseFloat(totalall).toFixed(2));
  }
- 
+ function checkRate(e){
+      var q_date = new Date();
+                  var q_date_arr = $(".quotation_date").val().split('/');
+                  if(q_date_arr.length >0){
+                      q_date = q_date_arr[2] +'/'+q_date_arr[1]+'/'+q_date_arr[0];
+                  }
+                  
+     let id = e.val();
+     if(id){
+         $.ajax({
+              'type':'post',
+              'dataType': 'json',
+              'url': "$url_to_checkrate",
+              'data': {'cur_id': id},
+              'success': function(data) {
+                //  alert(data[0]['exp_date']);
+                 var exp_date = data[0]['exp_date'];
+                 if(exp_date > q_date){
+                      $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว").show();
+                      $(".rate").val('');
+                      return false;
+                 }
+                 
+                  if(data.length > 0){
+                      $(".rate").val(data[0]['exc_rate']);
+                  }else{
+                      $(".alert-currency").html("ไม่พบข้อมูลอัตราแลกเปลี่ยน").show();
+                      $(".rate").val('');
+                      return false;
+                  }
+              }
+         });
+     }
+ }
  
 JS;
 $this->registerJs($js,static::POS_END);
