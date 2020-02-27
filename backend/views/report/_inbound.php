@@ -106,7 +106,7 @@ $this->title = 'รายงานสรุปนำเข้า';
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
                             'hAlign' => 'left',
                             'format' => 'raw',
-                            'value' => function($data){return date('d/m/Y',$data->invoice_date);},
+                            'value' => function($data){return date('d/m/Y',strtotime($data->invoice_date));},
                             'filterType' => GridView::FILTER_DATE_RANGE,
                             'filterWidgetOptions' => ([
                                 'attribute' => 'only_date',
