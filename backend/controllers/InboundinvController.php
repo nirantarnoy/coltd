@@ -333,6 +333,8 @@ class InboundinvController extends Controller
                 if ($model) {
                     $model->transport_in_no = $linetransportno[$i];
                     $model->transport_in_date = date('Y-m-d',strtotime($transport_date));
+                   // $model->unit_id = \backend\models\Product::findUnit($model->product_id);
+
                     if ($model->save(false)) {
 //                        $modeltrans = \backend\models\Importline::find()->where(['import_id' => $refid[$i]])->one();
 //                        if ($modeltrans) {

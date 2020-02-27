@@ -87,9 +87,9 @@ class ReportController extends Controller
         $to_date = '';
         $qty = null;
 
-        if(!empty(Yii::$app->request->queryParams['QuerypickingSearch'])){
-            $qty = Yii::$app->request->queryParams['QuerypickingSearch']['qty'];
-            $find_date = explode('-',Yii::$app->request->queryParams['QuerypickingSearch']['picking_date']);
+        if(!empty(Yii::$app->request->queryParams['QueryinboundSearch'])){
+            $qty = Yii::$app->request->queryParams['QueryinboundSearch']['qty'];
+            $find_date = explode('-',Yii::$app->request->queryParams['QueryinboundSearch']['invoice_date']);
             if(count($find_date)==2){
                 $from_date = $find_date[0];
                 $to_date = $find_date[1];
@@ -98,15 +98,15 @@ class ReportController extends Controller
 
 //        $find_date = Yii::$app->request->get('picking_date');
         //  echo print_r(Yii::$app->request->queryParams['QuerypickingSearch']['picking_date']);return;
-        $searchModel = new QuerypickingSearch();
+        $searchModel = new \backend\models\QueryinboundSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['AND',['>=','picking_date',$from_date],['<=','picking_date',$to_date]]);
+        $dataProvider->query->andFilterWhere(['AND',['>=','invoice_date',$from_date],['<=','invoice_date',$to_date]]);
         if($qty != null){
             $dataProvider->query->andFilterWhere(['qty'=>$qty]);
         }
 
-        $dataProvider->setSort(['defaultOrder'=>['picking_date'=>SORT_ASC]]);
-        return $this->render('_sale',[
+        $dataProvider->setSort(['defaultOrder'=>['invoice_date'=>SORT_ASC]]);
+        return $this->render('_inbound',[
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
