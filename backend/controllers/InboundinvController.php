@@ -87,8 +87,16 @@ class InboundinvController extends Controller
                 $inv_date = $x_date[2] . '/' . $x_date[1] . '/' . $x_date[0];
             }
 
+            $cur = 1;
+            if($model->currency_id == '' || $model->currency_id != null){
+                $cur = $model->currency_id;
+            }else{
+                $cur = 1;
+            }
+
             $model->invoice_date = date('Y-m-d', strtotime($inv_date));
             $model->status = 1;
+            $model->currency_id = $cur;
             if ($model->save(false)) {
                 if (count($prodid) > 0) {
                     for ($i = 0; $i <= count($prodid) - 1; $i++) {
