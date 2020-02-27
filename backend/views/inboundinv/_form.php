@@ -678,7 +678,7 @@ $js =<<<JS
  }
  function checkRate(e){
       var q_date = new Date();
-                  var q_date_arr = $(".invoice_date").val().split('/');
+                  var q_date_arr = $("#invoice_date").val().split('/');
                   if(q_date_arr.length >0){
                       q_date = q_date_arr[2] +'/'+q_date_arr[1]+'/'+q_date_arr[0];
                   }
