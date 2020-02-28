@@ -115,6 +115,21 @@ function line_cal(e){
 function approve(e){
         //e.preventDefault();
         var url = e.attr("data-url");
+        var i = 0;
+        $("table.table-importline tbody tr").each(function(){
+            var no = $(this).closest("tr").find(".line_transport_in_no").val();
+            var no_date = $(this).closest("tr").find(".line_transport_in_date").val();
+            var permit_no = $(this).closest("tr").find(".line_permit_no").val();
+            var permit_date = $(this).closest("tr").find(".line_permit_date").val();
+            
+            if(no == '' || no_date == '' || permit_no == '' || permit_date == ''){
+                i+=1;
+            }
+        });
+        if(i>0){
+            alert("มีรายการที่ยังไม่ได้กรอก กรุณาตรวจสอบอีกครั้ง");
+            return false;
+        }
         swal({
               title: "ตัองการบันทึกยอดรับเข้าใช่หรือไม่?",
               text: "",

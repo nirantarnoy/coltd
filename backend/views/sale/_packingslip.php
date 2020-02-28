@@ -21,7 +21,7 @@ $this->title = "Packing List";
         </div>
         <div class="panel-body" style="overflow-y: auto;white-space:nowrap ">
             <form action="<?=Url::to(['sale/savepicking'],true)?>" method="post" id="form-packing">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-picking">
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
@@ -102,10 +102,10 @@ $this->title = "Packing List";
                                 <?=$query[$i]['origin']?>
                             </td>
                             <td style="vertical-align: middle">
-                                <input type="text" class="form-control" name="line_transport_out_no[]" style="width: 100px;" value="">
+                                <input type="text" class="form-control line_transport_out_no" name="line_transport_out_no[]" style="width: 100px;" value="">
                             </td>
                             <td style="vertical-align: middle">
-                                <input type="date" class="form-control" name="line_transport_out_date[]" value="">
+                                <input type="date" class="form-control line_transport_out_date" name="line_transport_out_date[]" value="">
                             </td>
                             <td style="vertical-align: middle">
                                 <?=$query[$i]['invoice_no']?>
@@ -125,10 +125,10 @@ $this->title = "Packing List";
                                 <?=date('d-m-Y',strtotime($query[$i]['permit_date']))?>
                             </td>
                             <td style="vertical-align: middle">
-                                <input type="text" style="width: 200px;" class="form-control line_kno_out" name="line_kno_out_no[]" value="">
+                                <input type="text" style="width: 200px;" class="form-control line_kno_out_no" name="line_kno_out_no[]" value="">
                             </td>
                             <td style="vertical-align: middle">
-                                <input type="date" class="form-control" name="line_kno_out_date[]" value="">
+                                <input type="date" class="form-control line_kno_out_date" name="line_kno_out_date[]" value="">
                             </td>
                         </tr>
                       <?php endfor;?>
@@ -184,6 +184,21 @@ $js=<<<JS
     $(function() {
      // $("#packModal").modal("show");
      $(".btn-ok").click(function(){
+         var i = 0;
+        $("table.table-picking tbody tr").each(function(){
+            var no = $(this).closest("tr").find(".line_transport_out_no").val();
+            var no_date = $(this).closest("tr").find(".line_transport_out_date").val();
+            var permit_no = $(this).closest("tr").find(".line_kno_no").val();
+            var permit_date = $(this).closest("tr").find(".line_kno_date").val();
+            
+            if(no == '' || no_date == '' || permit_no == '' || permit_date == ''){
+                i+=1;
+            }
+        });
+        if(i>0){
+            alert("มีรายการที่ยังไม่ได้กรอก กรุณาตรวจสอบอีกครั้ง");
+            return false;
+        }
          $("#form-packing").submit();
      });
     });
