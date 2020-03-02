@@ -53,7 +53,7 @@ $this->title = "Packing List";
                     <?php //$i=0; ?>
                       <?php for($i=0;$i<=count($query)-1;$i++):?>
                             <?php //$i+=1; ?>
-                            <?=date('d-m-Y',$query[$i]['require_date']);?>
+
                         <tr>
                             <td style="vertical-align: middle">
                                 <input type="hidden" name="stock_id[]" value="<?=$query[$i]['stock_id']?>">
