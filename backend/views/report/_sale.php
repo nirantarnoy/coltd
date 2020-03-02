@@ -178,7 +178,7 @@ $this->title = 'รายงานสรุปส่งออก';
                             'filterInputOptions' => ['placeholder' => 'เลือกประเภทสินค้า']
                         ],
                         [
-                            'attribute' => 'inv_no',
+                            'attribute' => 'sale_no',
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
                             'label' => 'INV No.'
                         ],
