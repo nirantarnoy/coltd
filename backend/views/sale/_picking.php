@@ -140,7 +140,8 @@
                 <?php
                 $sumqty = $sumqty + $value->qty;
                 $productinfo = \backend\models\Product::findProductinfo($value->product_id);
-                $linenet = ($value->qty * $productinfo->unit_factor * $productinfo->volumn);
+//                $linenet = ($value->qty * $productinfo->unit_factor * $productinfo->volumn);
+                $linenet =\backend\models\Product::findProductInfo($value->product_id)->netweight;
                 //   $linegross = ((0.25 + $productinfo->volumn) * ($value->qty * $productinfo->unit_factor));
                 $sumnet = $sumnet + $linenet;
 
