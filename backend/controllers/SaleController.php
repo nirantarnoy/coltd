@@ -207,7 +207,7 @@ class SaleController extends Controller
                             continue;
                         }
 
-                        $modelcheck = \backend\models\Saleline::find()->where(['sale_id' => $id, 'product_id' => $prodid[$i],'id'=>$recid])->one();
+                        $modelcheck = \backend\models\Saleline::find()->where(['sale_id' => $id, 'product_id' => $prodid[$i],'id'=>$recid[$i]])->one();
                         if ($modelcheck) {
                             $modelcheck->qty = $lineqty[$i];
                             $modelcheck->price = $lineprice[$i];
