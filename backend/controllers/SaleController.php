@@ -627,10 +627,11 @@ class SaleController extends Controller
             //  echo  $linepermitdate[$i];return;
             $sale_date_x = explode('-', $sale_date);
             if (count($sale_date_x) > 0 && $sale_date_x[0] != '') {
-                $pick_date = $sale_date_x[2] . "/" . $sale_date_x[1] . "/" . $sale_date_x[0];
+                $pick_date = $sale_date_x[0] . "/" . $sale_date_x[1] . "/" . $sale_date_x[2];
             }
         }
-    //   print_r($trans_out_no);return;
+//   echo $sale_date.'<br/>';
+//        echo $pick_date;return;
 
         if (count($stock_id)) {
 
