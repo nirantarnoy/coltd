@@ -189,6 +189,7 @@ class SaleController extends Controller
 
 
         if ($model->load(Yii::$app->request->post())) {
+            $recid = Yii::$app->request->post('recid');
             $prodid = Yii::$app->request->post('productid');
             $lineqty = Yii::$app->request->post('qty');
             $lineprice = Yii::$app->request->post('price');
@@ -206,7 +207,7 @@ class SaleController extends Controller
                             continue;
                         }
 
-                        $modelcheck = \backend\models\Saleline::find()->where(['sale_id' => $id, 'product_id' => $prodid[$i]])->one();
+                        $modelcheck = \backend\models\Saleline::find()->where(['sale_id' => $id, 'product_id' => $prodid[$i],'id'=>$recid])->one();
                         if ($modelcheck) {
                             $modelcheck->qty = $lineqty[$i];
                             $modelcheck->price = $lineprice[$i];

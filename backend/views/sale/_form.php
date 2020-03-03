@@ -206,6 +206,8 @@ $this->registerCss('
                                         <td>
                                             <input type="hidden" class="productid" name="productid[]"
                                                    value="<?= $value->product_id ?>">
+                                            <input type="hidden" class="recid" name="recid[]"
+                                                   value="<?= $value->id ?>">
                                             <input type="text" autocomplete="off" class="form-control productcode"
                                                    name="prodcode[]"
                                                    value="<?= \backend\models\Product::findProductInfo($value->product_id)->product_code ?>"
