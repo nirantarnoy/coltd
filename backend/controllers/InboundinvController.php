@@ -266,7 +266,33 @@ class InboundinvController extends Controller
             ]);
         }
     }
-
+    public function actionAttachfile(){
+        $invoiceid = Yii::$app->request->post('inv_id');
+        $doc_file = UploadedFile::getInstanceByName('doc_file');
+        if(!empty($doc_file)){
+            $doc_name = time().".".$doc_file->getExtension();
+            $doc_file->saveAs(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$doc_name);
+            $model = new \backend\models\Importfile();
+            $model->import_id = $invoiceid;
+            $model->filename = $doc_name;
+            $model->save(false);
+            return $this->redirect(['inboundinv/update','id'=>$invoiceid]);
+        }else{
+            echo 'no file';
+        }
+    }
+    public function actionDeletedoc(){
+        $recid = Yii::$app->request->post('recid');
+        if($recid){
+            $model = \backend\models\Importfile::find()->where(['id'=>$recid])->one();
+            if($model){
+                unlink(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$model->filename);
+                \backend\models\Importfile::deleteAll(['id'=>$recid]);
+                return true;
+            }
+        }
+        return false;
+    }
     public function actionRecieve()
     {
         $productid = Yii::$app->request->post('product_id');
@@ -290,18 +316,6 @@ class InboundinvController extends Controller
         $linekno_no = Yii::$app->request->post('line_kno_no');
         $linekno_date = Yii::$app->request->post('line_kno_date');
 
-        $doc_file = UploadedFile::getInstanceByName('doc_file');
-        if(!empty($doc_file)){
-            echo "ok file";
-            $doc_name = time().".".$doc_file->getExtension();
-            $doc_file->saveAs(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$doc_name);
-            $model = new \backend\models\Importfile();
-            $model->import_id = $invoiceid;
-            $model->filename = $doc_name;
-            $model->save(false);
-        }else{
-            echo 'no file';
-        }
         //return;
 
         $permit_date = null;
@@ -330,23 +344,23 @@ class InboundinvController extends Controller
         if (count($productid) > 0) {
             $data = [];
             for ($i = 0; $i <= count($productid) - 1; $i++) {
-                $model = \backend\models\Inboundinvline::find()->where(['invoice_id' => $invoiceid, 'product_id' => $productid[$i]])->one();
+                $model = \backend\models\Inboundinvline::find()->where(['invoice_id' => $invoiceid, 'product_id' => $productid[$i],'line_num'=>$linenum[$i]])->one();
 
-//                if ($linepermitdate[$i] != '') {
-//                    //  echo  $linepermitdate[$i];return;
-//                    $per_origin = explode('-', $linepermitdate[$i]);
-//                    if (count($per_origin) > 0 && $per_origin[0] != '') {
-//                        $permit_date = $per_origin[2] . "/" . $per_origin[1] . "/" . $per_origin[0];
-//                    }
-//                }
+                if ($linepermitdate[$i] != '') {
+                    //  echo  $linepermitdate[$i];return;
+                    $per_origin = explode('-', $linepermitdate[$i]);
+                    if (count($per_origin) > 0 && $per_origin[0] != '') {
+                        $permit_date = $per_origin[2] . "/" . $per_origin[1] . "/" . $per_origin[0];
+                    }
+                }
                // echo $permit_date;return;
-//                if ($linetransportdate[$i] != '') {
-//                    //  echo  $linepermitdate[$i];return;
-//                    $trans_date = explode('-', $linetransportdate[$i]);
-//                    if (count($trans_date) > 0 && $trans_date[0] != '') {
-//                        $transport_date = $trans_date[2] . "/" . $trans_date[1] . "/" . $trans_date[0];
-//                    }
-//                }
+                if ($linetransportdate[$i] != '') {
+                    //  echo  $linepermitdate[$i];return;
+                    $trans_date = explode('-', $linetransportdate[$i]);
+                    if (count($trans_date) > 0 && $trans_date[0] != '') {
+                        $transport_date = $trans_date[2] . "/" . $trans_date[1] . "/" . $trans_date[0];
+                    }
+                }
                 if ($linekno_date[$i] != '') {
                     //  echo  $linepermitdate[$i];return;
                     $kno_date_arr = explode('/', $linekno_date[$i]);
@@ -358,6 +372,8 @@ class InboundinvController extends Controller
                // echo $inv_date.' '.$kno_date;return;
 
                 if ($model) {
+                    $model->permit_no = $linepermitno[$i];
+                    $model->permit_date = date('Y-m-d', strtotime($permit_date));
                     $model->transport_in_no = $linetransportno[$i];
                     $model->transport_in_date = date('Y-m-d',strtotime($transport_date));
                    // $model->unit_id = \backend\models\Product::findUnit($model->product_id);

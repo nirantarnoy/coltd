@@ -159,7 +159,7 @@ class SaleController extends Controller
         $model = $this->findModel($id);
         $modelline = \backend\models\Saleline::find()->where(['sale_id' => $id])->all();
         $modelpayment = \backend\models\Paymenttrans::find()->where(['sale_id' => $id])->all();
-
+        $modeldoc = \backend\models\Exportfile::find()->where(['sale_id'=>$id])->all();
 
         $pickinglist = [];
 
@@ -237,17 +237,38 @@ class SaleController extends Controller
             'modelpick' => $modelpick,
             'modelpickline' => $modelpickline,
             'modelpayment' => $modelpayment,
+            'modeldoc'=>$modeldoc
 
         ]);
     }
 
-    /**
-     * Deletes an existing Sale model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    public function actionAttachfile(){
+        $invoiceid = Yii::$app->request->post('inv_id');
+        $doc_file = UploadedFile::getInstanceByName('doc_file');
+        if(!empty($doc_file)){
+            $doc_name = time().".".$doc_file->getExtension();
+            $doc_file->saveAs(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$doc_name);
+            $model = new \backend\models\Exportfile();
+            $model->sale_id = $invoiceid;
+            $model->filename = $doc_name;
+            $model->save(false);
+            return $this->redirect(['sale/update','id'=>$invoiceid]);
+        }else{
+            echo 'no file';
+        }
+    }
+    public function actionDeletedoc(){
+        $recid = Yii::$app->request->post('recid');
+        if($recid){
+            $model = \backend\models\Exportfile::find()->where(['id'=>$recid])->one();
+            if($model){
+                unlink(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$model->filename);
+                \backend\models\Exportfile::deleteAll(['id'=>$recid]);
+                return true;
+            }
+        }
+        return false;
+    }
     public function actionDelete($id)
     {
         // echo $id;return;

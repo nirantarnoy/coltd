@@ -93,11 +93,12 @@ use yii\helpers\Url;
                                 <td><input type="text" style="width: 100px" class="form-control line_gross"
                                            name="line_gross[]" value="<?= $product_data->grossweight ?>" readonly></td>
                                 <td><input type="text" style="width: 200px" class="form-control line_transport_in_no"
-                                           name="line_transport_in_no[]" value="" required></td>
+                                           name="line_transport_in_no[]" value="<?=$value->transport_in_no?>" required></td>
                                 <td><input type="date" id="cut_date_<?= $i ?>" style="width: 200px"
                                            class="form-control line_transport_in_date" name="line_transport_in_date[]"
                                            required
-                                           value="<?= $value->transport_in_date == '' || $value->transport_in_date == Null ? date('d-m-Y') : date('d-m-Y', strtotime($value->transport_in_date)) ?>">
+                                           value="<?= $value->transport_in_date == '' || $value->transport_in_date == Null ? date('Y-d-m') : date('Y-d-m', strtotime($value->transport_in_date)) ?>"
+                                    >
                                 </td>
                                 <td><input type="text" style="width: 100px" class="form-control line_num"
                                            name="line_num[]" value="<?= $value->line_num ?>"></td>
@@ -117,10 +118,10 @@ use yii\helpers\Url;
                                            name="line_kno_date[]"
                                            value="<?= date('d/m/Y', strtotime($value->kno_in_date)) ?>" readonly></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_permit_no"
-                                           name="line_permit_no[]" value=""></td>
+                                           name="line_permit_no[]" value="<?= $value->permit_no ?>"></td>
                                 <td><input type="date" id="permit_date_<?= $i ?>" style="width: 200px"
                                            class="form-control line_permit_date" name="line_permit_date[]"
-                                           value="<?= $value->permit_date == '' || $value->permit_date == Null ? date('d-m-Y') : date('d-m-Y', strtotime($value->permit_date)) ?>">
+                                           value="<?= $value->permit_date == '' || $value->permit_date == Null ? date('Y-d-m') : date('Y-d-m', strtotime($value->permit_date)) ?>">
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -130,12 +131,7 @@ use yii\helpers\Url;
             </div>
             <br>
             <?php //if(!$modelinv->posted):?>
-            <br>
-            <div class="row">
-                <div class="col-lg-6">
-                    <input type="file" name="doc_file" class="form-control">
-                </div>
-            </div>
+
             <br>
             </form>
             <div class="btn-group">

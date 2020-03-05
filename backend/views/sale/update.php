@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = 'แก้ไข';
         'modelpick' => $modelpick,
         'modelpickline' => $modelpickline,
         'modelpayment' => $modelpayment,
+        'modeldoc'=>$modeldoc,
     ]) ?>
 
 </div>

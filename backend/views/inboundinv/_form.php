@@ -6,6 +6,7 @@ use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 use yii\helpers\Url;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\Inboundinv */
 /* @var $form yii\widgets\ActiveForm */
@@ -13,17 +14,17 @@ use yii\helpers\Url;
 
 <div class="inboundinv-form">
 
-    <?php $form = ActiveForm::begin(['id'=>'form-inbound']); ?>
+    <?php $form = ActiveForm::begin(['id' => 'form-inbound']); ?>
     <div class="panel panel-body">
         <div class="row">
             <div class="col-lg-4">
-                <?= $form->field($model, 'invoice_no')->textInput(['maxlength' => true,'readonly'=>'readonly','value'=>$model->isNewRecord?$runno:$model->invoice_no]) ?>
+                <?= $form->field($model, 'invoice_no')->textInput(['maxlength' => true, 'readonly' => 'readonly', 'value' => $model->isNewRecord ? $runno : $model->invoice_no]) ?>
             </div>
             <div class="col-lg-4">
-                <?php $model->invoice_date = $model->isNewRecord?date('d/m/Y'):date('d/m/Y',strtotime($model->invoice_date));?>
-                <?= $form->field($model, 'invoice_date')->widget(DatePicker::className(),[
-                    'value' =>date('d/m/Y'),
-                    'options' => ['id'=>'invoice_date'],
+                <?php $model->invoice_date = $model->isNewRecord ? date('d/m/Y') : date('d/m/Y', strtotime($model->invoice_date)); ?>
+                <?= $form->field($model, 'invoice_date')->widget(DatePicker::className(), [
+                    'value' => date('d/m/Y'),
+                    'options' => ['id' => 'invoice_date'],
                     'pluginOptions' => [
                         'format' => 'dd/mm/yyyy',
                         'todayHighlight' => true,
@@ -36,23 +37,23 @@ use yii\helpers\Url;
             </div>
         </div>
         <div class="row">
-<!--            <div class="col-lg-4">-->
-<!--                --><?php ////echo $form->field($model, 'delivery_term')->textInput(['maxlength' => true]) ?>
-<!--            </div>-->
+            <!--            <div class="col-lg-4">-->
+            <!--                --><?php ////echo $form->field($model, 'delivery_term')->textInput(['maxlength' => true]) ?>
+            <!--            </div>-->
             <div class="col-lg-4">
-                <?php $xstatus = $model->isNewRecord?'open':\backend\helpers\QuotationStatus::getTypeById($model->status);?>
-                <?= $form->field($model, 'status')->textInput(['value'=>$xstatus , 'readonly'=>'readonly']) ?>
+                <?php $xstatus = $model->isNewRecord ? 'open' : \backend\helpers\QuotationStatus::getTypeById($model->status); ?>
+                <?= $form->field($model, 'status')->textInput(['value' => $xstatus, 'readonly' => 'readonly']) ?>
             </div>
             <div class="col-lg-4">
                 <?= $form->field($model, 'docin_no')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-lg-4">
-                <?= $form->field($model, 'supplier_id')->widget(\kartik\select2\Select2::className(),[
-                        'data'=>ArrayHelper::map(\backend\models\Vendor::find()->all(),'id','name'),
-                        'options' => [
-                                'placeholder'=>'เลือก',
-                                'id' => 'supplier_id',
-                        ]
+                <?= $form->field($model, 'supplier_id')->widget(\kartik\select2\Select2::className(), [
+                    'data' => ArrayHelper::map(\backend\models\Vendor::find()->all(), 'id', 'name'),
+                    'options' => [
+                        'placeholder' => 'เลือก',
+                        'id' => 'supplier_id',
+                    ]
                 ])->label('ผู้ขาย') ?>
             </div>
         </div>
@@ -98,7 +99,7 @@ use yii\helpers\Url;
                     </tr>
                     </thead>
                     <tbody>
-                    <?php if($model->isNewRecord):?>
+                    <?php if ($model->isNewRecord): ?>
                         <tr>
                             <td style="vertical-align: middle;text-align: center">
 
@@ -109,17 +110,20 @@ use yii\helpers\Url;
                             <td>
                                 <input type="hidden" class="productid" name="productid[]">
                                 <input type="hidden" class="stock-id" name="stock_id[]" value="">
-                                <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]"
+                                       value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
                             </td>
                             <td>
                                 <input type="text" class="form-control productname" name="prodname[]" value="" readonly>
                             </td>
                             <td>
-                                <input type="number" min="0" class="form-control line_qty" name="qty[]" value="" onchange="cal_num($(this))">
+                                <input type="number" min="0" class="form-control line_qty" name="qty[]" value=""
+                                       onchange="cal_num($(this))">
                             </td>
                             <td>
                                 <!--                                    <input style="text-align: right" type="text" class="form-control line_cost" name="cost[]" value="" readonly>-->
-                                <input style="text-align: right" type="text" class="form-control line_origin" name="origin[]" value="" readonly>
+                                <input style="text-align: right" type="text" class="form-control line_origin"
+                                       name="origin[]" value="" readonly>
                             </td>
                             <td>
                                 <input type="text" class="form-control line_packper" value="" readonly>
@@ -132,71 +136,95 @@ use yii\helpers\Url;
                             </td>
 
                             <td>
-                                <input style="text-align: right" type="text" class="form-control line_price" name="price[]" value="" onchange="cal_num($(this));">
+                                <input style="text-align: right" type="text" class="form-control line_price"
+                                       name="price[]" value="" onchange="cal_num($(this));">
                             </td>
                             <td>
-                                <input style="text-align: right" type="text" class="form-control line_total" name="linetotal[]" value="" readonly>
+                                <input style="text-align: right" type="text" class="form-control line_total"
+                                       name="linetotal[]" value="" readonly>
                             </td>
                             <td>
-                                <div class="btn btn-sm btn-danger btn-removeline" onclick="return removeline($(this));"><i class="fa fa-trash-o"></i></div>
+                                <div class="btn btn-sm btn-danger btn-removeline" onclick="return removeline($(this));">
+                                    <i class="fa fa-trash-o"></i></div>
                             </td>
                         </tr>
-                    <?php else:?>
-                        <?php if(count($modelline) >0):?>
-                            <?php $i=0;?>
-                            <?php foreach ($modelline as $value):?>
-                                <?php $i+=1;?>
-                                <tr data-var="<?=$value->id?>">
+                    <?php else: ?>
+                        <?php if (count($modelline) > 0): ?>
+                            <?php $i = 0; ?>
+                            <?php foreach ($modelline as $value): ?>
+                                <?php $i += 1; ?>
+                                <tr data-var="<?= $value->id ?>">
                                     <td style="vertical-align: middle;text-align: center">
-                                        <?=$i?>
+                                        <?= $i ?>
                                     </td>
                                     <td style="vertical-align: middle;text-align: left">
                                         <?php
-                                        if(\backend\models\Product::findImg($value->product_id) == ''):?>
+                                        if (\backend\models\Product::findImg($value->product_id) == ''):?>
                                             <i class="fa fa-image"></i>
-                                        <?php else:?>
-                                            <?=Html::img('../web/uploads/images/'.\backend\models\Product::findImg($value->product_id),['style'=>'width: 100%;left: 0px;top: 0px','class'=>'popover1'])?>
-                                        <?php endif;?>
+                                        <?php else: ?>
+                                            <?= Html::img('../web/uploads/images/' . \backend\models\Product::findImg($value->product_id), ['style' => 'width: 100%;left: 0px;top: 0px', 'class' => 'popover1']) ?>
+                                        <?php endif; ?>
                                     </td>
                                     <td>
-                                        <input type="hidden" class="productid" name="productid[]" value="<?=$value->product_id?>">
-                                     <input type="hidden" class="stock-id" name="stock_id[]" value="<?php //echo $value->stock_id?>">
-                                        <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="<?=\backend\models\Product::findCode($value->product_id)?>" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                        <input type="hidden" class="productid" name="productid[]"
+                                               value="<?= $value->product_id ?>">
+                                        <input type="hidden" class="stock-id" name="stock_id[]"
+                                               value="<?php //echo $value->stock_id?>">
+                                        <input type="text" autocomplete="off" class="form-control productcode"
+                                               name="prodcode[]"
+                                               value="<?= \backend\models\Product::findCode($value->product_id) ?>"
+                                               onchange="itemchange($(this));" ondblclick="showfind($(this))">
 
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control productname" name="prodname[]" value="<?=\backend\models\Product::findName($value->product_id)?>" readonly>
+                                        <input type="text" class="form-control productname" name="prodname[]"
+                                               value="<?= \backend\models\Product::findName($value->product_id) ?>"
+                                               readonly>
                                     </td>
                                     <td>
-                                        <input type="number" min="0" class="form-control line_qty" name="qty[]" value="<?=$value->line_qty?>" onchange="cal_num($(this));">
+                                        <input type="number" min="0" class="form-control line_qty" name="qty[]"
+                                               value="<?= $value->line_qty ?>" onchange="cal_num($(this));">
                                     </td>
                                     <td>
                                         <!--                                            <input type="text" class="form-control line_cost" name="cost[]" value="" readonly>-->
-                                        <input type="text" class="form-control line_origin" name="origin[]" value="<?=\backend\models\Product::findProductinfo($value->product_id)!=null?\backend\models\Product::findProductinfo($value->product_id)->origin:''?>" readonly>
+                                        <input type="text" class="form-control line_origin" name="origin[]"
+                                               value="<?= \backend\models\Product::findProductinfo($value->product_id) != null ? \backend\models\Product::findProductinfo($value->product_id)->origin : '' ?>"
+                                               readonly>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control line_packper" value="<?=\backend\models\Product::findProductInfo($value->product_id)->unit_factor?>" readonly>
+                                        <input type="text" class="form-control line_packper"
+                                               value="<?= \backend\models\Product::findProductInfo($value->product_id)->unit_factor ?>"
+                                               readonly>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control line_litre" value="<?=\backend\models\Product::findProductInfo($value->product_id)->volumn_content?>" readonly>
+                                        <input type="text" class="form-control line_litre"
+                                               value="<?= \backend\models\Product::findProductInfo($value->product_id)->volumn_content ?>"
+                                               readonly>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control line_percent" value="<?=\backend\models\Product::findProductInfo($value->product_id)->volumn?>" readonly>
+                                        <input type="text" class="form-control line_percent"
+                                               value="<?= \backend\models\Product::findProductInfo($value->product_id)->volumn ?>"
+                                               readonly>
                                     </td>
 
                                     <td>
-                                        <input style="text-align: right" type="text" class="form-control line_price" name="price[]" value="<?=$value->line_price?>" onchange="cal_num($(this));">
+                                        <input style="text-align: right" type="text" class="form-control line_price"
+                                               name="price[]" value="<?= $value->line_price ?>"
+                                               onchange="cal_num($(this));">
                                     </td>
                                     <td>
-                                        <input style="text-align: right" type="text" class="form-control line_total" name="linetotal[]" value="<?=$value->line_price * $value->line_qty?>" readonly>
+                                        <input style="text-align: right" type="text" class="form-control line_total"
+                                               name="linetotal[]" value="<?= $value->line_price * $value->line_qty ?>"
+                                               readonly>
                                     </td>
                                     <td>
-                                        <div class="btn btn-sm btn-danger btn-removeline" onclick="return removeline($(this));"><i class="fa fa-trash-o"></i></div>
+                                        <div class="btn btn-sm btn-danger btn-removeline"
+                                             onclick="return removeline($(this));"><i class="fa fa-trash-o"></i></div>
                                     </td>
                                 </tr>
 
-                            <?php endforeach;?>
-                        <?php else:?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
                             <tr>
                                 <td style="vertical-align: middle;text-align: center">
 
@@ -207,17 +235,22 @@ use yii\helpers\Url;
                                 <td>
                                     <input type="hidden" class="productid" name="productid[]">
                                     <input type="hidden" class="stock-id" name="stock_id[]" value="">
-                                    <input type="text" autocomplete="off" class="form-control productcode" name="prodcode[]" value="" onchange="itemchange($(this));" ondblclick="showfind($(this))">
+                                    <input type="text" autocomplete="off" class="form-control productcode"
+                                           name="prodcode[]" value="" onchange="itemchange($(this));"
+                                           ondblclick="showfind($(this))">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control productname" name="prodname[]" value="" readonly>
+                                    <input type="text" class="form-control productname" name="prodname[]" value=""
+                                           readonly>
                                 </td>
                                 <td>
-                                    <input type="number" min="0" class="form-control line_qty" name="qty[]" value="" onchange="cal_num($(this));">
+                                    <input type="number" min="0" class="form-control line_qty" name="qty[]" value=""
+                                           onchange="cal_num($(this));">
                                 </td>
                                 <td>
                                     <!--                                        <input style="text-align: right" type="text" class="form-control line_cost" name="cost[]" value="" readonly>-->
-                                    <input style="text-align: right" type="text" class="form-control line_origin" name="origin[]" value="" readonly>
+                                    <input style="text-align: right" type="text" class="form-control line_origin"
+                                           name="origin[]" value="" readonly>
                                 </td>
                                 <td>
                                     <input type="text" class="form-control line_packper" value="" readonly>
@@ -230,18 +263,21 @@ use yii\helpers\Url;
                                 </td>
 
                                 <td>
-                                    <input style="text-align: right" type="text" class="form-control line_price" name="price[]" value="" onchange="cal_num($(this));">
+                                    <input style="text-align: right" type="text" class="form-control line_price"
+                                           name="price[]" value="" onchange="cal_num($(this));">
                                 </td>
                                 <td>
-                                    <input style="text-align: right" type="text" class="form-control line_total" name="linetotal[]" value="" readonly>
+                                    <input style="text-align: right" type="text" class="form-control line_total"
+                                           name="linetotal[]" value="" readonly>
                                 </td>
                                 <td>
-                                    <div class="btn btn-sm btn-danger btn-removeline" onclick="return removeline($(this));"><i class="fa fa-trash-o"></i></div>
+                                    <div class="btn btn-sm btn-danger btn-removeline"
+                                         onclick="return removeline($(this));"><i class="fa fa-trash-o"></i></div>
                                 </td>
                             </tr>
-                        <?php endif;?>
+                        <?php endif; ?>
 
-                    <?php endif;?>
+                    <?php endif; ?>
                     </tbody>
                     <tfoot>
                     <tr>
@@ -259,16 +295,15 @@ use yii\helpers\Url;
 
     <div class="form-group pull-right">
         <?= Html::submitButton("<i class='fa fa-save'></i> บันทึก", ['class' => 'btn btn-success']) ?>
-        <?php if(!$model->isNewRecord):?>
+        <?php if (!$model->isNewRecord): ?>
 
-            <?= Html::Button("<i class='fa fa-print'></i> พิมพ์ Invoice", ['class' => 'btn btn-warning btn-quote-print','data-id'=>$model->id]) ?>
-            <?= Html::Button("<i class='fa fa-print'></i> พิมพ์ Packing", ['class' => 'btn btn-info btn-quote-print-packing','data-id'=>$model->id]) ?>
+            <?= Html::Button("<i class='fa fa-print'></i> พิมพ์ Invoice", ['class' => 'btn btn-warning btn-quote-print', 'data-id' => $model->id]) ?>
+            <?= Html::Button("<i class='fa fa-print'></i> พิมพ์ Packing", ['class' => 'btn btn-info btn-quote-print-packing', 'data-id' => $model->id]) ?>
             <?php //echo Html::Button("<i class='fa fa-print'></i> พิมพ์ PackingList", ['class' => 'btn btn-primary btn-firm-sale']) ?>
-                <?= Html::a('สร้าง Form นำเข้า',['inboundinv/createtrans','id'=>$model->id],['class'=>'btn btn-default'])?>
+            <?= Html::a('สร้าง Form นำเข้า', ['inboundinv/createtrans', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
 
 
-
-        <?php endif;?>
+        <?php endif; ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -276,36 +311,58 @@ use yii\helpers\Url;
     <br>
     <div class="panel panel-body">
         <b>เอกสารประกอบการนำเข้า</b>
+        <br>
+        <form action="<?= Url::to(['inboundinv/attachfile'], true) ?>" method="post" enctype="multipart/form-data">
+            <br>
+            <div class="row">
+                <div class="col-lg-6">
+                    <input type="hidden" name="inv_id" value="<?= $model->id ?>">
+                    <input type="file" name="doc_file" class="form-control">
+                </div>
+                <div class="col-lg-6">
+                    <input type="submit" value="บันนึกแนบไฟล์" class="btn btn-warning">
+                </div>
+            </div>
+
+        </form>
         <hr>
         <div class="row">
             <div class="col-lg-6">
-             <table class="table table-bordered">
-                 <thead>
-                 <tr>
-                     <th>วันที่</th>
-                     <th>เอกสาร</th>
-                 </tr>
-                 </thead>
-                 <tbody>
-                  <?php foreach ($modeldoc as $val):?>
-                  <tr>
-                      <td><?=date('d/m/Y',$val->created_at)?></td>
-                      <td>
-                          <a href="<?=Yii::$app->getUrlManager()->baseUrl?>/uploads/doc_in/<?=$val->filename?>" target="_blank">
-                              <?=$val->filename?>
-                          </a>
-                      </td>
-                  </tr>
-                 <?php endforeach;?>
-                 </tbody>
-             </table>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>วันที่</th>
+                        <th>เอกสาร</th>
+                        <th>-</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($modeldoc as $val): ?>
+                        <tr>
+                            <td><?= date('d/m/Y', $val->created_at) ?></td>
+                            <td>
+                                <a href="<?= Yii::$app->getUrlManager()->baseUrl ?>/uploads/doc_in/<?= $val->filename ?>"
+                                   target="_blank">
+                                    <?= $val->filename ?>
+                                </a>
+                            </td>
+                            <td>
+                                <input type="hidden" class="doc_line_id" name="doc_line_id" value="<?= $val->id ?>">
+                                <i class="fa fa-trash" onclick="removedoc($(this))"></i>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
 
     </div>
 
-    <form id="form-print-invoice" action="<?=Url::to(['inboundinv/printinv','id'=>$model->id],true)?>" method="post" target="_blank"></form>
-    <form id="form-print-packing" action="<?=Url::to(['inboundinv/print','id'=>$model->id],true)?>" method="post" target="_blank"></form>
+    <form id="form-print-invoice" action="<?= Url::to(['inboundinv/printinv', 'id' => $model->id], true) ?>"
+          method="post" target="_blank"></form>
+    <form id="form-print-packing" action="<?= Url::to(['inboundinv/print', 'id' => $model->id], true) ?>" method="post"
+          target="_blank"></form>
 </div>
 
 <div id="findModal" class="modal fade" role="dialog">
@@ -318,7 +375,7 @@ use yii\helpers\Url;
                     <div class="col-sm-6">
                         <div id="imaginary_container">
                             <div class="input-group stylish-input-group">
-                                <input type="text" class="form-control search-item"  placeholder="ค้นหาสินค้า" >
+                                <input type="text" class="form-control search-item" placeholder="ค้นหาสินค้า">
                                 <span class="input-group-addon">
                                         <button type="submit" class="btn-search-submit">
                                             <span class="fa fa-search"></span>
@@ -363,7 +420,9 @@ use yii\helpers\Url;
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close text-danger"></i> ปิดหน้าต่าง</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                            class="fa fa-close text-danger"></i> ปิดหน้าต่าง
+                </button>
             </div>
         </div>
 
@@ -371,11 +430,12 @@ use yii\helpers\Url;
 </div>
 
 <?php
-$url_to_find = Url::to(['inboundinv/finditem'],true);
-$url_to_firm = Url::to(['inboundinv/genpacking'],true);
-$url_to_find_product = Url::to(['product/searchitem'],true);
+$url_to_find = Url::to(['inboundinv/finditem'], true);
+$url_to_firm = Url::to(['inboundinv/genpacking'], true);
+$url_to_find_product = Url::to(['product/searchitem'], true);
 $url_to_checkrate = Url::to(['quotation/check-rate'], true);
-$js =<<<JS
+$url_to_remove_file = Url::to(['inboundinv/deletedoc'],true);
+$js = <<<JS
  var currow = 0;
  var  removelist = [];
  var quote = '$model->id';
@@ -549,7 +609,23 @@ $js =<<<JS
   });
     
  });
-
+ function removedoc(e) {
+     let lineid = e.closest('tr').find('.doc_line_id').val();
+     if(lineid > 0){
+           if(confirm('ต้องการลบข้อมูลนี้ใช่หรือไม่')){
+                $.ajax({
+                      'type':'post',
+                      'dataType': 'json',
+                      'url': "$url_to_remove_file",
+                      'data': {'recid': lineid},
+                      'success': function(data) {
+                          location.reload();
+                      }
+                });
+          }
+     }
+ 
+ }
  function itemchange(e) {
    if(e.val() !=""){
       
@@ -745,5 +821,5 @@ $js =<<<JS
  }
  
 JS;
-$this->registerJs($js,static::POS_END);
+$this->registerJs($js, static::POS_END);
 ?>

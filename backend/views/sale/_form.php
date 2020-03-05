@@ -407,6 +407,56 @@ $this->registerCss('
         </div>
     </div>
 </div>
+<br>
+<div class="panel panel-body">
+    <b>เอกสารประกอบการนำออก</b>
+    <br>
+    <form action="<?= Url::to(['sale/attachfile'], true) ?>" method="post" enctype="multipart/form-data">
+        <br>
+        <div class="row">
+            <div class="col-lg-6">
+                <input type="hidden" name="inv_id" value="<?= $model->id ?>">
+                <input type="file" name="doc_file" class="form-control">
+            </div>
+            <div class="col-lg-6">
+                <input type="submit" value="บันนึกแนบไฟล์" class="btn btn-warning">
+            </div>
+        </div>
+
+    </form>
+    <hr>
+    <div class="row">
+        <div class="col-lg-6">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>วันที่</th>
+                    <th>เอกสาร</th>
+                    <th>-</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($modeldoc as $val):?>
+                    <tr>
+                        <td><?=date('d/m/Y',$val->created_at)?></td>
+                        <td>
+                            <a href="<?=Yii::$app->getUrlManager()->baseUrl?>/uploads/doc_in/<?=$val->filename?>" target="_blank">
+                                <?=$val->filename?>
+                            </a>
+                        </td>
+                        <td>
+                            <input type="hidden" class="doc_line_id" name="doc_line_id" value="<?= $val->id ?>">
+                            <i class="fa fa-trash" onclick="removedoc($(this))"></i>
+                        </td>
+                    </tr>
+                <?php endforeach;?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<br>
 <div class="panel">
     <div class="panel panel-heading">
         <h3><i class="fa fa-clock-o"></i> ประวัติชำระเงิน</h3>
@@ -561,6 +611,7 @@ $url_to_find_transport = Url::to(['sale/findtransport'], true);
 $url_to_createinvoice = Url::to(['sale/createinvoice'], true);
 $url_to_printpicking = Url::to(['sale/printpicking'], true);
 $url_to_createpacking = Url::to(['sale/createpacking'], true);
+$url_to_remove_file = Url::to(['sale/deletedoc'],true);
 $js = <<<JS
  var currow = 0;
  var  removelist = [];
@@ -756,7 +807,7 @@ $js = <<<JS
     $(".btn-save-picking").click(function(){
        $("form#form-picking").submit();
     });
-    
+     
     $('.popover1').on({
       mousemove: function(e) {
           $(this).next('#big').css({
@@ -779,6 +830,23 @@ $js = <<<JS
       }
   });
  });
+ function removedoc(e) {
+     let lineid = e.closest('tr').find('.doc_line_id').val();
+     if(lineid > 0){
+           if(confirm('ต้องการลบข้อมูลนี้ใช่หรือไม่')){
+                $.ajax({
+                      'type':'post',
+                      'dataType': 'json',
+                      'url': "$url_to_remove_file",
+                      'data': {'recid': lineid},
+                      'success': function(data) {
+                          location.reload();
+                      }
+                });
+          }
+     }
+ 
+ }
  function pickinginv(e){
      var x = "#form-"+e.attr('data-var');
    
