@@ -272,6 +272,38 @@ use yii\helpers\Url;
     </div>
 
     <?php ActiveForm::end(); ?>
+    <br>
+    <br>
+    <div class="panel panel-body">
+        <b>เอกสารประกอบการนำเข้า</b>
+        <hr>
+        <div class="row">
+            <div class="col-lg-6">
+             <table class="table table-bordered">
+                 <thead>
+                 <tr>
+                     <th>วันที่</th>
+                     <th>เอกสาร</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                  <?php foreach ($modeldoc as $val):?>
+                  <tr>
+                      <td><?=date('d/m/Y',$val->created_at)?></td>
+                      <td>
+                          <a href="<?=Yii::$app->getUrlManager()->baseUrl?>/uploads/doc_in/<?=$val->filename?>" target="_blank">
+                              <?=$val->filename?>
+                          </a>
+                      </td>
+                  </tr>
+                 <?php endforeach;?>
+                 </tbody>
+             </table>
+            </div>
+        </div>
+
+    </div>
+
     <form id="form-print-invoice" action="<?=Url::to(['inboundinv/printinv','id'=>$model->id],true)?>" method="post" target="_blank"></form>
     <form id="form-print-packing" action="<?=Url::to(['inboundinv/print','id'=>$model->id],true)?>" method="post" target="_blank"></form>
 </div>

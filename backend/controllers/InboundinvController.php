@@ -12,6 +12,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use kartik\mpdf\Pdf;
+use yii\web\UploadedFile;
 
 /**
  * InboundinvController implements the CRUD actions for Inboundinv model.
@@ -173,6 +174,7 @@ class InboundinvController extends Controller
     {
         $model = $this->findModel($id);
         $modelline = \backend\models\Inboundinvline::find()->where(['invoice_id' => $id])->all();
+        $modeldoc = \backend\models\Importfile::find()->where(['import_id'=>$id])->all();
         if ($model->load(Yii::$app->request->post())) {
             $prodid = Yii::$app->request->post('productid');
             $lineqty = Yii::$app->request->post('qty');
@@ -213,6 +215,7 @@ class InboundinvController extends Controller
         return $this->render('update', [
             'model' => $model,
             'modelline' => $modelline,
+            'modeldoc' => $modeldoc,
         ]);
     }
 
@@ -286,6 +289,20 @@ class InboundinvController extends Controller
         $lineexcisedate = Yii::$app->request->post('line_excise_date');
         $linekno_no = Yii::$app->request->post('line_kno_no');
         $linekno_date = Yii::$app->request->post('line_kno_date');
+
+        $doc_file = UploadedFile::getInstanceByName('doc_file');
+        if(!empty($doc_file)){
+            echo "ok file";
+            $doc_name = time().".".$doc_file->getExtension();
+            $doc_file->saveAs(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$doc_name);
+            $model = new \backend\models\Importfile();
+            $model->import_id = $invoiceid;
+            $model->filename = $doc_name;
+            $model->save(false);
+        }else{
+            echo 'no file';
+        }
+        //return;
 
         $permit_date = null;
         $transport_date = null;
