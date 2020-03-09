@@ -106,7 +106,9 @@ $this->title = 'รายงานสรุปนำเข้า';
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
                             'hAlign' => 'left',
                             'format' => 'raw',
-                            'value' => function($data){return date('d/m/Y',strtotime($data->invoice_date));},
+                            'value' => function ($data) {
+                                return date('d/m/Y', strtotime($data->invoice_date));
+                            },
                             'filterType' => GridView::FILTER_DATE_RANGE,
                             'filterWidgetOptions' => ([
                                 'attribute' => 'only_date',
@@ -168,16 +170,23 @@ $this->title = 'รายงานสรุปนำเข้า';
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                         ],
                         [
-                            'attribute' => 'category_name',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                             'label' => 'ประเภทสินค้า',
-                            'filterType' => GridView::FILTER_SELECT2,
-                            'filter' => ArrayHelper::map(\backend\models\Productcategory::find()->orderBy('name')->asArray()->all(), 'name', 'name'),
-                            'filterWidgetOptions' => [
-                                'pluginOptions' => ['allowClear' => true],
-                            ],
-                            'filterInputOptions' => ['placeholder' => 'เลือกประเภทสินค้า']
+                            'value' => function ($data) {
+                                return \backend\models\Queryinvoicecategory::findCat($data->docin_no);
+                            }
                         ],
+//                        [
+//                            'attribute' => 'category_name',
+//                            'contentOptions' => ['style' => 'vertical-align: middle'],
+//                            'label' => 'ประเภทสินค้า',
+//                            'filterType' => GridView::FILTER_SELECT2,
+//                            'filter' => ArrayHelper::map(\backend\models\Productcategory::find()->orderBy('name')->asArray()->all(), 'name', 'name'),
+//                            'filterWidgetOptions' => [
+//                                'pluginOptions' => ['allowClear' => true],
+//                            ],
+//                            'filterInputOptions' => ['placeholder' => 'เลือกประเภทสินค้า']
+//                        ],
                         [
                             'attribute' => 'docin_no',
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
@@ -194,12 +203,12 @@ $this->title = 'รายงานสรุปนำเข้า';
                         [
                             'label' => 'ราคาสินค้า(USD)',
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],
-                            'value' => function($data){
+                            'value' => function ($data) {
                                 $amt = 0;
                                 //$cur = \backend\models\Currency::findName($data->currency);
-                                if($data->currency_name =='USD'){
+                                if ($data->currency_name == 'USD') {
                                     return $data->line_price;
-                                }else{
+                                } else {
                                     return 0;
                                 }
                             },
@@ -211,7 +220,7 @@ $this->title = 'รายงานสรุปนำเข้า';
                         [
                             'label' => 'ราคาสินค้า(THB)',
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],
-                            'value' => function($data){
+                            'value' => function ($data) {
                                 $amt = 0;
                                 // $cur = \backend\models\Currency::findName($data->currency);
                                 // if($cur =='THB'){
