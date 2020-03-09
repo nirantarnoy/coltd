@@ -42,7 +42,7 @@ class QueryInbound extends \yii\db\ActiveRecord
             [['invoice_date', 'permit_date', 'transport_in_date'], 'safe'],
             [['supplier_id', 'line_qty'], 'integer'],
             [['line_price', 'rate'], 'number'],
-            [['invoice_no', 'docin_no', 'permit_no', 'transport_in_no', 'name', 'currency_name', 'unit_name', 'category_name'], 'string', 'max' => 255],
+            [['invoice_no', 'docin_no', 'permit_no', 'transport_in_no', 'name', 'currency_name', 'unit_name'], 'string', 'max' => 255],
         ];
     }
 
@@ -66,7 +66,6 @@ class QueryInbound extends \yii\db\ActiveRecord
             'currency_name' => 'Currency Name',
             'rate' => 'Rate',
             'unit_name' => 'Unit Name',
-            'category_name' => 'Category Name',
         ];
     }
 }
