@@ -436,20 +436,23 @@ $this->registerCss('
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($modeldoc as $val):?>
-                    <tr>
-                        <td><?=date('d/m/Y',$val->created_at)?></td>
-                        <td>
-                            <a href="<?=Yii::$app->getUrlManager()->baseUrl?>/uploads/doc_in/<?=$val->filename?>" target="_blank">
-                                <?=$val->filename?>
-                            </a>
-                        </td>
-                        <td>
-                            <input type="hidden" class="doc_line_id" name="doc_line_id" value="<?= $val->id ?>">
-                            <i class="fa fa-trash" onclick="removedoc($(this))"></i>
-                        </td>
-                    </tr>
-                <?php endforeach;?>
+                <?php if (count($modeldoc) > 0): ?>
+                    <?php foreach ($modeldoc as $val): ?>
+                        <tr>
+                            <td><?= date('d/m/Y', $val->created_at) ?></td>
+                            <td>
+                                <a href="<?= Yii::$app->getUrlManager()->baseUrl ?>/uploads/doc_in/<?= $val->filename ?>"
+                                   target="_blank">
+                                    <?= $val->filename ?>
+                                </a>
+                            </td>
+                            <td>
+                                <input type="hidden" class="doc_line_id" name="doc_line_id" value="<?= $val->id ?>">
+                                <i class="fa fa-trash" onclick="removedoc($(this))"></i>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
                 </tbody>
             </table>
         </div>
@@ -611,7 +614,7 @@ $url_to_find_transport = Url::to(['sale/findtransport'], true);
 $url_to_createinvoice = Url::to(['sale/createinvoice'], true);
 $url_to_printpicking = Url::to(['sale/printpicking'], true);
 $url_to_createpacking = Url::to(['sale/createpacking'], true);
-$url_to_remove_file = Url::to(['sale/deletedoc'],true);
+$url_to_remove_file = Url::to(['sale/deletedoc'], true);
 $js = <<<JS
  var currow = 0;
  var  removelist = [];

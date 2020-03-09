@@ -337,6 +337,7 @@ use yii\helpers\Url;
                     </tr>
                     </thead>
                     <tbody>
+                    <?php if(count($modeldoc) > 0):?>
                     <?php foreach ($modeldoc as $val): ?>
                         <tr>
                             <td><?= date('d/m/Y', $val->created_at) ?></td>
@@ -352,6 +353,7 @@ use yii\helpers\Url;
                             </td>
                         </tr>
                     <?php endforeach; ?>
+                    <?php endif;?>
                     </tbody>
                 </table>
             </div>
