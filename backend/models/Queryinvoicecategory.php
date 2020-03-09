@@ -19,7 +19,7 @@ class Queryinvoicecategory extends \common\models\QueryInvoiceCategory
             foreach ($model as $val) {
                 if ($i == 0 && $i < count($model)) {
                     $cat .= $val->name;
-                } else if ($i == 0 || $i < count($model)) {
+                } else if ($i < count($model)) {
                     $cat .= $val->name . ',';
                 } else if ($i == count($model)) {
                     $cat .= $val->name;
