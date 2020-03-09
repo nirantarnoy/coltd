@@ -110,7 +110,7 @@ use yii\helpers\Url;
                                            name="line_excise_no[]" value="<?= $product_data->excise_no ?>" readonly>
                                 </td>
                                 <td><input type="text" style="width: 100px" class="form-control line_excise_date"
-                                           name="line_excise_date[]" value="<?= $product_data->excise_date ?>" readonly>
+                                           name="line_excise_date[]" value="<?= date('d/m/Y',strtotime($product_data->excise_date)) ?>" readonly>
                                 </td>
                                 <td><input type="text" style="width: 100px" class="form-control line_kno_no"
                                            name="line_kno_no[]" readonly value="<?= $value->kno_no_in ?>"></td>
