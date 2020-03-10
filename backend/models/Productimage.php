@@ -33,4 +33,8 @@ class Productimage extends \common\models\ProductImage
             ],
         ];
     }
+    public function getCover($id){
+        $model = \backend\models\Productimage::find()->where(['product_id'=>$id])->one();
+        return count($model)>0?$model->name:'';
+    }
 }

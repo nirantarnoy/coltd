@@ -409,6 +409,7 @@ $this->registerCss('
                         <th style="text-align: center">เลือก</th>
                         <th>รหัสสินค้า</th>
                         <th>รายละเอียด</th>
+                        <th>คงเหลือ</th>
                         <th>Origin</th>
                         <th>ปริมาณ/ลัง</th>
                         <th>ลิตร/ขวด</th>
@@ -426,7 +427,7 @@ $this->registerCss('
                         <th>วันที่</th>
                         <th>เข้า</th>
                         <th>ออก</th>
-                        <th>คงเหลือ</th>
+
 
                     </tr>
                     </thead>
@@ -575,6 +576,7 @@ $js = <<<JS
                            "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
                              "<input type='hidden' class='stock_qty' value='"+all_qty+"'/>" +
                            "</td>"+
+                             "<td style='font-weight: bold;text-align: right;'>"+ parseFloat(in_q).toLocaleString()+"</td>" +
                            "<td>"+data[i]['origin']+"</td>"+
                           "<td>"+data[i]['unit_factor']+"</td>"+
                           "<td>"+data[i]['volumn']+"</td>"+
@@ -592,7 +594,7 @@ $js = <<<JS
                            "<td>"+data[i]['kno_in_date']+"</td>" +
                             "<td style='color:green;text-align: right;'>"+parseFloat(in_q).toLocaleString()+"</td>" +
                            "<td style='color:red;text-align: right;'>"+parseFloat(out_q).toLocaleString()+"</td>" +
-                           "<td style='font-weight: bold;text-align: right;'>"+ parseFloat(in_q).toLocaleString()+"</td>" +
+                         
                            "</tr>"
                           
                      }

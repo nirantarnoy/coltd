@@ -1040,10 +1040,7 @@ class ProductController extends Controller
                     ->all();
                 return Json::encode($model);
             }
-
-
         }
-
     }
     public function actionGetphoto(){
         $id = \Yii::$app->request->post('product_id');
