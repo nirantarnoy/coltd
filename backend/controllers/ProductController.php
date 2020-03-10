@@ -1050,7 +1050,7 @@ class ProductController extends Controller
         $html = '';
         if($id){
             $model = \backend\models\Productimage::find()->where(['product_id'=>$id])->one();
-            $url = Yii::getAlias('@backend') . '/web/uploads/images/'.$model->name;
+            $url = '../web/uploads/images/'.$model->name;
             if($model){
                 $html.='<img src="'.$url.'" >';
             }
