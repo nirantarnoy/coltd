@@ -132,7 +132,7 @@ $this->registerCss('
                                 <th style="width: 10%">จำนวน</th>
                                 <th style="width: 10%">origin</th>
                                 <th style="width: 10%">ต้นทุน</th>
-                                <th>ราคาขาย/ลัง(Bath)</th>
+                                <th>ราคาขาย/ลัง</th>
                                 <th>ราคารวม</th>
                                 <th>-</th>
 
@@ -454,6 +454,7 @@ $url_to_find = Url::to(['quotation/finditem'], true);
 $url_to_firm = Url::to(['quotation/firmorder'], true);
 $url_to_find_product = Url::to(['product/searchitem'], true);
 $url_to_checkrate = Url::to(['quotation/check-rate'], true);
+$url_to_get_photo = Url::to(['product/getphoto'],true);
 $js = <<<JS
  var currow = 0;
  var  removelist = [];
@@ -773,6 +774,20 @@ $js = <<<JS
         //   alert("รายการสินค้านี้ซ้ำ");return false;   
         // }
         if($(this).index() == currow){
+              let html_photo = '';
+              $.ajax({
+              'type':'post',
+              'dataType': 'html',
+              'async': false,
+              'url': "$url_to_get_photo",
+              'data': {'product_id': prodid},
+              'success': function(data) {
+                  //  alert(data);
+                    html_photo = data;
+                 }
+              });
+            
+               $(this).closest('tr').find("td:eq(1)").html(html_photo);
               $(this).closest('tr').find(".productcode").val(prodcode);
               $(this).closest('tr').find(".stock_qty").val(stock_qty);
               $(this).closest('tr').find(".productname").val(prodname);
@@ -788,7 +803,6 @@ $js = <<<JS
         }
         cal_num($(this));
     });
-    ;
     $("#findModal").modal("hide");
  }
  function cal_all(){

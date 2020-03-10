@@ -40,29 +40,29 @@ class ProductController extends Controller
                     'findvendor'=>['POST'],
                 ],
             ],
-            'access'=>[
-                'class'=>AccessControl::className(),
-                'denyCallback' => function ($rule, $action) {
-                    throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
-                },
-                'rules'=>[
+//            'access'=>[
+//                'class'=>AccessControl::className(),
+//                'denyCallback' => function ($rule, $action) {
+//                    throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+//                },
+//                'rules'=>[
+////                    [
+////                        'allow'=>true,
+////                        'actions'=>['index','create','update','delete','view'],
+////                        'roles'=>['@'],
+////                    ]
 //                    [
 //                        'allow'=>true,
-//                        'actions'=>['index','create','update','delete','view'],
 //                        'roles'=>['@'],
+//                        'matchCallback'=>function($rule,$action){
+//                            $currentRoute = Yii::$app->controller->getRoute();
+//                            if(Yii::$app->user->can($currentRoute)){
+//                                return true;
+//                            }
+//                        }
 //                    ]
-                    [
-                        'allow'=>true,
-                        'roles'=>['@'],
-                        'matchCallback'=>function($rule,$action){
-                            $currentRoute = Yii::$app->controller->getRoute();
-                            if(Yii::$app->user->can($currentRoute)){
-                                return true;
-                            }
-                        }
-                    ]
-                ]
-            ]
+//                ]
+//            ]
         ];
     }
 
@@ -1044,5 +1044,17 @@ class ProductController extends Controller
 
         }
 
+    }
+    public function actionGetphoto(){
+        $id = \Yii::$app->request->post('product_id');
+        $html = '';
+        if($id){
+            $model = \backend\models\Productimage::find()->where(['product_id'=>$id])->one();
+            $url = Yii::getAlias('@backend') . '/web/uploads/images/'.$model->name;
+            if($model){
+                $html.='<img src="'.$url.'" >';
+            }
+        }
+        echo $html;
     }
 }
