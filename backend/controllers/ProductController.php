@@ -1052,7 +1052,7 @@ class ProductController extends Controller
             $model = \backend\models\Productimage::find()->where(['product_id'=>$id])->one();
             $url = '../web/uploads/images/'.$model->name;
             if($model){
-                $html.='<img src="'.$url.'" >';
+                $html.='<img src="'.$url.'" width="20%">';
             }
         }
         echo $html;
