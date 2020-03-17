@@ -24,7 +24,7 @@ use yii\helpers\Url;
                 <?php $model->invoice_date = $model->isNewRecord ? date('d/m/Y') : date('d/m/Y', strtotime($model->invoice_date)); ?>
                 <?= $form->field($model, 'invoice_date')->widget(DatePicker::className(), [
                     'value' => date('d/m/Y'),
-                    'options' => ['id' => 'invoice_date'],
+                    'options' => ['id' => 'invoice_date', 'class' => 'inbound_date'],
                     'pluginOptions' => [
                         'format' => 'dd/mm/yyyy',
                         'todayHighlight' => true,
@@ -64,6 +64,7 @@ use yii\helpers\Url;
                     'options' => [
                         'placeholder' => 'เลือกสกุลเงิน',
                         'onchange' => 'checkRate($(this))',
+                        'class' => 'selected-currency'
                     ],
                     'pluginOptions' => [
                         'allowClear' => true
@@ -136,6 +137,7 @@ use yii\helpers\Url;
                             </td>
 
                             <td>
+                                <input type="hidden" name="line_price_origin" class="line-price-origin" value="">
                                 <input style="text-align: right" type="text" class="form-control line_price"
                                        name="price[]" value="" onchange="cal_num($(this));">
                             </td>
@@ -208,6 +210,7 @@ use yii\helpers\Url;
                                     </td>
 
                                     <td>
+                                        <input type="hidden" name="line_price_origin" class="line-price-origin" value="">
                                         <input style="text-align: right" type="text" class="form-control line_price"
                                                name="price[]" value="<?= $value->line_price ?>"
                                                onchange="cal_num($(this));">
@@ -337,23 +340,23 @@ use yii\helpers\Url;
                     </tr>
                     </thead>
                     <tbody>
-                    <?php if(count($modeldoc) > 0):?>
-                    <?php foreach ($modeldoc as $val): ?>
-                        <tr>
-                            <td><?= date('d/m/Y', $val->created_at) ?></td>
-                            <td>
-                                <a href="<?= Yii::$app->getUrlManager()->baseUrl ?>/uploads/doc_in/<?= $val->filename ?>"
-                                   target="_blank">
-                                    <?= $val->filename ?>
-                                </a>
-                            </td>
-                            <td>
-                                <input type="hidden" class="doc_line_id" name="doc_line_id" value="<?= $val->id ?>">
-                                <i class="fa fa-trash" onclick="removedoc($(this))"></i>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                    <?php endif;?>
+                    <?php if (count($modeldoc) > 0): ?>
+                        <?php foreach ($modeldoc as $val): ?>
+                            <tr>
+                                <td><?= date('d/m/Y', $val->created_at) ?></td>
+                                <td>
+                                    <a href="<?= Yii::$app->getUrlManager()->baseUrl ?>/uploads/doc_in/<?= $val->filename ?>"
+                                       target="_blank">
+                                        <?= $val->filename ?>
+                                    </a>
+                                </td>
+                                <td>
+                                    <input type="hidden" class="doc_line_id" name="doc_line_id" value="<?= $val->id ?>">
+                                    <i class="fa fa-trash" onclick="removedoc($(this))"></i>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -435,8 +438,8 @@ use yii\helpers\Url;
 $url_to_find = Url::to(['inboundinv/finditem'], true);
 $url_to_firm = Url::to(['inboundinv/genpacking'], true);
 $url_to_find_product = Url::to(['product/searchitem'], true);
-$url_to_checkrate = Url::to(['quotation/check-rate'], true);
-$url_to_remove_file = Url::to(['inboundinv/deletedoc'],true);
+$url_to_checkrate = Url::to(['inboundinv/check-rate'], true);
+$url_to_remove_file = Url::to(['inboundinv/deletedoc'], true);
 $js = <<<JS
  var currow = 0;
  var  removelist = [];
@@ -523,6 +526,8 @@ $js = <<<JS
     
     $(".btn-search-submit").click(function(){
       var textsearch = $(".search-item").val();
+      var selected_currency = $(".selected-currency").val();
+      var rate = $(".cur_rate").val();
       //alert(textsearch);
       $.ajax({
               'type':'post',
@@ -685,6 +690,7 @@ $js = <<<JS
                          var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
                          var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
                          var line_price = data[i]['thb_amount'] == null?0:data[i]['thb_amount'];
+                         
                          html +="<tr ondblclick='getitem($(this));'>" +
                          "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td>"+
                           "<td style='vertical-align: middle'>"+
@@ -753,6 +759,14 @@ $js = <<<JS
     var volumn = e.closest("tr").find(".volumn").val();
     var volumn_content = e.closest("tr").find(".volumn_content").val();
     
+    var c_rate = $(".rate").val();
+    var line_price = parseFloat(c_rate) * parseFloat(prodprice);
+    
+    if(c_rate == ''){
+        alert("กรุณาตรวจสอบ Exchange Rate");
+        return;
+    }
+    
     //alert(volumn);
     $(".table-quotation tbody tr").each(function() {
         // if($(this).closest('tr').find(".productcode").val() == prodcode){
@@ -766,7 +780,8 @@ $js = <<<JS
               $(this).closest('tr').find(".stock-id").val(stock_id);
               $(this).closest('tr').find(".line_cost").val(prodcost);
               $(this).closest('tr').find(".line_origin").val(prodorigin);
-              $(this).closest('tr').find(".line_price").val(stock_price);
+              $(this).closest('tr').find(".line_price").val(line_price);
+              $(this).closest('tr').find(".line-price-origin").val(line_price);
               $(this).closest('tr').find(".line_packper").val(unitfactor);
               $(this).closest('tr').find(".line_litre").val(volumn);
               $(this).closest('tr').find(".line_percent").val(volumn_content);
@@ -788,38 +803,67 @@ $js = <<<JS
       $(".total-sum").text(parseFloat(totalall).toFixed(2));
  }
  function checkRate(e){
+      var c_m = 0;
       var q_date = new Date();
                   var q_date_arr = $("#invoice_date").val().split('/');
                   if(q_date_arr.length >0){
                       q_date = q_date_arr[2] +'/'+q_date_arr[1]+'/'+q_date_arr[0];
+                      c_m = q_date_arr[1];
                   }
                   
      let id = e.val();
      if(id){
+         //alert(c_m);
+      
          $.ajax({
               'type':'post',
               'dataType': 'json',
+              'async': false,
               'url': "$url_to_checkrate",
-              'data': {'cur_id': id},
+              'data': {'cur_id': id,'month': c_m},
               'success': function(data) {
-                //  alert(data[0]['exp_date']);
+                //  alert(data);
+                if(data[0]!= null){
                  var exp_date = data[0]['exp_date'];
-                 if(exp_date > q_date){
-                      $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว").show();
+                 var rate_name = data[0]['currency'];
+                // alert(exp_date +' = '+ q_date);
+                //alert(data);
+                 if(exp_date < q_date && rate_name !='THB'){
+                      $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว หรือ ยังไม่ได้ป้อนค่าอัตราแลกเปลี่ยน").show();
                       $(".rate").val('');
                       return false;
                  }
                  
                   if(data.length > 0){
                       $(".rate").val(data[0]['exc_rate']);
+                      $(".alert-currency").hide();
                   }else{
                       $(".alert-currency").html("ไม่พบข้อมูลอัตราแลกเปลี่ยน").show();
                       $(".rate").val('');
                       return false;
                   }
+                }else{
+                     alert("ไม่พบอัตราแลกเปลี่ยน กรุณาตรวจสอบข้อมูลให้ถูกต้องด้วยครับ");
+                }
+                 
               }
          });
+         re_cal();
      }
+ }
+ 
+ function re_cal() {
+   $(".table-quotation tbody tr").each(function() {
+        var line_price =  $(this).closest('tr').find(".line-price-origin").val();
+        var line_qty =  $(this).closest('tr').find(".line_qty").val();
+        //alert(line_price);
+        var cur_rate = $(".rate").val();
+        var new_price = parseFloat(line_price) * parseFloat(cur_rate);
+        var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
+        $(this).closest('tr').find(".line_price").val(new_price);
+        $(this).closest('tr').find(".line_total").val(new_line_total);
+        cal_all();
+    });
  }
  
 JS;

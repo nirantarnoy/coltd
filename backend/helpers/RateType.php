@@ -7,13 +7,13 @@ class RateType
     const ROLE = 1;
     const RULE = 2;
     private static $data = [
-        1 => 'ในประเทศ',
-        2 => 'ต่างประเทศ'
+        1 => 'ขาเข้า',
+        2 => 'ขาออก'
     ];
 
     private static $dataobj = [
-        ['id'=>1,'name' => 'ในประเทศ'],
-        ['id'=>2,'name' => 'ต่างประเทศ'],
+        ['id'=>1,'name' => 'ขาเข้า'],
+        ['id'=>2,'name' => 'ขาออก'],
     ];
     public static function asArray()
     {

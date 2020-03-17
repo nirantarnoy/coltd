@@ -15,6 +15,7 @@ use yii\helpers\Url;
                 <form id="form-recieve" action="<?= Url::to(['inboundinv/recieve'], true) ?>" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="invoice_no" value="<?= $modelinv->docin_no; ?>">
                     <input type="hidden" name="invoice_id" value="<?= $modelinv->id; ?>">
+                    <input type="hidden" name="currency_id" value="<?= $modelinv->currency_id; ?>">
                     <input type="hidden" name="invoice_date"
                            value="<?= date('d-m-Y', strtotime($modelinv->invoice_date)); ?>">
                     <table class="table table-importline">

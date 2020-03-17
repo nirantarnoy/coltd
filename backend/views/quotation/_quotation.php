@@ -119,7 +119,7 @@
                 <tr style="border: 0.5px solid black;border-bottom:none;border-collapse: collapse;">
                     <td style="padding: 5px;font-size: 12px;font-weight: normal;text-align: center;"><?=$rows?></td>
                     <td style="border-left: 0.2px solid grey;width: 10%">
-                        <img src="../web/uploads/images/<?=$url?>" alt="" width="10%">
+                        <img src="../web/uploads/images/<?=$url?>" alt="" width="5%">
                     </td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;padding-left: 5px;text-align: center"><?=\backend\models\Product::findProductinfo($value->product_id)->product_code;?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;padding-left: 5px;text-align: left"><?=\backend\models\Product::findProductinfo($value->product_id)->engname;?></td>

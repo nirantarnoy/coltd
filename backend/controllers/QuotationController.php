@@ -374,7 +374,7 @@ class QuotationController extends Controller
        // echo $id;return;
         $data = [];
         if($id){
-            $model = \backend\models\Currencyrate::findRate($id);
+            $model = \backend\models\Currencyrate::findRate($id,1);
             if($model){
                 $final_date = '';
                 $xdate = explode('-',$model->to_date);

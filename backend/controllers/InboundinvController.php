@@ -295,6 +295,7 @@ class InboundinvController extends Controller
     }
     public function actionRecieve()
     {
+        $currencyid = Yii::$app->request->post('currency_id');
         $productid = Yii::$app->request->post('product_id');
         $invoiceid = Yii::$app->request->post('invoice_id');
         $invoiceno = Yii::$app->request->post('invoice_no');
@@ -304,7 +305,7 @@ class InboundinvController extends Controller
         $pack2 = Yii::$app->request->post('product_pack2');
         $lineqty = Yii::$app->request->post('line_qty');
         $linepacking = Yii::$app->request->post('line_packing');
-        $linepriceper = Yii::$app->request->post('line_price_per');
+        $linepriceper = Yii::$app->request->post('line_price_per2');
         $linetotalamount = Yii::$app->request->post('line_total_amount');
         $linetransportno = Yii::$app->request->post('line_transport_in_no');
         $linetransportdate = Yii::$app->request->post('line_transport_in_date');
@@ -324,6 +325,7 @@ class InboundinvController extends Controller
         $trans_date = null;
         $kno_date = null;
 
+        $inv_month = 0;
 
 //        $trans_origin = explode('/',$rowData[14]);
 //        if(count($trans_origin)>0 && $trans_origin[0] !=''){
@@ -333,6 +335,7 @@ class InboundinvController extends Controller
         $inv_date_x = explode('-',$invoicedate);
         if(count($inv_date_x)>0 && $inv_date_x[0] !=''){
             $inv_date = $inv_date_x[2]."/".$inv_date_x[1]."/".$inv_date_x[0];
+            $inv_month = $inv_date_x[1];
         }
 //
 //        $kno_origin = explode('/',$rowData[19]);
@@ -394,6 +397,9 @@ class InboundinvController extends Controller
 
                 //$catid = $this->checkCat($rowData[6]);
                 $whid = \backend\models\Warehouse::getDefault();
+
+                $ex_rate = 1;
+                $ex_rate = \backend\models\Currencyrate::findRateMonth($currencyid,$inv_month,1);
 
 
                 $usd = str_replace(",","",$linepriceper[$i]);
@@ -501,6 +507,33 @@ class InboundinvController extends Controller
 
         }
 
+    }
+    public function actionCheckRate(){
+        $id = \Yii::$app->request->post('cur_id');
+        $m = \Yii::$app->request->post('month');
+        // echo (int)$m;return;
+        $data = [];
+        $rate_name = \backend\models\Currency::findName($id);
+
+        if($rate_name == 'THB'){
+           // echo $rate_name;return;
+            array_push($data,['exp_date'=>'1970/01/01','exc_rate'=>1,'currency'=>$rate_name]);
+            echo Json::encode($data);return;
+        }
+        if($id){
+            $model = \backend\models\Currencyrate::findRateMonth($id,$m,1);
+            if($model){
+                $final_date = '';
+                $xdate = explode('-',$model->to_date);
+                if(count($xdate)>0){
+                    $final_date = $xdate[0].'/'.$xdate[1].'/'.$xdate[2];
+                }
+                array_push($data,['exp_date'=>$final_date,'exc_rate'=>$model->rate,'currency'=>'']);
+            }else{
+                array_push($data,['exp_date'=>'1970/01/01','exc_rate'=>1,'currency'=>'']);
+            }
+        }
+        echo Json::encode($data);
     }
     public function actionPrint($id)
     {

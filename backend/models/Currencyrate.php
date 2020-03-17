@@ -34,8 +34,14 @@ class Currencyrate extends \common\models\CurrencyRate
         ];
     }
 
-    public function findRate($cur){
-        $model = \backend\models\Currencyrate::find()->where(['from_currency'=>$cur])->one();
+    public function findRate($cur,$type){
+        $model = \backend\models\Currencyrate::find()->where(['from_currency'=>$cur,'rate_type'=>$type])->one();
         return $model!=null?$model:null;
+    }
+    public function findRateMonth($currency,$month,$type){
+        if($currency){
+            $model = \backend\models\Currencyrate::find()->where(['from_currency'=>$currency,'MONTH(from_date)'=>$month,'rate_type'=>$type])->one();
+            return count($model)>0?$model:null;
+        }
     }
 }
