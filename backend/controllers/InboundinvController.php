@@ -402,8 +402,11 @@ class InboundinvController extends Controller
                 $ex_rate = \backend\models\Currencyrate::findRateMonth($currencyid,$inv_month,1);
 
 
-                $usd = str_replace(",","",$linepriceper[$i]);
-                $thb = str_replace(",","",$linepriceper[$i]);
+//                $usd = str_replace(",","",$linepriceper[$i]);
+//                $thb = str_replace(",","",$linepriceper[$i]);
+
+                $usd = str_replace(",","",$pack1[$i]);
+                $thb = str_replace(",","",$pack2[$i]);
                 array_push($data, [
                     'prod_id' => $productid[$i],
                     'qty' => $lineqty[$i],

@@ -85,7 +85,7 @@ class CurrencyrateController extends Controller
     public function actionCheckmonth(){
         $find_month = \Yii::$app->request->post('find_month');
         $find_type = \Yii::$app->request->post('find_type');
-      // return $find_type;
+//       return $find_type;
         if($find_month !='' && $find_type !=''){
             $model = \backend\models\Currencyrate::find()->where(['MONTH(from_date)'=>(int)$find_month,'rate_type'=>$find_type])->one();
             if($model){
@@ -108,8 +108,24 @@ class CurrencyrateController extends Controller
     {
         $model = $this->findModel($id);
         if($model->load(Yii::$app->request->post())){
-        $model->from_date = date('Y/m/d', strtotime($model->from_date));
-        $model->to_date = date('Y/m/d', strtotime($model->to_date));
+            $fm_date = explode('/',$model->from_date);
+            $f_date = '';
+            if(count($fm_date)>0){
+                $f_date = $fm_date[1].'/'.$fm_date[0].'/'.$fm_date[2];
+            }
+            $to_date = explode('/',$model->to_date);
+            $t_date = '';
+            if(count($to_date)>0){
+                $t_date = $to_date[1].'/'.$to_date[0].'/'.$to_date[2];
+            }
+
+         //  echo $f_date.' and '.$t_date;return;
+
+        $model->from_date = date('Y-m-d', strtotime($f_date));
+        $model->to_date = date('Y-m-d', strtotime($t_date));
+
+
+//        echo $model->from_currency;return;
 
         if ($model->save(false)) {
             return $this->redirect(['view', 'id' => $model->id]);

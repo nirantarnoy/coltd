@@ -369,19 +369,47 @@ class QuotationController extends Controller
             return $pdf->render();
         }
     }
+//    public function actionCheckRate(){
+//        $id = \Yii::$app->request->post('cur_id');
+//       // echo $id;return;
+//        $data = [];
+//        if($id){
+//            $model = \backend\models\Currencyrate::findRate($id,1);
+//            if($model){
+//                $final_date = '';
+//                $xdate = explode('-',$model->to_date);
+//                if(count($xdate)>0){
+//                    $final_date = $xdate[2].'/'.$xdate[1].'/'.$xdate[0];
+//                }
+//              array_push($data,['exp_date'=>$final_date,'exc_rate'=>$model->rate]);
+//            }
+//        }
+//        echo Json::encode($data);
+//    }
     public function actionCheckRate(){
         $id = \Yii::$app->request->post('cur_id');
-       // echo $id;return;
+        $m = \Yii::$app->request->post('month');
+       //  echo (int)$id;return;
         $data = [];
+        $rate_name = \backend\models\Currency::findName($id);
+
+        if($rate_name == 'THB'){
+            // echo $rate_name;return;
+            array_push($data,['exp_date'=>'1970/01/01','exc_rate'=>1,'currency'=>$rate_name]);
+           // echo Json::encode($data);return;
+        }
         if($id){
-            $model = \backend\models\Currencyrate::findRate($id,1);
+            $model = \backend\models\Currencyrate::findRateMonth($id,(int)$m,2);
             if($model){
                 $final_date = '';
                 $xdate = explode('-',$model->to_date);
                 if(count($xdate)>0){
-                    $final_date = $xdate[2].'/'.$xdate[1].'/'.$xdate[0];
+                    $final_date = $xdate[0].'/'.$xdate[1].'/'.$xdate[2];
                 }
-              array_push($data,['exp_date'=>$final_date,'exc_rate'=>$model->rate]);
+                //echo $final_date;return;
+                array_push($data,['exp_date'=>$final_date,'exc_rate'=>$model->rate,'currency'=>'']);
+            }else{
+                array_push($data,['exp_date'=>'1970/01/01','exc_rate'=>1,'currency'=>'']);
             }
         }
         echo Json::encode($data);

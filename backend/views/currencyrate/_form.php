@@ -90,6 +90,14 @@ $mode = $model->isNewRecord?'create':'update';
 $url_to_check_rate = \yii\helpers\Url::to(['currencyrate/checkmonth'],true);
 $js=<<<JS
  $(function() {
+     $('#form-currency').on('beforeSubmit', function (e) {
+        $('#form-currency').yiiActiveForm('validateAttribute', 'name');
+        $('#form-currency').yiiActiveForm('validateAttribute', 'rate');
+        $('#form-currency').yiiActiveForm('validateAttribute', 'rate_factor');
+       $('#form-currency').yiiActiveForm('validateAttribute', 'rate_type');
+        // return true;
+     });
+    //$('#form-currency').yiiActiveForm('validateAttribute', 'contactform-name');
    $(".btn-save").click(function() {
        let mode = $(".form-mode").val();
        if(mode =='create'){
@@ -100,17 +108,19 @@ $js=<<<JS
             if(arr.length > 0){
                 m=arr[1];
             }
-            // alert(m);
+            // alert(rate_type);
              $.ajax({
                 'type':'post',
                 'dataType':'html',
                 'url':'$url_to_check_rate',
                 'data':{'find_month': m,'find_type': rate_type},
                 'success': function(data) {
+                   // alert(data);
                    if(data == 1){
                        $(".alert").show();
                    }else{
                        $(".alert").hide();
+                       $("#form-currency").submit();
                    }
                 }
              });

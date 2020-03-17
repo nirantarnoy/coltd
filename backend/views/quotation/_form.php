@@ -182,6 +182,7 @@ $this->registerCss('
                                                name="cost[]" value="">
                                     </td>
                                     <td>
+                                        <input type="hidden" name="line_price_origin" class="line-price-origin" value="">
                                         <input style="text-align: right" type="text" class="form-control line_price"
                                                name="price[]" value="" onchange="cal_num($(this));">
                                     </td>
@@ -261,6 +262,7 @@ $this->registerCss('
                                                        value="<?= \backend\models\Product::findProductinfo($value->product_id) != null ? \backend\models\Product::findProductinfo($value->product_id)->cost : 0 ?>">
                                             </td>
                                             <td>
+                                                <input type="hidden" name="line_price_origin" class="line-price-origin" value="">
                                                 <input style="text-align: right" type="text"
                                                        class="form-control line_price" name="price[]"
                                                        value="<?= $value->price ?>" onchange="cal_num($(this));">
@@ -770,6 +772,14 @@ $js = <<<JS
     var volumn_content = e.closest("tr").find(".volumn_content").val();
     var stock_qty = e.closest("tr").find(".stock_qty").val();
     
+    var c_rate = $(".rate").val();
+    var line_price = parseFloat(c_rate) * parseFloat(prodprice);
+    
+    if(c_rate == ''){
+        alert("กรุณาตรวจสอบ Exchange Rate");
+        return;
+    }
+    
    // alert(stock_qty);
     $(".table-quotation tbody tr").each(function() {
         // if($(this).closest('tr').find(".productcode").val() == prodcode){
@@ -802,6 +812,8 @@ $js = <<<JS
               $(this).closest('tr').find(".line_packper").val(unitfactor);
               $(this).closest('tr').find(".line_litre").val(volumn);
               $(this).closest('tr').find(".line_percent").val(volumn_content);
+              
+                $(this).closest('tr').find(".line-price-origin").val(line_price);
         }
         cal_num($(this));
     });
@@ -825,30 +837,37 @@ $js = <<<JS
  }
  
  function checkRate(e){
+     var c_m = 0;
       var q_date = new Date();
                   var q_date_arr = $(".quotation_date").val().split('/');
                   if(q_date_arr.length >0){
                       q_date = q_date_arr[2] +'/'+q_date_arr[1]+'/'+q_date_arr[0];
+                      c_m = q_date_arr[1];
                   }
                   
      let id = e.val();
      if(id){
+         //alert(c_m);
          $.ajax({
               'type':'post',
               'dataType': 'json',
               'url': "$url_to_checkrate",
-              'data': {'cur_id': id},
+              'data': {'cur_id': id,'month': c_m},
               'success': function(data) {
-                //  alert(data[0]['exp_date']);
+                 //alert(data);
+                 //  alert(data[0]['exp_date']);
+                 //  alert(q_date);
                  var exp_date = data[0]['exp_date'];
-                 if(exp_date > q_date){
-                      $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว").show();
+                 var rate_name = data[0]['currency'];
+                 if(exp_date < q_date && rate_name !='THB'){
+                       $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว หรือ ยังไม่ได้ป้อนค่าอัตราแลกเปลี่ยน").show();
                       $(".rate").val('');
                       return false;
                  }
                  
                   if(data.length > 0){
                       $(".rate").val(data[0]['exc_rate']);
+                        $(".alert-currency").hide();
                   }else{
                       $(".alert-currency").html("ไม่พบข้อมูลอัตราแลกเปลี่ยน").show();
                       $(".rate").val('');
@@ -856,7 +875,21 @@ $js = <<<JS
                   }
               }
          });
+          re_cal();
      }
+ }
+  function re_cal() {
+   $(".table-quotation tbody tr").each(function() {
+        var line_price =  $(this).closest('tr').find(".line-price-origin").val();
+        var line_qty =  $(this).closest('tr').find(".line_qty").val();
+        //alert(line_price);
+        var cur_rate = $(".rate").val();
+        var new_price = parseFloat(line_price) * parseFloat(cur_rate);
+        var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
+        $(this).closest('tr').find(".line_price").val(new_price);
+        $(this).closest('tr').find(".line_total").val(new_line_total);
+        cal_all();
+    });
  }
  
 JS;

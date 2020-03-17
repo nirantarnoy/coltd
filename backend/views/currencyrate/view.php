@@ -29,19 +29,29 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            //'id',
             'name',
-            'from_currency',
-            'to_integer',
+            [
+                'attribute' => 'from_currency',
+                'value' => function ($data) {
+                    return \backend\models\Currency::findName($data->from_currency);
+                }
+            ],
+            [
+                'attribute' => 'to_integer',
+                'value' => function ($data) {
+                    return \backend\models\Currency::findName($data->to_integer);
+                }
+            ],
             'rate',
             'rate_factor',
             'from_date',
             'to_date',
-            'status',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+            //         'status',
+//            'created_at',
+//            'updated_at',
+//            'created_by',
+//            'updated_by',
         ],
     ]) ?>
 
