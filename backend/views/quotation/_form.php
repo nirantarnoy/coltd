@@ -566,7 +566,7 @@ $js = <<<JS
                          data[i]['product_code']+"</td><td style='vertical-align: middle'>"+
                          data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
                           "<input type='hidden' class='prodcost' value='"+data[i]['cost']+"'/>" +
-                          "<input type='hidden' class='prodprice' value='"+data[i]['price']+"'/>" +
+                          "<input type='hidden' class='prodprice' value='"+data[i]['usd_rate']+"'/>" +
                           "<input type='hidden' class='prodnet' value='"+data[i]['netweight']+"'/>" +
                           "<input type='hidden' class='prodgross' value='"+data[i]['grossweight']+"'/>" +
                           "<input type='hidden' class='prodorigin' value='"+data[i]['origin']+"'/>" +
@@ -696,7 +696,7 @@ $js = <<<JS
                          data[i]['product_code']+"</td><td style='vertical-align: middle'>"+
                          data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
                           "<input type='hidden' class='prodcost' value='"+data[i]['cost']+"'/>" +
-                          "<input type='hidden' class='prodprice' value='"+data[i]['price']+"'/>" +
+                          "<input type='hidden' class='prodprice' value='"+data[i]['usd_rate']+"'/>" +
                           "<input type='hidden' class='prodnet' value='"+data[i]['netweight']+"'/>" +
                           "<input type='hidden' class='prodgross' value='"+data[i]['grossweight']+"'/>" +
                           "<input type='hidden' class='prodorigin' value='"+data[i]['origin']+"'/>" +
@@ -806,14 +806,14 @@ $js = <<<JS
               $(this).closest('tr').find(".productid").val(prodid);
               $(this).closest('tr').find(".line_qty").val(1);
               $(this).closest('tr').find(".stock-id").val(stock_id);
-              $(this).closest('tr').find(".line_cost").val(prodcost);
+              $(this).closest('tr').find(".line_cost").val(prodprice);
               $(this).closest('tr').find(".line_origin").val(prodorigin);
-              $(this).closest('tr').find(".line_price").val(prodcost);
+              $(this).closest('tr').find(".line_price").val(prodprice);
               $(this).closest('tr').find(".line_packper").val(unitfactor);
               $(this).closest('tr').find(".line_litre").val(volumn);
               $(this).closest('tr').find(".line_percent").val(volumn_content);
               
-                $(this).closest('tr').find(".line-price-origin").val(line_price);
+                $(this).closest('tr').find(".line-price-origin").val(prodprice);
         }
         cal_num($(this));
     });
@@ -855,7 +855,8 @@ $js = <<<JS
               'data': {'cur_id': id,'month': c_m},
               'success': function(data) {
                  //alert(data);
-                 //  alert(data[0]['exp_date']);
+                  // alert(new Date(data[0]['exp_date']));
+                  // alert(data[0]['exp_date']);
                  //  alert(q_date);
                  var exp_date = data[0]['exp_date'];
                  var rate_name = data[0]['currency'];
@@ -872,17 +873,19 @@ $js = <<<JS
                       $(".alert-currency").html("ไม่พบข้อมูลอัตราแลกเปลี่ยน").show();
                       $(".rate").val('');
                       return false;
-                  }
+                  } 
+                  re_cal();
               }
+              
          });
-          re_cal();
+         
      }
  }
   function re_cal() {
    $(".table-quotation tbody tr").each(function() {
         var line_price =  $(this).closest('tr').find(".line-price-origin").val();
         var line_qty =  $(this).closest('tr').find(".line_qty").val();
-        //alert(line_price);
+        alert(line_price);
         var cur_rate = $(".rate").val();
         var new_price = parseFloat(line_price) * parseFloat(cur_rate);
         var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
