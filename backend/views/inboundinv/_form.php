@@ -502,7 +502,7 @@ $js = <<<JS
     });
     
     
-    $('.popover1').on({
+    $(".popover1").on({
       mousemove: function(e) {
           $(this).next('#big').css({
               top: e.pageY - 400 - 25, // height of image and title area plus some
