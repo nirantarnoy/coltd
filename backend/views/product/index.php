@@ -26,8 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $view_type = $viewtype;
 
-$groupall = \backend\models\Productcategory::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
-$stock_status = [['id'=>1,'name'=>'มีสินค้า'],['id'=>2,'name'=>'สินค่าต่ำกว่ากำหนด'],['id'=>3,'name'=>'ไม่มีสินค้า']];
+$groupall = \backend\models\Productcategory::find()->where(['!=', 'name', ''])->orderby(['name' => SORT_ASC])->all();
+$stock_status = [['id' => 1, 'name' => 'มีสินค้า'], ['id' => 2, 'name' => 'สินค่าต่ำกว่ากำหนด'], ['id' => 3, 'name' => 'ไม่มีสินค้า']];
 $this->registerJsFile(
     '@web/js/stockbalancejs.js?V=001',
     ['depends' => [\yii\web\JqueryAsset::className()]],
@@ -35,7 +35,7 @@ $this->registerJsFile(
 );
 
 $data = \backend\models\Product::find()
-    ->select(['name as value', 'name as  label','id as id'])
+    ->select(['name as value', 'name as  label', 'id as id'])
     ->asArray()
     ->all();
 
@@ -53,9 +53,9 @@ table.table-vendor td{
 ');
 ?>
 <div class="product-index">
-<?php $session = Yii::$app->session;
-      if ($session->getFlash('msg')): ?>
-       <!-- <div class="alert alert-success alert-dismissible" role="alert">
+    <?php $session = Yii::$app->session;
+    if ($session->getFlash('msg')): ?>
+        <!-- <div class="alert alert-success alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <?php //echo $session->getFlash('msg'); ?>
       </div> -->
@@ -63,7 +63,7 @@ table.table-vendor td{
             'type' => 'success',
             'title' => 'แจ้งผลการทำงาน',
             'message' => $session->getFlash('msg'),
-          //  'message' => 'Hello',
+            //  'message' => 'Hello',
             'options' => [
                 "closeButton" => false,
                 "debug" => false,
@@ -82,297 +82,305 @@ table.table-vendor td{
                 "hideMethod" => "fadeOut"
             ]
         ]); ?>
-        <?php endif; ?>
+    <?php endif; ?>
 
-   <?php Pjax::begin(); ?>
+    <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-     <div class="row">
-      <div class="col-lg-12">
-      </div>
-     </div>
+    <div class="row">
+        <div class="col-lg-12">
+        </div>
+    </div>
     <div class="panel panel-headline">
         <div class="panel-heading">
 
-                      <div class="btn-group">
-                         <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างรหัสสินค้า'), ['create'], ['class' => 'btn btn-success']) ?>
-                       </div>
-                       <div class="btn-group">
-                          <div class="btn btn-default btn-import"><i class="fa fa-upload"></i> นำเข้า</div>
-<!--                          <div class="btn btn-default btn-import-update"><i class="fa fa-upload"></i> นำเข้าอัพเดท</div>-->
-                           <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
-                          <div class="btn btn-default btn-printbarcode"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>
-<!--                          <div class="btn btn-default view-list"><i class="fa fa-list"></i></div>-->
-<!--                          <div class="btn btn-default view-grid"><i class="fa fa-th"></i></div>-->
-                      </div>
+            <div class="btn-group">
+                <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างรหัสสินค้า'), ['create'], ['class' => 'btn btn-success']) ?>
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-default btn-import"><i class="fa fa-upload"></i> นำเข้า</div>
+<!--                <div class="btn btn-default btn-import-thai"><i class="fa fa-upload"></i> นำเข้าภาษาไทย</div>-->
+                <!--                          <div class="btn btn-default btn-import-update"><i class="fa fa-upload"></i> นำเข้าอัพเดท</div>-->
+                <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span
+                            class="remove_item"></span> ลบ
+                </div>
+                <div class="btn btn-default btn-printbarcode"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>
+                <!--                          <div class="btn btn-default view-list"><i class="fa fa-list"></i></div>-->
+                <!--                          <div class="btn btn-default view-grid"><i class="fa fa-th"></i></div>-->
+            </div>
 
-                    <h4 class="pull-right"><?=$this->title?> <i class="fa fa-cubes"></i><small></small></h4>
-                    <!-- <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul> -->
+            <h4 class="pull-right"><?= $this->title ?> <i class="fa fa-cubes"></i>
+                <small></small>
+            </h4>
+            <!-- <ul class="nav navbar-right panel_toolbox">
+              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Settings 1</a>
+                  </li>
+                  <li><a href="#">Settings 2</a>
+                  </li>
+                </ul>
+              </li>
+              <li><a class="close-link"><i class="fa fa-close"></i></a>
+              </li>
+            </ul> -->
 
-                  </div>
-                  <div class="panel-body">
-                        <div class="row">
-                          <div class="col-lg-9">
-                            <form id="search-form" action="<?=Url::to(['product/index'],true)?>" method="post">
-                            <div class="form-inline">
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-9">
+                    <form id="search-form" action="<?= Url::to(['product/index'], true) ?>" method="post">
+                        <div class="form-inline">
 
-                                <input type="text" class="form-control search_all" name="search_all" value="<?=$searchname;?>" placeholder="ค้นหารหัส,ชื่อ">
-                                <?php
-//                                   echo \kartik\select2\Select2::widget([
-//                                       'name' => 'kv-state-240',
-//                                       'data' => \backend\models\Productcategory::find()->all(),
-//                                       'size' => Select2::MEDIUM,
-//                                       'options' => ['placeholder' => 'Select a state ...', 'multiple' => true],
-//                                       'pluginOptions' => [
-//                                           'allowClear' => true
-//                                       ],
-//                                   ]);
-                                ?>
+                            <input type="text" class="form-control search_all" name="search_all"
+                                   value="<?= $searchname; ?>" placeholder="ค้นหารหัส,ชื่อ">
+                            <?php
+                            //                                   echo \kartik\select2\Select2::widget([
+                            //                                       'name' => 'kv-state-240',
+                            //                                       'data' => \backend\models\Productcategory::find()->all(),
+                            //                                       'size' => Select2::MEDIUM,
+                            //                                       'options' => ['placeholder' => 'Select a state ...', 'multiple' => true],
+                            //                                       'pluginOptions' => [
+                            //                                           'allowClear' => true
+                            //                                       ],
+                            //                                   ]);
+                            ?>
 
-                                <input type="hidden" name="perpage" value="<?=$perpage?>">
-                                   <div class="btn-group">
-                                         <input type="submit" class="btn btn-info btn-search" value="ค้นหา" />
-                                  <div class="btn btn-default btn-reset"> รีเซ็ต</div>
-                                   </div>
-
-
+                            <input type="hidden" name="perpage" value="<?= $perpage ?>">
+                            <div class="btn-group">
+                                <input type="submit" class="btn btn-info btn-search" value="ค้นหา"/>
+                                <div class="btn btn-default btn-reset"> รีเซ็ต</div>
                             </div>
-                            </form>
-                          </div>
-                          <div class="col-lg-3">
 
-                            <div class="pull-right">
-                              <div class="form-inline">
-                                <form id="form-perpage" class="form-inline" action="<?=Url::to(['product/index'],true)?>" method="post">
-                                <div class="form-group">
-                                    <?php for($i=0;$i<=count($group)-1;$i++):?>
-                                        <input type="hidden" name="product_group[]" value="<?=$group[$i]?>">
-                                    <?php endfor;?>
-                                    <?php for($i=0;$i<=count($stockstatus)-1;$i++):?>
-                                        <input type="hidden" name="stock_status[]" value="<?=$stockstatus[$i]?>">
-                                    <?php endfor;?>
-                                    <input type="hidden" name="search_all" value="<?=$searchname;?>">
-                                    <label>แสดง </label>
-                                  <select class="form-control" name="perpage" id="perpage">
-                                     <option value="20" <?=$perpage=='20'?'selected':''?>>20</option>
-                                     <option value="50" <?=$perpage=='50'?'selected':''?> >50</option>
-                                     <option value="100" <?=$perpage=='100'?'selected':''?>>100</option>
-                                  </select>
-                                  <label> รายการ</label>
-                              </div>
-                              </form>
-                            </div>
-                          </div>
+
                         </div>
-                        </div><br />
-                         <div class="row">
-                          <div class="col-lg-12">
-                        <div class="table-responsive">
-                   <div class="table-grid">
+                    </form>
+                </div>
+                <div class="col-lg-3">
 
-                    <?= GridView::widget([
-                        'dataProvider' => $dataProvider,
-                        //'filterModel' => $searchModel,
-                        'emptyCell'=>'-',
-                        'layout'=>"{items}\n{summary}\n<div class='text-left'>{pager}</div>",
-                        'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
-                        'showOnEmpty'=>false,
-                        'bordered'=>false,
-                        'striped' => false,
-                        'hover' => true,
-                        'id'=>'product-grid',
-                        //'tableOptions' => ['class' => 'table table-hover'],
-                        'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
-                        'rowOptions' => function($model, $key, $index, $gird){
-                            $contextMenuId = $gird->columns[0]->contextMenuId;
-                            return ['data'=>[ 'toggle' => 'context','target'=> "#".$contextMenuId ]];
-                        },
-                        'columns' => [
-                            [
-                                'class' => \liyunfang\contextmenu\SerialColumn::className(),
-                                'contextMenu' => true,
-                                'headerOptions' => ['style' => 'text-align: left'],
-                                'contentOptions' => ['style' => 'vertical-align: middle'],
-                                //'contextMenuAttribute' => 'id',
-                                'template' => '<br /> {view} {update} <li class="divider"></li> {delete}',
-                                'buttons' => [
-                                    'view' => function ($url, $model) {
-                                        $title = Yii::t('app', 'ดูรายละเอียด');
-                                        $label = '<span class="fa fa-eye"></span> ' . $title;
-                                        $url = \Yii::$app->getUrlManager()->createUrl(['/product/view','id' => $model->id]);
-                                        $options = ['tabindex' => '1','title' => $title, 'data' => ['pjax' => '0' ,  'toggle' => 'tooltips']];
-                                        return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
-                                    },
-                                    'update' => function ($url, $model) {
-                                        $title = Yii::t('app', 'แก้ไข');
-                                        $label = '<span class="fa fa-pencil"></span> ' . $title;
-                                        $url = \Yii::$app->getUrlManager()->createUrl(['/product/update','id' => $model->id]);
-                                        $options = ['tabindex' => '-1','title' => $title, 'data' => ['pjax' => '0' ,  'toggle' => 'tooltip']];
-                                        return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
-                                    },
-                                    'delete' => function ($url, $model) {
-                                        $title = Yii::t('app', 'ลบรายการ');
-                                        $label = '<span class="fa fa-trash-o"></span> ' . $title;
-                                        $url = \Yii::$app->getUrlManager()->createUrl(['/product/delete','id' => $model->id]);
-                                        $options = ['class'=>'del-product','tabindex' => '-1','title' => $title, 'data' => ['pjax' => '0' ,  'toggle' => 'tooltip'],'data-url'=>$url,'onclick'=>'recDelete($(this));'];
-                                        return '<li>' . Html::a($label, 'javascript:void(0)', $options) . '</li>' . PHP_EOL;
-                                    },
-                                ],
-                            ],
-                            ['class' => 'yii\grid\CheckboxColumn',
-                                'headerOptions' => ['style' => 'text-align: center'],
-                                'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
-                                'multiple'=>true,
-                                'name'=>'selection',
-                                'checkboxOptions' => [
-                                        'onclick'=>'
+                    <div class="pull-right">
+                        <div class="form-inline">
+                            <form id="form-perpage" class="form-inline" action="<?= Url::to(['product/index'], true) ?>"
+                                  method="post">
+                                <div class="form-group">
+                                    <?php for ($i = 0; $i <= count($group) - 1; $i++): ?>
+                                        <input type="hidden" name="product_group[]" value="<?= $group[$i] ?>">
+                                    <?php endfor; ?>
+                                    <?php for ($i = 0; $i <= count($stockstatus) - 1; $i++): ?>
+                                        <input type="hidden" name="stock_status[]" value="<?= $stockstatus[$i] ?>">
+                                    <?php endfor; ?>
+                                    <input type="hidden" name="search_all" value="<?= $searchname; ?>">
+                                    <label>แสดง </label>
+                                    <select class="form-control" name="perpage" id="perpage">
+                                        <option value="20" <?= $perpage == '20' ? 'selected' : '' ?>>20</option>
+                                        <option value="50" <?= $perpage == '50' ? 'selected' : '' ?> >50</option>
+                                        <option value="100" <?= $perpage == '100' ? 'selected' : '' ?>>100</option>
+                                    </select>
+                                    <label> รายการ</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <div class="table-grid">
+
+                            <?= GridView::widget([
+                                'dataProvider' => $dataProvider,
+                                //'filterModel' => $searchModel,
+                                'emptyCell' => '-',
+                                'layout' => "{items}\n{summary}\n<div class='text-left'>{pager}</div>",
+                                'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
+                                'showOnEmpty' => false,
+                                'bordered' => false,
+                                'striped' => false,
+                                'hover' => true,
+                                'id' => 'product-grid',
+                                //'tableOptions' => ['class' => 'table table-hover'],
+                                'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
+                                'rowOptions' => function ($model, $key, $index, $gird) {
+                                    $contextMenuId = $gird->columns[0]->contextMenuId;
+                                    return ['data' => ['toggle' => 'context', 'target' => "#" . $contextMenuId]];
+                                },
+                                'columns' => [
+                                    [
+                                        'class' => \liyunfang\contextmenu\SerialColumn::className(),
+                                        'contextMenu' => true,
+                                        'headerOptions' => ['style' => 'text-align: left'],
+                                        'contentOptions' => ['style' => 'vertical-align: middle'],
+                                        //'contextMenuAttribute' => 'id',
+                                        'template' => '<br /> {view} {update} <li class="divider"></li> {delete}',
+                                        'buttons' => [
+                                            'view' => function ($url, $model) {
+                                                $title = Yii::t('app', 'ดูรายละเอียด');
+                                                $label = '<span class="fa fa-eye"></span> ' . $title;
+                                                $url = \Yii::$app->getUrlManager()->createUrl(['/product/view', 'id' => $model->id]);
+                                                $options = ['tabindex' => '1', 'title' => $title, 'data' => ['pjax' => '0', 'toggle' => 'tooltips']];
+                                                return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
+                                            },
+                                            'update' => function ($url, $model) {
+                                                $title = Yii::t('app', 'แก้ไข');
+                                                $label = '<span class="fa fa-pencil"></span> ' . $title;
+                                                $url = \Yii::$app->getUrlManager()->createUrl(['/product/update', 'id' => $model->id]);
+                                                $options = ['tabindex' => '-1', 'title' => $title, 'data' => ['pjax' => '0', 'toggle' => 'tooltip']];
+                                                return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
+                                            },
+                                            'delete' => function ($url, $model) {
+                                                $title = Yii::t('app', 'ลบรายการ');
+                                                $label = '<span class="fa fa-trash-o"></span> ' . $title;
+                                                $url = \Yii::$app->getUrlManager()->createUrl(['/product/delete', 'id' => $model->id]);
+                                                $options = ['class' => 'del-product', 'tabindex' => '-1', 'title' => $title, 'data' => ['pjax' => '0', 'toggle' => 'tooltip'], 'data-url' => $url, 'onclick' => 'recDelete($(this));'];
+                                                return '<li>' . Html::a($label, 'javascript:void(0)', $options) . '</li>' . PHP_EOL;
+                                            },
+                                        ],
+                                    ],
+                                    ['class' => 'yii\grid\CheckboxColumn',
+                                        'headerOptions' => ['style' => 'text-align: center'],
+                                        'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
+                                        'multiple' => true,
+                                        'name' => 'selection',
+                                        'checkboxOptions' => [
+                                            'onclick' => '
                                             var keys = $("#product-grid").yiiGridView("getSelectedRows");
                                             //console.log(keys);
                                             if(keys.length>0){
                                                 $(".btn-bulk-remove").attr("disabled",false);
-//                                              jQuery.post("'.Url::to(['delete-all']).'",{ids:keys.join()},function(){
+//                                              jQuery.post("' . Url::to(['delete-all']) . '",{ids:keys.join()},function(){
 //                                        
 //                                              });
                                             }
                                         '
-                                ]
-                            ],
-                             // ['class' => 'yii\grid\RadioButtonColumn','headerOptions' => ['style' => 'text-align: center'],'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
-                          //  ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle']],
+                                        ]
+                                    ],
+                                    // ['class' => 'yii\grid\RadioButtonColumn','headerOptions' => ['style' => 'text-align: center'],'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
+                                    //  ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle']],
 
-                         //   'id',
-                             [
-                                  'attribute'=>'product_code',
-                                  'format'=>'html',
-                                  'headerOptions' => ['style' => 'text-align: left'],
-                                  'contentOptions' => ['style' => 'vertical-align: middle'],
-                                  'value'=>function($data){
-                                      return Html::a($data->product_code, ['product/view', 'id' => $data->id]);
-                                  }
-                             ],
-                            [
-                                'attribute'=>'engname',
-                                'format'=>'html',
-                                'headerOptions' => ['style' => 'text-align: left'],
-                                'contentOptions' => ['style' => 'vertical-align: middle'],
-                                'value'=>function($data){
-                                    return Html::a($data->engname, ['product/view', 'id' => $data->id]);
-                                }
-                            ],
+                                    //   'id',
+                                    [
+                                        'attribute' => 'product_code',
+                                        'format' => 'html',
+                                        'headerOptions' => ['style' => 'text-align: left'],
+                                        'contentOptions' => ['style' => 'vertical-align: middle'],
+                                        'value' => function ($data) {
+                                            return Html::a($data->product_code, ['product/view', 'id' => $data->id]);
+                                        }
+                                    ],
+                                    [
+                                        'attribute' => 'engname',
+                                        'format' => 'html',
+                                        'headerOptions' => ['style' => 'text-align: left'],
+                                        'contentOptions' => ['style' => 'vertical-align: middle'],
+                                        'value' => function ($data) {
+                                            return Html::a($data->engname, ['product/view', 'id' => $data->id]);
+                                        }
+                                    ],
 //                             [
 //                                  'attribute'=>'name',
 //                                  'headerOptions' => ['style' => 'text-align: left'],
 //                                  'contentOptions' => ['style' => 'vertical-align: middle'],
 //                             ],
-                             [
-                                  'attribute'=>'unit_id',
-                                  'headerOptions' => ['style' => 'text-align: left'],
-                                  'contentOptions' => ['style' => 'vertical-align: middle'],
-                                  'value'=> function($data){
-                                    return \backend\models\Unit::findUnitname($data->unit_id);
-                                  }
-                             ],
-                             [
-                                  'attribute'=>'category_id',
-                                  'headerOptions' => ['style' => 'text-align: left'],
-                                  'contentOptions' => ['style' => 'vertical-align: middle'],
-                                   'value'=> function($data){
-                                    return \backend\models\Productcategory::findName($data->category_id);
-                                  }
-                             ],
-                            //'photo',
-                            //'category_id',
-                            //'product_type_id',
-                            //'unit_id',
-                            //'min_stock',
-                            //'max_stock',
-                            //'is_hold',
-                            //'has_variant',
-                            //'bom_type',
-                            //'cost',
-                            //'price',
-                              [
-                                'label'=>'สถานะสินค้า',
-                                'format'=>'html',
-                                'headerOptions' => ['style' => 'text-align: center'],
-                                'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
-                                'value'=>function($data){
-                                    if($data->all_qty >0 && $data->all_qty > $data->min_stock){
-                                      return '<div class="label label-success">มีสินค้า</div>';
-                                    }else if($data->all_qty >0 && $data->all_qty < $data->min_stock){
-                                      return '<div class="label label-warning">สินค่าต่ำกว่ากำหนด</div>';
-                                    }else{
-                                      return '<div class="label label-danger">ไม่มีสินค้า</div>';
-                                    }
+                                    [
+                                        'attribute' => 'unit_id',
+                                        'headerOptions' => ['style' => 'text-align: left'],
+                                        'contentOptions' => ['style' => 'vertical-align: middle'],
+                                        'value' => function ($data) {
+                                            return \backend\models\Unit::findUnitname($data->unit_id);
+                                        }
+                                    ],
+                                    [
+                                        'attribute' => 'category_id',
+                                        'headerOptions' => ['style' => 'text-align: left'],
+                                        'contentOptions' => ['style' => 'vertical-align: middle'],
+                                        'value' => function ($data) {
+                                            return \backend\models\Productcategory::findName($data->category_id);
+                                        }
+                                    ],
+                                    //'photo',
+                                    //'category_id',
+                                    //'product_type_id',
+                                    //'unit_id',
+                                    //'min_stock',
+                                    //'max_stock',
+                                    //'is_hold',
+                                    //'has_variant',
+                                    //'bom_type',
+                                    //'cost',
+                                    //'price',
+                                    [
+                                        'label' => 'สถานะสินค้า',
+                                        'format' => 'html',
+                                        'headerOptions' => ['style' => 'text-align: center'],
+                                        'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
+                                        'value' => function ($data) {
+                                            if ($data->all_qty > 0 && $data->all_qty > $data->min_stock) {
+                                                return '<div class="label label-success">มีสินค้า</div>';
+                                            } else if ($data->all_qty > 0 && $data->all_qty < $data->min_stock) {
+                                                return '<div class="label label-warning">สินค่าต่ำกว่ากำหนด</div>';
+                                            } else {
+                                                return '<div class="label label-danger">ไม่มีสินค้า</div>';
+                                            }
 
-                                }
-                              ],
-                               [
-                                  'attribute'=>'all_qty',
-                                  'headerOptions' => ['style' => 'text-align: right'],
-                                  'contentOptions' => ['style' => 'vertical-align: middle;text-align: right;font-weight: bold;'],
-                                  'value'=> function($data){
-                                     return $data->all_qty > 0?number_format($data->all_qty,0):0;
-                                  }
-                              ],
-                              [
-                                  'attribute'=>'price',
-                                  'headerOptions' => ['style' => 'text-align: right'],
-                                  'contentOptions' => ['style' => 'vertical-align: middle;text-align: right;font-weight: bold;'],
-                                  'value'=> function($data){
-                                     return $data->price > 0?number_format($data->price,0):0;
-                                  }
-                              ],
-                           [
-                                                       'attribute'=>'status',
-                                                       'headerOptions' => ['style' => 'text-align: center'],
-                                                       'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
-                                                       'format' => 'html',
-                                                       'value'=>function($data){
-                                                         return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
-                                                       }
-                                                      ],
+                                        }
+                                    ],
+                                    [
+                                        'attribute' => 'all_qty',
+                                        'headerOptions' => ['style' => 'text-align: right'],
+                                        'contentOptions' => ['style' => 'vertical-align: middle;text-align: right;font-weight: bold;'],
+                                        'value' => function ($data) {
+                                            return $data->all_qty > 0 ? number_format($data->all_qty, 0) : 0;
+                                        }
+                                    ],
+                                    [
+                                        'attribute' => 'price',
+                                        'headerOptions' => ['style' => 'text-align: right'],
+                                        'contentOptions' => ['style' => 'vertical-align: middle;text-align: right;font-weight: bold;'],
+                                        'value' => function ($data) {
+                                            return $data->price > 0 ? number_format($data->price, 0) : 0;
+                                        }
+                                    ],
+                                    [
+                                        'attribute' => 'status',
+                                        'headerOptions' => ['style' => 'text-align: center'],
+                                        'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
+                                        'format' => 'html',
+                                        'value' => function ($data) {
+                                            return $data->status === 1 ? '<div class="label label-success">Active</div>' : '<div class="label label-default">Inactive</div>';
+                                        }
+                                    ],
 
-                        ],
-                    ]); ?>
-                    </div>
+                                ],
+                            ]); ?>
+                        </div>
 
-                   <!--  <div class="row">
+                        <!--  <div class="row">
                       <div class="col-lg-12">
-                        <?php foreach($dataProvider->getModels() as $value):?>
+                        <?php foreach ($dataProvider->getModels() as $value): ?>
                               <div class="col-md-3 col-xs-12 widget widget_tally_box">
                               <div class="x_panel fixed_height_300">
                                 <div class="x_content">
-                                  <h3 class="name"><?=$value->product_code?></h3>
+                                  <h3 class="name"><?= $value->product_code ?></h3>
                                   <p>
-                                    <?=$value->name?>
+                                    <?= $value->name ?>
                                   </p>
                                    <div class="flex">
                                     <ul class="list-inline count2">
                                       <li>
                                         <span>
-                                          <?php if($value->all_qty >0): ?>
+                                          <?php if ($value->all_qty > 0): ?>
                                             <div class="label label-success"> มีสินค้า</div>
-                                          <?php else:?>
+                                          <?php else: ?>
                                             <div class="label label-danger"> ไม่มีสินค้า</div>
-                                          <?php endif;?>
+                                          <?php endif; ?>
                                         </span>
                                       </li>
                                       <li>
                                         <span>
-                                          <?=$value->all_qty?>
+                                          <?= $value->all_qty ?>
                                         </span>
                                       </li>
 
@@ -386,15 +394,15 @@ table.table-vendor td{
                                 </div>
                               </div>
                             </div>
-                          <?php endforeach;?>
+                          <?php endforeach; ?>
                       </div>
                     </div> -->
 
-                  </div>
+                    </div>
                 </div>
-              </div>
             </div>
         </div>
+    </div>
     <?php Pjax::end(); ?>
 </div>
 <div id="importModal" class="modal fade" role="dialog">
@@ -403,29 +411,34 @@ table.table-vendor td{
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
-                <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายการสินค้า <small id="items"> </small></h4>
+                <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายการสินค้า
+                    <small id="items"></small>
+                </h4>
             </div>
             <div class="modal-body">
-                <?php $form_upload = ActiveForm::begin(['action'=>'index.php?r=product/importproduct','options'=>['enctype' => 'multipart/form-data']]); ?>
+                <?php $form_upload = ActiveForm::begin(['action' => 'index.php?r=product/importproduct', 'options' => ['enctype' => 'multipart/form-data']]); ?>
                 <div class="row">
                     <div class="col-lg-12">
-                        <small class="text-info"> สามารถดาวน์โหลด template สำหรับการนำเข้าสินค้าโดยคลิก </small><a href="<?=Url::to(['product/exporttemplate'],true)?>" style="text-decoration-style: dashed;text-decoration: underline;">ที่นี่</a>
+                        <small class="text-info"> สามารถดาวน์โหลด template สำหรับการนำเข้าสินค้าโดยคลิก</small>
+                        <a href="<?= Url::to(['product/exporttemplate'], true) ?>"
+                           style="text-decoration-style: dashed;text-decoration: underline;">ที่นี่</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                       <br />
+                        <br/>
 
-                           <?= $form_upload->field($modelupload,'file')->fileinput(['class'=>'form-control','accept'=>'.csv'])->label(false)?>
+                        <?= $form_upload->field($modelupload, 'file')->fileinput(['class' => 'form-control', 'accept' => '.csv'])->label(false) ?>
 
 
                     </div>
                 </div>
-                <br />
+                <br/>
                 <div class="row">
                     <div class="col-lg-12">
 
-                        <i class="fa fa-warning text-danger"></i> <small class="text-danger"> ขนาดไฟล์ไม่เกิน 100 MB</small>
+                        <i class="fa fa-warning text-danger"></i>
+                        <small class="text-danger"> ขนาดไฟล์ไม่เกิน 100 MB</small>
                     </div>
                 </div>
             </div>
@@ -434,7 +447,7 @@ table.table-vendor td{
                 <input type="submit" class="btn btn-success" value="ตกลง">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
             </div>
-            <?php ActiveForm::end();?>
+            <?php ActiveForm::end(); ?>
         </div>
 
     </div>
@@ -445,29 +458,34 @@ table.table-vendor td{
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
-                <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายการสินค้า <small id="items"> </small></h4>
+                <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายการสินค้า
+                    <small id="items"></small>
+                </h4>
             </div>
             <div class="modal-body">
-                <?php $form_upload = ActiveForm::begin(['action'=>'index.php?r=product/importupdate','options'=>['enctype' => 'multipart/form-data']]); ?>
+                <?php $form_upload = ActiveForm::begin(['action' => 'index.php?r=product/importupdate', 'options' => ['enctype' => 'multipart/form-data']]); ?>
                 <div class="row">
                     <div class="col-lg-12">
-                        <small class="text-info"> สามารถดาวน์โหลด template สำหรับการนำเข้าสินค้าโดยคลิก </small><a href="<?=Url::to(['product/exporttemplate'],true)?>" style="text-decoration-style: dashed;text-decoration: underline;">ที่นี่</a>
+                        <small class="text-info"> สามารถดาวน์โหลด template สำหรับการนำเข้าสินค้าโดยคลิก</small>
+                        <a href="<?= Url::to(['product/exporttemplate'], true) ?>"
+                           style="text-decoration-style: dashed;text-decoration: underline;">ที่นี่</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <br />
+                        <br/>
 
-                        <?= $form_upload->field($modelupload,'file')->fileinput(['class'=>'form-control','accept'=>'.csv'])->label(false)?>
+                        <?= $form_upload->field($modelupload, 'file')->fileinput(['class' => 'form-control', 'accept' => '.csv'])->label(false) ?>
 
 
                     </div>
                 </div>
-                <br />
+                <br/>
                 <div class="row">
                     <div class="col-lg-12">
 
-                        <i class="fa fa-warning text-danger"></i> <small class="text-danger"> ขนาดไฟล์ไม่เกิน 100 MB</small>
+                        <i class="fa fa-warning text-danger"></i>
+                        <small class="text-danger"> ขนาดไฟล์ไม่เกิน 100 MB</small>
                     </div>
                 </div>
             </div>
@@ -476,7 +494,7 @@ table.table-vendor td{
                 <input type="submit" class="btn btn-success" value="ตกลง">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
             </div>
-            <?php ActiveForm::end();?>
+            <?php ActiveForm::end(); ?>
         </div>
 
     </div>
@@ -486,11 +504,13 @@ table.table-vendor td{
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i> </button>
-                <h4 class="modal-title"><i class="fa fa-download"></i> นำออกรายการสินค้า <small id="items"> </small></h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
+                <h4 class="modal-title"><i class="fa fa-download"></i> นำออกรายการสินค้า
+                    <small id="items"></small>
+                </h4>
             </div>
             <div class="modal-body">
-                <?php $form_upload = ActiveForm::begin(['action'=>'exportproduct','options'=>['enctype' => 'multipart/form-data']]); ?>
+                <?php $form_upload = ActiveForm::begin(['action' => 'exportproduct', 'options' => ['enctype' => 'multipart/form-data']]); ?>
                 <div class="row">
                     <div class="col-lg-12">
                         <small class="text-info"> เลือกรูปแบบข้อมูลที่ต้องการนำออก</small>
@@ -498,18 +518,30 @@ table.table-vendor td{
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <br />
-                        <a href="<?=Url::to(['product/export','type'=>'xls'],true)?>" target="_blank" class="btn btn-default" style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i class="fa fa-file-excel-o label-success"></i> XLS File</a>
-                        <a href="<?=Url::to(['product/export','type'=>'csv'],true)?>" target="_blank" class="btn btn-default" style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i class="fa fa-file-photo-o label-success"></i> CSV File</a>
-                        <div class="btn btn-default" style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i class="fa fa-file-pdf-o label-danger"></i> PDF File</div>
-                        <div class="btn btn-default" style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i class="fa fa-file-o"></i> TEXT File</div>
+                        <br/>
+                        <a href="<?= Url::to(['product/export', 'type' => 'xls'], true) ?>" target="_blank"
+                           class="btn btn-default"
+                           style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i
+                                    class="fa fa-file-excel-o label-success"></i> XLS File</a>
+                        <a href="<?= Url::to(['product/export', 'type' => 'csv'], true) ?>" target="_blank"
+                           class="btn btn-default"
+                           style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i
+                                    class="fa fa-file-photo-o label-success"></i> CSV File</a>
+                        <div class="btn btn-default"
+                             style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i
+                                    class="fa fa-file-pdf-o label-danger"></i> PDF File
+                        </div>
+                        <div class="btn btn-default"
+                             style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i
+                                    class="fa fa-file-o"></i> TEXT File
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
             </div>
-            <?php ActiveForm::end();?>
+            <?php ActiveForm::end(); ?>
         </div>
 
     </div>
@@ -520,15 +552,18 @@ table.table-vendor td{
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
-                <h4 class="modal-title"><i class="fa fa-barcode"></i> พิมพ์รหัสบาร์โค้ด <small id="items"> </small></h4>
+                <h4 class="modal-title"><i class="fa fa-barcode"></i> พิมพ์รหัสบาร์โค้ด
+                    <small id="items"></small>
+                </h4>
             </div>
             <div class="modal-body">
-                <?php $form_upload = ActiveForm::begin(['action'=>'printbarcode','options'=>['enctype' => 'multipart/form-data','class'=>'form-horizontal form-label-left','target'=>'_blank']]); ?>
+                <?php $form_upload = ActiveForm::begin(['action' => 'printbarcode', 'options' => ['enctype' => 'multipart/form-data', 'class' => 'form-horizontal form-label-left', 'target' => '_blank']]); ?>
                 <div class="row">
                     <div class="col-lg-12">
                         <small class="text-info"> เลือกรูปแบบที่ต้องการ</small>
                     </div>
-                </div><br />
+                </div>
+                <br/>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ขนาดกระดาษ
                     </label>
@@ -584,7 +619,7 @@ table.table-vendor td{
                 <input type="submit" class="btn btn-success btn-print-barcode" value="พิมพ์">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
             </div>
-            <?php ActiveForm::end();?>
+            <?php ActiveForm::end(); ?>
         </div>
 
     </div>
@@ -595,10 +630,12 @@ table.table-vendor td{
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
-                <h4 class="modal-title"><i class="fa fa-print"></i> พิมพ์สต๊อกสินค้า <small id="items"> </small></h4>
+                <h4 class="modal-title"><i class="fa fa-print"></i> พิมพ์สต๊อกสินค้า
+                    <small id="items"></small>
+                </h4>
             </div>
             <div class="modal-body">
-                <?php $form_upload = ActiveForm::begin(['action'=>'printstock','options'=>['enctype' => 'multipart/form-data','class'=>'form-horizontal form-label-left','target'=>'_blank']]); ?>
+                <?php $form_upload = ActiveForm::begin(['action' => 'printstock', 'options' => ['enctype' => 'multipart/form-data', 'class' => 'form-horizontal form-label-left', 'target' => '_blank']]); ?>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">พิมพ์สำหรับ
                     </label>
@@ -614,14 +651,14 @@ table.table-vendor td{
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                 </label>
                 <div class="col-md-8 col-sm-12 col-xs-12">
-                     <i class="fa fa-warning"></i> <span class="text-danger"> ถ้าต้องการสร้างใบนับสต๊อกให้เลือกหัวข้อ "จำนวนสต๊อกและนับยอด"</span>
+                    <i class="fa fa-warning"></i> <span class="text-danger"> ถ้าต้องการสร้างใบนับสต๊อกให้เลือกหัวข้อ "จำนวนสต๊อกและนับยอด"</span>
                 </div>
             </div>
             <div class="modal-footer">
                 <input type="submit" class="btn btn-success btnprint-stock" value="พิมพ์">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
             </div>
-            <?php ActiveForm::end();?>
+            <?php ActiveForm::end(); ?>
         </div>
 
     </div>
@@ -632,40 +669,45 @@ table.table-vendor td{
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
-                <h4 class="modal-title"><i class="fa fa-thumbs-up"></i> อนุมัติผู้ขาย <small id="items"> </small></h4>
+                <h4 class="modal-title"><i class="fa fa-thumbs-up"></i> อนุมัติผู้ขาย
+                    <small id="items"></small>
+                </h4>
             </div>
             <div class="modal-body">
-                <?php $form_upload = ActiveForm::begin(['action'=>'addvendor','options'=>['enctype' => 'multipart/form-data','class'=>'form-horizontal form-label-left','target'=>'_blank']]); ?>
+                <?php $form_upload = ActiveForm::begin(['action' => 'addvendor', 'options' => ['enctype' => 'multipart/form-data', 'class' => 'form-horizontal form-label-left', 'target' => '_blank']]); ?>
 
                 <div class="row">
                     <div class="col-lg-12">
                         <table class="table-vendor">
-                           <thead>
-                             <tr>
-                                 <th>#</th>
-                                 <th>รหัส</th>
-                                 <th>ชื่อ</th>
-                                 <th>วันเริ่ม</th>
-                                 <th>วันสิ้นสุด</th>
-                                 <th></th>
-                             </tr>
-                           </thead>
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>รหัส</th>
+                                <th>ชื่อ</th>
+                                <th>วันเริ่ม</th>
+                                <th>วันสิ้นสุด</th>
+                                <th></th>
+                            </tr>
+                            </thead>
                             <tbody>
                             <tr id="row-" style="vertical-align: middle">
                                 <td style="padding: 5px 5px 5px 5px;">#</td>
                                 <td>
-                                    <input type="text" name="vendor_id[]" class="form-control vendor_id" placeholder="เลือกผู้ขาย" value="" >
+                                    <input type="text" name="vendor_id[]" class="form-control vendor_id"
+                                           placeholder="เลือกผู้ขาย" value="">
 
                                 </td>
                                 <td>
                                     <input type="text" name="name[]" class="form-control name" value="" readonly>
                                 </td>
                                 <td>
-                                    <input type="text" id="from_date" name="from_date[]" class="form-control from_date" placeholder="เลือกวันที่" value="">
+                                    <input type="text" id="from_date" name="from_date[]" class="form-control from_date"
+                                           placeholder="เลือกวันที่" value="">
 
                                 </td>
                                 <td>
-                                    <input type="text" id="to_date" name="to_date[]" class="form-control to_date to_date" placeholder="เลือกกันที่" value="">
+                                    <input type="text" id="to_date" name="to_date[]"
+                                           class="form-control to_date to_date" placeholder="เลือกกันที่" value="">
                                 </td>
                                 <td style="padding-top: 2px;">
                                     <div class="btn btn-danger" onclick="removeline($(this))">ลบ</div>
@@ -680,7 +722,8 @@ table.table-vendor td{
 
                     <div class="col-lg-1">
                         <div class="btn-group">
-                            <div class="btn btn-default btn-add-vendor-line"><i class="fa fa-plus"></i> เพิ่มรายการ</div>
+                            <div class="btn btn-default btn-add-vendor-line"><i class="fa fa-plus"></i> เพิ่มรายการ
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -689,7 +732,7 @@ table.table-vendor td{
                 <input type="submit" class="btn btn-success btnprint-stock" value="ตกลง">
                 <div type="button" class="btn btn-default btn-cancel-vendor">ยกเลิก</div>
             </div>
-            <?php ActiveForm::end();?>
+            <?php ActiveForm::end(); ?>
         </div>
 
     </div>
@@ -697,12 +740,12 @@ table.table-vendor td{
 
 
 <?php
-  $this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
-  $this->registerCssFile( '@web/css/sweetalert.css');
-$this->registerJsFile("https://code.jquery.com/ui/1.12.1/jquery-ui.js",['depends'=> [\yii\web\JqueryAsset::className()]],static::POS_END);
-$this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\yii\web\JqueryAsset::className()]],static::POS_END);
+$this->registerJsFile('@web/js/sweetalert.min.js', ['depends' => [\yii\web\JqueryAsset::className()]], static::POS_END);
+$this->registerCssFile('@web/css/sweetalert.css');
+$this->registerJsFile("https://code.jquery.com/ui/1.12.1/jquery-ui.js", ['depends' => [\yii\web\JqueryAsset::className()]], static::POS_END);
+$this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js", ['depends' => [\yii\web\JqueryAsset::className()]], static::POS_END);
 //$url_to_delete =  Url::to(['product/bulkdelete'],true);
-  $this->registerJs('
+$this->registerJs('
 
     $(function(){
      var availableTags = [
@@ -736,7 +779,7 @@ $this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
       var idInc = 1;
         var options = {
-          url: "'.Url::to(['product/findvendor'],true).'",
+          url: "' . Url::to(['product/findvendor'], true) . '",
           getValue: "name",
           list: {	
             match: {
@@ -838,7 +881,7 @@ $this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\
         $(".btn-printbarcode").attr("disabled",true);
        
        
-        var viewtype = "'.$view_type.'";
+        var viewtype = "' . $view_type . '";
         if(viewtype == "list"){
           $(".view-list").addClass("active");
           $(".view-grid").removeClass("active");
@@ -850,7 +893,7 @@ $this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\
             $("#form-perpage").submit();
         });
 //        $(".btn-save").click(function(){
-//            $("#form-import").attr("href","'.Url::to(['product/importproduct'],true).'");
+//            $("#form-import").attr("href","' . Url::to(['product/importproduct'], true) . '");
 //            $("#form-import").submit();
 //        });
 
@@ -905,7 +948,7 @@ $this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\
 //           $.ajax({
 //              type: "post",
 //              dataType: "html",
-//              url: "'.Url::to(['product/addvendorline'],true).'",
+//              url: "' . Url::to(['product/addvendorline'], true) . '",
 //              data: {},
 //              success: function(data){
 //                $(".table-vendor tbody").append(data);
@@ -926,7 +969,7 @@ $this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\
                   if(keys.length>0){
                       $(".btn-bulk-remove").attr("disabled",false);
                       if(confirm("ต้องการลบรายการตามนี้ใช่หรอไม่")){
-                       jQuery.post("'.Url::to(['delete-all']).'",{ids:keys.join()},function(){
+                       jQuery.post("' . Url::to(['delete-all']) . '",{ids:keys.join()},function(){
                                             
                       });
                       } 
@@ -944,7 +987,7 @@ $this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\
             source: function(request, response) {
               $.ajax({
                 type: "GET",
-                url: "'.Url::to(['product/findvendor'],true).'",
+                url: "' . Url::to(['product/findvendor'], true) . '",
                 data: {},
                 success: function(data) {
                   response(data);
@@ -957,7 +1000,7 @@ $this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\
    function recDelete(e){
         //e.preventDefault();
         var url = e.attr("data-url");
-        //var url ="'.Url::to(['product/delete','id'=>10],true).'" ;
+        //var url ="' . Url::to(['product/delete', 'id' => 10], true) . '" ;
         alert(url);
 //        swal({
 //              title: "ต้องการลบรายการนี้ใช่หรือไม่",
@@ -988,5 +1031,5 @@ $this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\
 //        });
     }
 
-    ',static::POS_END);
+    ', static::POS_END);
 ?>

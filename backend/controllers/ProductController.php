@@ -26,7 +26,8 @@ use \backend\models\Productstock;
  */
 class ProductController extends Controller
 {
-     public $enableCsrfValidation = false;
+    public $enableCsrfValidation = false;
+
     /**
      * @inheritdoc
      */
@@ -36,8 +37,8 @@ class ProductController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST','GET'],
-                    'findvendor'=>['POST'],
+                    'delete' => ['POST', 'GET'],
+                    'findvendor' => ['POST'],
                 ],
             ],
 //            'access'=>[
@@ -75,7 +76,7 @@ class ProductController extends Controller
         $group = [];
         $stockstatus = [];
         $searcname = '';
-        if(Yii::$app->request->isPost){
+        if (Yii::$app->request->isPost) {
             $group = Yii::$app->request->post('product_group');
             $stockstatus = Yii::$app->request->post('stock_status');
             $searcname = Yii::$app->request->post('search_all');
@@ -86,26 +87,26 @@ class ProductController extends Controller
         $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['category_id'=>$group])->andFilterWhere(['OR',['LIKE','product_code',$searcname],['LIKE','name',$searcname]]);
-        if(count($stockstatus)>1){
-            if(in_array("1",$stockstatus,true) and in_array("2",$stockstatus,true) and in_array("3",$stockstatus,true)){
+        $dataProvider->query->andFilterWhere(['category_id' => $group])->andFilterWhere(['OR', ['LIKE', 'product_code', $searcname], ['LIKE', 'name', $searcname]]);
+        if (count($stockstatus) > 1) {
+            if (in_array("1", $stockstatus, true) and in_array("2", $stockstatus, true) and in_array("3", $stockstatus, true)) {
 
-            }else  if(in_array("1",$stockstatus,true) and in_array("2",$stockstatus,true)){
-                $dataProvider->query->andFilterWhere(['>','all_qty',0]);
-            }else if(in_array("1",$stockstatus,true) and in_array("3",$stockstatus,true)){
-                $dataProvider->query->andFilterWhere(['OR',['AND',['>','all_qty',0],['<=','min_stock','all_qty']],['=','all_qty',0]]);
-            }else if(in_array("2",$stockstatus,true) and in_array("3",$stockstatus,true)){
-                $dataProvider->query->andFilterWhere(['OR',['>','min_stock','all_qty'],['=','all_qty',0]]);
+            } else if (in_array("1", $stockstatus, true) and in_array("2", $stockstatus, true)) {
+                $dataProvider->query->andFilterWhere(['>', 'all_qty', 0]);
+            } else if (in_array("1", $stockstatus, true) and in_array("3", $stockstatus, true)) {
+                $dataProvider->query->andFilterWhere(['OR', ['AND', ['>', 'all_qty', 0], ['<=', 'min_stock', 'all_qty']], ['=', 'all_qty', 0]]);
+            } else if (in_array("2", $stockstatus, true) and in_array("3", $stockstatus, true)) {
+                $dataProvider->query->andFilterWhere(['OR', ['>', 'min_stock', 'all_qty'], ['=', 'all_qty', 0]]);
             }
 
-        }else if(count($stockstatus)>0 and count($stockstatus)<2){
+        } else if (count($stockstatus) > 0 and count($stockstatus) < 2) {
             //echo $stockstatus[0];return;
-            if($stockstatus[0] == "1"){
-                $dataProvider->query->andFilterWhere(['AND',['>','all_qty',0],['<=','min_stock','all_qty']]);
-            }else if($stockstatus[0] == "2"){
-                $dataProvider->query->andFilterWhere(['>','min_stock','all_qty']);
-            }else if($stockstatus[0] == "3"){
-                $dataProvider->query->andFilterWhere(['=','all_qty',0]);
+            if ($stockstatus[0] == "1") {
+                $dataProvider->query->andFilterWhere(['AND', ['>', 'all_qty', 0], ['<=', 'min_stock', 'all_qty']]);
+            } else if ($stockstatus[0] == "2") {
+                $dataProvider->query->andFilterWhere(['>', 'min_stock', 'all_qty']);
+            } else if ($stockstatus[0] == "3") {
+                $dataProvider->query->andFilterWhere(['=', 'all_qty', 0]);
             }
         }
 
@@ -118,9 +119,9 @@ class ProductController extends Controller
             'dataProvider' => $dataProvider,
             'perpage' => $pageSize,
             'viewtype' => 'list',
-            'modelupload'=> $modelupload,
-            'group'=>$group,
-            'stockstatus'=> $stockstatus,
+            'modelupload' => $modelupload,
+            'group' => $group,
+            'stockstatus' => $stockstatus,
             'searchname' => $searcname,
         ]);
     }
@@ -133,15 +134,15 @@ class ProductController extends Controller
     public function actionView($id)
     {
 
-       // $modeljournalline = \backend\models\Journalline::find()->where(['product_id'=>$id])->all();
-      //  $uploadfile = new \backend\models\Uploadfile();
+        // $modeljournalline = \backend\models\Journalline::find()->where(['product_id'=>$id])->all();
+        //  $uploadfile = new \backend\models\Uploadfile();
 
         //echo strtotime(date_format($start,'d-m-Y'));
-       // echo strtotime() ."-". strtotime(trim($dt_range[1]));
-      //  $movementSearch = new \backend\models\MovementSearch();
-      //  $movementDp = $movementSearch->search(Yii::$app->request->queryParams);
-       // $movementDp->pagination->pageSize = 10;
-       // $movementDp->query->andFilterWhere(['product_id'=>$id]);
+        // echo strtotime() ."-". strtotime(trim($dt_range[1]));
+        //  $movementSearch = new \backend\models\MovementSearch();
+        //  $movementDp = $movementSearch->search(Yii::$app->request->queryParams);
+        // $movementDp->pagination->pageSize = 10;
+        // $movementDp->query->andFilterWhere(['product_id'=>$id]);
 //        if(isset(Yii::$app->request->queryParams['MovementSearch']['created_at'])){
 //            $dt = Yii::$app->request->queryParams['MovementSearch']['created_at'];
 //            $dt_range = explode("to",$dt);
@@ -151,19 +152,19 @@ class ProductController extends Controller
 //
 //        }
 
-       // $photoes = \backend\models\Productgallery::find()->where(['product_id'=>$id])->all();
-        $productimage = \backend\models\Productimage::find()->where(['product_id'=>$id])->all();
-      //  $modelcost = \backend\models\Productcost::find()->where(['product_id'=>$id])->all();
-        $modelcost = \backend\models\Productstock::find()->where(['product_id'=>$id])->all();
+        // $photoes = \backend\models\Productgallery::find()->where(['product_id'=>$id])->all();
+        $productimage = \backend\models\Productimage::find()->where(['product_id' => $id])->all();
+        //  $modelcost = \backend\models\Productcost::find()->where(['product_id'=>$id])->all();
+        $modelcost = \backend\models\Productstock::find()->where(['product_id' => $id])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'productimage' => $productimage,
             'modelcost' => $modelcost,
-           // 'modeljournalline' => $modeljournalline,
-          //  'photoes'=>$photoes,
-          //  'uploadfile'=>$uploadfile,
-          //  'movementDp' => $movementDp,
-         //   'movementSearch'=> $movementSearch,
+            // 'modeljournalline' => $modeljournalline,
+            //  'photoes'=>$photoes,
+            //  'uploadfile'=>$uploadfile,
+            //  'movementDp' => $movementDp,
+            //   'movementSearch'=> $movementSearch,
         ]);
     }
 
@@ -178,15 +179,15 @@ class ProductController extends Controller
         $modelfile = new \backend\models\Modelfile();
 
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
-            $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
-            $model->excise_date = date('Y-m-d',strtotime($model->excise_date));
-            if($model->save()){
+            $uploadimage = UploadedFile::getInstances($modelfile, 'file_photo');
+            $model->excise_date = date('Y-m-d', strtotime($model->excise_date));
+            if ($model->save()) {
 
-                if(!empty($uploadimage)){
+                if (!empty($uploadimage)) {
 
-                    foreach($uploadimage as $file){
+                    foreach ($uploadimage as $file) {
 
-                        $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/images/'.$file);
+                        $file->saveAs(Yii::getAlias('@backend') . '/web/uploads/images/' . $file);
                         Image::thumbnail(Yii::getAlias('@backend') . '/web/uploads/images/' . $file, 100, 70)
                             ->rotate(0)
                             ->save(Yii::getAlias('@backend') . '/web/uploads/thumbnail/' . $file, ['jpeg_quality' => 100]);
@@ -199,7 +200,7 @@ class ProductController extends Controller
                 }
 
                 $session = Yii::$app->session;
-                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                $session->setFlash('msg', 'บันทึกรายการเรียบร้อย');
                 return $this->redirect(['index']);
             }
 
@@ -221,19 +222,19 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
         $modelfile = new \backend\models\Modelfile();
-        $productimage = \backend\models\Productimage::find()->where(['product_id'=>$id])->all();
+        $productimage = \backend\models\Productimage::find()->where(['product_id' => $id])->all();
 
 
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
-            $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
-            $model->excise_date = date('Y-m-d',strtotime($model->excise_date));
-            if($model->save()){
+            $uploadimage = UploadedFile::getInstances($modelfile, 'file_photo');
+            $model->excise_date = date('Y-m-d', strtotime($model->excise_date));
+            if ($model->save()) {
 
-                if(!empty($uploadimage)){
+                if (!empty($uploadimage)) {
 
-                    foreach($uploadimage as $file){
+                    foreach ($uploadimage as $file) {
 
-                        $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/images/'.$file);
+                        $file->saveAs(Yii::getAlias('@backend') . '/web/uploads/images/' . $file);
                         Image::thumbnail(Yii::getAlias('@backend') . '/web/uploads/images/' . $file, 100, 70)
                             ->rotate(0)
                             ->save(Yii::getAlias('@backend') . '/web/uploads/thumbnail/' . $file, ['jpeg_quality' => 100]);
@@ -246,7 +247,7 @@ class ProductController extends Controller
                 }
 
                 $session = Yii::$app->session;
-                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                $session->setFlash('msg', 'บันทึกรายการเรียบร้อย');
                 return $this->redirect(['index']);
             }
 
@@ -271,14 +272,16 @@ class ProductController extends Controller
         $this->findModel($id)->delete();
 
         $session = Yii::$app->session;
-        $session->setFlash('msg','ลบรหัสสินค้าเรียบร้อย');
+        $session->setFlash('msg', 'ลบรหัสสินค้าเรียบร้อย');
         return $this->redirect(['index']);
     }
-    public function actionDeleteAll(){
+
+    public function actionDeleteAll()
+    {
         $delete_ids = explode(',', Yii::$app->request->post('ids'));
-        Product::deleteAll(['in','id',$delete_ids]);
+        Product::deleteAll(['in', 'id', $delete_ids]);
         $session = Yii::$app->session;
-        $session->setFlash('msg','ลบรหัสสินค้าเรียบร้อย');
+        $session->setFlash('msg', 'ลบรหัสสินค้าเรียบร้อย');
         return $this->redirect(['index']);
     }
 
@@ -297,8 +300,10 @@ class ProductController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
-    public function actionExporttemplate(){
-        $strExcelFileName="form_product.xls";
+
+    public function actionExporttemplate()
+    {
+        $strExcelFileName = "form_product.xls";
         header('Content-Encoding: UTF-8');
         header("Content-Type: application/x-msexcel ; name=\"$strExcelFileName\" charset=utf-8");
         header("Content-Disposition: attachment; filename=\"$strExcelFileName\"");
@@ -320,15 +325,17 @@ class ProductController extends Controller
             </table>
         ";
     }
-    public function actionImportproduct(){
-       //echo "ok";return;
+
+    public function actionImportproduct()
+    {
+        //echo "ok";return;
         $model = new \backend\models\Uploadfile();
         $qty_text = [];
-        if(Yii::$app->request->post()){
+        if (Yii::$app->request->post()) {
             $uploaded = UploadedFile::getInstance($model, 'file');
-            if(!empty($uploaded)) {
+            if (!empty($uploaded)) {
                 $upfiles = time() . "." . $uploaded->getExtension();
-                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)) {
+                if ($uploaded->saveAs('../web/uploads/files/' . $upfiles)) {
                     //echo "okk";return;
                     $myfile = '../web/uploads/files/' . $upfiles;
                     $file = fopen($myfile, "r");
@@ -355,64 +362,64 @@ class ProductController extends Controller
                             continue;
                         }
 
-                        $per_origin = explode('/',$rowData[17]);
-                        if(count($per_origin) >0 && $per_origin[0] !=''){
+                        $per_origin = explode('/', $rowData[17]);
+                        if (count($per_origin) > 0 && $per_origin[0] != '') {
 
                             //print_r($per_origin);return;
-                            $permit_date = $per_origin[2]."/".$per_origin[1]."/".$per_origin[0];
+                            $permit_date = $per_origin[2] . "/" . $per_origin[1] . "/" . $per_origin[0];
 //                            if($rowData[0] =='C-007'){
 //                                echo $permit_date;return;
 //                            }
                         }
 
-                        $trans_origin = explode('/',$rowData[14]);
-                        if(count($trans_origin)>0 && $trans_origin[0] !=''){
-                            $trans_date = $trans_origin[2]."/".$trans_origin[1]."/".$trans_origin[0];
+                        $trans_origin = explode('/', $rowData[14]);
+                        if (count($trans_origin) > 0 && $trans_origin[0] != '') {
+                            $trans_date = $trans_origin[2] . "/" . $trans_origin[1] . "/" . $trans_origin[0];
                         }
 
-                        $inv_origin = explode('/',$rowData[12]);
-                        if(count($inv_origin)>0 && $inv_origin[0] !=''){
-                            $inv_date = $inv_origin[2]."/".$inv_origin[1]."/".$inv_origin[0];
+                        $inv_origin = explode('/', $rowData[12]);
+                        if (count($inv_origin) > 0 && $inv_origin[0] != '') {
+                            $inv_date = $inv_origin[2] . "/" . $inv_origin[1] . "/" . $inv_origin[0];
                         }
 
-                        $kno_origin = explode('/',$rowData[19]);
-                        if(count($kno_origin)>0 && $kno_origin[0] !=''){
-                            $kno_date = $kno_origin[2]."/".$kno_origin[1]."/".$kno_origin[0];
+                        $kno_origin = explode('/', $rowData[19]);
+                        if (count($kno_origin) > 0 && $kno_origin[0] != '') {
+                            $kno_date = $kno_origin[2] . "/" . $kno_origin[1] . "/" . $kno_origin[0];
                         }
 
 
-                        if($rowData[24]!='' && $rowData[24] != null){
-                            $qty_separate = explode(' ',$rowData[24]);
-                            if(count($qty_separate)>1){
-                                $qty = $qty_separate[1]==NULL || $qty_separate[1] =='' ?0:str_replace(",","",$qty_separate[1]);
-                            }else{
+                        if ($rowData[24] != '' && $rowData[24] != null) {
+                            $qty_separate = explode(' ', $rowData[24]);
+                            if (count($qty_separate) > 1) {
+                                $qty = $qty_separate[1] == NULL || $qty_separate[1] == '' ? 0 : str_replace(",", "", $qty_separate[1]);
+                            } else {
                                 $qty = $rowData[24];
                             }
                         }
 
-                      //  $permit_date = '02/08/2019';
+                        //  $permit_date = '02/08/2019';
 
-                       // array_push($qty_text, $rowData[24]);continue;
-                        $price = $rowData[21]==NULL || $rowData[21] ==''?0:str_replace(",","",$rowData[21]);
+                        // array_push($qty_text, $rowData[24]);continue;
+                        $price = $rowData[21] == NULL || $rowData[21] == '' ? 0 : str_replace(",", "", $rowData[21]);
                         $catid = $this->checkCat($rowData[6]);
                         $whid = $this->checkWarehouse($rowData[10]);
 
-                        if(!$whid){
+                        if (!$whid) {
                             $whid = \backend\models\Warehouse::getDefault();
                         }
 
                         $modelprod = \backend\models\Product::find()->where(['name' => $rowData[1]])->one();
                         if (count($modelprod) > 0) {
-                           // echo "oo";return;
+                            // echo "oo";return;
                             // $data_all +=1;
                             // array_push($data_fail,['name'=>$rowData[0][1]]);
-                            $modelstock = \backend\models\Productstock::find()->where(['product_id'=>$modelprod->id,'invoice_no'=>$rowData[11],'transport_in_no'=>$rowData[13]])->one();
-                            if($modelstock){
+                            $modelstock = \backend\models\Productstock::find()->where(['product_id' => $modelprod->id, 'invoice_no' => $rowData[11], 'transport_in_no' => $rowData[13]])->one();
+                            if ($modelstock) {
                                 continue;
-                            }else{
-                                $usd = str_replace(",","",$rowData[21]);
-                                $thb = str_replace(",","",$rowData[22]);
-                                array_push($data,[
+                            } else {
+                                $usd = str_replace(",", "", $rowData[21]);
+                                $thb = str_replace(",", "", $rowData[22]);
+                                array_push($data, [
 //                                    'prod_id'=>$modelprod->id,
 //                                    'qty'=>$qty,
 //                                    'warehouse_id'=>$whid,
@@ -431,10 +438,10 @@ class ProductController extends Controller
 //                                    'usd_rate' => $usd,
 //                                    'thb_amount' => $thb,
 
-                                    'prod_id'=>$modelprod->id,
-                                    'qty'=>$qty,
-                                    'warehouse_id'=>$whid,
-                                    'trans_type'=>TransType::TRANS_ADJUST_IN,
+                                    'prod_id' => $modelprod->id,
+                                    'qty' => $qty,
+                                    'warehouse_id' => $whid,
+                                    'trans_type' => TransType::TRANS_ADJUST_IN,
                                     'permit_no' => $rowData[16],
 //                                 'permit_date' => date('Y-m-d',strtotime($rowData[17])),
                                     'permit_date' => $permit_date,
@@ -455,13 +462,11 @@ class ProductController extends Controller
 
 
                                 ]);
-                               // print_r($data);return;
-                               // $update_stock = TransCalculate::createJournal($data);
+                                // print_r($data);return;
+                                // $update_stock = TransCalculate::createJournal($data);
                             }
                             continue;
                         }
-
-
 
 
                         $modelx = new \backend\models\Product();
@@ -470,7 +475,7 @@ class ProductController extends Controller
                         $modelx->engname = ltrim($rowData[1]);
                         $modelx->name = ltrim($rowData[1]);
                         $modelx->category_id = $catid;
-                       // $modelx->unit_id = $this->checkUnit($rowData[3]);
+                        // $modelx->unit_id = $this->checkUnit($rowData[3]);
                         $modelx->description = '';//$rowData[1] ;
                         $modelx->price = $price;//$rowData[5];
                         $modelx->cost = $price; //$rowData[6];
@@ -480,12 +485,12 @@ class ProductController extends Controller
                         $modelx->volumn_content = $rowData[4];
                         $modelx->excise_no = $rowData[8];
                         $modelx->all_qty = (int)$qty;
-                        $modelx->price_carton_thb = str_replace(",","",$rowData[24]); //ราคาต่อลัง
-                        $modelx->excise_date = date('Y-m-d',strtotime($rowData[9]));
+                        $modelx->price_carton_thb = str_replace(",", "", $rowData[24]); //ราคาต่อลัง
+                        $modelx->excise_date = date('Y-m-d', strtotime($rowData[9]));
 
-                        $this->updatePositiongroup($catid,$rowData[5]);
-                      //  $modelx->all_qty = str_replace(',','', $rowData[8]);
-                    //    $modelx->available_qty = str_replace(',','', $rowData[8]);
+                        $this->updatePositiongroup($catid, $rowData[5]);
+                        //  $modelx->all_qty = str_replace(',','', $rowData[8]);
+                        //    $modelx->available_qty = str_replace(',','', $rowData[8]);
                         $modelx->status = 1;
 
 
@@ -498,100 +503,106 @@ class ProductController extends Controller
 
                         if ($modelx->save(false)) {
                             $res += 1;
-                      //      $this->manageprodstock($whid,$modelx->id,$modelx->all_qty,);
-                        //     $data_all +=1;
-                            $usd = str_replace(",","",$rowData[21]);
-                            $thb = str_replace(",","",$rowData[22]);
-                             array_push($data,[
-                                 'prod_id'=>$modelx->id,
-                                 'qty'=>$modelx->all_qty,
-                                 'warehouse_id'=>$whid,
-                                 'trans_type'=>TransType::TRANS_ADJUST_IN,
-                                 'permit_no' => $rowData[16],
+                            //      $this->manageprodstock($whid,$modelx->id,$modelx->all_qty,);
+                            //     $data_all +=1;
+                            $usd = str_replace(",", "", $rowData[21]);
+                            $thb = str_replace(",", "", $rowData[22]);
+                            array_push($data, [
+                                'prod_id' => $modelx->id,
+                                'qty' => $modelx->all_qty,
+                                'warehouse_id' => $whid,
+                                'trans_type' => TransType::TRANS_ADJUST_IN,
+                                'permit_no' => $rowData[16],
 //                                 'permit_date' => date('Y-m-d',strtotime($rowData[17])),
-                                 'permit_date' => $permit_date,
-                                 'transport_in_no' => $rowData[13],
-                               //  'transport_in_date' => date('Y-m-d',strtotime($rowData[14])),
-                                 'transport_in_date' => $trans_date,
-                                 'excise_no' => $excise_no,
-                                 'invoice_no' => $rowData[11],
-                                 //'invoice_date' => date('Y-m-d',strtotime($rowData[12])),
-                                 'invoice_date' => $inv_date,
-                                 'sequence' => $rowData[15],
-                                 'kno_no_in' => $rowData[18],
-                              //   'kno_in_date' => date('Y-m-d',strtotime($rowData[19])),
-                                 'kno_in_date' => $kno_date,
-                                 'out_qty' => 0,
-                                 'usd_rate' => $usd,
-                                 'thb_amount' => $thb,
+                                'permit_date' => $permit_date,
+                                'transport_in_no' => $rowData[13],
+                                //  'transport_in_date' => date('Y-m-d',strtotime($rowData[14])),
+                                'transport_in_date' => $trans_date,
+                                'excise_no' => $excise_no,
+                                'invoice_no' => $rowData[11],
+                                //'invoice_date' => date('Y-m-d',strtotime($rowData[12])),
+                                'invoice_date' => $inv_date,
+                                'sequence' => $rowData[15],
+                                'kno_no_in' => $rowData[18],
+                                //   'kno_in_date' => date('Y-m-d',strtotime($rowData[19])),
+                                'kno_in_date' => $kno_date,
+                                'out_qty' => 0,
+                                'usd_rate' => $usd,
+                                'thb_amount' => $thb,
 
-                             ]);
+                            ]);
                         }
                     }
-                //    print_r($qty_text);return;
-                     $update_stock = TransCalculate::createJournal($data);
-                    if($res > 0 && $update_stock){
+                    //    print_r($qty_text);return;
+                    $update_stock = TransCalculate::createJournal($data);
+                    if ($res > 0 && $update_stock) {
                         $session = Yii::$app->session;
-                        $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
+                        $session->setFlash('msg', 'นำเข้าข้อมูลสินค้าเรียบร้อย');
                         return $this->redirect(['index']);
-                    }else{
+                    } else {
                         $session = Yii::$app->session;
-                        $session->setFlash('msg-error','พบข้อมผิดพลาด');
+                        $session->setFlash('msg-error', 'พบข้อมผิดพลาด');
                         return $this->redirect(['index']);
                     }
                 }
                 fclose($file);
-            }else{
+            } else {
 
             }
         }
     }
-    public function manageprodstock($whid,$prodid,$qty,$usd,$thb,$whdata,$invno,$trans_in_no){
+
+    public function manageprodstock($whid, $prodid, $qty, $usd, $thb, $whdata, $invno, $trans_in_no)
+    {
         $whid = 0;
 //        $prodid = \backend\models\Product::findId($rowData[0]);
 //        $qty = str_replace(",","",$rowData[20]);
 //        $usd = str_replace(",","",$rowData[21]);
 //        $thb = str_replace(",","",$rowData[22]);
-        $wh_get_id = \backend\models\Warehouse::find()->where(['name'=>$whdata])->one();
-        if($wh_get_id){$whid=$wh_get_id->id;}
+        $wh_get_id = \backend\models\Warehouse::find()->where(['name' => $whdata])->one();
+        if ($wh_get_id) {
+            $whid = $wh_get_id->id;
+        }
 
         // $qty = 100;
         //echo $rowData[11];
-        $has_stock = Productstock::find()->where(['product_id'=>$prodid,'warehouse_id'=>$whid,
-            'invoice_no'=>$invno,'transport_in_no'=>$trans_in_no])->one();
-        if($has_stock){
+        $has_stock = Productstock::find()->where(['product_id' => $prodid, 'warehouse_id' => $whid,
+            'invoice_no' => $invno, 'transport_in_no' => $trans_in_no])->one();
+        if ($has_stock) {
             $has_stock->in_qty = $qty;
             $has_stock->out_qty = 0;
             $has_stock->usd_rate = $usd;
-            $has_stock->thb_amount =  $thb;
+            $has_stock->thb_amount = $thb;
             $has_stock->save(false);
-        }else{
+        } else {
             $modelstock = new Productstock();
             $modelstock->product_id = $prodid;
             $modelstock->warehouse_id = $whid;
             $modelstock->invoice_no = $rowData[11];
-            $modelstock->invoice_date = date('Y-m-d',strtotime($rowData[12]));
+            $modelstock->invoice_date = date('Y-m-d', strtotime($rowData[12]));
             $modelstock->transport_in_no = $rowData[13];
-            $modelstock->transport_in_date = date('Y-m-d',strtotime($rowData[14]));
+            $modelstock->transport_in_date = date('Y-m-d', strtotime($rowData[14]));
             $modelstock->sequence = $rowData[15];
             $modelstock->permit_no = $rowData[16];
-            $modelstock->permit_date = date('Y-m-d',strtotime($rowData[17]));
+            $modelstock->permit_date = date('Y-m-d', strtotime($rowData[17]));
             $modelstock->kno_no_in = $rowData[18];
-            $modelstock->kno_in_date = date('Y-m-d',strtotime($rowData[19]));
+            $modelstock->kno_in_date = date('Y-m-d', strtotime($rowData[19]));
             $modelstock->in_qty = $qty;
             $modelstock->out_qty = 0;
             $modelstock->usd_rate = $usd;
-            $modelstock->thb_amount =  $thb;
+            $modelstock->thb_amount = $thb;
             $modelstock->save(false);
         }
     }
-    public function actionImportupdate(){
+
+    public function actionImportupdate()
+    {
         $model = new \backend\models\Uploadfile();
-        if(Yii::$app->request->post()){
+        if (Yii::$app->request->post()) {
             $uploaded = UploadedFile::getInstance($model, 'file');
-            if(!empty($uploaded)) {
+            if (!empty($uploaded)) {
                 $upfiles = time() . "." . $uploaded->getExtension();
-                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)) {
+                if ($uploaded->saveAs('../web/uploads/files/' . $upfiles)) {
                     //echo "okk";return;
                     $myfile = '../web/uploads/files/' . $upfiles;
                     $file = fopen($myfile, "r");
@@ -608,54 +619,56 @@ class ProductController extends Controller
                         }
 
 
-                        $has_product = \backend\models\Product::find()->where(['product_code'=>$rowData[0]])->one();
-                        if($has_product){
+                        $has_product = \backend\models\Product::find()->where(['product_code' => $rowData[0]])->one();
+                        if ($has_product) {
                             $whid = 0;
                             $prodid = \backend\models\Product::findId($rowData[0]);
-                            $qty = str_replace(",","",$rowData[20]);
-                            $usd = str_replace(",","",$rowData[21]);
-                            $thb = str_replace(",","",$rowData[22]);
-                            $wh_get_id = \backend\models\Warehouse::find()->where(['name'=>$rowData[10]])->one();
-                            if($wh_get_id){$whid=$wh_get_id->id;}
+                            $qty = str_replace(",", "", $rowData[20]);
+                            $usd = str_replace(",", "", $rowData[21]);
+                            $thb = str_replace(",", "", $rowData[22]);
+                            $wh_get_id = \backend\models\Warehouse::find()->where(['name' => $rowData[10]])->one();
+                            if ($wh_get_id) {
+                                $whid = $wh_get_id->id;
+                            }
 
-                           // $qty = 100;
+                            // $qty = 100;
                             //echo $rowData[11];
-                            $has_stock = Productstock::find()->where(['product_id'=>$has_product->id,'warehouse_id'=>$whid,
-                                'invoice_no'=>$rowData[11],'transport_in_no'=>$rowData[13]])->one();
-                            if($has_stock){
+                            $has_stock = Productstock::find()->where(['product_id' => $has_product->id, 'warehouse_id' => $whid,
+                                'invoice_no' => $rowData[11], 'transport_in_no' => $rowData[13]])->one();
+                            if ($has_stock) {
                                 $has_stock->in_qty = $qty;
                                 $has_stock->out_qty = 0;
                                 $has_stock->usd_rate = $usd;
-                                $has_stock->thb_amount =  $thb;
-                                if($has_stock->save(false)){
+                                $has_stock->thb_amount = $thb;
+                                if ($has_stock->save(false)) {
                                     $this->sumOnhand($has_product->prodid);
                                 }
-                            }else{
+                            } else {
                                 $modelstock = new Productstock();
                                 $modelstock->product_id = $prodid;
                                 $modelstock->warehouse_id = $whid;
                                 $modelstock->invoice_no = $rowData[11];
-                                $modelstock->invoice_date = date('Y-m-d',strtotime($rowData[12]));
+                                $modelstock->invoice_date = date('Y-m-d', strtotime($rowData[12]));
                                 $modelstock->transport_in_no = $rowData[13];
-                                $modelstock->transport_in_date = date('Y-m-d',strtotime($rowData[14]));
+                                $modelstock->transport_in_date = date('Y-m-d', strtotime($rowData[14]));
                                 $modelstock->sequence = $rowData[15];
                                 $modelstock->permit_no = $rowData[16];
-                                $modelstock->permit_date = date('Y-m-d',strtotime($rowData[17]));
+                                $modelstock->permit_date = date('Y-m-d', strtotime($rowData[17]));
                                 $modelstock->kno_no_in = $rowData[18];
-                                $modelstock->kno_in_date = date('Y-m-d',strtotime($rowData[19]));
+                                $modelstock->kno_in_date = date('Y-m-d', strtotime($rowData[19]));
                                 $modelstock->in_qty = $qty;
                                 $modelstock->out_qty = 0;
                                 $modelstock->usd_rate = $usd;
-                                $modelstock->thb_amount =  $thb;
-                                if($modelstock->save(false)){
+                                $modelstock->thb_amount = $thb;
+                                if ($modelstock->save(false)) {
                                     $this->sumOnhand($has_product->prodid);
                                 }
                             }
                         }
                     }
                     $session = Yii::$app->session;
-                        $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
-                        return $this->redirect(['index']);
+                    $session->setFlash('msg', 'นำเข้าข้อมูลสินค้าเรียบร้อย');
+                    return $this->redirect(['index']);
 
 //                        $catid = 0;
 //                        $qty = 0;
@@ -723,88 +736,102 @@ class ProductController extends Controller
 //                    }
                 }
                 fclose($file);
-            }else{
+            } else {
 
             }
         }
     }
-    public function sumOnhand($prodid){
-        $onhand = \backend\models\Productstock::find()->where(['prod_id'=>$prodid])->sum('qty');
+
+    public function sumOnhand($prodid)
+    {
+        $onhand = \backend\models\Productstock::find()->where(['prod_id' => $prodid])->sum('qty');
         $upproduct = \backend\models\Product::find()->where()->one();
     }
-    public function updatePositiongroup($groupid,$position){
-        $model = \backend\models\Productcategory::find()->where(['name'=>$groupid])->one();
-        if($model){
+
+    public function updatePositiongroup($groupid, $position)
+    {
+        $model = \backend\models\Productcategory::find()->where(['name' => $groupid])->one();
+        if ($model) {
             $model->geolocation = $position;
             $model->save();
         }
     }
-    public function cal_import_qty($product_id){
-        $model = \backend\models\Productcost::find()->where(['product_id'=>$product_id])->all();
-        if($model){
-           $total_qty = 0;
-           foreach ($model as $value){
-               $total_qty+=$value->qty;
-           }
-           $modelupdate = \backend\models\product::find()->where(['id'=>$product_id])->one();
-           $modelupdate->all_qty = $total_qty;
-           $modelupdate->available_qty = $total_qty;
-           $modelupdate->save(false);
+
+    public function cal_import_qty($product_id)
+    {
+        $model = \backend\models\Productcost::find()->where(['product_id' => $product_id])->all();
+        if ($model) {
+            $total_qty = 0;
+            foreach ($model as $value) {
+                $total_qty += $value->qty;
+            }
+            $modelupdate = \backend\models\product::find()->where(['id' => $product_id])->one();
+            $modelupdate->all_qty = $total_qty;
+            $modelupdate->available_qty = $total_qty;
+            $modelupdate->save(false);
         }
     }
-    public function checkCat($name){
-        $model = \backend\models\Productcategory::find()->where(['name'=>ltrim($name)])->one();
-        if(count($model)>0){
+
+    public function checkCat($name)
+    {
+        $model = \backend\models\Productcategory::find()->where(['name' => ltrim($name)])->one();
+        if (count($model) > 0) {
             return $model->id;
-        }else{
-            if($name != '') {
+        } else {
+            if ($name != '') {
                 $model_new = new \backend\models\Productcategory();
                 $model_new->name = ltrim($name);
                 $model_new->status = 1;
                 if ($model_new->save(false)) {
                     return $model_new->id;
                 }
-            }else{
+            } else {
                 return 0;
             }
         }
     }
-    public function checkWarehouse($name){
-        $model = \backend\models\Warehouse::find()->where(['name'=>ltrim($name)])->one();
-        if(count($model)>0){
+
+    public function checkWarehouse($name)
+    {
+        $model = \backend\models\Warehouse::find()->where(['name' => ltrim($name)])->one();
+        if (count($model) > 0) {
             return $model->id;
-        }else{
-            if($name != '') {
+        } else {
+            if ($name != '') {
                 $model_new = new \backend\models\Warehouse();
                 $model_new->name = ltrim($name);
                 $model_new->status = 1;
                 if ($model_new->save(false)) {
                     return $model_new->id;
                 }
-            }else{
+            } else {
                 return 0;
             }
         }
     }
-    public function checkUnit($name){
-        $model = \backend\models\Unit::find()->where(['name'=>$name])->one();
-        if(count($model)>0){
+
+    public function checkUnit($name)
+    {
+        $model = \backend\models\Unit::find()->where(['name' => $name])->one();
+        if (count($model) > 0) {
             return $model->id;
-        }else{
-            if($name != '') {
+        } else {
+            if ($name != '') {
                 $model_new = new \backend\models\Unit();
                 $model_new->name = $name;
                 $model_new->status = 1;
                 if ($model_new->save(false)) {
                     return $model_new->id;
                 }
-            }else{
+            } else {
                 return 0;
             }
         }
     }
-    public function actionPrintbarcode(){
-        if(Yii::$app->request->post()){
+
+    public function actionPrintbarcode()
+    {
+        if (Yii::$app->request->post()) {
             $prod_id = Yii::$app->request->post('product_listid');
             $paper_type = Yii::$app->request->post('paper_type');
             $paper_format = Yii::$app->request->post('paper_format');
@@ -813,32 +840,32 @@ class ProductController extends Controller
             $show_code = Yii::$app->request->post('show_code');
             $show_name = Yii::$app->request->post('show_name');
 
-            $prodid = explode(',',$prod_id);
-            $paper_size =  Pdf::FORMAT_LEGAL;
-            $orient =  Pdf::ORIENT_PORTRAIT;
+            $prodid = explode(',', $prod_id);
+            $paper_size = Pdf::FORMAT_LEGAL;
+            $orient = Pdf::ORIENT_PORTRAIT;
 
-            if($paper_format == 1){
+            if ($paper_format == 1) {
                 $orient = Pdf::ORIENT_LANDSCAPE;
             }
-            if($paper_type == 0){
-                $paper_size = [100,50];
-            }else if($paper_type == 1){
+            if ($paper_type == 0) {
+                $paper_size = [100, 50];
+            } else if ($paper_type == 1) {
                 $paper_size = Pdf::FORMAT_A4;
-            }else if($paper_type == 2){
+            } else if ($paper_type == 2) {
                 $paper_size = Pdf::FORMAT_LETTER;
             }
 
 
-            $modellist = Product::find()->where(['id'=>$prodid])->all();
+            $modellist = Product::find()->where(['id' => $prodid])->all();
 
             $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
                 'format' => $paper_size,
-               // 'format' => [60, 30],//กำหนดขนาด
+                // 'format' => [60, 30],//กำหนดขนาด
                 'orientation' => $orient,
                 'destination' => Pdf::DEST_BROWSER,
-                'content' => $this->renderPartial('_print',[
-                    'list'=>$modellist,
+                'content' => $this->renderPartial('_print', [
+                    'list' => $modellist,
                     'barcode_qty' => $qty,
                     'show_code' => $show_code,
                     'show_name' => $show_name,
@@ -847,37 +874,39 @@ class ProductController extends Controller
                 ]),
                 //'content' => "nira",
                 'cssFile' => '@backend/web/css/pdf.css',
-               // 'cssFile' => '@frontend/web/css/kv-mpdf-bootstrap.css',
+                // 'cssFile' => '@frontend/web/css/kv-mpdf-bootstrap.css',
                 'options' => [
                     'title' => 'บาร์โต้ดรหัสสินค้า',
                     'subject' => ''
                 ],
                 'methods' => [
-                  //  'SetHeader' => ['บาร์โค้ดรหัสสินค้า||Generated On: ' . date("r")],
-                  //  'SetFooter' => ['|Page {PAGENO}|'],
+                    //  'SetHeader' => ['บาร์โค้ดรหัสสินค้า||Generated On: ' . date("r")],
+                    //  'SetFooter' => ['|Page {PAGENO}|'],
                 ]
             ]);
             return $pdf->render();
 
         }
     }
-    public function actionExport($type){
-        if($type !=''){
+
+    public function actionExport($type)
+    {
+        if ($type != '') {
 
             $contenttype = "";
             $fileName = "";
 
-            if($type == 'xsl'){
+            if ($type == 'xsl') {
                 $contenttype = "application/x-msexcel";
-                $fileName="export_product.xls";
+                $fileName = "export_product.xls";
             }
-            if($type == 'csv'){
+            if ($type == 'csv') {
                 $contenttype = "application/csv";
-                $fileName="export_product.csv";
+                $fileName = "export_product.csv";
             }
 
             header('Content-Encoding: UTF-8');
-            header("Content-Type: ".$contenttype." ; name=\"$fileName\" ;charset=utf-8");
+            header("Content-Type: " . $contenttype . " ; name=\"$fileName\" ;charset=utf-8");
             header("Content-Disposition: attachment; filename=\"$fileName\"");
             header("Content-Transfer-Encoding: binary");
             header("Pragma: no-cache");
@@ -885,8 +914,8 @@ class ProductController extends Controller
 
             print "\xEF\xBB\xBF";
 
-            $model = Product::find()->where(['id'=>1])->all();
-            if($model){
+            $model = Product::find()->where(['id' => 1])->all();
+            if ($model) {
                 echo "
                        <table border='1'>
                          <tr>
@@ -900,7 +929,7 @@ class ProductController extends Controller
                         </tr>
                        
                     ";
-                foreach($model as $data){
+                foreach ($model as $data) {
                     $cat = \backend\models\Productcat::findGroupname($data->category_id);
                     $unit = \backend\models\Unit::findUnitname($data->unit_id);
                     echo "
@@ -919,47 +948,52 @@ class ProductController extends Controller
             }
         }
     }
-        public function actionUploadphoto(){
-            $model = new Uploadfile();
-            $prodid = Yii::$app->request->post('product_id');
-            $uploaded = UploadedFile::getInstances($model, 'file');
-            if(!empty($uploaded)) {
-                //print_r($uploaded);return;
-                foreach($uploaded as $data){
-                    $modelphoto = new \backend\models\Productgallery();
-                    $upfiles = time() . "." . $data->getExtension();
-                    if($data->saveAs('../web/uploads/gallery/'.$upfiles)) {
-                       $modelphoto->product_id = $prodid;
-                       $modelphoto->photo = $upfiles;
-                    }
-                    $modelphoto->save(false);
 
+    public function actionUploadphoto()
+    {
+        $model = new Uploadfile();
+        $prodid = Yii::$app->request->post('product_id');
+        $uploaded = UploadedFile::getInstances($model, 'file');
+        if (!empty($uploaded)) {
+            //print_r($uploaded);return;
+            foreach ($uploaded as $data) {
+                $modelphoto = new \backend\models\Productgallery();
+                $upfiles = time() . "." . $data->getExtension();
+                if ($data->saveAs('../web/uploads/gallery/' . $upfiles)) {
+                    $modelphoto->product_id = $prodid;
+                    $modelphoto->photo = $upfiles;
                 }
+                $modelphoto->save(false);
+
             }
-            return $this->redirect(['view','id'=>$prodid]);
         }
-        public function actionDeletephoto(){
-            $id = \Yii::$app->request->post('id');
-            \backend\models\Productimage::deleteAll(['id'=>$id]);
-           // return $this->redirect(['view','id'=>$prodid]);
-            return true;
-        }
+        return $this->redirect(['view', 'id' => $prodid]);
+    }
+
+    public function actionDeletephoto()
+    {
+        $id = \Yii::$app->request->post('id');
+        \backend\models\Productimage::deleteAll(['id' => $id]);
+        // return $this->redirect(['view','id'=>$prodid]);
+        return true;
+    }
 //    public function actionDeletephoto($id,$prodid){
 //        \backend\models\Productgallery::deleteAll(['id'=>$id]);
 //        return $this->redirect(['view','id'=>$prodid]);
 //    }
-    public function actionPrintstock(){
-        if(Yii::$app->request->isPost){
+    public function actionPrintstock()
+    {
+        if (Yii::$app->request->isPost) {
             $prod_id = Yii::$app->request->post('product_stocklist');
             $stock_type = Yii::$app->request->post('stock_type');
-            if($prod_id!=''){
+            if ($prod_id != '') {
                 //$model = new \backend\models\Journal();
-                if($stock_type ==1){
-                    $paper_size =  Pdf::FORMAT_A4;
-                    $orient =  Pdf::ORIENT_PORTRAIT;
-                    $prodid = explode(',',$prod_id);
+                if ($stock_type == 1) {
+                    $paper_size = Pdf::FORMAT_A4;
+                    $orient = Pdf::ORIENT_PORTRAIT;
+                    $prodid = explode(',', $prod_id);
 
-                    $modellist = \backend\models\Stockbalance::find()->where(['id'=>$prodid])->all();
+                    $modellist = \backend\models\Stockbalance::find()->where(['id' => $prodid])->all();
 
                     $pdf = new Pdf([
                         'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
@@ -967,8 +1001,8 @@ class ProductController extends Controller
                         // 'format' => [60, 30],//กำหนดขนาด
                         'orientation' => $orient,
                         'destination' => Pdf::DEST_BROWSER,
-                        'content' => $this->renderPartial('_printstock',[
-                            'list'=>$modellist,
+                        'content' => $this->renderPartial('_printstock', [
+                            'list' => $modellist,
                         ]),
                         //'content' => "nira",
                         'cssFile' => '@backend/web/css/pdf.css',
@@ -978,42 +1012,48 @@ class ProductController extends Controller
                             'subject' => ''
                         ],
                         'methods' => [
-                              'SetHeader' => ['รายการจำนวนสินค้า||Generated On: ' . date("r")],
-                              'SetFooter' => ['|Page {PAGENO}|'],
+                            'SetHeader' => ['รายการจำนวนสินค้า||Generated On: ' . date("r")],
+                            'SetFooter' => ['|Page {PAGENO}|'],
                         ]
                     ]);
                     return $pdf->render();
-                }else{
+                } else {
 
                 }
             }
         }
     }
-    public function actionAddvendorline(){
+
+    public function actionAddvendorline()
+    {
         return $this->renderPartial('_addvendor');
     }
-    public function actionFindvendor(){
-      // return Json::encode(['AX2012','AX2018']);
+
+    public function actionFindvendor()
+    {
+        // return Json::encode(['AX2012','AX2018']);
         $term = Yii::$app->request->post('query');
-        $product = Product::find()->where(['LIKE','product_code',$term])->all();
+        $product = Product::find()->where(['LIKE', 'product_code', $term])->all();
         $lists = [];
-        foreach($product as $country) {
-            $lists[] =[
+        foreach ($product as $country) {
+            $lists[] = [
                 'id' => $country->id,
                 'name' => $country->name,
                 'code' => $country->product_code,
             ];
         }
         print_r($product);
-       // return Json::encode($lists);
+        // return Json::encode($lists);
     }
-    public function actionSearchitem(){
+
+    public function actionSearchitem()
+    {
         $txt = \Yii::$app->request->post('txt');
         $list = [];
-        if($txt == ''){
+        if ($txt == '') {
             return Json::encode($list);
             //return 'no';
-        }else{
+        } else {
 //            if($txt == "*"){
 //                $model = \backend\models\Product::find()
 //                    ->asArray()
@@ -1027,31 +1067,80 @@ class ProductController extends Controller
 //                    ->all();
 //                return Json::encode($model);
 //            }
-            if($txt == "*"){
+            if ($txt == "*") {
                 $model = \common\models\QueryProduct::find()
                     ->asArray()
                     ->all();
                 return Json::encode($model);
-            }else{
-                $model = \common\models\QueryProduct::find()->where(['or',['Like','engname',$txt],['Like','name',$txt]])
-                    ->orFilterWhere(['like','engname',$txt])
-                    ->orFilterWhere(['like','name',$txt])
+            } else {
+                $model = \common\models\QueryProduct::find()->where(['or', ['Like', 'engname', $txt], ['Like', 'name', $txt]])
+                    ->orFilterWhere(['like', 'engname', $txt])
+                    ->orFilterWhere(['like', 'name', $txt])
                     ->asArray()
                     ->all();
                 return Json::encode($model);
             }
         }
     }
-    public function actionGetphoto(){
+
+    public function actionGetphoto()
+    {
         $id = \Yii::$app->request->post('product_id');
         $html = '';
-        if($id){
-            $model = \backend\models\Productimage::find()->where(['product_id'=>$id])->one();
-            $url = '../web/uploads/images/'.$model->name;
-            if($model){
-                $html.='<img src="'.$url.'" width="100%">';
+        if ($id) {
+            $model = \backend\models\Productimage::find()->where(['product_id' => $id])->one();
+            $url = '../web/uploads/images/' . $model->name;
+            if ($model) {
+                $html .= '<img src="' . $url . '" width="100%">';
             }
         }
         echo $html;
+    }
+
+    public function actionImportthai()
+    {
+        $model = new \backend\models\Uploadfile();
+        $qty_text = [];
+       // if (Yii::$app->request->post()) {
+            $uploaded = UploadedFile::getInstance($model, 'file');
+//            if (!empty($uploaded)) {
+//                $upfiles = time() . "." . $uploaded->getExtension();
+//                if ($uploaded->saveAs('../web/uploads/files/' . $upfiles)) {
+                    //echo "okk";return;
+                    $myfile = '../web/uploads/files/import_thai.csv';
+                    $file = fopen($myfile, "r");
+                    fwrite($file, "\xEF\xBB\xBF");
+
+                    setlocale(LC_ALL, 'th_TH.TIS-620');
+                    $i = -1;
+                    $res = 0;
+                    $data = [];
+                    while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE) {
+                        $i += 1;
+
+                        $permit_date = null;
+                        $inv_date = null;
+                        $trans_date = null;
+                        $kno_date = null;
+
+
+                        if ($rowData[1] == '' || $i == 0) {
+                            continue;
+                        }
+
+                        $prodcode = $rowData[1];
+                        $thainame = $rowData[3];
+
+                        $model = \backend\models\Product::find()->where(['product_code'=>$prodcode])->one();
+                        if($model){
+                            $model->description = $thainame;
+                            $model->save();
+                        }
+
+                    }
+                    fclose($file);
+//                }
+//            }
+      //  }
     }
 }
