@@ -476,7 +476,7 @@ class ProductController extends Controller
                         $modelx->name = ltrim($rowData[1]);
                         $modelx->category_id = $catid;
                         // $modelx->unit_id = $this->checkUnit($rowData[3]);
-                        $modelx->description = '';//$rowData[1] ;
+                        $modelx->description =$rowData[26] ;
                         $modelx->price = $price;//$rowData[5];
                         $modelx->cost = $price; //$rowData[6];
                         $modelx->origin = $rowData[7];

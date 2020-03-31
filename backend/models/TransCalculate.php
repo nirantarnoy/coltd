@@ -136,8 +136,14 @@ class TransCalculate extends \yii\base\Model
                 $modelstock->out_qty = $qty_out;
                 $modelstock->usd_rate = $param['usd_rate'];
                 $modelstock->thb_amount = $param['thb_amount'];
-                $modelstock->inbound_id = $param['inbound_id'];
-                $modelstock->outbound_id = $param['outbound_id'];
+                if(isset($param['inbound_id'])){
+                    $modelstock->inbound_id = $param['inbound_id'];
+                }
+                if(isset($param['outbound_id'])){
+                    $modelstock->outbound_id = $param['outbound_id'];
+                }
+
+
                 if ($modelstock->save(false)) {
                     return self::updateProductInvent($param['prod_id']);
                 } else {
