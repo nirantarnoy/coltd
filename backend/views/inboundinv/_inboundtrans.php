@@ -69,9 +69,9 @@ use yii\helpers\Url;
                                            onchange="itemchange($(this));" ondblclick="showfind($(this))">
                                 </td>
                                 <td><input type="text" style="width: 100px" class="form-control product-pack1"
-                                           name="product_pack1[]" value="<?= number_format($usd) ?>"></td>
+                                           name="product_pack1[]" value="<?= $value->line_price ?>"></td>
                                 <td><input type="text" style="width: 100px" class="form-control product-pack2"
-                                           name="product_pack2[]" value="<?= number_format($thb * $usd) ?>"></td>
+                                           name="product_pack2[]" value="<?= number_format($modelinv->currency_rate * $value->line_price) ?>"></td>
                                 <td><input style="width: 70px" style="width: 100px" type="number"
                                            class="form-control line_qty" name="line_qty[]" onchange="line_cal($(this))"
                                            value="<?= $value->line_qty ?>"></td>
