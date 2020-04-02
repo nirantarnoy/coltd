@@ -74,7 +74,8 @@ use yii\helpers\Url;
             </div>
             <div class="col-lg-3">
                 <label for="">อัตราแลกเปลี่ยน</label>
-                <input type="text" class="form-control rate" name="rate" readonly value="">
+<!--                <input type="text" class="form-control rate" name="rate" readonly value="">-->
+                <?= $form->field($model, 'customer_ref')->textInput(['class'=>'form-control rate','readonly'=>'readonly'])->label(false) ?>
             </div>
         </div>
         <br>
