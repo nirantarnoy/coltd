@@ -95,7 +95,7 @@ class InboundinvController extends Controller
                 $cur = $model->currency_id;
             }
 
-            echo $cur;return;
+            //echo $cur;return;
 
             $model->invoice_date = date('Y-m-d', strtotime($inv_date));
             $model->status = 1;
