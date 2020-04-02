@@ -82,7 +82,7 @@ use yii\helpers\Url;
                                 </td>
                                 <td><input type="text" style="width: 100px;text-align: right"
                                            class="form-control line_price_per" name="line_price_per[]"
-                                           value="<?= $line_per_bottom ?>"></td>
+                                           value="<?= number_format($line_per_bottom,2) ?>"></td>
                                 <td><input style="width: 100px;text-align: right" type="text"
                                            class="form-control line_total_amount" name="line_total_amount[]"
                                            value="<?= number_format($price_total, 2) ?>" readonly></td>
