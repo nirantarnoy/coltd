@@ -56,6 +56,8 @@ use yii\helpers\Url;
                             $thb = \backend\models\Productstock::findTHBPriceCarton($value->product_id);
                             $bottle_qty = $product_data->unit_factor * $value->line_qty;
                             $geo = \backend\models\Product::findGeo($value->product_id);
+
+                            $line_per_bottom = $value->line_price / $product_data->unit_factor;
                             ?>
                             <?php $i += 1; ?>
                             <tr>
@@ -80,7 +82,7 @@ use yii\helpers\Url;
                                 </td>
                                 <td><input type="text" style="width: 100px;text-align: right"
                                            class="form-control line_price_per" name="line_price_per[]"
-                                           value="<?= $value->line_price ?>"></td>
+                                           value="<?= $line_per_bottom ?>"></td>
                                 <td><input style="width: 100px;text-align: right" type="text"
                                            class="form-control line_total_amount" name="line_total_amount[]"
                                            value="<?= number_format($price_total, 2) ?>" readonly></td>
