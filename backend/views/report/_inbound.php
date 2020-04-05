@@ -224,7 +224,7 @@ $this->title = 'รายงานสรุปนำเข้า';
                                 $amt = 0;
                                 // $cur = \backend\models\Currency::findName($data->currency);
                                 // if($cur =='THB'){
-                                return ($data->line_price * $data->rate);
+                                return ($data->line_price * $data->currency_rate);
                                 // }else{
                                 //     return 0;
                                 // }
