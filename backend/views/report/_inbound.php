@@ -193,11 +193,11 @@ $this->title = 'รายงานสรุปนำเข้า';
                             'label' => 'INV No.'
                         ],
                         [
-                            'attribute' => 'rate',
+                            'attribute' => 'currency_rate',
                             'label' => 'อัตราแลกเปลี่ยน',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                             'value' => function ($data) {
-                                return number_format($data->rate, 4);
+                                return number_format($data->currency_rate, 4);
                             }
                         ],
                         [
