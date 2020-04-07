@@ -49,11 +49,11 @@
             </tr><br><br>
             <tr >
                 <td colspan="2" style="border: none;font-size: 14px;font-weight: bold">Prepared For: </td>
-                <td colspan="5" style="border: none;font-size: 14px;font-weight: bold">
+                <td colspan="4" style="border: none;font-size: 14px;font-weight: bold">
 
                 </td>
 
-                <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">
+                <td colspan="4" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">
                     Date: <?=date('d/m/Y',$model->require_date)?><br />
                     Invoice: <?=$model->quotation_no?>
                 </td>

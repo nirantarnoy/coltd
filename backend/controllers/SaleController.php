@@ -159,7 +159,7 @@ class SaleController extends Controller
         $model = $this->findModel($id);
         $modelline = \backend\models\Saleline::find()->where(['sale_id' => $id])->all();
         $modelpayment = \backend\models\Paymenttrans::find()->where(['sale_id' => $id])->all();
-        $modeldoc = \backend\models\Exportfile::find()->where(['sale_id'=>$id])->all();
+        $modeldoc = \backend\models\Exportfile::find()->where(['sale_id' => $id])->all();
 
         $pickinglist = [];
 
@@ -207,7 +207,7 @@ class SaleController extends Controller
                             continue;
                         }
 
-                        $modelcheck = \backend\models\Saleline::find()->where(['sale_id' => $id, 'product_id' => $prodid[$i],'id'=>$recid[$i]])->one();
+                        $modelcheck = \backend\models\Saleline::find()->where(['sale_id' => $id, 'product_id' => $prodid[$i], 'id' => $recid[$i]])->one();
                         if ($modelcheck) {
                             $modelcheck->qty = $lineqty[$i];
                             $modelcheck->price = $lineprice[$i];
@@ -237,38 +237,42 @@ class SaleController extends Controller
             'modelpick' => $modelpick,
             'modelpickline' => $modelpickline,
             'modelpayment' => $modelpayment,
-            'modeldoc'=>$modeldoc
+            'modeldoc' => $modeldoc
 
         ]);
     }
 
-    public function actionAttachfile(){
+    public function actionAttachfile()
+    {
         $invoiceid = Yii::$app->request->post('inv_id');
         $doc_file = UploadedFile::getInstanceByName('doc_file');
-        if(!empty($doc_file)){
-            $doc_name = time().".".$doc_file->getExtension();
-            $doc_file->saveAs(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$doc_name);
+        if (!empty($doc_file)) {
+            $doc_name = time() . "." . $doc_file->getExtension();
+            $doc_file->saveAs(Yii::getAlias('@backend') . '/web/uploads/doc_in/' . $doc_name);
             $model = new \backend\models\Exportfile();
             $model->sale_id = $invoiceid;
             $model->filename = $doc_name;
             $model->save(false);
-            return $this->redirect(['sale/update','id'=>$invoiceid]);
-        }else{
+            return $this->redirect(['sale/update', 'id' => $invoiceid]);
+        } else {
             echo 'no file';
         }
     }
-    public function actionDeletedoc(){
+
+    public function actionDeletedoc()
+    {
         $recid = Yii::$app->request->post('recid');
-        if($recid){
-            $model = \backend\models\Exportfile::find()->where(['id'=>$recid])->one();
-            if($model){
-                unlink(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$model->filename);
-                \backend\models\Exportfile::deleteAll(['id'=>$recid]);
+        if ($recid) {
+            $model = \backend\models\Exportfile::find()->where(['id' => $recid])->one();
+            if ($model) {
+                unlink(Yii::getAlias('@backend') . '/web/uploads/doc_in/' . $model->filename);
+                \backend\models\Exportfile::deleteAll(['id' => $recid]);
                 return true;
             }
         }
         return false;
     }
+
     public function actionDelete($id)
     {
         // echo $id;return;
@@ -489,6 +493,8 @@ class SaleController extends Controller
             $this->updateStock($model->id);
 
             return $this->redirect(['update', 'id' => $sale]);
+
+
         }
         return "";
 
@@ -621,7 +627,7 @@ class SaleController extends Controller
 
     public function actionSavepicking()
     {
-       // echo 'niran';return;
+        // echo 'niran';return;
         //if(Yii::$app->request->isAjax){
         // $list = Yii::$app->request->post('list');
 
@@ -665,7 +671,7 @@ class SaleController extends Controller
                 if (count($stock_id) > 0) {
                     $data = [];
                     for ($i = 0; $i <= count($stock_id) - 1; $i++) {
-                      // echo $trans_out_no[$i];return;
+                        // echo $trans_out_no[$i];return;
                         $trans_out_date_ok = null;
                         $kno_out_date_ok = null;
 
@@ -683,7 +689,7 @@ class SaleController extends Controller
                                 $kno_out_date_ok = $kno_date[0] . "/" . $kno_date[1] . "/" . $kno_date[2];
                             }
                         }
-                       // echo $trans_out_date_ok.'   '.$trans_out_date[0];return;
+                        // echo $trans_out_date_ok.'   '.$trans_out_date[0];return;
                         $stock_info = \common\models\ProductStock::find()->where(['id' => $stock_id[$i]])->one();
                         if ($stock_info) {
                             $pickline = new \backend\models\Pickingline();
