@@ -372,11 +372,11 @@ class InboundinvController extends Controller
                         $kno_date = $kno_date_arr[2] . "/" . $kno_date_arr[1] . "/" . $kno_date_arr[0];
                     }
                 }
-               // echo $inv_date.' '.$kno_date;return;
+                //echo $inv_date.' '.$kno_date.' '.$permit_date;return;
 
                 if ($model) {
                     $model->permit_no = $linepermitno[$i];
-                    $model->permit_date = date('Y-m-d', strtotime($permit_date));
+                    $model->permit_date = date('Y-m-d', strtotime($linepermitdate[$i]));
                     $model->transport_in_no = $linetransportno[$i];
                     $model->transport_in_date = date('Y-m-d',strtotime($transport_date));
                     $model->kno_in_date = date('Y-m-d',strtotime($kno_date));
