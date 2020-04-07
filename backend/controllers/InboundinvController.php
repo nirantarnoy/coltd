@@ -379,18 +379,15 @@ class InboundinvController extends Controller
                     $model->permit_date = date('Y-m-d', strtotime($permit_date));
                     $model->transport_in_no = $linetransportno[$i];
                     $model->transport_in_date = date('Y-m-d',strtotime($transport_date));
+                    $model->kno_in_date = date('Y-m-d',strtotime($kno_date));
                    // $model->unit_id = \backend\models\Product::findUnit($model->product_id);
 
                     if ($model->save(false)) {
-//                        $modeltrans = \backend\models\Importline::find()->where(['import_id' => $refid[$i]])->one();
-//                        if ($modeltrans) {
-//                            $modeltrans->transport_in_no = $linetransportno[$i];
-//                            $modeltrans->transport_in_date = date('d-m-Y');
-//                            $modeltrans->posted = 1;
-//                            if ($modeltrans->save(false)) {
-//
-//                            }
-//                        }
+                       $model_master = \backend\models\Inboundinv::find()->where(['id'=>$model->invoice_id])->one();
+                       if($model_master){
+                           $model_master->status = 1;
+                           $model_master->save(false);
+                       }
                     }
 
                 }
