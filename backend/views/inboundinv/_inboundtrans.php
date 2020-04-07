@@ -100,7 +100,7 @@ use yii\helpers\Url;
                                 <td><input type="date" id="cut_date_<?= $i ?>" style="width: 200px"
                                            class="form-control line_transport_in_date" name="line_transport_in_date[]"
                                            required
-                                           value="<?= $value->transport_in_date == '' || $value->transport_in_date == Null ? date('Y-m-d') : date('Y-m-d', strtotime($value->transport_in_date)) ?>"
+                                           value="<?= $value->transport_in_date == '' || $value->transport_in_date == Null ? date('Y-d-m') : date('Y-d-m', strtotime($value->transport_in_date)) ?>"
                                     >
                                 </td>
                                 <td><input type="text" style="width: 100px" class="form-control line_num"
@@ -124,7 +124,7 @@ use yii\helpers\Url;
                                            name="line_permit_no[]" value="<?= $value->permit_no ?>"></td>
                                 <td><input type="date" id="permit_date_<?= $i ?>" style="width: 200px"
                                            class="form-control line_permit_date" name="line_permit_date[]"
-                                           value="<?= $value->permit_date == '' || $value->permit_date == Null ? date('d/m/Y') : date('d/m/Y', strtotime($value->permit_date)) ?>">
+                                           value="<?= $value->permit_date == '' || $value->permit_date == Null ? date('Y-d-m') : date('Y-d-m', strtotime($value->permit_date)) ?>">
                                 </td>
                             </tr>
                         <?php endforeach; ?>
