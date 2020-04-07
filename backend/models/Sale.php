@@ -52,6 +52,10 @@ class Sale extends \common\models\Sale{
         $model = Sale::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->sale_no:'';
     }
+    public function findInvoiceDate($id){
+        $model = Sale::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model->trans_date:'';
+    }
     public function findSaleDate($id){
         $model = Sale::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->require_date:'';

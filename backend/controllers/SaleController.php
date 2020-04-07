@@ -585,6 +585,12 @@ class SaleController extends Controller
     public function actionShowcreate($id)
     {
         if ($id) {
+
+            $model_check = \backend\models\Picking::find()->where(['sale_id'=>$id])->one();
+            if($model_check){
+                return $this->redirect(['sale/pickinghistory','id'=>$id]);
+            }
+
             $model = \backend\models\Sale::find()->where(['id' => $id])->one();
             $modelline = \backend\models\Saleline::find()->where(['sale_id' => $id])->all();
             $data = [];
@@ -841,6 +847,19 @@ class SaleController extends Controller
             Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
             Yii::$app->response->headers->add('Content-Type', 'application/pdf');
             return $pdf->render();
+        }
+    }
+    public function actionPickinghistory($id){
+        if($id){
+            $model = \backend\models\Picking::find()->where(['sale_id'=>$id])->one();
+            if($model){
+                $model_line = \backend\models\Pickingline::find()->where(['picking_id'=>$model->id])->all();
+
+                return $this->render('_packhistory',[
+                    'query'=> $model_line,
+                    'sale_no' => \backend\models\Sale::findSaleNo($id)
+                ]);
+            }
         }
     }
 }
