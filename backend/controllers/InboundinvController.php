@@ -385,7 +385,7 @@ class InboundinvController extends Controller
                     if ($model->save(false)) {
                        $model_master = \backend\models\Inboundinv::find()->where(['id'=>$model->invoice_id])->one();
                        if($model_master){
-                           $model_master->status = 1;
+                           $model_master->status = 2;
                            $model_master->save(false);
                        }
                     }

@@ -137,7 +137,7 @@ use yii\helpers\Url;
 
             <br>
             </form>
-            <?php if($modelinv->status < 1):?>
+            <?php if($modelinv->status < 2):?>
             <div class="btn-group">
                 <div class="btn btn-warning btn-success btn-approve" onclick="approve($(this))"> ยืนยันยอดรับเข้า</div>
             </div>
