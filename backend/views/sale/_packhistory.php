@@ -87,7 +87,7 @@ $this->title = "Packing List";
                                     <?=date('d-m-Y',strtotime($query[$i]['transport_in_date']))?>
                                 </td>
                                 <td style="text-align: center;vertical-align: middle">
-                                    <?php //echo $query[$i]['sequence']?>
+                                    <?=$i?>
                                 </td>
 
                                 <td style="vertical-align: middle">
