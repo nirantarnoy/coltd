@@ -650,7 +650,7 @@ class SaleController extends Controller
         $kno_out_date = Yii::$app->request->post('line_kno_out_date');
 
         $sale_no = \backend\models\Sale::findSaleNo($sale_id);
-        // $sale_date = \backend\models\Sale::findSaleDate($sale_id);
+        $sale_date = \backend\models\Sale::findSaleDate($sale_id);
 
         $qty = 0;
         $price = 0;
