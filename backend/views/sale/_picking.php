@@ -61,15 +61,15 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="1" style="border: none;font-size: 14px;font-weight: bold"></td>
-                <td colspan="3" style="border: none;font-size: 13px;">
+                <td colspan="7" style="border: none;font-size: 14px;font-weight: bold"></td>
+                <td colspan="2" style="border: none;font-size: 13px;">
                     <?= \backend\models\Picking::findCustomer($model->id) ?> <br>
                     <?= \backend\models\Picking::findCustomerAddress($model->id) ?>
                 </td>
 
-                <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">
-
-                </td>
+<!--                <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">-->
+<!---->
+<!--                </td>-->
             </tr>
             <tr>
                 <td colspan="1" style="border: none;font-size: 14px;font-weight: bold"></td>
