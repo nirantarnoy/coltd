@@ -98,8 +98,9 @@ $this->registerCss('
                             <div class="text-danger alert-currency" style="display: none"></div>
                         </div>
                         <div class="col-lg-3">
-                            <label for="">อัตราแลกเปลี่ยน</label>
-                            <input type="text" class="form-control rate" name="rate" readonly value="">
+<!--                            <label for="">อัตราแลกเปลี่ยน</label>-->
+<!--                            <input type="text" class="form-control rate" name="rate" readonly value="">-->
+                            <?= $form->field($model, 'currency_rate')->textInput(['class'=>'rate','readonly'=>'readonly']) ?>
                         </div>
                         <div class="col-lg-3">
                             <?php $xstatus = $model->isNewRecord ? 'open' : \backend\helpers\QuotationStatus::getTypeById($model->status); ?>

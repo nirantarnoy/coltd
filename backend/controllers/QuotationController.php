@@ -273,6 +273,7 @@ class QuotationController extends Controller
                     $order->note = $model->note;
                     $order->delvery_to = $model->delvery_to;
                     $order->payment_status = 0;
+                    $order->currency_rate = $model->currency_rate;
                     $order->total_amount = self::calTotal($modelline);
                     if($order->save()){
                         if(count($modelline)>0){

@@ -45,7 +45,7 @@ class Sale extends \yii\db\ActiveRecord
         return [
             [['sale_no','customer_id','currency'],'required'],
             [['revise','customer_id', 'delvery_to', 'currency', 'sale_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['disc_amount', 'disc_percent', 'total_amount'], 'number'],
+            [['disc_amount', 'disc_percent', 'total_amount','currency_rate'], 'number'],
             [['sale_no', 'customer_ref', 'note'], 'string', 'max' => 255],
             [['require_date','status','quotation_id'],'safe'],
         ];
@@ -65,6 +65,7 @@ class Sale extends \yii\db\ActiveRecord
             'customer_ref' => 'อ้างอิงลูกค้า',
             'delvery_to' => 'ที่อยู่จัดส่ง',
             'currency' => 'สกุลเงิน',
+            'currency_rate' =>'อัตราแลกเปลี่ยน',
             'sale_id' => 'พนักงานขาย',
             'disc_amount' => 'Disc Amount',
             'disc_percent' => 'Disc Percent',

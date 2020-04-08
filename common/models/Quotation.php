@@ -44,7 +44,7 @@ class Quotation extends \yii\db\ActiveRecord
         return [
             [['quotation_no','customer_id','currency'],'required'],
             [['revise',  'customer_id', 'delvery_to', 'currency', 'sale_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['disc_amount', 'disc_percent', 'total_amount'], 'number'],
+            [['disc_amount', 'disc_percent', 'total_amount','currency_rate'], 'number'],
             [['quotation_no', 'customer_ref', 'note'], 'string', 'max' => 255],
             [['require_date','status'],'safe']
         ];
@@ -66,6 +66,7 @@ class Quotation extends \yii\db\ActiveRecord
             'currency' => 'สกุลเงิน',
             'sale_id' => 'เลขที่ใบออเดอร์',
             'disc_amount' => 'Disc Amount',
+            'currency_rate' =>'อัตราแลกเปลี่ยน',
             'disc_percent' => 'Disc Percent',
             'total_amount' => 'Total Amount',
             'note' => 'บันทึกหมายเหตุ',
