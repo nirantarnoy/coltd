@@ -166,16 +166,23 @@ $this->title = 'รายงานสรุปส่งออก';
                             'label' => 'หน่วย',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                         ],
+//                        [
+//                            'attribute' => 'product_group',
+//                            'contentOptions' => ['style' => 'vertical-align: middle'],
+//                            'label' => 'ประเภทสินค้า',
+//                            'filterType' => GridView::FILTER_SELECT2,
+//                            'filter' => ArrayHelper::map(\backend\models\Productcategory::find()->orderBy('name')->asArray()->all(), 'name', 'name'),
+//                            'filterWidgetOptions' => [
+//                                'pluginOptions' => ['allowClear' => true],
+//                            ],
+//                            'filterInputOptions' => ['placeholder' => 'เลือกประเภทสินค้า']
+//                        ],
                         [
-                            'attribute' => 'product_group',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                             'label' => 'ประเภทสินค้า',
-                            'filterType' => GridView::FILTER_SELECT2,
-                            'filter' => ArrayHelper::map(\backend\models\Productcategory::find()->orderBy('name')->asArray()->all(), 'name', 'name'),
-                            'filterWidgetOptions' => [
-                                'pluginOptions' => ['allowClear' => true],
-                            ],
-                            'filterInputOptions' => ['placeholder' => 'เลือกประเภทสินค้า']
+                            'value' => function ($data) {
+                                return \backend\models\Queryinvoiceoutcategory::findCat($data->sale_no);
+                            }
                         ],
                         [
                             'attribute' => 'sale_no',
