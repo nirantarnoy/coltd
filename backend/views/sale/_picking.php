@@ -61,7 +61,8 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="7" style="border: none;font-size: 14px;font-weight: bold"></td>
+                <td colspan="2" style="border: none;font-size: 14px;font-weight: bold"></td>
+                <td colspan="5" style="border: none;font-size: 14px;font-weight: bold"></td>
                 <td colspan="2" style="border: none;font-size: 13px;">
                     <?= \backend\models\Picking::findCustomer($model->id) ?> <br>
                     <?= \backend\models\Picking::findCustomerAddress($model->id) ?>
