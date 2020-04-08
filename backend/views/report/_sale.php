@@ -203,11 +203,11 @@ $this->title = 'รายงานสรุปส่งออก';
                              'value' => function($data){
                                 $amt = 0;
                                 $cur = \backend\models\Currency::findName($data->currency);
-                                if($cur =='USD'){
+                               // if($cur =='USD'){
                                     return $data->total_amount;
-                                }else{
-                                    return 0;
-                                }
+                                //}else{
+                                  //  return 0;
+                                //}
                             },
                             'hAlign' => 'right',
                             'format' => ['decimal', 2],
