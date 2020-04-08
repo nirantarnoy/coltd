@@ -202,12 +202,12 @@ $this->title = 'รายงานสรุปส่งออก';
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],
                              'value' => function($data){
                                 $amt = 0;
-                                $cur = \backend\models\Currency::findName($data->currency);
-                               // if($cur =='USD'){
+                                //$cur = \backend\models\Currency::findName($data->currency);
+                                if($data->currency_name =='USD'){
                                     return $data->total_amount;
-                                //}else{
-                                  //  return 0;
-                                //}
+                                }else{
+                                    return 0;
+                                }
                             },
                             'hAlign' => 'right',
                             'format' => ['decimal', 2],
@@ -218,10 +218,15 @@ $this->title = 'รายงานสรุปส่งออก';
                             'label' => 'ราคาสินค้า(THB)',
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],
                             'value' => function($data){
-                                $amt = 0;
+                                if($data->currency_name =='THB'){
+                                    return $data->total_amount;
+                                }else{
+                                    return 0;
+                                }
+                                //$amt = 0;
                                // $cur = \backend\models\Currency::findName($data->currency);
                               // if($cur =='THB'){
-                                    return ($data->total_amount * $data->rate);
+                               //     return ($data->total_amount * $data->rate);
                                // }else{
                                //     return 0;
                                // }
