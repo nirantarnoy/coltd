@@ -886,7 +886,7 @@ $js = <<<JS
    $(".table-quotation tbody tr").each(function() {
         var line_price =  $(this).closest('tr').find(".line-price-origin").val();
         var line_qty =  $(this).closest('tr').find(".line_qty").val();
-        alert(line_price);
+      //  alert(line_price);
         var cur_rate = $(".rate").val();
         var new_price = parseFloat(line_price) * parseFloat(cur_rate);
         var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
