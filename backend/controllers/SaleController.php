@@ -660,7 +660,7 @@ class SaleController extends Controller
             //  echo  $linepermitdate[$i];return;
             $sale_date_x = explode('-', $sale_date);
             if (count($sale_date_x) > 0 && $sale_date_x[0] != '') {
-                $pick_date = $sale_date_x[0] . "/" . $sale_date_x[1] . "/" . $sale_date_x[2];
+                $pick_date = $sale_date_x[2] . "/" . $sale_date_x[1] . "/" . $sale_date_x[1];
             }
         }
 //   echo $sale_date.'<br/>';
