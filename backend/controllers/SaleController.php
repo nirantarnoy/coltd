@@ -657,14 +657,15 @@ class SaleController extends Controller
         $pick_date = null;
 
         if ($sale_date != '') {
-            //  echo  $linepermitdate[$i];return;
-            $sale_date_x = explode('-', $sale_date);
+            $sale_date_new = date('d-m-Y', $sale_date);
+            $sale_date_x = explode('-', $sale_date_new);
+         //   print_r($sale_date_x);return;
             if (count($sale_date_x) > 0 && $sale_date_x[0] != '') {
-                $pick_date = $sale_date_x[2] . "/" . $sale_date_x[1] . "/" . $sale_date_x[1];
+                $pick_date = $sale_date_x[2] . "/" . $sale_date_x[1] . "/" . $sale_date_x[0];
             }
         }
 //   echo $sale_date.'<br/>';
-//        echo $pick_date;return;
+        //echo $pick_date;return;
 
         if (count($stock_id)) {
 
