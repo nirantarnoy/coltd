@@ -259,7 +259,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <tr>
                                                 <td><?= $i ?></td>
                                                 <td>
-                                                    <input type="hidden" class="line-invbound-id" value="<?=$value->inbound_id?>">
+                                                    <input type="hidden" class="line-invbound-no"
+                                                           value="<?= $value->invoice_no ?>">
+                                                    <input type="hidden" class="line-invbound-id"
+                                                           value="<?= $value->invoice_id ?>">
                                                     <a href="javascript:void(0)"
                                                        data-var="<?= $value->transport_in_no ?>"
                                                        onclick="showdoc($(this))"><?= $value->transport_in_no ?></a>
@@ -298,13 +301,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="modal-body" style="white-space:nowrap;overflow-y: auto">
                 <div class="row import-file" style="display: none">
                     <form action="">
-                    <div class="col-lg-12">
-                        <form action="<?=Url::to(['inboundinv/savedoc'],true)?>" enctype="multipart/form-data">
-                            <input type="hidden" class="doc-invoice-id" name="invoice_id" value="">
-                            <input type="file" class="form-control" name="doc_file"><br>
-                            <input type="submit" class="btn btn-success" value="ตกลง">
-                        </form>
-                    </div>
+                        <div class="col-lg-12">
+                            <form action="<?= Url::to(['inboundinv/savedoc'], true) ?>" enctype="multipart/form-data">
+                                <input type="hidden" class="doc-invoice-id" name="invoice_id" value="">
+                                <input type="file" class="form-control" name="doc_file"><br>
+                                <input type="submit" class="btn btn-success" value="ตกลง">
+                            </form>
+                        </div>
                     </form>
                 </div>
                 <div class="row btn-show-file" style="display: none">
@@ -369,14 +372,15 @@ $url_to_showdoc = Url::to(['inboundinv/showdoc'], true);
 $js = <<<JS
 function showdoc(e){
     var doc_no = e.attr('data-var');
+    var invoice_no = e.closest('tr').find('.line-invbound-no').val();
     var invoice_id = e.closest('tr').find('.line-invbound-id').val();
-    alert(invoice_id);
-    if(doc_no !='' && invoice_id !=''){
+    // alert(invoice_no);
+    if(doc_no !=''){
         $.ajax({
               'type':'post',
               'dataType': 'json',
               'url': "$url_to_showdoc",
-              'data': {'doc_no': doc_no ,'invoice_id': invoice_id},
+              'data': {'doc_no': doc_no ,'invoice_no': invoice_no,'invoice_id': invoice_id},
               'success': function(data) {
                    alert(data[1]);
                    if(data.length > 0){

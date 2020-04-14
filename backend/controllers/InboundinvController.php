@@ -652,6 +652,7 @@ class InboundinvController extends Controller
     }
     public function actionShowdoc(){
         $doc_no = \Yii::$app->request->post('doc_no');
+        $invoice_no = \Yii::$app->request->post('invoice_no');
         $invoice_id = \Yii::$app->request->post('invoice_id');
         $res = [];
         $html = '';
@@ -683,7 +684,7 @@ class InboundinvController extends Controller
             $res[0] = '';
         }
 
-        echo Json::encode($res);
+        return Json::encode($res);
     }
 
     public function actionSavedoc(){
