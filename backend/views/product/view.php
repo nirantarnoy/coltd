@@ -253,7 +253,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ?>
                                             <tr>
                                                 <td><?=$i?></td>
-                                                <td><a href="javaScript:void(0)" data-var="<?=$value->transport_in_no?>" onclick="showdoc($(this))"><?=$value->transport_in_no?></a></td>
+                                                <td><a href="javascript:void(0)" data-var="<?=$value->transport_in_no?>" onclick="showdoc($(this))"><?=$value->transport_in_no?></a></td>
                                                 <td><?=date('d-m-Y',strtotime($value->transport_in_date))?></td>
                                                 <td><?=$value->permit_no?></td>
                                                 <td><?=date('d-m-Y',strtotime($value->permit_date))?></td>
