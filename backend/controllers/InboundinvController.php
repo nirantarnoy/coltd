@@ -652,7 +652,10 @@ class InboundinvController extends Controller
     }
     public function actionShowdoc(){
         $doc_no = \Yii::$app->request->post('doc_no');
+        $invoice_id = \Yii::$app->request->post('invoice_id');
+        $res = [];
         $html = '';
+        $docfile = '';
         if($doc_no != ''){
             $model = \backend\models\Productstock::find()->where(['transport_in_no'=> trim($doc_no)])->all();
             if($model){
@@ -665,10 +668,20 @@ class InboundinvController extends Controller
                     $html.='</tr>';
                 }
             }
-            echo $html;
+            $res[1] = $html;
         }else{
-            echo $html;
+            $res[1] = $html;
         }
+        if($invoice_id != ''){
+            $model = \backend\models\Importfile::find()->where(['import_id'=> $invoice_id])->one();
+            if($model){
+                $res[0] = '<a href="../web/uploads/doc_in/'.$model->filename.'">'.$model->filename.'</a>';
+            }
+        }else{
+            $res[0] = '';
+        }
+
+        echo Json::encode($res);
     }
 
     public function actionSavedoc(){

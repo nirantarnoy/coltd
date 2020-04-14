@@ -370,20 +370,20 @@ $js = <<<JS
 function showdoc(e){
     var doc_no = e.attr('data-var');
     var invoice_id = e.closest('tr').find('.line-invbound-id').val();
-    if(doc_no !=''){
+    if(doc_no !='' && invoice_id !=''){
         $.ajax({
               'type':'post',
-              'dataType': 'html',
+              'dataType': 'json',
               'url': "$url_to_showdoc",
-              'data': {'doc_no': doc_no },
+              'data': {'doc_no': doc_no ,'invoice_id': invoice_id},
               'success': function(data) {
                    //alert(data);
-                   if(data !=''){
+                   if(data.length > 0){
                        $(".import-file").show();
                        $(".btn-import-file").show();
                    }
                    $(".doc-invoice-id").val(invoice_id);
-                  $(".table-list tbody").html(data);
+                  $(".table-list tbody").html(data[1]);
                   $("#docModal").modal('show');
               }
             });
