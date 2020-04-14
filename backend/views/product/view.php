@@ -387,7 +387,7 @@ function showdoc(e){
                        if(data[0] == ''){
                            $(".import-file").show();
                        }else{
-                           $(".btn-import-file").show();    
+                           $(".btn-show-file").show();    
                        }
                        
                    }
