@@ -258,7 +258,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ?>
                                             <tr>
                                                 <td><?= $i ?></td>
-                                                <td><a href="javascript:void(0)"
+                                                <td>
+                                                    <input type="hidden" class="line-invbound-id" value="<?=$value->inbound_id?>">
+                                                    <a href="javascript:void(0)"
                                                        data-var="<?= $value->transport_in_no ?>"
                                                        onclick="showdoc($(this))"><?= $value->transport_in_no ?></a>
                                                 </td>
@@ -295,16 +297,22 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="modal-body" style="white-space:nowrap;overflow-y: auto">
                 <div class="row import-file" style="display: none">
+                    <form action="">
                     <div class="col-lg-12">
-                        <form action="">
-                            <input type="file" class="form-control" name="upload_file"><br>
+                        <form action="<?=Url::to(['inboundinv/savedoc'],true)?>" enctype="multipart/form-data">
+                            <input type="hidden" class="doc-invoice-id" name="invoice_id" value="">
+                            <input type="file" class="form-control" name="doc_file"><br>
                             <input type="submit" class="btn btn-success" value="ตกลง">
                         </form>
                     </div>
+                    </form>
                 </div>
                 <div class="row btn-show-file" style="display: none">
                     <div class="col-lg-3">
-                        <div class="btn btn-success">ดูเอกสาร</div>
+                        <div class="show-button-doc">
+                            <a href="#" class="btn btn-success">ดูเอกสาร</a>
+                        </div>
+
                     </div>
                 </div>
                 <br>
@@ -361,7 +369,7 @@ $url_to_showdoc = Url::to(['inboundinv/showdoc'], true);
 $js = <<<JS
 function showdoc(e){
     var doc_no = e.attr('data-var');
-   
+    var invoice_id = e.closest('tr').find('.line-invbound-id').val();
     if(doc_no !=''){
         $.ajax({
               'type':'post',
@@ -374,6 +382,7 @@ function showdoc(e){
                        $(".import-file").show();
                        $(".btn-import-file").show();
                    }
+                   $(".doc-invoice-id").val(invoice_id);
                   $(".table-list tbody").html(data);
                   $("#docModal").modal('show');
               }

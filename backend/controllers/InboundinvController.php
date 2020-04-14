@@ -670,4 +670,21 @@ class InboundinvController extends Controller
             echo $html;
         }
     }
+
+    public function actionSavedoc(){
+        //$doc_no = \Yii::$app->request->post('doc_no');
+        $invoiceid = Yii::$app->request->post('invoice_id');
+        $doc_file = UploadedFile::getInstanceByName('doc_file');
+        if(!empty($doc_file)){
+            $doc_name = time().".".$doc_file->getExtension();
+            $doc_file->saveAs(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$doc_name);
+            $model = new \backend\models\Importfile();
+            $model->import_id = $invoiceid;
+            $model->filename = $doc_name;
+            $model->save(false);
+            return $this->redirect(['inboundinv/update','id'=>$invoiceid]);
+        }else{
+            echo 'no file';
+        }
+    }
 }
