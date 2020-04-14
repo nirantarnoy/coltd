@@ -262,7 +262,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     <input type="hidden" class="line-invbound-no"
                                                            value="<?= $value->invoice_no ?>">
                                                     <input type="hidden" class="line-invbound-id"
-                                                           value="<?= $value->invoice_id ?>">
+                                                           value="<?= $value->inbound_id ?>">
                                                     <a href="javascript:void(0)"
                                                        data-var="<?= $value->transport_in_no ?>"
                                                        onclick="showdoc($(this))"><?= $value->transport_in_no ?></a>
