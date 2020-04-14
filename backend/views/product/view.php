@@ -370,6 +370,7 @@ $js = <<<JS
 function showdoc(e){
     var doc_no = e.attr('data-var');
     var invoice_id = e.closest('tr').find('.line-invbound-id').val();
+    alert(invoice_id);
     if(doc_no !='' && invoice_id !=''){
         $.ajax({
               'type':'post',
