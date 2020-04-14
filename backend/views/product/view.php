@@ -383,17 +383,15 @@ function showdoc(e){
               'data': {'doc_no': doc_no ,'invoice_no': invoice_no,'invoice_id': invoice_id},
               'success': function(data) {
                    alert(data[0]);
-                   if(data.length > 0){
-                       if(data[0] == ''){
-                           $(".import-file").show();
-                       }else{
-                           $(".btn-show-file").show();    
-                       }
-                       
+                   if(data[0] == ''){
+                       $(".import-file").show();
+                   }else{
+                       $(".btn-show-file").show();    
                    }
+                 
                    $(".doc-invoice-id").val(invoice_id);
-                  $(".table-list tbody").html(data[1]);
-                  $("#docModal").modal('show');
+                   $(".table-list tbody").html(data[1]);
+                   $("#docModal").modal('show');
               }
             });
     }
