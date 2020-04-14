@@ -363,14 +363,15 @@ $url_to_showdoc = Url::to(['inboundinv/showdoc'],true);
 $js=<<<JS
 function showdoc(e){
     var doc_no = e.attr('data-var');
-    alert(doc_no);
+   
     if(doc_no !=''){
         $.ajax({
               'type':'post',
-              'dataType': 'json',
+              'dataType': 'html',
               'url': "$url_to_showdoc",
               'data': {'doc_no': doc_no },
               'success': function(data) {
+                   alert(data);
                   $(".table-list tbody").html(data);
                   $(".docModal").modal('show');
               }

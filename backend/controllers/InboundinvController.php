@@ -664,9 +664,9 @@ class InboundinvController extends Controller
                     $html.='</tr>';
                 }
             }
-            return $html;
+            echo $html;
         }else{
-            return $html;
+            echo $html;
         }
     }
 }
