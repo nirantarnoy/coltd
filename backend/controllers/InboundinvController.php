@@ -661,6 +661,7 @@ class InboundinvController extends Controller
                     $html.='<td>'.\backend\models\Product::findCode($value->product_id).'</td>';
                     $html.='<td>'.\backend\models\Product::findName($value->product_id).'</td>';
                     $html.='<td>'.\backend\models\Product::findName($value->product_id).'</td>';
+                    $html.='<td>'.number_format($value->in_qty).'</td>';
                     $html.='</tr>';
                 }
             }

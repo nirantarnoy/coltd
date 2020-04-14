@@ -287,21 +287,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div id="imaginary_container">
-                            <div class="input-group stylish-input-group">
-                                <input type="text" class="form-control search-item" placeholder="ค้นหาสินค้า">
-                                <span class="input-group-addon">
-                                        <button type="submit" class="btn-search-submit">
-                                            <span class="fa fa-search"></span>
-                                        </button>
-                                    </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
             <div class="modal-body" style="white-space:nowrap;overflow-y: auto">
                 <div class="row">
@@ -316,7 +301,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th style="text-align: center">เลือก</th>
                         <th>รหัสสินค้า</th>
                         <th>รายละเอียด</th>
-                        <th>Origin</th>
+                        <th>จำนวน</th>
                     </tr>
                     </thead>
                     <tbody>
