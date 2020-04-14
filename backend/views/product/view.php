@@ -371,6 +371,7 @@ function showdoc(e){
               'data': {'doc_no': doc_no },
               'success': function(data) {
                   $(".table-list tbody").html(data);
+                  $(".docModal").modal('show');
               }
             });
     }
