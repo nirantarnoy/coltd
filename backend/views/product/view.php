@@ -367,7 +367,7 @@ function showdoc(e){
         $.ajax({
               'type':'post',
               'dataType': 'json',
-              'url': "$url_to_firm",
+              'url': "$url_to_showdoc",
               'data': {'doc_no': doc_no },
               'success': function(data) {
                   $(".table-list tbody").html(data);
