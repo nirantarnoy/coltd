@@ -382,7 +382,7 @@ function showdoc(e){
               'url': "$url_to_showdoc",
               'data': {'doc_no': doc_no ,'invoice_no': invoice_no,'invoice_id': invoice_id},
               'success': function(data) {
-                   alert(data);
+                   alert(data.length);
                    if(data.length > 0){
                        if(data[0] == ''){
                            $(".import-file").show();
