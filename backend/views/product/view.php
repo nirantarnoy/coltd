@@ -377,7 +377,7 @@ function showdoc(e){
               'url': "$url_to_showdoc",
               'data': {'doc_no': doc_no ,'invoice_id': invoice_id},
               'success': function(data) {
-                   //alert(data);
+                   alert(data[1]);
                    if(data.length > 0){
                        $(".import-file").show();
                        $(".btn-import-file").show();

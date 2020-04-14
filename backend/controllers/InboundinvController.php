@@ -676,6 +676,8 @@ class InboundinvController extends Controller
             $model = \backend\models\Importfile::find()->where(['import_id'=> $invoice_id])->one();
             if($model){
                 $res[0] = '<a href="../web/uploads/doc_in/'.$model->filename.'">'.$model->filename.'</a>';
+            }else{
+                $res[0] = '';
             }
         }else{
             $res[0] = '';
