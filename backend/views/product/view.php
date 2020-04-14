@@ -253,7 +253,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ?>
                                             <tr>
                                                 <td><?=$i?></td>
-                                                <td><?=$value->transport_in_no?></td>
+                                                <td><a href="#" data-var="<?=$value->transport_in_no?>" onclick="showdoc($(this))"><?=$value->transport_in_no?></a></td>
                                                 <td><?=date('d-m-Y',strtotime($value->transport_in_date))?></td>
                                                 <td><?=$value->permit_no?></td>
                                                 <td><?=date('d-m-Y',strtotime($value->permit_date))?></td>
@@ -281,6 +281,66 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 
+<div id="docModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div id="imaginary_container">
+                            <div class="input-group stylish-input-group">
+                                <input type="text" class="form-control search-item" placeholder="ค้นหาสินค้า">
+                                <span class="input-group-addon">
+                                        <button type="submit" class="btn-search-submit">
+                                            <span class="fa fa-search"></span>
+                                        </button>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-body" style="white-space:nowrap;overflow-y: auto">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input type="file" class="form-control" name="upload_file">
+                    </div>
+                </div>
+                <br>
+                <table class="table table-bordered table-striped table-list">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center">เลือก</th>
+                        <th>รหัสสินค้า</th>
+                        <th>รายละเอียด</th>
+                        <th>Origin</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <br>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <a href="../web/uploads/doc_in/" target="_blank"></a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                            class="fa fa-close text-danger"></i> ปิดหน้าต่าง
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <?php $this->registerCss('
    .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -297,3 +357,24 @@ $this->params['breadcrumbs'][] = $this->title;
         padding: 2px 16px;
     }
 ');?>
+
+<?php
+$url_to_showdoc = Url::to(['inboundinv/showdoc'],true);
+$js=<<<JS
+function showdoc(e){
+    var doc_no = e.attr('data-var');
+    if(doc_no !=''){
+        $.ajax({
+              'type':'post',
+              'dataType': 'json',
+              'url': "$url_to_firm",
+              'data': {'doc_no': doc_no },
+              'success': function(data) {
+                  $(".table-list tbody").html(data);
+              }
+            });
+    }
+}
+JS;
+$this->registerJs($js,static::POS_END);
+?>

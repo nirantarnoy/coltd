@@ -650,4 +650,23 @@ class InboundinvController extends Controller
             return $pdf->render();
         }
     }
+    public function actionShowdoc(){
+        $doc_no = \Yii::$app->request->post('doc_no');
+        $html = '';
+        if($doc_no != ''){
+            $model = \backend\models\Productstock::find()->where(['transport_in_no'=> trim($doc_no)])->all();
+            if($model){
+                foreach ($model as $value){
+                    $html.='<tr>';
+                    $html.='<td>'.\backend\models\Product::findCode($value->product_id).'</td>';
+                    $html.='<td>'.\backend\models\Product::findName($value->product_id).'</td>';
+                    $html.='<td>'.\backend\models\Product::findName($value->product_id).'</td>';
+                    $html.='</tr>';
+                }
+            }
+            return $html;
+        }else{
+            return $html;
+        }
+    }
 }
