@@ -384,8 +384,12 @@ function showdoc(e){
               'success': function(data) {
                    alert(data);
                    if(data.length > 0){
-                       $(".import-file").show();
-                       $(".btn-import-file").show();
+                       if(data[0] == ''){
+                           $(".import-file").show();
+                       }else{
+                           $(".btn-import-file").show();    
+                       }
+                       
                    }
                    $(".doc-invoice-id").val(invoice_id);
                   $(".table-list tbody").html(data[1]);
