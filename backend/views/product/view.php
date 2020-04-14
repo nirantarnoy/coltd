@@ -371,9 +371,9 @@ function showdoc(e){
               'url': "$url_to_showdoc",
               'data': {'doc_no': doc_no },
               'success': function(data) {
-                   alert(data);
+                   //alert(data);
                   $(".table-list tbody").html(data);
-                  $(".docModal").modal('show');
+                  $("#docModal").modal('show');
               }
             });
     }
