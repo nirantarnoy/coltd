@@ -296,6 +296,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
+                <h4>เลขที่นำเข้า <span class="title-header"></span></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body" style="white-space:nowrap;overflow-y: auto">
@@ -389,6 +390,7 @@ function showdoc(e){
                        $(".btn-show-file").show();    
                    }
                  
+                   $(".title-header").html(invoice_no);
                    $(".doc-invoice-id").val(invoice_id);
                    $(".table-list tbody").html(data[1]);
                    $("#docModal").modal('show');
