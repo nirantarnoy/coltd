@@ -363,6 +363,7 @@ $url_to_showdoc = Url::to(['inboundinv/showdoc'],true);
 $js=<<<JS
 function showdoc(e){
     var doc_no = e.attr('data-var');
+    alert(doc);
     if(doc_no !=''){
         $.ajax({
               'type':'post',
