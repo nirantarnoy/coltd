@@ -384,12 +384,12 @@ class ProductController extends Controller
 
                         if ($rowData[19] != '' && $rowData[19] != null) {
                             $kno_origin = explode('/', $rowData[19]);
-                            if (count($kno_origin) > 0 && $kno_origin[0] != '') {
-                                $kno_date = $kno_origin[2] . "/" . $kno_origin[1] . "/" . $kno_origin[0];
-                            }
+//                            if (count($kno_origin) > 0 && $kno_origin[0] != '') {
+//                                $kno_date = $kno_origin[2] . "/" . $kno_origin[1] . "/" . $kno_origin[0];
+//                            }
                         }
 
-                        
+
                         if ($rowData[24] != '' && $rowData[24] != null) {
                             $qty_separate = explode(' ', $rowData[24]);
                             if (count($qty_separate) > 1) {
