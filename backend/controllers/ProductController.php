@@ -382,12 +382,14 @@ class ProductController extends Controller
                             $inv_date = $inv_origin[2] . "/" . $inv_origin[1] . "/" . $inv_origin[0];
                         }
 
-//                        $kno_origin = explode('/', $rowData[19]);
-//                        if (count($kno_origin) > 0 && $kno_origin[0] != '') {
-//                            $kno_date = $kno_origin[2] . "/" . $kno_origin[1] . "/" . $kno_origin[0];
-//                        }
+                        if ($rowData[19] != '' && $rowData[19] != null) {
+                            $kno_origin = explode('/', $rowData[19]);
+                            if (count($kno_origin) > 0 && $kno_origin[0] != '') {
+                                $kno_date = $kno_origin[2] . "/" . $kno_origin[1] . "/" . $kno_origin[0];
+                            }
+                        }
 
-
+                        
                         if ($rowData[24] != '' && $rowData[24] != null) {
                             $qty_separate = explode(' ', $rowData[24]);
                             if (count($qty_separate) > 1) {
@@ -477,7 +479,7 @@ class ProductController extends Controller
                         $modelx->name = ltrim($rowData[1]);
                         $modelx->category_id = $catid;
                         // $modelx->unit_id = $this->checkUnit($rowData[3]);
-                        $modelx->description =$rowData[26] ;
+                        $modelx->description = $rowData[26];
                         $modelx->price = $price;//$rowData[5];
                         $modelx->cost = $price; //$rowData[6];
                         $modelx->origin = $rowData[7];
@@ -554,7 +556,9 @@ class ProductController extends Controller
             }
         }
     }
-    public function createInvoicefromimport($data){
+
+    public function createInvoicefromimport($data)
+    {
 //        $x_date = explode('/', $inv_date);
 //        $inv_date = date('Y-m-d');
 //        if (count($x_date)) {
@@ -570,13 +574,13 @@ class ProductController extends Controller
 
         //echo $cur;return;
 
-        if(count($data)>0){
-            for($i=0;$i<=count($data)-1;$i++){
+        if (count($data) > 0) {
+            for ($i = 0; $i <= count($data) - 1; $i++) {
                 $inv_no = $data[$i]['invoice_no'];
                 $inv_date = $data[$i]['invoice_date'];
 
-                $chk_old = \backend\models\Inboundinv::find()->where(['invoice_no'=>$inv_no])->one();
-                if($chk_old != null){
+                $chk_old = \backend\models\Inboundinv::find()->where(['invoice_no' => $inv_no])->one();
+                if ($chk_old != null) {
                     $model_line = new \backend\models\Inboundinvline();
                     $model_line->invoice_id = $chk_old->id;
                     $model_line->product_id = $data[$i]['prod_id'];
@@ -590,13 +594,13 @@ class ProductController extends Controller
                     $model_line->line_price = $data[$i]['usd_rate'];
                     $model_line->line_qty = $data[$i]['qty'];
                     $model_line->save(false);
-                }else{
+                } else {
                     $model = new \backend\models\Inboundinv();
                     $model->invoice_no = $inv_no;
                     $model->invoice_date = date('Y-m-d', strtotime($inv_date));
                     $model->status = 1;
                     $model->currency_id = 1; // USD default
-                    if($model->save(false)){
+                    if ($model->save(false)) {
                         $model_line = new \backend\models\Inboundinvline();
                         $model_line->invoice_id = $model->id;
                         $model_line->product_id = $data[$i]['prod_id'];
@@ -617,6 +621,7 @@ class ProductController extends Controller
 
 
     }
+
     public function manageprodstock($whid, $prodid, $qty, $usd, $thb, $whdata, $invno, $trans_in_no)
     {
         $whid = 0;
@@ -1166,46 +1171,46 @@ class ProductController extends Controller
     {
         $model = new \backend\models\Uploadfile();
         $qty_text = [];
-       // if (Yii::$app->request->post()) {
-            $uploaded = UploadedFile::getInstance($model, 'file');
+        // if (Yii::$app->request->post()) {
+        $uploaded = UploadedFile::getInstance($model, 'file');
 //            if (!empty($uploaded)) {
 //                $upfiles = time() . "." . $uploaded->getExtension();
 //                if ($uploaded->saveAs('../web/uploads/files/' . $upfiles)) {
-                    //echo "okk";return;
-                    $myfile = '../web/uploads/files/import_thai.csv';
-                    $file = fopen($myfile, "r");
-                    fwrite($file, "\xEF\xBB\xBF");
+        //echo "okk";return;
+        $myfile = '../web/uploads/files/import_thai.csv';
+        $file = fopen($myfile, "r");
+        fwrite($file, "\xEF\xBB\xBF");
 
-                    setlocale(LC_ALL, 'th_TH.TIS-620');
-                    $i = -1;
-                    $res = 0;
-                    $data = [];
-                    while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE) {
-                        $i += 1;
+        setlocale(LC_ALL, 'th_TH.TIS-620');
+        $i = -1;
+        $res = 0;
+        $data = [];
+        while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE) {
+            $i += 1;
 
-                        $permit_date = null;
-                        $inv_date = null;
-                        $trans_date = null;
-                        $kno_date = null;
+            $permit_date = null;
+            $inv_date = null;
+            $trans_date = null;
+            $kno_date = null;
 
 
-                        if ($rowData[1] == '' || $i == 0) {
-                            continue;
-                        }
+            if ($rowData[1] == '' || $i == 0) {
+                continue;
+            }
 
-                        $prodcode = $rowData[1];
-                        $thainame = $rowData[3];
+            $prodcode = $rowData[1];
+            $thainame = $rowData[3];
 
-                        $model = \backend\models\Product::find()->where(['product_code'=>$prodcode])->one();
-                        if($model){
-                            $model->description = $thainame;
-                            $model->save();
-                        }
+            $model = \backend\models\Product::find()->where(['product_code' => $prodcode])->one();
+            if ($model) {
+                $model->description = $thainame;
+                $model->save();
+            }
 
-                    }
-                    fclose($file);
+        }
+        fclose($file);
 //                }
 //            }
-      //  }
+        //  }
     }
 }
