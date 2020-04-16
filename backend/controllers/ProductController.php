@@ -382,10 +382,10 @@ class ProductController extends Controller
                             $inv_date = $inv_origin[2] . "/" . $inv_origin[1] . "/" . $inv_origin[0];
                         }
 
-                        $kno_origin = explode('/', $rowData[19]);
-                        if (count($kno_origin) > 0 && $kno_origin[0] != '') {
-                            $kno_date = $kno_origin[2] . "/" . $kno_origin[1] . "/" . $kno_origin[0];
-                        }
+//                        $kno_origin = explode('/', $rowData[19]);
+//                        if (count($kno_origin) > 0 && $kno_origin[0] != '') {
+//                            $kno_date = $kno_origin[2] . "/" . $kno_origin[1] . "/" . $kno_origin[0];
+//                        }
 
 
                         if ($rowData[24] != '' && $rowData[24] != null) {
@@ -459,6 +459,7 @@ class ProductController extends Controller
                                     'out_qty' => 0,
                                     'usd_rate' => $usd,
                                     'thb_amount' => $thb,
+                                    'line_num' => $rowData[15]
 
 
                                 ]);
@@ -529,11 +530,13 @@ class ProductController extends Controller
                                 'out_qty' => 0,
                                 'usd_rate' => $usd,
                                 'thb_amount' => $thb,
+                                'line_num' => $rowData[15]
 
                             ]);
                         }
                     }
                     //    print_r($qty_text);return;
+                    $this->createInvoicefromimport($data);
                     $update_stock = TransCalculate::createJournal($data);
                     if ($res > 0 && $update_stock) {
                         $session = Yii::$app->session;
@@ -551,7 +554,69 @@ class ProductController extends Controller
             }
         }
     }
+    public function createInvoicefromimport($data){
+//        $x_date = explode('/', $inv_date);
+//        $inv_date = date('Y-m-d');
+//        if (count($x_date)) {
+//            $inv_date = $x_date[2] . '/' . $x_date[1] . '/' . $x_date[0];
+//        }
+//
+//        $cur = 1;
+//        if($model->currency_id == '' || $model->currency_id == null){
+//            $cur = 1;
+//        }else{
+//            $cur = $model->currency_id;
+//        }
 
+        //echo $cur;return;
+
+        if(count($data)>0){
+            for($i=0;$i<=count($data)-1;$i++){
+                $inv_no = $data[$i]['invoice_no'];
+                $inv_date = $data[$i]['invoice_date'];
+
+                $chk_old = \backend\models\Inboundinv::find()->where(['invoice_no'=>$inv_no])->one();
+                if($chk_old != null){
+                    $model_line = new \backend\models\Inboundinvline();
+                    $model_line->invoice_id = $chk_old->id;
+                    $model_line->product_id = $data[$i]['prod_id'];
+                    $model_line->permit_no = $data[$i]['permit_no'];
+                    $model_line->permit_date = $data[$i]['permit_date'];
+                    $model_line->kno_no_in = $data[$i]['kno_no_in'];
+                    $model_line->kno_in_date = $data[$i]['kno_in_date'];
+                    $model_line->transport_in_no = $data[$i]['transport_in_no'];
+                    $model_line->transport_in_date = $data[$i]['transport_in_date'];
+                    $model_line->line_num = $data[$i]['line_num'];
+                    $model_line->line_price = $data[$i]['usd_rate'];
+                    $model_line->line_qty = $data[$i]['qty'];
+                    $model_line->save(false);
+                }else{
+                    $model = new \backend\models\Inboundinv();
+                    $model->invoice_no = $inv_no;
+                    $model->invoice_date = date('Y-m-d', strtotime($inv_date));
+                    $model->status = 1;
+                    $model->currency_id = 1; // USD default
+                    if($model->save(false)){
+                        $model_line = new \backend\models\Inboundinvline();
+                        $model_line->invoice_id = $model->id;
+                        $model_line->product_id = $data[$i]['prod_id'];
+                        $model_line->permit_no = $data[$i]['permit_no'];
+                        $model_line->permit_date = $data[$i]['permit_date'];
+                        $model_line->kno_no_in = $data[$i]['kno_no_in'];
+                        $model_line->kno_in_date = $data[$i]['kno_in_date'];
+                        $model_line->transport_in_no = $data[$i]['transport_in_no'];
+                        $model_line->transport_in_date = $data[$i]['transport_in_date'];
+                        $model_line->line_num = $data[$i]['line_num'];
+                        $model_line->line_price = $data[$i]['usd_rate'];
+                        $model_line->line_qty = $data[$i]['qty'];
+                        $model_line->save();
+                    }
+                }
+            }
+        }
+
+
+    }
     public function manageprodstock($whid, $prodid, $qty, $usd, $thb, $whdata, $invno, $trans_in_no)
     {
         $whid = 0;

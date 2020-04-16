@@ -74,6 +74,12 @@ class Product extends \common\models\Product
         return count($model) > 0 ? $model->name : '';
     }
 
+    public function findNameThai($id)
+    {
+        $model = Product::find()->where(['id' => $id])->one();
+        return count($model) > 0 ? $model->description : '';
+    }
+
     public function findUnit($id)
     {
         $model = Product::find()->where(['id' => $id])->one();

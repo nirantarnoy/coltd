@@ -262,7 +262,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     <input type="hidden" class="line-invbound-no"
                                                            value="<?= $value->invoice_no ?>">
                                                     <input type="hidden" class="line-invbound-id"
-                                                           value="<?= $value->inbound_id ?>">
+                                                           value="<?= \backend\models\Inboundinv::findId($value->invoice_no) ?>">
                                                     <a href="javascript:void(0)"
                                                        data-var="<?= $value->transport_in_no ?>"
                                                        onclick="showdoc($(this))"><?= $value->transport_in_no ?></a>
@@ -301,20 +301,21 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="modal-body" style="white-space:nowrap;overflow-y: auto">
                 <div class="row import-file" style="display: none">
-                    <form action="">
+
                         <div class="col-lg-12">
-                            <form action="<?= Url::to(['inboundinv/savedoc'], true) ?>" enctype="multipart/form-data">
+                            <form action="<?= Url::to(['inboundinv/savedoc'], true) ?>" enctype="multipart/form-data" method="post">
                                 <input type="hidden" class="doc-invoice-id" name="invoice_id" value="">
+                                <input type="hidden" class="doc-invoice-no" name="invoice_no" value="">
                                 <input type="file" class="form-control" name="doc_file"><br>
                                 <input type="submit" class="btn btn-success" value="ตกลง">
                             </form>
                         </div>
-                    </form>
+
                 </div>
                 <div class="row btn-show-file" style="display: none">
                     <div class="col-lg-3">
                         <div class="show-button-doc">
-                            <a href="#" class="btn btn-success">ดูเอกสาร</a>
+<!--                            <a href="#" class="btn btn-success btn-open-doc">ดูเอกสาร</a>-->
                         </div>
 
                     </div>
@@ -323,9 +324,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table table-bordered table-striped table-list">
                     <thead>
                     <tr>
-                        <th style="text-align: center">เลือก</th>
-                        <th>รหัสสินค้า</th>
+                        <th style="text-align: center">รหัสสินค้า</th>
                         <th>รายละเอียด</th>
+                        <th>ชื่อไทย</th>
                         <th>จำนวน</th>
                     </tr>
                     </thead>
@@ -383,15 +384,20 @@ function showdoc(e){
               'url': "$url_to_showdoc",
               'data': {'doc_no': doc_no ,'invoice_no': invoice_no,'invoice_id': invoice_id},
               'success': function(data) {
-                   alert(data[0]);
+                 //  alert(data[0]);
                    if(data[0] == ''){
                        $(".import-file").show();
                    }else{
+                      // $(".btn-open-doc").attr("href",data[0]);
+                       $(".show-button-doc").html(data[0]);
                        $(".btn-show-file").show();    
                    }
-                 
+                  
+                   //alert(invoice_id);
+                   
                    $(".title-header").html(invoice_no);
                    $(".doc-invoice-id").val(invoice_id);
+                   $(".doc-invoice-no").val(invoice_no);
                    $(".table-list tbody").html(data[1]);
                    $("#docModal").modal('show');
               }

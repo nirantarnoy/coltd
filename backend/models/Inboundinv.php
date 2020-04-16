@@ -66,6 +66,10 @@ class Inboundinv extends \common\models\InboundInv
             return $prefix.'000001';
         }
     }
+    public function findId($inv_no){
+        $model = Inboundinv::find()->where(['invoice_no'=>trim($inv_no)])->one();
+        return count($model)>0?$model->id:0;
+    }
     public function findNum($id){
         $model = Inboundinv::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->invoice_no:'';

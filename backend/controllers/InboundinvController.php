@@ -449,13 +449,6 @@ class InboundinvController extends Controller
         }
     }
 
-    /**
-     * Finds the Inboundinv model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Inboundinv the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Inboundinv::findOne($id)) !== null) {
@@ -664,7 +657,7 @@ class InboundinvController extends Controller
                     $html.='<tr>';
                     $html.='<td>'.\backend\models\Product::findCode($value->product_id).'</td>';
                     $html.='<td>'.\backend\models\Product::findName($value->product_id).'</td>';
-                    $html.='<td>'.\backend\models\Product::findName($value->product_id).'</td>';
+                    $html.='<td>'.\backend\models\Product::findNameThai($value->product_id).'</td>';
                     $html.='<td>'.number_format($value->in_qty).'</td>';
                     $html.='</tr>';
                 }
@@ -676,7 +669,7 @@ class InboundinvController extends Controller
         if($invoice_id != ''){
             $model = \backend\models\Importfile::find()->where(['import_id'=> $invoice_id])->one();
             if($model){
-                $res[0] = '<a href="../web/uploads/doc_in/'.$model->filename.'">'.$model->filename.'</a>';
+                $res[0] = '<a class="btn btn-success" target="_blank" href="../web/uploads/doc_in/'.$model->filename.'">'.$model->filename.'</a>';
             }else{
                 $res[0] = '';
             }
@@ -690,15 +683,21 @@ class InboundinvController extends Controller
     public function actionSavedoc(){
         //$doc_no = \Yii::$app->request->post('doc_no');
         $invoiceid = Yii::$app->request->post('invoice_id');
+        $invoice_no = Yii::$app->request->post('invoice_no');
         $doc_file = UploadedFile::getInstanceByName('doc_file');
-        if(!empty($doc_file)){
+
+
+        //echo $invoiceid;return;
+
+        if(!empty($doc_file) && $invoiceid !=''){
+          //  echo 'ok';return;
             $doc_name = time().".".$doc_file->getExtension();
             $doc_file->saveAs(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$doc_name);
             $model = new \backend\models\Importfile();
             $model->import_id = $invoiceid;
             $model->filename = $doc_name;
             $model->save(false);
-            return $this->redirect(['inboundinv/update','id'=>$invoiceid]);
+            return $this->redirect(['inboundinv/view','id'=>$invoiceid]);
         }else{
             echo 'no file';
         }
