@@ -490,6 +490,8 @@ class ProductController extends Controller
                         $modelx->all_qty = (int)$qty;
                         $modelx->price_carton_thb = str_replace(",", "", $rowData[24]); //ราคาต่อลัง
                         $modelx->excise_date = date('Y-m-d', strtotime($rowData[9]));
+                        $modelx->netweight = $rowData[27];
+                        $modelx->grossweight = $rowData[28];
 
                         $this->updatePositiongroup($catid, $rowData[5]);
                         //  $modelx->all_qty = str_replace(',','', $rowData[8]);
