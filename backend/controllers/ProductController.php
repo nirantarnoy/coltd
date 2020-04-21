@@ -384,7 +384,7 @@ class ProductController extends Controller
                             $inv_date = $inv_origin[2] . "/" . $inv_origin[1] . "/" . $inv_origin[0];
                         }
 
-                        $excise_origin = explode('/', $rowData[9]);
+                        $excise_origin = explode('/', trim($rowData[9]));
                         if (count($excise_origin) > 0 && $excise_origin[0] != '') {
                             $excise_date = $excise_origin[2] . "/" . $excise_origin[1] . "/" . $excise_origin[0];
                         }
