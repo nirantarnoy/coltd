@@ -356,6 +356,8 @@ class ProductController extends Controller
                         $inv_date = null;
                         $trans_date = null;
                         $kno_date = null;
+                        $excise_date = null;
+
 
 
                         if ($rowData[1] == '' || $i == 0) {
@@ -380,6 +382,11 @@ class ProductController extends Controller
                         $inv_origin = explode('/', $rowData[12]);
                         if (count($inv_origin) > 0 && $inv_origin[0] != '') {
                             $inv_date = $inv_origin[2] . "/" . $inv_origin[1] . "/" . $inv_origin[0];
+                        }
+
+                        $excise_origin = explode('/', $rowData[9]);
+                        if (count($excise_origin) > 0 && $excise_origin[0] != '') {
+                            $excise_date = $excise_origin[2] . "/" . $excise_origin[1] . "/" . $excise_origin[0];
                         }
 
                         if ($rowData[19] != '' && $rowData[19] != null) {
@@ -489,7 +496,7 @@ class ProductController extends Controller
                         $modelx->excise_no = $rowData[8];
                         $modelx->all_qty = (int)$qty;
                         $modelx->price_carton_thb = str_replace(",", "", $rowData[24]); //ราคาต่อลัง
-                        $modelx->excise_date = date('Y-m-d', strtotime($rowData[9]));
+                        $modelx->excise_date = date('Y-m-d',strtotime($excise_date)) ;// date('Y-m-d', strtotime($rowData[9]));
                         $modelx->netweight = $rowData[27];
                         $modelx->grossweight = $rowData[28];
 
