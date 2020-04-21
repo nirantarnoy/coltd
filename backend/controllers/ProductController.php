@@ -155,7 +155,7 @@ class ProductController extends Controller
         // $photoes = \backend\models\Productgallery::find()->where(['product_id'=>$id])->all();
         $productimage = \backend\models\Productimage::find()->where(['product_id' => $id])->all();
         //  $modelcost = \backend\models\Productcost::find()->where(['product_id'=>$id])->all();
-        $modelcost = \backend\models\Productstock::find()->where(['product_id' => $id])->andFilterWhere(['<>','transport_in_no',''])->all();
+        $modelcost = \backend\models\Productstock::find()->where(['product_id' => $id])->andFilterWhere(['<>','invoice_no',''])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'productimage' => $productimage,
