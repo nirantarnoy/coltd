@@ -528,6 +528,60 @@ class InboundinvController extends Controller
         }
         echo Json::encode($data);
     }
+    public function actionPayment()
+    {
+        $inboundid = \Yii::$app->request->post('saleid');
+        $pdate = \Yii::$app->request->post('payment_date');
+        $ptime = \Yii::$app->request->post('payment_time');
+        $pamount = \Yii::$app->request->post('amount');
+        $note = \Yii::$app->request->post('note');
+        $uploaded = UploadedFile::getInstanceByName('payment_slip');
+        $file = '';
+        if ($uploaded) {
+            $file = $uploaded->name;
+            $uploaded->saveAs(Yii::getAlias('@backend') . '/web/uploads/slip/' . $uploaded->name);
+        }
+
+
+        if ($pdate != '') {
+            if ($pamount != '' && $pamount > 0) {
+                $model = new \backend\models\Inboundpayment();
+                $model->inbound_id = $inboundid;
+                $model->trans_date = date('Y-m-d', strtotime($pdate));
+                $model->trans_time = date('H:i:s', strtotime($ptime));
+                $model->amount = $pamount;
+                $model->note = $note;
+                $model->status = 1;
+                $model->slip = $file;
+
+                if ($model->save()) {
+                    self::updatePayment($inboundid, $model->amount);
+                }
+            }
+        }
+
+        return $this->redirect(['index']);
+    }
+    public function updatePayment($inboundid, $payamount)
+    {
+        if ($inboundid) {
+            $model = \backend\models\Inboundinv::find()->where(['id' => $inboundid])->one();
+            if ($model) {
+                $model_paytrans = \backend\models\Inboundpayment::find()->where(['inbound_id' => $inboundid])->sum('amount');
+
+                if ($model->total_amount <= ($payamount + $model_paytrans)) {
+                    $model->payment_status = 1;
+                    if ($model->save(false)) {
+                        $closeinv = \backend\models\Inboundinv::find()->where(['id' => $inboundid])->one();
+                        if ($closeinv) {
+                            $closeinv->status = 2;
+                            $closeinv->save(false);
+                        }
+                    }
+                }
+            }
+        }
+    }
     public function actionPrint($id)
     {
         // echo $id;return;
