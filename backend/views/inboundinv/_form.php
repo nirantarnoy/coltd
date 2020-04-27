@@ -365,6 +365,46 @@ use yii\helpers\Url;
 
     </div>
 
+    <br>
+    <div class="panel">
+        <div class="panel panel-heading">
+            <h3><i class="fa fa-clock-o"></i> ประวัติชำระเงิน</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>วันที่</th>
+                    <th>จำนวน</th>
+                    <th>Note</th>
+                    <th>slip</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php if (!$model->isNewRecord): ?>
+                    <?php if (count($modelpayment) > 0): ?>
+                        <?php $i = 0; ?>
+                        <?php foreach ($modelpayment as $value): ?>
+                            <?php $i += 1; ?>
+                            <tr>
+                                <th><?= $i ?></th>
+                                <th><?= $value->trans_date ?></th>
+                                <th><?= $value->amount ?></th>
+                                <th><?= $value->note ?></th>
+                                <th>
+                                    <a href="../web/uploads/slip/<?= trim($value->slip) ?>"
+                                       target="_blank"><?= trim($value->slip) ?></a>
+                                </th>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <form id="form-print-invoice" action="<?= Url::to(['inboundinv/printinv', 'id' => $model->id], true) ?>"
           method="post" target="_blank"></form>
     <form id="form-print-packing" action="<?= Url::to(['inboundinv/print', 'id' => $model->id], true) ?>" method="post"

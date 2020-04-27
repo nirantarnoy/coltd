@@ -185,6 +185,7 @@ class InboundinvController extends Controller
         $model = $this->findModel($id);
         $modelline = \backend\models\Inboundinvline::find()->where(['invoice_id' => $id])->all();
         $modeldoc = \backend\models\Importfile::find()->where(['import_id'=>$id])->all();
+        $modelpayment = \backend\models\Inboundpayment::find()->where(['inbound_id' => $id])->all();
         if ($model->load(Yii::$app->request->post())) {
             $prodid = Yii::$app->request->post('productid');
             $lineqty = Yii::$app->request->post('qty');
@@ -226,6 +227,7 @@ class InboundinvController extends Controller
             'model' => $model,
             'modelline' => $modelline,
             'modeldoc' => $modeldoc,
+            'modelpayment' => $modelpayment
         ]);
     }
 
