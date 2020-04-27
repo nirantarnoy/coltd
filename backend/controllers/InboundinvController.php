@@ -129,6 +129,16 @@ class InboundinvController extends Controller
         ]);
     }
 
+    public function updateTotalAmount($id){
+        $total = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$id])->sum('line_qty * line_price');
+        if($total > 0){
+            $model = \backend\models\Inboundinv::find()->where(['id'=>$id])->one();
+            if($model){
+                $model->total_amount = $total;
+                $model->save(false);
+            }
+        }
+    }
     public function actionCreatetrans($id)
     {
         if ($id) {
