@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: niran.w
- * Date: 07/02/2019
- * Time: 13:24:38
- */
+
 ?>
 <div class="row" style="font-family: angsana;">
     <!--    <h1>สวัสดี</h1>-->
