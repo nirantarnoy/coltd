@@ -67,9 +67,9 @@
                     <?= \backend\models\Picking::findCustomerAddress($model->id) ?>
                 </td>
 
-<!--                <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">-->
-<!---->
-<!--                </td>-->
+                <!--                <td colspan="2" style="text-align: right;font-size: 13px;font-weight: bold;border: none;">-->
+                <!---->
+                <!--                </td>-->
             </tr>
             <tr>
                 <td colspan="1" style="border: none;font-size: 14px;font-weight: bold"></td>
@@ -137,7 +137,11 @@
             <?php $sumqty = 0; ?>
 
             <?php $sumnet = 0; ?>
-            <?php $sumgross = 0; ?>
+            <?php
+            $sumgross = 0;
+            $sumnw = 0;
+            $sumgw = 0;
+            ?>
             <?php foreach ($modelline as $value): ?>
                 <?php $linenet = 0; ?>
                 <?php $linegross = 0; ?>
@@ -145,12 +149,16 @@
                 $sumqty = $sumqty + $value->qty;
                 $productinfo = \backend\models\Product::findProductinfo($value->product_id);
 //                $linenet = ($value->qty * $productinfo->unit_factor * $productinfo->volumn);
-                $linenet =\backend\models\Product::findProductInfo($value->product_id)->netweight;
+                $linenet = \backend\models\Product::findProductInfo($value->product_id)->netweight;
                 //   $linegross = ((0.25 + $productinfo->volumn) * ($value->qty * $productinfo->unit_factor));
                 $sumnet = $sumnet + $linenet;
 
                 $linegross = \backend\models\Product::findProductInfo($value->product_id)->grossweight;
                 $sumgross = $sumgross + $linegross;
+
+                $sumnw = $sumnw + ($value->line_qty * (\backend\models\Product::findProductinfo($value->product_id)->netweight));
+                $sumgw = $sumgw + ($value->line_qty * (\backend\models\Product::findProductinfo($value->product_id)->grossweight));
+
                 ?>
                 <?php $rows += 1; ?>
                 <tr style="border: 0.5px solid black;border-bottom:none;border-collapse: collapse;">
@@ -162,9 +170,9 @@
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?= $productinfo->unit_factor; ?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?= $productinfo->volumn; ?></td>
                     <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: center;padding-right: 10px;"><?= $productinfo->volumn_content . '%'; ?></td>
-                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: right;padding-right: 10px;"><?= number_format($linenet, 2); ?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: right;padding-right: 10px;"><?= number_format($value->qty * $linenet, 2); ?></td>
 
-                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: right;padding-right: 10px;"><?= number_format($linegross, 2); ?></td>
+                    <td style="border-left: 0.2px solid grey;font-size: 12px;font-weight: normal;text-align: right;padding-right: 10px;"><?= number_format($value->qty * $linegross, 2); ?></td>
 
                 </tr>
             <?php endforeach; ?>
@@ -205,8 +213,8 @@
                 <td></td>
                 <td></td>
 
-                <td style="font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"><?= number_format($sumnet, 2) ?></td>
-                <td style="font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"><?= number_format($sumgross, 2) ?></td>
+                <td style="font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"><?= number_format($sumnw, 2) ?></td>
+                <td style="font-size: 14px;font-weight: bold;text-align: right;padding-right: 10px;"><?= number_format($sumgw, 2) ?></td>
 
             </tr>
 
