@@ -118,6 +118,7 @@ class InboundinvController extends Controller
                         $modelline->save();
                     }
                 }
+                $this->updateTotalAmount($model->id);
                 return $this->redirect(['index']);
             }
 
@@ -218,6 +219,7 @@ class InboundinvController extends Controller
                         $modelline->save();
                     }
                 }
+                $this->updateTotalAmount($id);
                 return $this->redirect(['index']);
             }
 

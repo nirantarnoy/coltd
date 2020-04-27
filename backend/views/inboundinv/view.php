@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\Inboundinv */
 
 $this->title = $model->invoice_no;
-$this->params['breadcrumbs'][] = ['label' => 'Inboundinvs', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'นำเข้าสินค้า', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
