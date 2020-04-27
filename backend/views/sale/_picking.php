@@ -156,8 +156,8 @@
                 $linegross = \backend\models\Product::findProductInfo($value->product_id)->grossweight;
                 $sumgross = $sumgross + $linegross;
 
-                $sumnw = $sumnw + ($value->line_qty * (\backend\models\Product::findProductinfo($value->product_id)->netweight));
-                $sumgw = $sumgw + ($value->line_qty * (\backend\models\Product::findProductinfo($value->product_id)->grossweight));
+                $sumnw = $sumnw + ($value->qty * (\backend\models\Product::findProductinfo($value->product_id)->netweight));
+                $sumgw = $sumgw + ($value->qty * (\backend\models\Product::findProductinfo($value->product_id)->grossweight));
 
                 ?>
                 <?php $rows += 1; ?>
