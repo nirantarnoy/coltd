@@ -94,8 +94,8 @@
                 //$sumnet = $sumnet + \backend\models\Product::findProductinfo($value->product_id)->netweight;
                 $sumnw = $sumnw + ($value->line_qty * (\backend\models\Product::findProductinfo($value->product_id)->netweight));
                 $sumgw = $sumgw + ($value->line_qty * (\backend\models\Product::findProductinfo($value->product_id)->grossweight));
-                $nw = (\backend\models\Product::findProductinfo($value->product_id)->netweight);
-                $gw = (\backend\models\Product::findProductinfo($value->product_id)->grossweight);
+                $nw = $value->line_qty *(\backend\models\Product::findProductinfo($value->product_id)->netweight);
+                $gw = $value->line_qty *(\backend\models\Product::findProductinfo($value->product_id)->grossweight);
 
                 ?>
                 <?php $rows +=1; ?>
