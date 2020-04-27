@@ -284,6 +284,10 @@ $this->registerJs('
         $("#perpage").change(function(){
             $("#form-perpage").submit();
         });
+        
+        $(".btn-payment").click(function(){
+            $("form#form-payment").submit();
+        });
     });
 
    function recDelete(e){

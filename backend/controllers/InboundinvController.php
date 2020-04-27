@@ -558,6 +558,8 @@ class InboundinvController extends Controller
                     self::updatePayment($inboundid, $model->amount);
                 }
             }
+        }else{
+           // echo "no";return;
         }
 
         return $this->redirect(['index']);
