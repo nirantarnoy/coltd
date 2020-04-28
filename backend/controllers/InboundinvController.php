@@ -89,9 +89,9 @@ class InboundinvController extends Controller
             }
 
             $cur = 1;
-            if($model->currency_id == '' || $model->currency_id == null){
+            if ($model->currency_id == '' || $model->currency_id == null) {
                 $cur = 1;
-            }else{
+            } else {
                 $cur = $model->currency_id;
             }
 
@@ -130,16 +130,18 @@ class InboundinvController extends Controller
         ]);
     }
 
-    public function updateTotalAmount($id){
-        $total = \backend\models\Inboundinvline::find()->where(['invoice_id'=>$id])->sum('line_qty * line_price');
-        if($total > 0){
-            $model = \backend\models\Inboundinv::find()->where(['id'=>$id])->one();
-            if($model){
+    public function updateTotalAmount($id)
+    {
+        $total = \backend\models\Inboundinvline::find()->where(['invoice_id' => $id])->sum('line_qty * line_price');
+        if ($total > 0) {
+            $model = \backend\models\Inboundinv::find()->where(['id' => $id])->one();
+            if ($model) {
                 $model->total_amount = $total;
                 $model->save(false);
             }
         }
     }
+
     public function actionCreatetrans($id)
     {
         if ($id) {
@@ -185,7 +187,7 @@ class InboundinvController extends Controller
     {
         $model = $this->findModel($id);
         $modelline = \backend\models\Inboundinvline::find()->where(['invoice_id' => $id])->all();
-        $modeldoc = \backend\models\Importfile::find()->where(['import_id'=>$id])->all();
+        $modeldoc = \backend\models\Importfile::find()->where(['import_id' => $id])->all();
         $modelpayment = \backend\models\Inboundpayment::find()->where(['inbound_id' => $id])->all();
         if ($model->load(Yii::$app->request->post())) {
             $prodid = Yii::$app->request->post('productid');
@@ -244,28 +246,31 @@ class InboundinvController extends Controller
     {
         \backend\models\Inboundinvline::deleteAll(['invoice_id' => $id]);
         $this->recalStock($id);
-        \backend\models\Productstock::deleteAll(['inbound_id'=>$id]);
+        \backend\models\Productstock::deleteAll(['inbound_id' => $id]);
         \backend\models\Importline::deleteAll(['import_id' => $id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
-    public function recalStock($id){
-            $product_stock = \backend\models\Productstock::find()->where(['inbound_id'=>$id])->all();
-            foreach ($product_stock as $value){
-                //$sum_all = Productstock::find()->where(['product_id'=>$value->product_id])->sum('qty');
-                $in_qty =$value->in_qty;
-                $model_product = \backend\models\Product::find()->where(['id'=>$value->product_id])->one();
-                if($model_product){
-                    $model_product->all_qty = $model_product->all_qty - $in_qty ;
-                    $model_product->available_qty = $model_product->available_qty - $in_qty;
-                    //    $model_product->available_qty = $model_product->all_qty - (int)$model_product->reserved_qty;
-                    $model_product->save(false);
-                }
+
+    public function recalStock($id)
+    {
+        $product_stock = \backend\models\Productstock::find()->where(['inbound_id' => $id])->all();
+        foreach ($product_stock as $value) {
+            //$sum_all = Productstock::find()->where(['product_id'=>$value->product_id])->sum('qty');
+            $in_qty = $value->in_qty;
+            $model_product = \backend\models\Product::find()->where(['id' => $value->product_id])->one();
+            if ($model_product) {
+                $model_product->all_qty = $model_product->all_qty - $in_qty;
+                $model_product->available_qty = $model_product->available_qty - $in_qty;
+                //    $model_product->available_qty = $model_product->all_qty - (int)$model_product->reserved_qty;
+                $model_product->save(false);
             }
+        }
 
 
     }
+
     public function actionInboundtrans($id)
     {
         if ($id) {
@@ -280,33 +285,38 @@ class InboundinvController extends Controller
             ]);
         }
     }
-    public function actionAttachfile(){
+
+    public function actionAttachfile()
+    {
         $invoiceid = Yii::$app->request->post('inv_id');
         $doc_file = UploadedFile::getInstanceByName('doc_file');
-        if(!empty($doc_file)){
-            $doc_name = time().".".$doc_file->getExtension();
-            $doc_file->saveAs(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$doc_name);
+        if (!empty($doc_file)) {
+            $doc_name = time() . "." . $doc_file->getExtension();
+            $doc_file->saveAs(Yii::getAlias('@backend') . '/web/uploads/doc_in/' . $doc_name);
             $model = new \backend\models\Importfile();
             $model->import_id = $invoiceid;
             $model->filename = $doc_name;
             $model->save(false);
-            return $this->redirect(['inboundinv/update','id'=>$invoiceid]);
-        }else{
+            return $this->redirect(['inboundinv/update', 'id' => $invoiceid]);
+        } else {
             echo 'no file';
         }
     }
-    public function actionDeletedoc(){
+
+    public function actionDeletedoc()
+    {
         $recid = Yii::$app->request->post('recid');
-        if($recid){
-            $model = \backend\models\Importfile::find()->where(['id'=>$recid])->one();
-            if($model){
-                unlink(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$model->filename);
-                \backend\models\Importfile::deleteAll(['id'=>$recid]);
+        if ($recid) {
+            $model = \backend\models\Importfile::find()->where(['id' => $recid])->one();
+            if ($model) {
+                unlink(Yii::getAlias('@backend') . '/web/uploads/doc_in/' . $model->filename);
+                \backend\models\Importfile::deleteAll(['id' => $recid]);
                 return true;
             }
         }
         return false;
     }
+
     public function actionRecieve()
     {
         $currencyid = Yii::$app->request->post('currency_id');
@@ -346,9 +356,9 @@ class InboundinvController extends Controller
 //            $trans_date = $trans_origin[2]."/".$trans_origin[1]."/".$trans_origin[0];
 //        }
 //
-        $inv_date_x = explode('-',$invoicedate);
-        if(count($inv_date_x)>0 && $inv_date_x[0] !=''){
-            $inv_date = $inv_date_x[2]."/".$inv_date_x[1]."/".$inv_date_x[0];
+        $inv_date_x = explode('-', $invoicedate);
+        if (count($inv_date_x) > 0 && $inv_date_x[0] != '') {
+            $inv_date = $inv_date_x[2] . "/" . $inv_date_x[1] . "/" . $inv_date_x[0];
             $inv_month = $inv_date_x[1];
         }
 //
@@ -361,7 +371,7 @@ class InboundinvController extends Controller
         if (count($productid) > 0) {
             $data = [];
             for ($i = 0; $i <= count($productid) - 1; $i++) {
-                $model = \backend\models\Inboundinvline::find()->where(['invoice_id' => $invoiceid, 'product_id' => $productid[$i],'line_num'=>$linenum[$i]])->one();
+                $model = \backend\models\Inboundinvline::find()->where(['invoice_id' => $invoiceid, 'product_id' => $productid[$i], 'line_num' => $linenum[$i]])->one();
 
                 if ($linepermitdate[$i] != '') {
                     //  echo  $linepermitdate[$i];return;
@@ -370,7 +380,7 @@ class InboundinvController extends Controller
                         $permit_date = $per_origin[2] . "/" . $per_origin[1] . "/" . $per_origin[0];
                     }
                 }
-               // echo $permit_date;return;
+                // echo $permit_date;return;
                 if ($linetransportdate[$i] != '') {
                     //  echo  $linepermitdate[$i];return;
                     $trans_date = explode('-', $linetransportdate[$i]);
@@ -392,16 +402,16 @@ class InboundinvController extends Controller
                     $model->permit_no = $linepermitno[$i];
                     $model->permit_date = date('Y-m-d', strtotime($linepermitdate[$i]));
                     $model->transport_in_no = $linetransportno[$i];
-                    $model->transport_in_date = date('Y-m-d',strtotime($transport_date));
-                    $model->kno_in_date = date('Y-m-d',strtotime($kno_date));
-                   // $model->unit_id = \backend\models\Product::findUnit($model->product_id);
+                    $model->transport_in_date = date('Y-m-d', strtotime($transport_date));
+                    $model->kno_in_date = date('Y-m-d', strtotime($kno_date));
+                    // $model->unit_id = \backend\models\Product::findUnit($model->product_id);
 
                     if ($model->save(false)) {
-                       $model_master = \backend\models\Inboundinv::find()->where(['id'=>$model->invoice_id])->one();
-                       if($model_master){
-                           $model_master->status = 2;
-                           $model_master->save(false);
-                       }
+                        $model_master = \backend\models\Inboundinv::find()->where(['id' => $model->invoice_id])->one();
+                        if ($model_master) {
+                            $model_master->status = 2;
+                            $model_master->save(false);
+                        }
                     }
 
                 }
@@ -410,21 +420,21 @@ class InboundinvController extends Controller
                 $whid = \backend\models\Warehouse::getDefault();
 
                 $ex_rate = 1;
-                $ex_rate = \backend\models\Currencyrate::findRateMonth($currencyid,$inv_month,1);
+                $ex_rate = \backend\models\Currencyrate::findRateMonth($currencyid, $inv_month, 1);
 
 
 //                $usd = str_replace(",","",$linepriceper[$i]);
 //                $thb = str_replace(",","",$linepriceper[$i]);
 
-                $usd = str_replace(",","",$pack1[$i]);
-                $thb = str_replace(",","",$pack2[$i]);
+                $usd = str_replace(",", "", $pack1[$i]);
+                $thb = str_replace(",", "", $pack2[$i]);
                 array_push($data, [
                     'prod_id' => $productid[$i],
                     'qty' => $lineqty[$i],
                     'warehouse_id' => $whid,
                     'trans_type' => \backend\helpers\TransType::TRANS_ADJUST_IN,
                     'permit_no' => $linepermitno[$i],
-                    'permit_date' =>$linepermitdate[$i],// date('Y-m-d',strtotime($permit_date)),// $permit_date,//date('Y-d-m',strtotime($linepermitdate[$i])),
+                    'permit_date' => $linepermitdate[$i],// date('Y-m-d',strtotime($permit_date)),// $permit_date,//date('Y-d-m',strtotime($linepermitdate[$i])),
                     'transport_in_no' => $linetransportno[$i],
                     'transport_in_date' => $linetransportdate[$i],//date('Y-d-m',strtotime($rowData[14])),
                     'excise_no' => $lineexciseno[$i],
@@ -445,7 +455,7 @@ class InboundinvController extends Controller
 
             }
 
-           // print_r($data);return;
+            // print_r($data);return;
 
             $update_stock = \backend\models\TransCalculate::createJournal($data);
             if ($update_stock) {
@@ -453,7 +463,8 @@ class InboundinvController extends Controller
                 $session->setFlash('msg', 'นำเข้าข้อมูลสินค้าเรียบร้อย');
                 return $this->redirect(['index']);
             } else {
-                echo 'no';return;
+                echo 'no';
+                return;
                 $session = Yii::$app->session;
                 $session->setFlash('msg-error', 'พบข้อมผิดพลาด');
                 return $this->redirect(['index']);
@@ -471,13 +482,15 @@ class InboundinvController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-    public function actionFinditem(){
+
+    public function actionFinditem()
+    {
         $txt = \Yii::$app->request->post('txt');
         $list = [];
-        if($txt == ''){
+        if ($txt == '') {
             return Json::encode($list);
             //return 'no';
-        }else {
+        } else {
 
 //            if($txt == "*"){
 //                $model = \backend\models\Product::find()
@@ -492,7 +505,7 @@ class InboundinvController extends Controller
 //                    ->all();
 //                return Json::encode($mode`l);
 //            }
-            if($txt == "*"){
+            if ($txt == "*") {
                 $model = \common\models\QueryProduct::find()
 //                    ->where(['>','all_qty',0])
 //                    ->andFilterWhere(['!=','stock_id',''])
@@ -500,10 +513,10 @@ class InboundinvController extends Controller
                     ->all();
                 return Json::encode($model);
                 //   }
-            }else{
-                $model = \common\models\QueryProduct::find()->where(['or',['Like','product_code',$txt],['Like','name',$txt]])
-                    ->orFilterWhere(['like','product_code',$txt])
-                    ->orFilterWhere(['like','name',$txt])
+            } else {
+                $model = \common\models\QueryProduct::find()->where(['or', ['Like', 'product_code', $txt], ['Like', 'name', $txt]])
+                    ->orFilterWhere(['like', 'product_code', $txt])
+                    ->orFilterWhere(['like', 'name', $txt])
 //                    ->andFilterWhere(['>','all_qty',0])
 //                    ->andFilterWhere(['!=','stock_id',''])
                     ->asArray()
@@ -515,33 +528,37 @@ class InboundinvController extends Controller
         }
 
     }
-    public function actionCheckRate(){
+
+    public function actionCheckRate()
+    {
         $id = \Yii::$app->request->post('cur_id');
         $m = \Yii::$app->request->post('month');
         // echo (int)$m;return;
         $data = [];
         $rate_name = \backend\models\Currency::findName($id);
 
-        if($rate_name == 'THB'){
-           // echo $rate_name;return;
-            array_push($data,['exp_date'=>'1970/01/01','exc_rate'=>1,'currency'=>$rate_name]);
-            echo Json::encode($data);return;
+        if ($rate_name == 'THB') {
+            // echo $rate_name;return;
+            array_push($data, ['exp_date' => '1970/01/01', 'exc_rate' => 1, 'currency' => $rate_name]);
+            echo Json::encode($data);
+            return;
         }
-        if($id){
-            $model = \backend\models\Currencyrate::findRateMonth($id,$m,1);
-            if($model){
+        if ($id) {
+            $model = \backend\models\Currencyrate::findRateMonth($id, $m, 1);
+            if ($model) {
                 $final_date = '';
-                $xdate = explode('-',$model->to_date);
-                if(count($xdate)>0){
-                    $final_date = $xdate[0].'/'.$xdate[1].'/'.$xdate[2];
+                $xdate = explode('-', $model->to_date);
+                if (count($xdate) > 0) {
+                    $final_date = $xdate[0] . '/' . $xdate[1] . '/' . $xdate[2];
                 }
-                array_push($data,['exp_date'=>$final_date,'exc_rate'=>$model->rate,'currency'=>'']);
-            }else{
-                array_push($data,['exp_date'=>'1970/01/01','exc_rate'=>1,'currency'=>'']);
+                array_push($data, ['exp_date' => $final_date, 'exc_rate' => $model->rate, 'currency' => '']);
+            } else {
+                array_push($data, ['exp_date' => '1970/01/01', 'exc_rate' => 1, 'currency' => '']);
             }
         }
         echo Json::encode($data);
     }
+
     public function actionPayment()
     {
         $inboundid = \Yii::$app->request->post('saleid');
@@ -572,12 +589,13 @@ class InboundinvController extends Controller
                     self::updatePayment($inboundid, $model->amount);
                 }
             }
-        }else{
-           // echo "no";return;
+        } else {
+            // echo "no";return;
         }
 
-        return $this->redirect(['index']);
+        return $this->redirect(['inboundinv/update','id'=>$inboundid]);
     }
+
     public function updatePayment($inboundid, $payamount)
     {
         if ($inboundid) {
@@ -598,6 +616,7 @@ class InboundinvController extends Controller
             }
         }
     }
+
     public function actionPrint($id)
     {
         // echo $id;return;
@@ -713,44 +732,47 @@ class InboundinvController extends Controller
             return $pdf->render();
         }
     }
-    public function actionShowdoc(){
+
+    public function actionShowdoc()
+    {
         $doc_no = \Yii::$app->request->post('doc_no');
         $invoice_no = \Yii::$app->request->post('invoice_no');
         $invoice_id = \Yii::$app->request->post('invoice_id');
         $res = [];
         $html = '';
         $docfile = '';
-        if($doc_no != ''){
-            $model = \backend\models\Productstock::find()->where(['transport_in_no'=> trim($doc_no)])->all();
-            if($model){
-                foreach ($model as $value){
-                    $html.='<tr>';
-                    $html.='<td>'.\backend\models\Product::findCode($value->product_id).'</td>';
-                    $html.='<td>'.\backend\models\Product::findName($value->product_id).'</td>';
-                    $html.='<td>'.\backend\models\Product::findNameThai($value->product_id).'</td>';
-                    $html.='<td>'.number_format($value->in_qty).'</td>';
-                    $html.='</tr>';
+        if ($doc_no != '') {
+            $model = \backend\models\Productstock::find()->where(['transport_in_no' => trim($doc_no)])->all();
+            if ($model) {
+                foreach ($model as $value) {
+                    $html .= '<tr>';
+                    $html .= '<td>' . \backend\models\Product::findCode($value->product_id) . '</td>';
+                    $html .= '<td>' . \backend\models\Product::findName($value->product_id) . '</td>';
+                    $html .= '<td>' . \backend\models\Product::findNameThai($value->product_id) . '</td>';
+                    $html .= '<td>' . number_format($value->in_qty) . '</td>';
+                    $html .= '</tr>';
                 }
             }
             $res[1] = $html;
-        }else{
+        } else {
             $res[1] = $html;
         }
-        if($invoice_id != ''){
-            $model = \backend\models\Importfile::find()->where(['import_id'=> $invoice_id])->one();
-            if($model){
-                $res[0] = '<a class="btn btn-success" target="_blank" href="../web/uploads/doc_in/'.$model->filename.'">'.$model->filename.'</a>';
-            }else{
+        if ($invoice_id != '') {
+            $model = \backend\models\Importfile::find()->where(['import_id' => $invoice_id])->one();
+            if ($model) {
+                $res[0] = '<a class="btn btn-success" target="_blank" href="../web/uploads/doc_in/' . $model->filename . '">' . $model->filename . '</a>';
+            } else {
                 $res[0] = '';
             }
-        }else{
+        } else {
             $res[0] = '';
         }
 
         return Json::encode($res);
     }
 
-    public function actionSavedoc(){
+    public function actionSavedoc()
+    {
         //$doc_no = \Yii::$app->request->post('doc_no');
         $invoiceid = Yii::$app->request->post('invoice_id');
         $invoice_no = Yii::$app->request->post('invoice_no');
@@ -759,17 +781,140 @@ class InboundinvController extends Controller
 
         //echo $invoiceid;return;
 
-        if(!empty($doc_file) && $invoiceid !=''){
-          //  echo 'ok';return;
-            $doc_name = time().".".$doc_file->getExtension();
-            $doc_file->saveAs(Yii::getAlias('@backend') .'/web/uploads/doc_in/'.$doc_name);
+        if (!empty($doc_file) && $invoiceid != '') {
+            //  echo 'ok';return;
+            $doc_name = time() . "." . $doc_file->getExtension();
+            $doc_file->saveAs(Yii::getAlias('@backend') . '/web/uploads/doc_in/' . $doc_name);
             $model = new \backend\models\Importfile();
             $model->import_id = $invoiceid;
             $model->filename = $doc_name;
             $model->save(false);
-            return $this->redirect(['inboundinv/view','id'=>$invoiceid]);
-        }else{
+            return $this->redirect(['inboundinv/view', 'id' => $invoiceid]);
+        } else {
             echo 'no file';
         }
+    }
+
+    public function actionUpdatepaymenttrans()
+    {
+        $recid = \Yii::$app->request->post('recid');
+        $inboundid = \Yii::$app->request->post('saleid');
+        $pdate = \Yii::$app->request->post('payment_date');
+        $ptime = \Yii::$app->request->post('payment_time');
+        $pamount = \Yii::$app->request->post('amount');
+        $note = \Yii::$app->request->post('note');
+        $uploaded = UploadedFile::getInstanceByName('payment_slip');
+        $file = '';
+
+        if ($inboundid > 0 && $recid > 0) {
+            $model = \backend\models\Inboundpayment::find()->where(['id' => $recid])->one();
+            if ($uploaded) {
+                $file = $uploaded->name;
+                $uploaded->saveAs(Yii::getAlias('@backend') . '/web/uploads/slip/' . $uploaded->name);
+                $model->slip = $file;
+            }
+
+            if ($model) {
+                $model->trans_date = date('Y-m-d', strtotime($pdate));
+                $model->trans_time = date('H:i:s', strtotime($ptime));
+                $model->amount = $pamount;
+                $model->note = $note;
+                $model->status = 1;
+                if ($model->save()) {
+                    self::updatePaymentAction($inboundid, $recid, $model->amount);
+                }
+            }
+        }
+        $session = Yii::$app->session;
+        $session->setFlash('msg', 'บันทึกเรียบร้อย');
+        return $this->redirect(['inboundinv/update','id'=>$inboundid]);
+
+    }
+
+    public function actionDeletepaymenttrans(){
+        $recid = \Yii::$app->request->post('recid_delete');
+        $in_id = \Yii::$app->request->post('inbound_id');
+        if($recid > 0){
+            $model = \backend\models\Inboundpayment::find()->where(['id'=>$recid])->one();
+            if($model){
+                if(\backend\models\Inboundpayment::deleteAll(['id'=>$recid])){
+                    $this->recalPayment($in_id);
+                    unlink(\Yii::getAlias('@backend') . '/web/uploads/slip/' . $model->slip);
+                }
+
+            }
+        }
+        $session = Yii::$app->session;
+        $session->setFlash('msg', 'บันทึกเรียบร้อย');
+        return $this->redirect(['inboundinv/update','id'=>$in_id]);
+    }
+
+    public function updatePaymentAction($in_id, $recid, $payamount)
+    {
+        if ($recid) {
+            $model = \backend\models\Inboundinv::find()->where(['id' => $recid])->one();
+            if ($model) {
+                $model_paytrans = \backend\models\Inboundpayment::find()->where(['!=', 'id', $recid])->andFilterWhere(['inbound_id' => $in_id])->sum('amount');
+
+                if ($model->total_amount <= ($payamount + $model_paytrans)) {
+                    $model->payment_status = 1;
+                    $model->status = 2;
+                    if ($model->save(false)) {
+//                        $closeinv = \backend\models\Inboundinv::find()->where(['id' => $recid])->one();
+//                        if ($closeinv) {
+//                            $closeinv->status = 2;
+//                            $closeinv->save(false);
+//                        }
+                    }
+                } else {
+                    $model->payment_status = 0;
+                    $model->status = 1;
+                    if ($model->save(false)) {
+//                        $closeinv = \backend\models\Inboundinv::find()->where(['id' => $recid])->one();
+//                        if ($closeinv) {
+//                            $closeinv->status = 1;
+//                            $closeinv->save(false);
+//                        }
+                    }
+                }
+            }
+
+        }
+
+
+    }
+    public function recalPayment($in_id)
+    {
+        if ($in_id) {
+            $model = \backend\models\Inboundinv::find()->where(['id' => $in_id])->one();
+            if ($model) {
+                $model_paytrans = \backend\models\Inboundpayment::find()->where(['inbound_id'=> $in_id])->sum('amount');
+
+                if ($model->total_amount <= $model_paytrans) {
+                    $model->payment_status = 1;
+                    $model->status = 2;
+                    if ($model->save(false)) {
+//                        $closeinv = \backend\models\Inboundinv::find()->where(['id' => $recid])->one();
+//                        if ($closeinv) {
+//                            $closeinv->status = 2;
+//                            $closeinv->save(false);
+//                        }
+                    }
+                } else {
+                    $model->payment_status = 0;
+                    $model->status = 1;
+                    if ($model->save(false)) {
+//                        $closeinv = \backend\models\Inboundinv::find()->where(['id' => $recid])->one();
+//                        if ($closeinv) {
+//                            $closeinv->status = 1;
+//                            $closeinv->save(false);
+//                        }
+                    }
+                }
+            }
+
+        }
+
+
     }
 }

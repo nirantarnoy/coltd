@@ -6,6 +6,7 @@ use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 use yii\helpers\Url;
+use kartik\time\TimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Inboundinv */
@@ -74,8 +75,8 @@ use yii\helpers\Url;
             </div>
             <div class="col-lg-3">
                 <label for="">อัตราแลกเปลี่ยน</label>
-<!--                <input type="text" class="form-control rate" name="rate" readonly value="">-->
-                <?= $form->field($model, 'currency_rate')->textInput(['class'=>'form-control rate','readonly'=>'readonly'])->label(false) ?>
+                <!--                <input type="text" class="form-control rate" name="rate" readonly value="">-->
+                <?= $form->field($model, 'currency_rate')->textInput(['class' => 'form-control rate', 'readonly' => 'readonly'])->label(false) ?>
             </div>
         </div>
         <br>
@@ -211,7 +212,8 @@ use yii\helpers\Url;
                                     </td>
 
                                     <td>
-                                        <input type="hidden" name="line_price_origin" class="line-price-origin" value="">
+                                        <input type="hidden" name="line_price_origin" class="line-price-origin"
+                                               value="">
                                         <input style="text-align: right" type="text" class="form-control line_price"
                                                name="price[]" value="<?= $value->line_price ?>"
                                                onchange="cal_num($(this));">
@@ -379,6 +381,7 @@ use yii\helpers\Url;
                     <th>จำนวน</th>
                     <th>Note</th>
                     <th>slip</th>
+                    <th>-</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -388,14 +391,29 @@ use yii\helpers\Url;
                         <?php foreach ($modelpayment as $value): ?>
                             <?php $i += 1; ?>
                             <tr>
-                                <th><?= $i ?></th>
-                                <th><?= $value->trans_date ?></th>
-                                <th><?= $value->amount ?></th>
-                                <th><?= $value->note ?></th>
-                                <th>
+                                <td><?= $i ?></td>
+                                <td><?= $value->trans_date ?></td>
+                                <td><?= $value->amount ?></td>
+                                <td><?= $value->note ?></td>
+                                <td>
                                     <a href="../web/uploads/slip/<?= trim($value->slip) ?>"
                                        target="_blank"><?= trim($value->slip) ?></a>
-                                </th>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <input type="hidden" class="trans-date" value="<?= $value->trans_date ?>">
+                                        <input type="hidden" class="trans-time" value="<?= $value->trans_time ?>">
+                                        <input type="hidden" class="trans-amount" value="<?= $value->amount ?>">
+                                        <input type="hidden" class="trans-note" value="<?= $value->note ?>">
+                                        <input type="hidden" class="trans-file" value="<?= $value->trans_date ?>">
+                                        <div class="btn btn-warning" data-id="<?= $value->id ?>"
+                                             onclick="editpay($(this))">แก้ไข
+                                        </div>
+                                        <div class="btn btn-danger" data-id="<?= $value->id ?>"
+                                             onclick="deletepay($(this))">ลบ
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -474,6 +492,91 @@ use yii\helpers\Url;
 
     </div>
 </div>
+
+<div id="paymentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fa fa-tags"></i> บันทึกชำระเงิน
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <form id="form-payment" action="<?= Url::to(['inboundinv/updatepaymenttrans'], true) ?>" method="post"
+                      enctype="multipart/form-data">
+                    <input type="hidden" name="recid" class="recid" value="">
+                    <input type="hidden" name="saleid" class="saleid" value="<?= $model->id ?>">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="">ยอดเต็มที่ต้องชำระ</label>
+                            <input type="hidden" class="hidden-amount" value="<?= $model->total_amount ?>">
+                            <input type="text" class="form-control total-amount" name="total_amount"
+                                   value="<?= number_format($model->total_amount) ?>" readonly>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="">วันที่</label>
+                            <?php
+                            echo DatePicker::widget([
+                                'name' => 'payment_date',
+                                'options' => ['id' => 'trans-date'],
+                                'value' => date('Y/m/d'),
+                            ])
+                            ?>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label for="">จำนวนเงิน</label>
+                            <input type="text" id="trans-amount" class="form-control payment-amount" name="amount"
+                                   value=""
+                                   onchange="checkamount($(this))">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label class="control-label">เวลา</label>
+                            <?php echo TimePicker::widget(['name' => 'payment_time', 'options' => ['id' => 'trans-time']]); ?>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="">Notes</label>
+                            <textarea name="note" id="trans-note" class="form-control" id="" cols="30"
+                                      rows="3"></textarea>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="">แนบหลักฐาน</label>
+                            <input type="file" id="trans-file" name="payment_slip">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-payment" data-dismiss="modalx"><i
+                            class="fa fa-close text-danger"></i> บันทึกรายการ
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                            class="fa fa-close text-danger"></i> ปิดหน้าต่าง
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<form id="form-payment-delete" action="<?= Url::to(['inboundinv/deletepaymenttrans'], true) ?>" method="post">
+    <input type="hidden" name="recid_delete" class="recid-delete" value="">
+    <input type="hidden" name="inbound_id" value="<?= $model->id ?>">
+</form>
 
 <?php
 $url_to_find = Url::to(['inboundinv/finditem'], true);
@@ -655,6 +758,11 @@ $js = <<<JS
         $("#form-inbound").submit();
     }
   });
+    
+    
+    $(".btn-payment").click(function(){
+       $("#form-payment").submit(); 
+    });
     
  });
  function removedoc(e) {
@@ -906,6 +1014,47 @@ $js = <<<JS
         cal_all();
     });
  }
+ 
+ function editpay(e) {
+     var pay_id = e.attr("data-id");
+     var t_date = e.closest("tr").find(".trans-date").val();
+     var t_time = e.closest("tr").find(".trans-time").val();
+     var t_amount = e.closest("tr").find(".trans-amount").val();
+     var t_note = e.closest("tr").find(".trans-note").val();
+    // alert(pay_id);
+     if(pay_id > 0){
+          $(".recid").val(pay_id);
+          $("#trans-date").val(t_date);
+          $("#trans-time").val(t_time);
+          $("#trans-amount").val(t_amount);
+          $("#trans-note").val(t_note);
+          $("#paymentModal").modal("show");
+     }
+ }
+ function deletepay(e) {
+   if(confirm("ต้องการลบรายการนี้ใช่หรือไม่?")){
+       var pay_id = e.attr("data-id");
+       if(pay_id > 0){
+          $(".recid-delete").val(pay_id);
+          $("#form-payment-delete").submit();
+       }
+   }
+ }
+ 
+ function checkamount(e){
+        var payamount = e.val();
+       
+        if(payamount > 0){
+           var amt = $(".total-amount").val();
+           var total_payment = amt.replace(",","");
+           //alert(total_payment);
+           if(payment > parseFloat(total_payment)){
+              alert("จำนวนที่ชำระมากกว่ายอดที่ต้องชำระ");
+              e.val(0);
+              return false;
+           }
+        }
+    }
  
 JS;
 $this->registerJs($js, static::POS_END);

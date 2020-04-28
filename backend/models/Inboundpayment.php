@@ -51,9 +51,9 @@ class Inboundpayment extends \common\models\InboundPayment
 //        $model = Location::find()->where(['id'=>$id])->one();
 //        return count($model)>0?$model:null;
 //    }
-//    public function findLocationname($id){
-//        $model = Location::find()->where(['id'=>$id])->one();
-//        return count($model)>0?$model->name:'';
-//    }
+    public function findPayamount($id){
+        $model = Inboundpayment::find()->where(['inbound_id'=>$id])->sum('amount');
+        return $model!=null?$model:0;
+    }
 
 }
