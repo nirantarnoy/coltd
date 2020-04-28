@@ -220,7 +220,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <i class="fa fa-tags"></i> บันทึกรับเงิน
+                <i class="fa fa-tags"></i> บันทึกชำระเงิน
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
 
             </div>
