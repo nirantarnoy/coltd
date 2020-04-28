@@ -198,7 +198,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'onclick'=>'payment($(this));'
 
                         ];
-                        return $data->payment_status==0? Html::a(
+                        return $data->payment_status<=1? Html::a(
                             '<span class="glyphicon glyphicon-tags btn btn-xs btn-default"></span>', 'javascript:void(0)', $options)
                             :'';
                     },
