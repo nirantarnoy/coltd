@@ -34,6 +34,12 @@ $this->registerCss('
       #big { z-index: 999; position:absolute; text-align:center; padding:2px; background-color:#fff; border:1px solid #999; }
       #big img { height: 250px; }
     
+    .my-db-scroll{
+       transform: rotateX(180deg);
+       overflow-x: auto;
+    }
+    .my-db-scroll-child{
+    }
 ');
 
 ?>
@@ -98,9 +104,9 @@ $this->registerCss('
                             <div class="text-danger alert-currency" style="display: none"></div>
                         </div>
                         <div class="col-lg-3">
-<!--                            <label for="">อัตราแลกเปลี่ยน</label>-->
-<!--                            <input type="text" class="form-control rate" name="rate" readonly value="">-->
-                            <?= $form->field($model, 'currency_rate')->textInput(['class'=>'form-control rate','readonly'=>'readonly']) ?>
+                            <!--                            <label for="">อัตราแลกเปลี่ยน</label>-->
+                            <!--                            <input type="text" class="form-control rate" name="rate" readonly value="">-->
+                            <?= $form->field($model, 'currency_rate')->textInput(['class' => 'form-control rate', 'readonly' => 'readonly']) ?>
                         </div>
                         <div class="col-lg-3">
                             <?php $xstatus = $model->isNewRecord ? 'open' : \backend\helpers\QuotationStatus::getTypeById($model->status); ?>
@@ -183,7 +189,8 @@ $this->registerCss('
                                                name="cost[]" value="">
                                     </td>
                                     <td>
-                                        <input type="hidden" name="line_price_origin" class="line-price-origin" value="">
+                                        <input type="hidden" name="line_price_origin" class="line-price-origin"
+                                               value="">
                                         <input style="text-align: right" type="text" class="form-control line_price"
                                                name="price[]" value="" onchange="cal_num($(this));">
                                     </td>
@@ -263,7 +270,8 @@ $this->registerCss('
                                                        value="<?= \backend\models\Product::findProductinfo($value->product_id) != null ? \backend\models\Product::findProductinfo($value->product_id)->cost : 0 ?>">
                                             </td>
                                             <td>
-                                                <input type="hidden" name="line_price_origin" class="line-price-origin" value="">
+                                                <input type="hidden" name="line_price_origin" class="line-price-origin"
+                                                       value="">
                                                 <input style="text-align: right" type="text"
                                                        class="form-control line_price" name="price[]"
                                                        value="<?= $value->price ?>" onchange="cal_num($(this));">
@@ -404,7 +412,8 @@ $this->registerCss('
                 </div>
 
             </div>
-            <div class="modal-body" style="white-space:nowrap;overflow-y: auto">
+            <!--            <div class="modal-body" style="white-space:nowrap;overflow-y: auto">-->
+            <div class="modal-body" style="white-space:nowrap;overflow-y: auto;scrollbar-x-position: top">
                 <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
                 <table class="table table-bordered table-striped table-list">
                     <thead>
@@ -458,7 +467,7 @@ $url_to_find = Url::to(['quotation/finditem'], true);
 $url_to_firm = Url::to(['quotation/firmorder'], true);
 $url_to_find_product = Url::to(['product/searchitem'], true);
 $url_to_checkrate = Url::to(['quotation/check-rate'], true);
-$url_to_get_photo = Url::to(['product/getphoto'],true);
+$url_to_get_photo = Url::to(['product/getphoto'], true);
 $js = <<<JS
  var currow = 0;
  var  removelist = [];

@@ -92,9 +92,9 @@ use yii\helpers\Url;
                                 <td><input type="text" style="width: 100px" class="form-control line_litre"
                                            name="line_litre[]" value="<?= $product_data->volumn ?>"></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_net"
-                                           name="line_net[]" value="<?= $product_data->netweight ?>" readonly></td>
+                                           name="line_net[]" value="<?= $value->line_qty * $product_data->netweight ?>" readonly></td>
                                 <td><input type="text" style="width: 100px" class="form-control line_gross"
-                                           name="line_gross[]" value="<?= $product_data->grossweight ?>" readonly></td>
+                                           name="line_gross[]" value="<?= $value->line_qty * $product_data->grossweight ?>" readonly></td>
                                 <td><input type="text" style="width: 200px" class="form-control line_transport_in_no"
                                            name="line_transport_in_no[]" value="<?=$value->transport_in_no?>" required></td>
                                 <td><input type="date" id="cut_date_<?= $i ?>" style="width: 200px"
