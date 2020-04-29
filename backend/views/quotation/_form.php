@@ -752,7 +752,7 @@ $js = <<<JS
      var qty = e.closest("tr").find(".line_qty").val();
      var stock_qty = e.closest("tr").find(".stock_qty").val();
      var price = e.closest("tr").find(".line_price").val();
-     // alert(stock_qty);
+      alert(stock_qty);
      if(qty == ""){qty = 0;}
      if(price == ""){price = 0;}
      if(stock_qty == ""){stock_qty = 0;}

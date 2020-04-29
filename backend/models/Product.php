@@ -108,6 +108,16 @@ class Product extends \common\models\Product
 
         return $geo;
     }
+    public function findStock($id)
+    {
+        $model = Product::find()->where(['id' => $id])->one();
+        $stock_qty = 0;
+        if ($model) {
+            $stock_qty = $model->all_qty;
+        }
+
+        return $stock_qty;
+    }
 
     public function findImg($id)
     {
