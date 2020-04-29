@@ -200,17 +200,17 @@ use kartik\time\TimePicker;
                                                value="<?= \backend\models\Product::findProductInfo($value->product_id)->unit_factor ?>"
                                                readonly>
                                     </td>
-                                    <td>
-                                        <input type="text" class="form-control line_litre"
-                                               value="<?= \backend\models\Product::findProductInfo($value->product_id)->volumn_content ?>"
-                                               readonly>
-                                    </td>
+
                                     <td>
                                         <input type="text" class="form-control line_percent"
                                                value="<?= \backend\models\Product::findProductInfo($value->product_id)->volumn ?>"
                                                readonly>
                                     </td>
-
+                                    <td>
+                                        <input type="text" class="form-control line_litre"
+                                               value="<?= \backend\models\Product::findProductInfo($value->product_id)->volumn_content ?>"
+                                               readonly>
+                                    </td>
                                     <td>
                                         <input type="hidden" name="line_price_origin" class="line-price-origin"
                                                value="">
