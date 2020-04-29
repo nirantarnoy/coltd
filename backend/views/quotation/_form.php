@@ -752,12 +752,13 @@ $js = <<<JS
      var qty = e.closest("tr").find(".line_qty").val();
      var stock_qty = e.closest("tr").find(".stock_qty").val();
      var price = e.closest("tr").find(".line_price").val();
-      alert(stock_qty);
+    
      if(qty == ""){qty = 0;}
      if(price == ""){price = 0;}
      if(stock_qty == ""){stock_qty = 0;}
-     
-     if(qty > stock_qty){
+      alert(qty);
+     alert(stock_qty);
+     if(parseInt(qty) > parseInt(stock_qty)){
          alert("จำนวนที่ต้องการมากกว่าจำนวนคงเหลือ");
          e.closest("tr").find(".line_qty").val(stock_qty);
          return false;
