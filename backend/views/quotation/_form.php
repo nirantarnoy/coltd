@@ -737,7 +737,7 @@ $js = <<<JS
                            "<td>"+kno_date+"</td>" +
                            "<td style='color:green;text-align: right;'>"+parseFloat(in_q).toLocaleString()+"</td>" +
                            "<td style='color:red;text-align: right;'>"+parseFloat(out_q).toLocaleString()+"</td>" +
-                           "<td style='font-weight: bold;text-align: right;'>"+ parseFloat(in_q).toLocaleString()+"</td>" +
+      
                            "</tr>"
                            
                      }
