@@ -418,7 +418,7 @@ $this->registerCss('
                 <div id="div1">
                 </div>
             </div>
-            <div class="modal-product-list" style="width: 100%;overflow-y: auto;">
+            <div class="modal-product-list" style="width: 100%;overflow-y: auto;white-space:nowrap;">
                 <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
                 <table class="table table-bordered table-striped table-list">
                     <thead>
