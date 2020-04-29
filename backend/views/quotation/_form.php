@@ -734,7 +734,7 @@ $js = <<<JS
                            "<td>"+data[i]['sequence']+"</td>" +
                            "<td>"+data[i]['excise_no']+"</td>" +
                            "<td>"+data[i]['kno_no_in']+"</td>" +
-                           "<td>"+kno_date+"</td>" +
+                            "<td>"+data[i]['kno_in_date']+"</td>" +
                            "<td style='color:green;text-align: right;'>"+parseFloat(in_q).toLocaleString()+"</td>" +
                            "<td style='color:red;text-align: right;'>"+parseFloat(out_q).toLocaleString()+"</td>" +
       
