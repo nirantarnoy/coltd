@@ -413,7 +413,8 @@ $this->registerCss('
 
             </div>
             <!--            <div class="modal-body" style="white-space:nowrap;overflow-y: auto">-->
-            <div class="modal-body" style="white-space:nowrap;overflow-y: auto;scrollbar-x-position: top">
+<!--            <div class="modal-body" style="white-space:nowrap;overflow-y: auto;scrollbar-x-position: top">-->
+                <div class="modal-body">
                 <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
                 <table class="table table-bordered table-striped table-list">
                     <thead>
