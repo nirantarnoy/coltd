@@ -482,7 +482,7 @@ $js = <<<JS
  var quote = '$model->id';
  $(function(){
      cal_all();
-     $(".modal-boy").doubleScroll({
+     $(".modal-body").doubleScroll({
       scrollCss: {                
         //'overflow-x': 'auto',
         'overflow-y': 'auto'
