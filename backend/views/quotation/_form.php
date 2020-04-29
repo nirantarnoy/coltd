@@ -414,35 +414,39 @@ $this->registerCss('
             </div>
             <!--            <div class="modal-body" style="white-space:nowrap;overflow-y: auto">-->
             <!--            <div class="modal-body" style="white-space:nowrap;overflow-y: auto;scrollbar-x-position: top">-->
+            <div id="wrapper1">
+                <div id="div1">
+                </div>
+            </div>
             <div class="modal-product-list" style="width: 100%;overflow-y: auto;">
                 <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
                 <table class="table table-bordered table-striped table-list">
                     <thead>
-                    <tr>
-                        <th style="text-align: center">เลือก</th>
-                        <th>รหัสสินค้า</th>
-                        <th>รายละเอียด</th>
-                        <th>คงเหลือ</th>
-                        <th>Origin</th>
-                        <th>ปริมาณ/ลัง</th>
-                        <th>ลิตร/ขวด</th>
-                        <th>%</th>
-                        <th>คลัง</th>
-                        <th>inv</th>
-                        <th>inv.date</th>
-                        <th>ใบอนุญาต</th>
-                        <th>วันที่</th>
-                        <th>ใบขน</th>
-                        <th>วันที่</th>
-                        <th>ลำดับ</th>
-                        <th>สรรพสามิตร</th>
-                        <th>กนอ.</th>
-                        <th>วันที่</th>
-                        <th>เข้า</th>
-                        <th>ออก</th>
+                        <tr>
+                            <th style="text-align: center">เลือก</th>
+                            <th>รหัสสินค้า</th>
+                            <th>รายละเอียด</th>
+                            <th>คงเหลือ</th>
+                            <th>Origin</th>
+                            <th>ปริมาณ/ลัง</th>
+                            <th>ลิตร/ขวด</th>
+                            <th>%</th>
+                            <th>คลัง</th>
+                            <th>inv</th>
+                            <th>inv.date</th>
+                            <th>ใบอนุญาต</th>
+                            <th>วันที่</th>
+                            <th>ใบขน</th>
+                            <th>วันที่</th>
+                            <th>ลำดับ</th>
+                            <th>สรรพสามิตร</th>
+                            <th>กนอ.</th>
+                            <th>วันที่</th>
+                            <th>เข้า</th>
+                            <th>ออก</th>
 
 
-                    </tr>
+                        </tr>
                     </thead>
                     <tbody>
 
@@ -483,7 +487,19 @@ $js = <<<JS
  var quote = '$model->id';
  $(function(){
      cal_all();
-     $(".modal-product-list").doubleScroll();
+     //$(".modal-product-list").doubleScroll();
+     var x = 1;
+     $(".modal-product-list").scroll(function() {
+         
+        if (x == 1) {
+            x = 0;
+            $(".wrapper1")
+                .scrollLeft($(".wrapper1").scrollLeft());
+        } else {
+            x = 1;
+        }
+    });
+     
      $(".btn-firm-sale").click(function(){
         if(confirm("ต้องการเปิดใบออเดอร์ใช่หรือไม่")){
             $.ajax({
