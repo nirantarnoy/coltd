@@ -482,13 +482,7 @@ $js = <<<JS
  var quote = '$model->id';
  $(function(){
      cal_all();
-     $(".modal-body").doubleScroll({
-      scrollCss: {                
-        //'overflow-x': 'auto',
-        'overflow-y': 'auto'
-      },
-  
-    });
+     $(".modal-body").doubleScroll();
      $(".btn-firm-sale").click(function(){
         if(confirm("ต้องการเปิดใบออเดอร์ใช่หรือไม่")){
             $.ajax({
