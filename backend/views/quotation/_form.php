@@ -589,6 +589,7 @@ $js = <<<JS
                              "<input type='hidden' class='stock_qty' value='"+all_qty+"'/>" +
                            "</td>"+
                              "<td style='font-weight: bold;text-align: right;'>"+ parseFloat(in_q).toLocaleString()+"</td>" +
+                           "<td>"+all_qty+"</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
                           "<td>"+data[i]['unit_factor']+"</td>"+
                           "<td>"+data[i]['volumn']+"</td>"+
