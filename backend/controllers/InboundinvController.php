@@ -447,7 +447,7 @@ class InboundinvController extends Controller
                     'out_qty' => 0,
                     'usd_rate' => $usd,
                     'thb_amount' => $thb,
-                    'inbound_id' => $model->invoice_id,
+                    'inbound_id' => $invoiceid,
                     'outbound_id' => 0
 
                 ]);
