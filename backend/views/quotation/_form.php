@@ -468,12 +468,27 @@ $url_to_firm = Url::to(['quotation/firmorder'], true);
 $url_to_find_product = Url::to(['product/searchitem'], true);
 $url_to_checkrate = Url::to(['quotation/check-rate'], true);
 $url_to_get_photo = Url::to(['product/getphoto'], true);
+
+$this->registerJsFile(
+    '@web/js/jQuery-DoubleScroll/jquery.doubleScroll.js?V=001',
+    ['depends' => [\yii\web\JqueryAsset::className()]],
+    static::POS_END
+);
+
+
 $js = <<<JS
  var currow = 0;
  var  removelist = [];
  var quote = '$model->id';
  $(function(){
      cal_all();
+     $(".modal-boy").doubleScroll({
+      scrollCss: {                
+        //'overflow-x': 'auto',
+        'overflow-y': 'auto'
+      },
+  
+    });
      $(".btn-firm-sale").click(function(){
         if(confirm("ต้องการเปิดใบออเดอร์ใช่หรือไม่")){
             $.ajax({
@@ -756,8 +771,8 @@ $js = <<<JS
      if(qty == ""){qty = 0;}
      if(price == ""){price = 0;}
      if(stock_qty == ""){stock_qty = 0;}
-      alert(qty);
-     alert(stock_qty);
+      //alert(qty);
+     //alert(stock_qty);
      if(parseInt(qty) > parseInt(stock_qty)){
          alert("จำนวนที่ต้องการมากกว่าจำนวนคงเหลือ");
          e.closest("tr").find(".line_qty").val(stock_qty);
