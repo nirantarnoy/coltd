@@ -773,7 +773,7 @@ $js = <<<JS
  function getitem(e){
     var prodcode = e.closest("tr").find("td:eq(1)").text();
     var prodname = e.closest("tr").find("td:eq(2)").text();
-    var prodorigin = e.closest("tr").find("td:eq(3)").text()=="null"?'':e.closest("tr").find("td:eq(3)").text();
+    var prodorigin = e.closest("tr").find("td:eq(4)").text()=="null"?'':e.closest("tr").find("td:eq(4)").text();
     var prodid = e.closest("tr").find(".recid").val();
     var prodcost = e.closest("tr").find(".prodcost").val();
     var prodprice = e.closest("tr").find(".prodprice").val();
