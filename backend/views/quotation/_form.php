@@ -413,8 +413,8 @@ $this->registerCss('
 
             </div>
             <!--            <div class="modal-body" style="white-space:nowrap;overflow-y: auto">-->
-<!--            <div class="modal-body" style="white-space:nowrap;overflow-y: auto;scrollbar-x-position: top">-->
-                <div class="modal-product-list" style="width: 100%;overflow-y: auto;">
+            <!--            <div class="modal-body" style="white-space:nowrap;overflow-y: auto;scrollbar-x-position: top">-->
+            <div class="modal-product-list" style="width: 100%;overflow-y: auto;">
                 <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
                 <table class="table table-bordered table-striped table-list">
                     <thead>
@@ -483,7 +483,7 @@ $js = <<<JS
  var quote = '$model->id';
  $(function(){
      cal_all();
-     $(".table").doubleScroll();
+     $(".modal-product-list").doubleScroll();
      $(".btn-firm-sale").click(function(){
         if(confirm("ต้องการเปิดใบออเดอร์ใช่หรือไม่")){
             $.ajax({
