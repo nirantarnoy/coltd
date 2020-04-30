@@ -117,13 +117,12 @@ class ReportController extends Controller
         $html = '';
 
         $model_chk = \backend\models\Inboundinv::find()->where(['invoice_no'=>trim($no)])->one();
-        if($model_chk){
+        if($model_chk !=null){
             if($model_chk->id > 0){
                 $model = \backend\models\Inboundpayment::find()->where(['inbound_id'=>$model_chk->id])->all();
                 $i=0;
-                if($model){
+                if($model != null){
                     foreach ($model as $value){
-
                         $i+=1;
                         $html.='<tr>
                                 <td>'.$i.'</td>

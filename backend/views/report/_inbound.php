@@ -336,13 +336,15 @@ $js = <<<JS
     function showPay(e){
         var invoice_no = e.attr('data-var');
         if(invoice_no !=''){
+           // alert(invoice_no);
             $.ajax({
               'type':'post',
               'dataType': 'html',
               'url': "$url_to_show_slip",
               'data': {'invoice_no': invoice_no },
               'success': function(data) {
-                  $(".table-list tbody tr").html(data);
+                  //alert(data);
+                  $(".table-list tbody").html(data);
                   $("#payModal").modal("show");
               }
             });
