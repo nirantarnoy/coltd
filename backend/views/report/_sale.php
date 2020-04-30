@@ -221,7 +221,7 @@ $this->title = 'รายงานสรุปส่งออก';
                                 $amt = 0;
                                 // $cur = \backend\models\Currency::findName($data->currency);
                                 // if($cur =='THB'){
-                                if ($data->currency_name == 'USD') {
+                                if ($data->currency_name == 'THB') {
                                     return ($data->price);
                                 }else{
                                     return ($data->price * $data->currency);
