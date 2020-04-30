@@ -459,21 +459,15 @@ use kartik\time\TimePicker;
                         <th style="text-align: center">เลือก</th>
                         <th>รหัสสินค้า</th>
                         <th>รายละเอียด</th>
-                        <th>Origin</th>
-                        <th>คลัง</th>
-                        <th>inv</th>
-                        <th>inv.date</th>
-                        <th>ใบอนุญาต</th>
-                        <th>วันที่</th>
-                        <th>ใบขน</th>
-                        <th>วันที่</th>
-                        <th>ลำดับ</th>
-                        <th>สรรพสามิตร</th>
-                        <th>กนอ.</th>
-                        <th>วันที่</th>
-                        <th>เข้า</th>
-                        <th>ออก</th>
-                        <th>คงเหลือ</th>
+                        <th>ขวด/ลัง</th>
+                        <th>สิตร/ขวด</th>
+                        <th>แอลกอฮอร์ %</th>
+                        <th>พิกัด</th>
+                        <th>ชนิดสินค้า</th>
+                        <th>ประเทศ</th>
+                        <th>เลข28หลัก</th>
+                        <th>วันที่เลข28หลัก</th>
+                        <th>ราคาขายปลีก</th>
 
                     </tr>
                     </thead>
@@ -688,11 +682,12 @@ $js = <<<JS
                      $(".table-list").show();
                      var html = "";
                      for(var i =0;i<=data.length -1;i++){
-                            var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
+                         var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
                          var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
                          var line_price = data[i]['thb_amount'] == null?0:data[i]['thb_amount'];
+                         
                          html +="<tr ondblclick='getitem($(this));'>" +
-                          "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td>"+
+                         "<td style='vertical-align: middle;text-align: center'><div class='btn btn-info btn-sm' onclick='getitem($(this));'>เลือก</div></td>"+
                           "<td style='vertical-align: middle'>"+
                          data[i]['product_code']+"</td><td style='vertical-align: middle'>"+
                          data[i]['name']+"<input type='hidden' class='recid' value='"+data[i]['id']+"'/>" +
@@ -705,26 +700,20 @@ $js = <<<JS
                           "<input type='hidden' class='unitfactor' value='"+data[i]['unit_factor']+"'/>" +
                           "<input type='hidden' class='volumn' value='"+data[i]['volumn']+"'/>" +
                           "<input type='hidden' class='volumn_content' value='"+data[i]['volumn_content']+"'/>" +
-                           "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
-                           "<input type='hidden' class='stock_price' value='"+line_price+"'/>" +
+                          "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
+                          "<input type='hidden' class='stock_price' value='"+line_price+"'/>" +
                            "</td>"+
-                           "<td>"+data[i]['origin']+"</td>"+
-                           "<td>"+data[i]['warehouse_name']+"</td>"+
-                           "<td>"+data[i]['invoice_no']+"</td>"+
-                           "<td>"+data[i]['invoice_date']+"</td>" +
-                           "<td>"+data[i]['permit_no']+"</td>" +
-                           "<td>"+data[i]['permit_date']+"</td>" +
-                             "<td>"+data[i]['transport_in_no']+"</td>" +
-                           "<td>"+data[i]['transport_in_date']+"</td>" +
-                                     "<td>"+data[i]['sequence']+"</td>" +
+                           "<td>"+data[i]['unit_factor']+"</td>"+
+                             "<td>"+data[i]['volumn']+"</td>"+
+                           "<td>"+data[i]['volumn_content']+"</td>"+
+                           "<td>"+data[i]['geolocation']+"</td>"+
+                          "<td>"+data[i]['group_name']+"</td>"+
+                          "<td>"+data[i]['origin']+"</td>"+                         
                            "<td>"+data[i]['excise_no']+"</td>" +
-                           "<td>"+data[i]['kno_no_in']+"</td>" +
-                           "<td>"+data[i]['kno_in_date']+"</td>" +
-                            "<td style='color:green;text-align: right;'>"+parseFloat(in_q).toLocaleString()+"</td>" +
-                           "<td style='color:red;text-align: right;'>"+parseFloat(out_q).toLocaleString()+"</td>" +
-                           "<td style='font-weight: bold;text-align: right;'>"+ parseFloat(in_q).toLocaleString()+"</td>" +
+                           "<td>"+data[i]['excise_date']+"</td>" +
+                           "<td>"+data[i]['price']+"</td>" +
                            "</tr>"
-                          
+                           
                      }
                      $(".table-list tbody").html(html);
                      
@@ -857,21 +846,15 @@ $js = <<<JS
                           "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
                           "<input type='hidden' class='stock_price' value='"+line_price+"'/>" +
                            "</td>"+
-                           "<td>"+data[i]['origin']+"</td>"+
-                             "<td>"+data[i]['warehouse_name']+"</td>"+
-                           "<td>"+data[i]['invoice_no']+"</td>"+
-                           "<td>"+data[i]['invoice_date']+"</td>"+
-                          "<td>"+data[i]['permit_no']+"</td>"+
-                          "<td>"+data[i]['permit_date']+"</td>"+
-                            "<td>"+data[i]['transport_in_no']+"</td>" +
-                           "<td>"+data[i]['transport_in_date']+"</td>" +
-                           "<td>"+data[i]['sequence']+"</td>" +
+                           "<td>"+data[i]['unit_factor']+"</td>"+
+                             "<td>"+data[i]['volumn']+"</td>"+
+                           "<td>"+data[i]['volumn_content']+"</td>"+
+                           "<td>"+data[i]['geolocation']+"</td>"+
+                          "<td>"+data[i]['group_name']+"</td>"+
+                          "<td>"+data[i]['origin']+"</td>"+                         
                            "<td>"+data[i]['excise_no']+"</td>" +
-                           "<td>"+data[i]['kno_no_in']+"</td>" +
-                           "<td>"+data[i]['kno_in_date']+"</td>" +
-                           "<td style='color:green;text-align: right;'>"+parseFloat(in_q).toLocaleString()+"</td>" +
-                           "<td style='color:red;text-align: right;'>"+parseFloat(out_q).toLocaleString()+"</td>" +
-                           "<td style='font-weight: bold;text-align: right;'>"+ parseFloat(in_q).toLocaleString()+"</td>" +
+                           "<td>"+data[i]['excise_date']+"</td>" +
+                           "<td>"+data[i]['price']+"</td>" +
                            "</tr>"
                            
                      }
@@ -898,7 +881,7 @@ $js = <<<JS
  function getitem(e){
     var prodcode = e.closest("tr").find("td:eq(1)").text();
     var prodname = e.closest("tr").find("td:eq(2)").text();
-    var prodorigin = e.closest("tr").find("td:eq(3)").text()=="null"?'':e.closest("tr").find("td:eq(3)").text();
+    var prodorigin = e.closest("tr").find("td:eq(8)").text()=="null"?'':e.closest("tr").find("td:eq(8)").text();
     var prodid = e.closest("tr").find(".recid").val();
     var prodcost = e.closest("tr").find(".prodcost").val();
     var prodprice = e.closest("tr").find(".prodprice").val();
@@ -932,8 +915,8 @@ $js = <<<JS
               $(this).closest('tr').find(".line_price").val(line_price);
               $(this).closest('tr').find(".line-price-origin").val(line_price);
               $(this).closest('tr').find(".line_packper").val(unitfactor);
-              $(this).closest('tr').find(".line_litre").val(volumn);
-              $(this).closest('tr').find(".line_percent").val(volumn_content);
+              $(this).closest('tr').find(".line_litre").val(volumn_content);
+              $(this).closest('tr').find(".line_percent").val(volumn);
         }
         cal_num($(this));
     });

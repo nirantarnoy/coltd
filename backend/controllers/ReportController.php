@@ -111,4 +111,37 @@ class ReportController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    public function actionShowpayment(){
+        $no = \Yii::$app->request->post('invoice_no');
+        $html = '';
+
+        $model_chk = \backend\models\Inboundinv::find()->where(['invoice_no'=>trim($no)])->one();
+        if($model_chk){
+            if($model_chk->id > 0){
+                $model = \backend\models\Inboundpayment::find()->where(['inbound_id'=>$model_chk->id])->all();
+                $i=0;
+                if($model){
+                    foreach ($model as $value){
+
+                        $i+=1;
+                        $html.='<tr>
+                                <td>'.$i.'</td>
+                                <td>'.$value->trans_date .'</td>
+                                <td>'.$value->amount.'</td>
+                                <td>'.$value->note.'</td>
+                                <td>
+                                    <a href="../web/uploads/slip/'.trim($value->slip).'"
+                                       target="_blank">'.$value->slip.'</a>
+                                </td>
+                                <td>
+                                </td>
+                                </tr>';
+                    }
+                }
+            }
+        }
+
+        echo $html;
+    }
 }
