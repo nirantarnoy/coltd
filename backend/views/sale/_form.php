@@ -1150,7 +1150,7 @@ $js = <<<JS
      var t_time = e.closest("tr").find(".trans-time").val();
      var t_amount = e.closest("tr").find(".trans-amount").val();
      var t_note = e.closest("tr").find(".trans-note").val();
-     alert(pay_id);
+     //alert(pay_id);
      if(pay_id > 0){
           $(".recid").val(pay_id);
           $("#trans-date").val(t_date);
