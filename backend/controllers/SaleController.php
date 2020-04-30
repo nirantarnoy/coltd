@@ -329,7 +329,7 @@ class SaleController extends Controller
                 $model->slip = $file;
 
                 if ($model->save()) {
-                    self::updatePayment($saleid, $model->amount);
+                    self::updatePayment($saleid, $pamount);
                 }
             }
         }
@@ -345,14 +345,15 @@ class SaleController extends Controller
             if ($model) {
                 $model_paytrans = \backend\models\Paymenttrans::find()->where(['sale_id' => $saleid])->sum('amount');
 
-                if ($model->total_amount <= ($payamount + $model_paytrans)) {
+                if ($model->total_amount <= $model_paytrans) {
                     $model->payment_status = 1;
+                    $model->status = 2;
                     if ($model->save(false)) {
-                        $closeinv = \backend\models\Sale::find()->where(['id' => $saleid])->one();
-                        if ($closeinv) {
-                            $closeinv->status = 2;
-                            $closeinv->save(false);
-                        }
+//                        $closeinv = \backend\models\Sale::find()->where(['id' => $saleid])->one();
+//                        if ($closeinv) {
+//                            $closeinv->status = 2;
+//                            $closeinv->save(false);
+//                        }
                     }
                 }
             }
@@ -862,5 +863,124 @@ class SaleController extends Controller
                 ]);
             }
         }
+    }
+    public function actionUpdatepaymenttrans()
+    {
+        $recid = \Yii::$app->request->post('recid');
+        $inboundid = \Yii::$app->request->post('saleid');
+        $pdate = \Yii::$app->request->post('payment_date');
+        $ptime = \Yii::$app->request->post('payment_time');
+        $pamount = \Yii::$app->request->post('amount');
+        $note = \Yii::$app->request->post('note');
+        $uploaded = UploadedFile::getInstanceByName('payment_slip');
+        $file = '';
+
+        if ($inboundid > 0 && $recid > 0) {
+            $model = \backend\models\Paymenttrans::find()->where(['id' => $recid])->one();
+            if ($uploaded) {
+                $file = $uploaded->name;
+                $uploaded->saveAs(Yii::getAlias('@backend') . '/web/uploads/slip/' . $uploaded->name);
+                $model->slip = $file;
+            }
+
+            if ($model) {
+                $model->trans_date = date('Y-m-d', strtotime($pdate));
+                $model->trans_time = date('H:i:s', strtotime($ptime));
+                $model->amount = $pamount;
+                $model->note = $note;
+                $model->status = 1;
+                if ($model->save()) {
+                    self::updatePaymentAction($inboundid, $recid, $model->amount);
+                }
+            }
+        }
+        $session = Yii::$app->session;
+        $session->setFlash('msg', 'บันทึกเรียบร้อย');
+        return $this->redirect(['sale/update','id'=>$inboundid]);
+
+    }
+    public function actionDeletepaymenttrans(){
+        $recid = \Yii::$app->request->post('recid_delete');
+        $in_id = \Yii::$app->request->post('inbound_id');
+        if($recid > 0){
+            $model = \backend\models\Paymenttrans::find()->where(['id'=>$recid])->one();
+            if($model){
+                if(\backend\models\Paymenttrans::deleteAll(['id'=>$recid])){
+                    $this->recalPayment($in_id);
+                    unlink(\Yii::getAlias('@backend') . '/web/uploads/slip/' . $model->slip);
+                }
+
+            }
+        }
+        $session = Yii::$app->session;
+        $session->setFlash('msg', 'บันทึกเรียบร้อย');
+        return $this->redirect(['sale/update','id'=>$in_id]);
+    }
+    public function recalPayment($in_id)
+    {
+        if ($in_id) {
+            $model = \backend\models\Sale::find()->where(['id' => $in_id])->one();
+            if ($model) {
+                $model_paytrans = \backend\models\Paymenttrans::find()->where(['sale_id'=> $in_id])->sum('amount');
+
+                if ($model->total_amount <= $model_paytrans) {
+                    $model->payment_status = 1;
+                    $model->status = 2;
+                    if ($model->save(false)) {
+//                        $closeinv = \backend\models\Inboundinv::find()->where(['id' => $recid])->one();
+//                        if ($closeinv) {
+//                            $closeinv->status = 2;
+//                            $closeinv->save(false);
+//                        }
+                    }
+                } else {
+                    $model->payment_status = 0;
+                    $model->status = 1;
+                    if ($model->save(false)) {
+//                        $closeinv = \backend\models\Inboundinv::find()->where(['id' => $recid])->one();
+//                        if ($closeinv) {
+//                            $closeinv->status = 1;
+//                            $closeinv->save(false);
+//                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+    public function updatePaymentAction($in_id, $recid, $payamount)
+    {
+        if ($recid) {
+            $model = \backend\models\Sale::find()->where(['id' => $in_id])->one();
+            if ($model) {
+                $model_paytrans = \backend\models\Paymenttrans::find()->where(['!=', 'id', $recid])->andFilterWhere(['sale_id' => $in_id])->sum('amount');
+
+                if ($model->total_amount <= ($payamount + $model_paytrans)) {
+                    $model->payment_status = 1;
+                    $model->status = 2;
+                    if ($model->save(false)) {
+//                        $closeinv = \backend\models\Inboundinv::find()->where(['id' => $recid])->one();
+//                        if ($closeinv) {
+//                            $closeinv->status = 2;
+//                            $closeinv->save(false);
+//                        }
+                    }
+                } else {
+                    $model->payment_status = 0;
+                    $model->status = 1;
+                    if ($model->save(false)) {
+//                        $closeinv = \backend\models\Inboundinv::find()->where(['id' => $recid])->one();
+//                        if ($closeinv) {
+//                            $closeinv->status = 1;
+//                            $closeinv->save(false);
+//                        }
+                    }
+                }
+            }
+
+        }
+
+
     }
 }

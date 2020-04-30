@@ -257,9 +257,15 @@ $this->title = 'รายงานสรุปส่งออก';
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                         ],
                         [
-                            'attribute' => 'payment_status',
+                            //'attribute' => 'payment_status',
                             'label' => 'หลักฐานการโอนเงิน',
+                            'format' => 'raw',
                             'contentOptions' => ['style' => 'vertical-align: middle'],
+                            'value' => function ($data) {
+
+                                $html = "<div class='btn btn-info' data-var='".$data->inv_no."' onclick='showPay($(this))'>ดูเอกสาร</div>";
+                                return $html;
+                            }
                         ],
                         [
                             'attribute' => 'note',
@@ -290,4 +296,72 @@ $this->title = 'รายงานสรุปส่งออก';
         <!--        </div>-->
     </div>
 </div>
+<div id="payModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3>ประวัติการชำระเงิน</h3>
+                    </div>
+                </div>
 
+            </div>
+            <div class="modal-body" style="white-space:nowrap;overflow-y: auto">
+                <table class="table table-list">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>วันที่</th>
+                        <th>จำนวน</th>
+                        <th>Note</th>
+                        <th>slip</th>
+                        <th>-</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                            class="fa fa-close text-danger"></i> ปิดหน้าต่าง
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<?php
+$url_to_show_slip = Url::to(['report/showsalepayment'], true);
+$js = <<<JS
+  $(function(){
+      
+  });
+    function showPay(e){
+        var invoice_no = e.attr('data-var');
+        if(invoice_no !=''){
+           // alert(invoice_no);
+            $.ajax({
+              'type':'post',
+              'dataType': 'html',
+              'url': "$url_to_show_slip",
+              'data': {'inv_no': invoice_no },
+              'success': function(data) {
+                  //alert(data);
+                  $(".table-list tbody").html(data);
+                  $("#payModal").modal("show");
+              }
+            });
+        }
+        
+        
+    }
+JS;
+
+$this->registerJs($js, static::POS_END);
+
+?>

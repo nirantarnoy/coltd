@@ -603,7 +603,7 @@ class InboundinvController extends Controller
             if ($model) {
                 $model_paytrans = \backend\models\Inboundpayment::find()->where(['inbound_id' => $inboundid])->sum('amount');
 
-                if ($model->total_amount <= ($payamount + $model_paytrans)) {
+                if ($model->total_amount <= $model_paytrans) {
                     $model->payment_status = 1;
                     if ($model->save(false)) {
                         $closeinv = \backend\models\Inboundinv::find()->where(['id' => $inboundid])->one();

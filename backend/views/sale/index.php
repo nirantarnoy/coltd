@@ -95,7 +95,15 @@ $this->params['breadcrumbs'][] = $this->title;
             //'sale_id',
             //'disc_amount',
             //'disc_percent',
-            //'total_amount',
+            [
+                'attribute'=>'total_amount',
+                'headerOptions' => ['style'=>'text-align: right'],
+                'contentOptions' => ['style'=>'text-align: right'],
+                'format' => 'html',
+                'value' => function($data){
+                    return number_format($data->total_amount,2);
+                }
+            ],
             //'quotation_id',
             //'note',
             [
@@ -160,6 +168,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-pjax' => '0',
                             'data-url'=>$url,
                             'data-var'=> $data->id,
+                            'data-id' => \backend\models\Paymenttrans::findPayamount($data->id),
                             'onclick'=>'payment($(this));'
 
                         ];
@@ -202,6 +211,17 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="modal-body">
                 <form id="form-payment" action="<?=Url::to(['sale/payment'],true)?>" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="saleid" class="saleid" value="">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="">ยอดเต็มที่ต้องชำระ</label>
+                            <input type="text" class="form-control total-amount" name="total_amount" value="" readonly>
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="">ยอดค้างชำระ</label>
+                            <input type="text" class="form-control total-remain-amount" name="total_remain_amount" value="" readonly>
+                        </div>
+                    </div>
+                    <br>
                 <div class="row">
                     <div class="col-lg-6">
                         <label for="">วันที่</label>
@@ -215,7 +235,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <div class="col-lg-6">
                         <label for="">จำนวนเงิน</label>
-                        <input type="text" class="form-control payment-amount" name="amount" value="">
+                        <input type="text" class="form-control payment-amount" name="amount" value="" onchange="checkamount($(this))">
                     </div>
                 </div>
                 <br>
@@ -288,8 +308,13 @@ $js=<<<JS
         //e.preventDefault();
         //var url = e.attr("data-url");
         var xdata = e.attr("data-var");
-       // alert(xdata);
+        var total = e.closest("tr").find("td:eq(4)").html();
+        var total = total.replace(",","");
+        var total_pay = e.attr("data-id");
+        //alert(total);
         $("#paymentModal").modal("show").find(".saleid").val(xdata);
+        $("#paymentModal").modal("show").find(".total-amount").val(total);
+        $("#paymentModal").modal("show").find(".total-remain-amount").val(parseFloat(total)-parseFloat(total_pay));
         // swal({
         //       title: "ต้องการลบรายการนี้ใช่หรือไม่",
         //       text: "",
@@ -301,6 +326,19 @@ $js=<<<JS
         //       e.attr("href",url); 
         //       e.trigger("click");        
         // });
+    }
+    function checkamount(e){
+        var payamount = e.val();
+        if(payamount > 0){
+           var amt = $(".total-amount").val();
+           var total_payment = amt.replace(",","");
+          // alert(total_payment);
+           if(payamount > parseFloat(total_payment)){
+              alert("จำนวนที่ชำระมากกว่ายอดที่ต้องชำระ");
+              e.val(0);
+              return false;
+           }
+        }
     }
 JS;
 

@@ -143,4 +143,35 @@ class ReportController extends Controller
 
         echo $html;
     }
+    public function actionShowsalepayment(){
+        $no = \Yii::$app->request->post('inv_no');
+        $html = '';
+
+        $model_chk = \backend\models\Querypicking::find()->where(['inv_no'=>trim($no)])->one();
+        if($model_chk !=null){
+            if($model_chk->id > 0){
+                $model = \backend\models\Paymenttrans::find()->where(['sale_id'=>$model_chk->id])->all();
+                $i=0;
+                if($model != null){
+                    foreach ($model as $value){
+                        $i+=1;
+                        $html.='<tr>
+                                <td>'.$i.'</td>
+                                <td>'.$value->trans_date .'</td>
+                                <td>'.$value->amount.'</td>
+                                <td>'.$value->note.'</td>
+                                <td>
+                                    <a href="../web/uploads/slip/'.trim($value->slip).'"
+                                       target="_blank">'.$value->slip.'</a>
+                                </td>
+                                <td>
+                                </td>
+                                </tr>';
+                    }
+                }
+            }
+        }
+
+        echo $html;
+    }
 }

@@ -55,5 +55,8 @@ class Paymenttrans extends \common\models\PaymentTrans
         $model = Location::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->name:'';
     }
-
+    public function findPayamount($id){
+        $model = Paymenttrans::find()->where(['sale_id'=>$id])->sum('amount');
+        return $model!=null?$model:0;
+    }
 }

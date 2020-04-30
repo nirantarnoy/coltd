@@ -359,7 +359,7 @@ $this->registerJs('
            var amt = $(".total-amount").val();
            var total_payment = amt.replace(",","");
            //alert(total_payment);
-           if(payment > parseFloat(total_payment)){
+           if(payamount > parseFloat(total_payment)){
               alert("จำนวนที่ชำระมากกว่ายอดที่ต้องชำระ");
               e.val(0);
               return false;
