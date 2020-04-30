@@ -224,7 +224,7 @@ $this->title = 'รายงานสรุปส่งออก';
                                 if ($data->currency_name == 'THB') {
                                     return ($data->price);
                                 }else{
-                                    return ($data->price * $data->currency);
+                                    return ($data->price * $data->rate);
                                 }
 
                                 // }else{
