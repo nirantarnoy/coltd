@@ -200,12 +200,12 @@ $this->title = 'รายงานสรุปส่งออก';
                         [
                             'label' => 'ราคาสินค้า(USD)',
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],
-                             'value' => function($data){
+                            'value' => function ($data) {
                                 $amt = 0;
                                 //$cur = \backend\models\Currency::findName($data->currency);
-                                if($data->currency_name =='USD'){
-                                    return $data->total_amount;
-                                }else{
+                                if ($data->currency_name == 'USD') {
+                                    return $data->price;
+                                } else {
                                     return 0;
                                 }
                             },
@@ -217,19 +217,14 @@ $this->title = 'รายงานสรุปส่งออก';
                         [
                             'label' => 'ราคาสินค้า(THB)',
                             'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],
-                            'value' => function($data){
-                                if($data->currency_name =='THB'){
-                                    return $data->total_amount;
-                                }else{
-                                    return 0;
-                                }
-                                //$amt = 0;
-                               // $cur = \backend\models\Currency::findName($data->currency);
-                              // if($cur =='THB'){
-                               //     return ($data->total_amount * $data->rate);
-                               // }else{
-                               //     return 0;
-                               // }
+                            'value' => function ($data) {
+                                $amt = 0;
+                                // $cur = \backend\models\Currency::findName($data->currency);
+                                // if($cur =='THB'){
+                                return ($data->price * $data->currency);
+                                // }else{
+                                //     return 0;
+                                // }
                             },
                             'hAlign' => 'right',
                             'format' => ['decimal', 2],
