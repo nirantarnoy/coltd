@@ -923,14 +923,8 @@ $js = <<<JS
                  }
                  
                   if(data.length > 0){
-                      if(rate_name =='THB'){
-                            $(".rate").val(data[0]['exc_rate']);
-                            $(".alert-currency").hide();
-                      }else{
-                            $(".rate").val(1);
-                            $(".alert-currency").hide();
-                      }
-                    
+                      $(".rate").val(data[0]['exc_rate']);
+                        $(".alert-currency").hide();
                   }else{
                       $(".alert-currency").html("ไม่พบข้อมูลอัตราแลกเปลี่ยน").show();
                       $(".rate").val('');
