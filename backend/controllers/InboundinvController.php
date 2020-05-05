@@ -506,7 +506,7 @@ class InboundinvController extends Controller
 //                return Json::encode($mode`l);
 //            }
             if ($txt == "*") {
-                $model = \common\models\QueryProduct::find()
+                $model = \common\models\QueryProductInbound::find()
                     ->orderBy(['product_code'=>SORT_ASC])
 //                    ->where(['>','all_qty',0])
 //                    ->andFilterWhere(['!=','stock_id',''])
@@ -515,7 +515,7 @@ class InboundinvController extends Controller
                 return Json::encode($model);
                 //   }
             } else {
-                $model = \common\models\QueryProduct::find()->where(['or', ['Like', 'product_code', $txt], ['Like', 'name', $txt]])
+                $model = \common\models\QueryProductInbound::find()->where(['or', ['Like', 'product_code', $txt], ['Like', 'name', $txt]])
                     ->orFilterWhere(['like', 'product_code', $txt])
                     ->orFilterWhere(['like', 'name', $txt])
 //                    ->andFilterWhere(['>','all_qty',0])
