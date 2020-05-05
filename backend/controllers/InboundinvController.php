@@ -507,6 +507,7 @@ class InboundinvController extends Controller
 //            }
             if ($txt == "*") {
                 $model = \common\models\QueryProduct::find()
+                    ->orderBy(['product_code'=>SORT_ASC])
 //                    ->where(['>','all_qty',0])
 //                    ->andFilterWhere(['!=','stock_id',''])
                     ->asArray()
@@ -519,6 +520,7 @@ class InboundinvController extends Controller
                     ->orFilterWhere(['like', 'name', $txt])
 //                    ->andFilterWhere(['>','all_qty',0])
 //                    ->andFilterWhere(['!=','stock_id',''])
+                    ->orderBy(['product_code'=>SORT_ASC])
                     ->asArray()
                     ->all();
                 return Json::encode($model);
