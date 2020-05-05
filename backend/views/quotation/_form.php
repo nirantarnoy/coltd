@@ -207,6 +207,15 @@ $this->registerCss('
                                 <?php if (count($modelline) > 0): ?>
                                     <?php $i = 0; ?>
                                     <?php foreach ($modelline as $value): ?>
+                                    <?php
+                                          $currency_name = \backend\models\Currency::findName($model->customer_id);
+                                          $line_cost = 0;
+                                          if($currency_name =="USD"){
+                                              $line_cost = \backend\models\Product::findProductinfo($value->product_id)->price_carton_usd;
+                                          }else{
+                                              $line_cost = \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb;
+                                          }
+                                        ?>
                                         <?php $i += 1; ?>
                                         <tr data-var="<?= $value->id ?>">
                                             <td style="vertical-align: middle;text-align: center">
@@ -267,7 +276,7 @@ $this->registerCss('
                                                 <input style="text-align: right" type="text"
                                                        class="form-control line_cost"
                                                        name="cost[]"
-                                                       value="<?= \backend\models\Product::findProductinfo($value->product_id) != null ? \backend\models\Product::findProductinfo($value->product_id)->cost : 0 ?>">
+                                                       value="<?= $line_cost?>">
                                             </td>
                                             <td>
                                                 <input type="hidden" name="line_price_origin" class="line-price-origin"
