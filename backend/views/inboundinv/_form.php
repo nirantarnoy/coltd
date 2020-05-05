@@ -452,30 +452,38 @@ use kartik\time\TimePicker;
 
             </div>
             <div class="modal-body" style="white-space:nowrap;overflow-y: auto">
-                <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
-                <table class="table table-bordered table-striped table-list">
-                    <thead>
-                    <tr>
-                        <th style="text-align: center">เลือก</th>
-                        <th>รหัสสินค้า</th>
-                        <th>รายละเอียด</th>
-                        <th>ขวด/ลัง</th>
-                        <th>สิตร/ขวด</th>
-                        <th>แอลกอฮอร์ %</th>
-                        <th>พิกัด</th>
-                        <th>ชนิดสินค้า</th>
-                        <th>ประเทศ</th>
-                        <th>เลข28หลัก</th>
-                        <th>วันที่เลข28หลัก</th>
-                        <th>ราคาขายปลีก</th>
+                <div class="wmd-view-topscroll" style=" overflow-x: scroll;overflow-y: hidden;width: 100%;">
+                    <div id="div1" style="width: 2000px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="wmd-view" style="overflow-x: scroll;overflow-y: hidden;width: 100%;;white-space:nowrap;">
+                    <div style="display: inline-block;">
+                        <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
+                        <table class="table table-bordered table-striped table-list">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">เลือก</th>
+                                <th>รหัสสินค้า</th>
+                                <th>รายละเอียด</th>
+                                <th>ขวด/ลัง</th>
+                                <th>สิตร/ขวด</th>
+                                <th>แอลกอฮอร์ %</th>
+                                <th>พิกัด</th>
+                                <th>ชนิดสินค้า</th>
+                                <th>ประเทศ</th>
+                                <th>เลข28หลัก</th>
+                                <th>วันที่เลข28หลัก</th>
+                                <th>ราคาขายปลีก</th>
 
-                    </tr>
-                    </thead>
-                    <tbody>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                    </tbody>
-                </table>
-
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i
@@ -584,6 +592,16 @@ $js = <<<JS
  var quote = '$model->id';
  $(function(){
      cal_all();
+     
+     $(".wmd-view-topscroll").scroll(function () {
+            $(".wmd-view")
+            .scrollLeft($(".wmd-view-topscroll").scrollLeft());
+        });
+
+        $(".wmd-view").scroll(function () {
+            $(".wmd-view-topscroll")
+            .scrollLeft($(".wmd-view").scrollLeft());
+        });
     
      $(".btn-firm-sale").click(function(){
         if(confirm("ต้องการเปิดใบออเดอร์ใช่หรือไม่")){
