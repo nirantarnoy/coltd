@@ -940,12 +940,14 @@ $js = <<<JS
   function re_cal(currency_name) {
         if(currency_name == "THB"){
             $(".table-quotation tbody tr").each(function() {
+                var line_price_usd =  $(this).closest('tr').find(".line-price-origin").val();
                 var line_price =  $(this).closest('tr').find(".line-price-origin-thb").val();
                 var line_qty =  $(this).closest('tr').find(".line_qty").val();
               //  alert(line_price);
                 var cur_rate = $(".rate").val();
-                var new_price = parseFloat(line_price) * parseFloat(cur_rate);
+                var new_price = parseFloat(line_price) * parseFloat(line_price_usd);
                 var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
+                $(this).closest('tr').find(".line_cost").val(new_price);
                 $(this).closest('tr').find(".line_price").val(new_price);
                 $(this).closest('tr').find(".line_total").val(new_line_total);
             });
