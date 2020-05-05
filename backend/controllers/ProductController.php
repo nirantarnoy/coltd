@@ -478,7 +478,6 @@ class ProductController extends Controller
                             continue;
                         }
 
-
                         $modelx = new \backend\models\Product();
                         $modelx->product_code = $rowData[0];
                         $modelx->barcode = $rowData[0];
@@ -495,6 +494,7 @@ class ProductController extends Controller
                         $modelx->volumn_content = $rowData[4];
                         $modelx->excise_no = $rowData[8];
                         $modelx->all_qty = (int)$qty;
+                        $modelx->price_carton_usd = $price;
                         $modelx->price_carton_thb = str_replace(",", "", $rowData[24]); //ราคาต่อลัง
                         $modelx->excise_date = date('Y-m-d',strtotime($excise_date)) ;// date('Y-m-d', strtotime($rowData[9]));
                         $modelx->netweight = $rowData[27];
