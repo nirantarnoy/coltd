@@ -223,7 +223,7 @@ $this->registerCss('
                                             <td>
                                                 <input type="hidden" class="productid" name="productid[]"
                                                        value="<?= $value->product_id ?>">
-                                                <input type="hidden" class="stock_qty" value="0">
+                                                <input type="hidden" class="stock_qty" value="<?=\backend\models\Product::findStock($value->product_id)?>">
                                                 <input type="hidden" class="stock-id" name="stock_id[]"
                                                        value="<?= $value->stock_id ?>">
                                                 <input type="text" autocomplete="off" class="form-control productcode"
