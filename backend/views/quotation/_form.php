@@ -45,7 +45,7 @@ $this->registerCss('
 ?>
 
 <div class="quotation-form">
-    <input type="hidden" class="action-mode" value="<?=$model->isNewRecord?1:2?>">
+    <input type="hidden" class="action-mode" value="<?= $model->isNewRecord ? 1 : 2 ?>">
     <div class="panel panel-headline">
         <div class="panel-heading">
         </div>
@@ -284,13 +284,13 @@ $this->registerCss('
                                             </td>
                                             <td>
                                                 <input type="hidden" name="line_price_origin" class="line-price-origin"
-                                                       value="<?=\backend\models\Product::findProductinfo($value->product_id)->price_carton_usd?>">
+                                                       value="<?= \backend\models\Product::findProductinfo($value->product_id)->price_carton_usd ?>">
                                                 <input type="hidden" name="line_price_origin_thb"
                                                        class="line-price-origin-thb"
-                                                       value="<?=\backend\models\Product::findProductinfo($value->product_id)->price_carton_thb?>">
+                                                       value="<?= \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb ?>">
                                                 <input type="hidden" name="line_price_origin_thb_origin"
                                                        class="line-price-origin-thb-origin"
-                                                       value="<?=\backend\models\Product::findProductinfo($value->product_id)->price_carton_thb?>">
+                                                       value="<?= \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb ?>">
                                                 <input style="text-align: right" type="text"
                                                        class="form-control line_price" name="price[]"
                                                        value="<?= $value->price ?>" onchange="cal_num($(this));">
@@ -433,46 +433,57 @@ $this->registerCss('
             </div>
             <!--            <div class="modal-body" style="white-space:nowrap;overflow-y: auto">-->
             <!--            <div class="modal-body" style="white-space:nowrap;overflow-y: auto;scrollbar-x-position: top">-->
-            <div id="wrapper1">
-                <div id="div1">
+
+            <div class="modal-body">
+                <!--                <div class="modal-product-list" style="width: 100%;overflow-y: auto;white-space:nowrap;">-->
+                <div class="wmd-view-topscroll" style=" overflow-x: scroll;overflow-y: hidden;width: 100%;">
+                    <div id="div1" style="width: 1000px;">
+                        &nbsp;
+                    </div>
                 </div>
+<!--                <div class="table-responsive">-->
+                    <div class="wmd-view" style="overflow-x: scroll;overflow-y: hidden;width: 100%;;white-space:nowrap;">
+                        <div style="display: inline-block;">
+                            <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
+                            <table class="table table-bordered table-striped table-list">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: center">เลือก</th>
+                                    <th>รหัสสินค้า</th>
+                                    <th>รายละเอียด</th>
+                                    <th>คงเหลือ</th>
+                                    <th>Origin</th>
+                                    <th>ปริมาณ/ลัง</th>
+                                    <th>ลิตร/ขวด</th>
+                                    <th>%</th>
+                                    <th>คลัง</th>
+                                    <th>inv</th>
+                                    <th>inv.date</th>
+                                    <th>ใบอนุญาต</th>
+                                    <th>วันที่</th>
+                                    <th>ใบขน</th>
+                                    <th>วันที่</th>
+                                    <th>ลำดับ</th>
+                                    <th>สรรพสามิตร</th>
+                                    <th>กนอ.</th>
+                                    <th>วันที่</th>
+                                    <th>เข้า</th>
+                                    <th>ออก</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+<!--                </div>-->
+
             </div>
-            <div class="modal-product-list" style="width: 100%;overflow-y: auto;white-space:nowrap;">
-                <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
-                <table class="table table-bordered table-striped table-list">
-                    <thead>
-                    <tr>
-                        <th style="text-align: center">เลือก</th>
-                        <th>รหัสสินค้า</th>
-                        <th>รายละเอียด</th>
-                        <th>คงเหลือ</th>
-                        <th>Origin</th>
-                        <th>ปริมาณ/ลัง</th>
-                        <th>ลิตร/ขวด</th>
-                        <th>%</th>
-                        <th>คลัง</th>
-                        <th>inv</th>
-                        <th>inv.date</th>
-                        <th>ใบอนุญาต</th>
-                        <th>วันที่</th>
-                        <th>ใบขน</th>
-                        <th>วันที่</th>
-                        <th>ลำดับ</th>
-                        <th>สรรพสามิตร</th>
-                        <th>กนอ.</th>
-                        <th>วันที่</th>
-                        <th>เข้า</th>
-                        <th>ออก</th>
 
-
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-
-            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i
                             class="fa fa-close text-danger"></i> ปิดหน้าต่าง
@@ -509,18 +520,18 @@ $js = <<<JS
  
  $(function(){
      cal_all();
-     //$(".modal-product-list").doubleScroll();
-     var x = 1;
-     $(".modal-product-list").scroll(function() {
-         
-        if (x == 1) {
-            x = 0;
-            $(".wrapper1")
-                .scrollLeft($(".wrapper1").scrollLeft());
-        } else {
-            x = 1;
-        }
-    });
+    // $(".modal-product-list").doubleScroll();
+    
+        $(".wmd-view-topscroll").scroll(function () {
+            $(".wmd-view")
+            .scrollLeft($(".wmd-view-topscroll").scrollLeft());
+        });
+
+        $(".wmd-view").scroll(function () {
+            $(".wmd-view-topscroll")
+            .scrollLeft($(".wmd-view").scrollLeft());
+        });
+     
      
      $(".btn-firm-sale").click(function(){
         if(confirm("ต้องการเปิดใบออเดอร์ใช่หรือไม่")){
