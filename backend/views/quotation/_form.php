@@ -437,7 +437,7 @@ $this->registerCss('
             <div class="modal-body">
                 <!--                <div class="modal-product-list" style="width: 100%;overflow-y: auto;white-space:nowrap;">-->
                 <div class="wmd-view-topscroll" style=" overflow-x: scroll;overflow-y: hidden;width: 100%;">
-                    <div id="div1" style="width: 2500px;">
+                    <div id="div1" style="width: 2200px;">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
