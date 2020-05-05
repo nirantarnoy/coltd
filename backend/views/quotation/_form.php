@@ -948,8 +948,8 @@ $js = <<<JS
                 var new_price = parseFloat(line_price) * parseFloat(line_price_usd);
                 var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
                 $(this).closest('tr').find(".line_cost").val(new_price);
-                $(this).closest('tr').find(".line_price").val(new_price);
-                $(this).closest('tr').find(".line_total").val(new_line_total);
+                $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
+                $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
             });
         }else{
             $(".table-quotation tbody tr").each(function() {
@@ -957,10 +957,10 @@ $js = <<<JS
                 var line_qty =  $(this).closest('tr').find(".line_qty").val();
               //  alert(line_price);
                 var cur_rate = $(".rate").val();
-                var new_price = parseFloat(line_price) * parseFloat(cur_rate);
+                var new_price = parseFloat(line_price).toFixed(2);
                 var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
-                $(this).closest('tr').find(".line_price").val(new_price);
-                $(this).closest('tr').find(".line_total").val(new_line_total);
+                $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
+                $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
            });
         }
         
