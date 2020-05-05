@@ -500,6 +500,7 @@ $js = <<<JS
  var currow = 0;
  var  removelist = [];
  var quote = '$model->id';
+ var currency_name = '';
  $(function(){
      cal_all();
      //$(".modal-product-list").doubleScroll();
@@ -871,6 +872,7 @@ $js = <<<JS
                 $(this).closest('tr').find(".line-price-origin").val(prodprice);
                 $(this).closest('tr').find(".line-price-origin-thb").val(prodprice_thb);
         }
+        re_cal();
         cal_num($(this));
     });
     $("#findModal").modal("hide");
@@ -916,6 +918,7 @@ $js = <<<JS
                  //  alert(q_date);
                  var exp_date = data[0]['exp_date'];
                  var rate_name = data[0]['currency'];
+                 currency_name = rate_name;
                  if(exp_date < q_date && rate_name !='THB'){
                        $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว หรือ ยังไม่ได้ป้อนค่าอัตราแลกเปลี่ยน").show();
                       $(".rate").val('');
@@ -930,14 +933,14 @@ $js = <<<JS
                       $(".rate").val('');
                       return false;
                   } 
-                  re_cal(rate_name);
+                  re_cal();
               }
               
          });
          
      }
  }
-  function re_cal(currency_name) {
+  function re_cal() {
         if(currency_name == "THB"){
             $(".table-quotation tbody tr").each(function() {
                 var line_price_usd =  $(this).closest('tr').find(".line-price-origin").val();
@@ -959,6 +962,7 @@ $js = <<<JS
                 var cur_rate = $(".rate").val();
                 var new_price = parseFloat(line_price).toFixed(2);
                 var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
+                 $(this).closest('tr').find(".line_cost").val(line_price);
                 $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
                 $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
            });
