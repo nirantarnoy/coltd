@@ -478,13 +478,11 @@ class ProductController extends Controller
                             continue;
                         }
 
+                        $usd2 = str_replace(",", "", $rowData[21]);
+                        $thb2 = str_replace(",", "", $rowData[22]);
 
-                        $thb_price = str_replace(",", "", $rowData[24]);
-                        if($thb_price == '' || $thb_price == null){
-                            $thb_price = 0;
-                        }else{
-                            $thb_price = ($usd * $thb);
-                        }
+                        $thb_price = ($usd2 * $thb2);
+
 
 
                         $modelx = new \backend\models\Product();
