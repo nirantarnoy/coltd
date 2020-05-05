@@ -191,6 +191,8 @@ $this->registerCss('
                                     <td>
                                         <input type="hidden" name="line_price_origin" class="line-price-origin"
                                                value="">
+                                        <input type="hidden" name="line_price_origin_thb" class="line-price-origin-thb"
+                                               value="">
                                         <input style="text-align: right" type="text" class="form-control line_price"
                                                name="price[]" value="" onchange="cal_num($(this));">
                                     </td>
@@ -207,14 +209,14 @@ $this->registerCss('
                                 <?php if (count($modelline) > 0): ?>
                                     <?php $i = 0; ?>
                                     <?php foreach ($modelline as $value): ?>
-                                    <?php
-                                          $currency_name = \backend\models\Currency::findName($model->customer_id);
-                                          $line_cost = 0;
-                                          if($currency_name =="USD"){
-                                              $line_cost = \backend\models\Product::findProductinfo($value->product_id)->price_carton_usd;
-                                          }else{
-                                              $line_cost = \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb;
-                                          }
+                                        <?php
+                                        $currency_name = \backend\models\Currency::findName($model->customer_id);
+                                        $line_cost = 0;
+                                        if ($currency_name == "USD") {
+                                            $line_cost = \backend\models\Product::findProductinfo($value->product_id)->price_carton_usd;
+                                        } else {
+                                            $line_cost = \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb;
+                                        }
                                         ?>
                                         <?php $i += 1; ?>
                                         <tr data-var="<?= $value->id ?>">
@@ -232,7 +234,8 @@ $this->registerCss('
                                             <td>
                                                 <input type="hidden" class="productid" name="productid[]"
                                                        value="<?= $value->product_id ?>">
-                                                <input type="hidden" class="stock_qty" value="<?=\backend\models\Product::findStock($value->product_id)?>">
+                                                <input type="hidden" class="stock_qty"
+                                                       value="<?= \backend\models\Product::findStock($value->product_id) ?>">
                                                 <input type="hidden" class="stock-id" name="stock_id[]"
                                                        value="<?= $value->stock_id ?>">
                                                 <input type="text" autocomplete="off" class="form-control productcode"
@@ -276,10 +279,13 @@ $this->registerCss('
                                                 <input style="text-align: right" type="text"
                                                        class="form-control line_cost"
                                                        name="cost[]"
-                                                       value="<?= $line_cost?>">
+                                                       value="<?= $line_cost ?>">
                                             </td>
                                             <td>
                                                 <input type="hidden" name="line_price_origin" class="line-price-origin"
+                                                       value="">
+                                                <input type="hidden" name="line_price_origin_thb"
+                                                       class="line-price-origin-thb"
                                                        value="">
                                                 <input style="text-align: right" type="text"
                                                        class="form-control line_price" name="price[]"
@@ -431,31 +437,31 @@ $this->registerCss('
                 <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
                 <table class="table table-bordered table-striped table-list">
                     <thead>
-                        <tr>
-                            <th style="text-align: center">เลือก</th>
-                            <th>รหัสสินค้า</th>
-                            <th>รายละเอียด</th>
-                            <th>คงเหลือ</th>
-                            <th>Origin</th>
-                            <th>ปริมาณ/ลัง</th>
-                            <th>ลิตร/ขวด</th>
-                            <th>%</th>
-                            <th>คลัง</th>
-                            <th>inv</th>
-                            <th>inv.date</th>
-                            <th>ใบอนุญาต</th>
-                            <th>วันที่</th>
-                            <th>ใบขน</th>
-                            <th>วันที่</th>
-                            <th>ลำดับ</th>
-                            <th>สรรพสามิตร</th>
-                            <th>กนอ.</th>
-                            <th>วันที่</th>
-                            <th>เข้า</th>
-                            <th>ออก</th>
+                    <tr>
+                        <th style="text-align: center">เลือก</th>
+                        <th>รหัสสินค้า</th>
+                        <th>รายละเอียด</th>
+                        <th>คงเหลือ</th>
+                        <th>Origin</th>
+                        <th>ปริมาณ/ลัง</th>
+                        <th>ลิตร/ขวด</th>
+                        <th>%</th>
+                        <th>คลัง</th>
+                        <th>inv</th>
+                        <th>inv.date</th>
+                        <th>ใบอนุญาต</th>
+                        <th>วันที่</th>
+                        <th>ใบขน</th>
+                        <th>วันที่</th>
+                        <th>ลำดับ</th>
+                        <th>สรรพสามิตร</th>
+                        <th>กนอ.</th>
+                        <th>วันที่</th>
+                        <th>เข้า</th>
+                        <th>ออก</th>
 
 
-                        </tr>
+                    </tr>
                     </thead>
                     <tbody>
 
@@ -813,6 +819,7 @@ $js = <<<JS
     var prodid = e.closest("tr").find(".recid").val();
     var prodcost = e.closest("tr").find(".prodcost").val();
     var prodprice = e.closest("tr").find(".prodprice").val();
+    var prodprice_thb = e.closest("tr").find(".stock_price").val();
     var unitfactor = e.closest("tr").find(".unitfactor").val();
     var stock_id = e.closest("tr").find(".stock_refid").val();
     var stock_price = e.closest("tr").find(".stock_price").val();
@@ -862,6 +869,7 @@ $js = <<<JS
               $(this).closest('tr').find(".line_percent").val(volumn_content);
               
                 $(this).closest('tr').find(".line-price-origin").val(prodprice);
+                $(this).closest('tr').find(".line-price-origin-thb").val(prodprice_thb);
         }
         cal_num($(this));
     });
@@ -885,7 +893,7 @@ $js = <<<JS
  }
  
  function checkRate(e){
-     var c_m = 0;
+      var c_m = 0;
       var q_date = new Date();
                   var q_date_arr = $(".quotation_date").val().split('/');
                   if(q_date_arr.length >0){
@@ -922,25 +930,40 @@ $js = <<<JS
                       $(".rate").val('');
                       return false;
                   } 
-                  re_cal();
+                  re_cal(rate_name);
               }
               
          });
          
      }
  }
-  function re_cal() {
-   $(".table-quotation tbody tr").each(function() {
-        var line_price =  $(this).closest('tr').find(".line-price-origin").val();
-        var line_qty =  $(this).closest('tr').find(".line_qty").val();
-      //  alert(line_price);
-        var cur_rate = $(".rate").val();
-        var new_price = parseFloat(line_price) * parseFloat(cur_rate);
-        var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
-        $(this).closest('tr').find(".line_price").val(new_price);
-        $(this).closest('tr').find(".line_total").val(new_line_total);
+  function re_cal(currency_name) {
+        if(currency_name == "THB"){
+            $(".table-quotation tbody tr").each(function() {
+                var line_price =  $(this).closest('tr').find(".line-price-origin-thb").val();
+                var line_qty =  $(this).closest('tr').find(".line_qty").val();
+              //  alert(line_price);
+                var cur_rate = $(".rate").val();
+                var new_price = parseFloat(line_price) * parseFloat(cur_rate);
+                var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
+                $(this).closest('tr').find(".line_price").val(new_price);
+                $(this).closest('tr').find(".line_total").val(new_line_total);
+            });
+        }else{
+            $(".table-quotation tbody tr").each(function() {
+                var line_price =  $(this).closest('tr').find(".line-price-origin").val();
+                var line_qty =  $(this).closest('tr').find(".line_qty").val();
+              //  alert(line_price);
+                var cur_rate = $(".rate").val();
+                var new_price = parseFloat(line_price) * parseFloat(cur_rate);
+                var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
+                $(this).closest('tr').find(".line_price").val(new_price);
+                $(this).closest('tr').find(".line_total").val(new_line_total);
+           });
+        }
+        
         cal_all();
-    });
+    
  }
  
 JS;
