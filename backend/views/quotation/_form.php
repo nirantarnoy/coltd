@@ -950,18 +950,20 @@ $js = <<<JS
         if(currency_name == "THB"){
             $(".table-quotation tbody tr").each(function() {
                 var line_price_usd =  $(this).closest('tr').find(".line-price-origin").val();
-                var line_price = 0;
-                if(action_mode == 1){
-                      var line_price =  $(this).closest('tr').find(".line-price-origin-thb").val();
-                }else{
-                     var line_price =  $(this).closest('tr').find(".line-price-origin-thb-origin").val();
-                }
+                var line_price =  $(this).closest('tr').find(".line-price-origin-thb").val();
+                var new_price = parseFloat(line_price);  
                 
+                // if(action_mode == 1){
+                //       var new_price = parseFloat(line_price) * parseFloat(line_price_usd);  
+                // }else{
+                //      var new_price = parseFloat(line_price) * parseFloat(line_price_usd);
+                // }
+                //
               
                 var line_qty =  $(this).closest('tr').find(".line_qty").val();
              
                 var cur_rate = $(".rate").val();
-                var new_price = parseFloat(line_price) * parseFloat(line_price_usd);
+              
                 var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
                 $(this).closest('tr').find(".line_cost").val(parseFloat(new_price).toFixed(2));
                 $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
