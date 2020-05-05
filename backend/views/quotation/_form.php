@@ -210,7 +210,7 @@ $this->registerCss('
                                     <?php $i = 0; ?>
                                     <?php foreach ($modelline as $value): ?>
                                         <?php
-                                        $currency_name = \backend\models\Currency::findName($model->customer_id);
+                                        $currency_name = \backend\models\Currency::findName($model->currency);
                                         $line_cost = 0;
                                         if ($currency_name == "USD") {
                                             $line_cost = \backend\models\Product::findProductinfo($value->product_id)->price_carton_usd;
