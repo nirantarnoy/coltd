@@ -478,6 +478,15 @@ class ProductController extends Controller
                             continue;
                         }
 
+
+                        $thb_price = str_replace(",", "", $rowData[24]);
+                        if($thb_price == '' || $thb_price == null){
+                            $thb_price = 0;
+                        }else{
+                            $thb_price = ($usd * $thb);
+                        }
+
+
                         $modelx = new \backend\models\Product();
                         $modelx->product_code = $rowData[0];
                         $modelx->barcode = $rowData[0];
@@ -495,7 +504,7 @@ class ProductController extends Controller
                         $modelx->excise_no = $rowData[8];
                         $modelx->all_qty = (int)$qty;
                         $modelx->price_carton_usd = $price;
-                        $modelx->price_carton_thb = str_replace(",", "", $rowData[24]); //ราคาต่อลัง
+                        $modelx->price_carton_thb = $thb_price; //ราคาต่อลัง
                         $modelx->excise_date = date('Y-m-d',strtotime($excise_date)) ;// date('Y-m-d', strtotime($rowData[9]));
                         $modelx->netweight = $rowData[27];
                         $modelx->grossweight = $rowData[28];
