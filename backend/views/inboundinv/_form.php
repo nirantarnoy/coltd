@@ -140,6 +140,7 @@ use kartik\time\TimePicker;
 
                             <td>
                                 <input type="hidden" name="line_price_origin" class="line-price-origin" value="">
+                                <input type="hidden" name="line_price_origin" class="line-price-origin-thb" value="">
                                 <input style="text-align: right" type="text" class="form-control line_price"
                                        name="price[]" value="" onchange="cal_num($(this));">
                             </td>
@@ -214,6 +215,13 @@ use kartik\time\TimePicker;
                                     <td>
                                         <input type="hidden" name="line_price_origin" class="line-price-origin"
                                                value="">
+                                        <input type="hidden" name="line_price_origin_thb"
+                                               class="line-price-origin-thb"
+                                               value="<?= \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb ?>">
+                                        <input type="hidden" name="line_price_origin_thb_origin"
+                                               class="line-price-origin-thb-origin"
+                                               value="<?= \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb ?>">
+
                                         <input style="text-align: right" type="text" class="form-control line_price"
                                                name="price[]" value="<?= $value->line_price ?>"
                                                onchange="cal_num($(this));">
@@ -590,6 +598,7 @@ $js = <<<JS
  var currow = 0;
  var  removelist = [];
  var quote = '$model->id';
+ currency_name = '';
  $(function(){
      cal_all();
      
@@ -976,6 +985,7 @@ $js = <<<JS
                 if(data[0]!= null){
                  var exp_date = data[0]['exp_date'];
                  var rate_name = data[0]['currency'];
+                 currency_name = rate_name;
                 // alert(exp_date +' = '+ q_date);
                 //alert(data);
                  if(exp_date < q_date && rate_name !='THB'){
@@ -1003,17 +1013,53 @@ $js = <<<JS
  }
  
  function re_cal() {
-   $(".table-quotation tbody tr").each(function() {
-        var line_price =  $(this).closest('tr').find(".line-price-origin").val();
-        var line_qty =  $(this).closest('tr').find(".line_qty").val();
-        //alert(line_price);
-        var cur_rate = $(".rate").val();
-        var new_price = parseFloat(line_price) * parseFloat(cur_rate);
-        var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
-        $(this).closest('tr').find(".line_price").val(new_price);
-        $(this).closest('tr').find(".line_total").val(new_line_total);
-        cal_all();
-    });
+     if(currency_name == "THB"){
+            $(".table-quotation tbody tr").each(function() {
+                var line_price_usd =  $(this).closest('tr').find(".line-price-origin").val();
+                var line_price =  $(this).closest('tr').find(".line-price-origin-thb").val();
+                var new_price = parseFloat(line_price);  
+                
+                // if(action_mode == 1){
+                //       var new_price = parseFloat(line_price) * parseFloat(line_price_usd);  
+                // }else{
+                //      var new_price = parseFloat(line_price) * parseFloat(line_price_usd);
+                // }
+                //
+              
+                var line_qty =  $(this).closest('tr').find(".line_qty").val();
+             
+                var cur_rate = $(".rate").val();
+              
+                var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
+                $(this).closest('tr').find(".line_cost").val(parseFloat(new_price).toFixed(2));
+                $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
+                $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
+            });
+        }else{
+            $(".table-quotation tbody tr").each(function() {
+                var line_price =  $(this).closest('tr').find(".line-price-origin").val();
+                var line_qty =  $(this).closest('tr').find(".line_qty").val();
+              
+                var cur_rate = $(".rate").val();
+                var new_price = parseFloat(line_price).toFixed(2);
+                var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
+                
+                $(this).closest('tr').find(".line_cost").val(parseFloat(new_price).toFixed(2));
+                $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
+                $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
+           });
+        }
+   // $(".table-quotation tbody tr").each(function() {
+   //      var line_price =  $(this).closest('tr').find(".line-price-origin").val();
+   //      var line_qty =  $(this).closest('tr').find(".line_qty").val();
+   //      //alert(line_price);
+   //      var cur_rate = $(".rate").val();
+   //      var new_price = parseFloat(line_price) * parseFloat(cur_rate);
+   //      var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
+   //      $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
+   //      $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
+   //      cal_all();
+   //  });
  }
  
  function editpay(e) {
@@ -1055,7 +1101,8 @@ $js = <<<JS
               return false;
            }
         }
-    }
+ }
+ 
  
 JS;
 $this->registerJs($js, static::POS_END);
