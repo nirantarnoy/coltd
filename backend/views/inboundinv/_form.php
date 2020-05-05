@@ -912,6 +912,7 @@ $js = <<<JS
     var prodid = e.closest("tr").find(".recid").val();
     var prodcost = e.closest("tr").find(".prodcost").val();
     var prodprice = e.closest("tr").find(".prodprice").val();
+       var prodprice_thb = e.closest("tr").find(".stock_price").val();
     var unitfactor = e.closest("tr").find(".unitfactor").val();
     var stock_id = e.closest("tr").find(".stock_refid").val();
     var stock_price = e.closest("tr").find(".stock_price").val();
@@ -944,6 +945,8 @@ $js = <<<JS
               $(this).closest('tr').find(".line_packper").val(unitfactor);
               $(this).closest('tr').find(".line_litre").val(volumn_content);
               $(this).closest('tr').find(".line_percent").val(volumn);
+                $(this).closest('tr').find(".line-price-origin").val(prodprice);
+                $(this).closest('tr').find(".line-price-origin-thb").val(prodprice_thb);
         }
         cal_num($(this));
     });
