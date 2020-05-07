@@ -872,7 +872,7 @@ $js = <<<JS
                  }
               });
             
-               $(this).closest('tr').find("td:eq(1)").html(html_photo);
+              $(this).closest('tr').find("td:eq(1)").html(html_photo);
               $(this).closest('tr').find(".productcode").val(prodcode);
               $(this).closest('tr').find(".stock_qty").val(stock_qty);
               $(this).closest('tr').find(".productname").val(prodname);
@@ -886,8 +886,8 @@ $js = <<<JS
               $(this).closest('tr').find(".line_litre").val(volumn);
               $(this).closest('tr').find(".line_percent").val(volumn_content);
               
-                $(this).closest('tr').find(".line-price-origin").val(prodprice);
-                $(this).closest('tr').find(".line-price-origin-thb").val(prodprice_thb);
+              $(this).closest('tr').find(".line-price-origin").val(prodprice);
+              $(this).closest('tr').find(".line-price-origin-thb").val(prodprice_thb);
         }
         re_cal();
         cal_num($(this));
@@ -952,9 +952,7 @@ $js = <<<JS
                   } 
                   re_cal();
               }
-              
          });
-         
      }
  }
   function re_cal() {

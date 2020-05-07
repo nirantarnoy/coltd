@@ -148,7 +148,7 @@ class QuotationController extends Controller
                             $modelcheck->qty = $lineqty[$i];
                             $modelcheck->price = $lineprice[$i];
                             $modelcheck->line_amount = $lineqty[$i] * $lineprice[$i];
-                            $modelcheck->stock_id = $stockid;
+                            $modelcheck->stock_id = $stockid[$i];
                             $modelcheck->save();
                         }else{
                             $modelline = new \backend\models\Quotationline();
