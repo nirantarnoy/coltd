@@ -53,7 +53,7 @@ class QueryPicking extends \yii\db\ActiveRecord
             [['month', 'customer_country', 'payment_status', 'currency'], 'integer'],
             [['picking_date', 'permit_date', 'inv_date', 'kno_out_date', 'transport_out_date'], 'safe'],
             [['qty', 'price', 'rate_factor', 'rate'], 'number'],
-            [['picking_no', 'unit_name', 'permit_no', 'inv_no', 'trans_out_no', 'kno_out_no', 'transport_out_no', 'customer_name', 'product_group', 'note', 'currency_name', 'sale_no'], 'string', 'max' => 255],
+            [[ 'unit_name', 'permit_no', 'inv_no', 'trans_out_no', 'kno_out_no', 'transport_out_no', 'customer_name', 'product_group', 'note', 'currency_name', 'sale_no'], 'string', 'max' => 255],
             [['country_name'], 'string', 'max' => 100],
         ];
     }
@@ -64,7 +64,7 @@ class QueryPicking extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'picking_no' => 'Picking No',
+            //'picking_no' => 'Picking No',
             'month' => 'Month',
             'picking_date' => 'Picking Date',
             'qty' => 'Qty',
