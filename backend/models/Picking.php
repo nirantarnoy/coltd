@@ -115,4 +115,8 @@ class Picking extends \common\models\Picking
             return '';
         }
     }
+    public function findLineInv($id,$product_id){
+        $model = \backend\models\Pickingline::find()->where(['picking_id'=>$id,'product_id'=>$product_id])->one();
+        return $model!=null?$model->inv_no:'';
+    }
 }

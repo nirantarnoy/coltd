@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     if ($data->inbound_id > 0) {
                                         return $data->invoice_no;
                                     }else if($data->outbound_id > 0){
-                                        return $data->invoice_no;
+                                        return \backend\models\Picking::findLineInv($data->outbound_id,$data->product_id);
                                     }
                                 }
                             ],
