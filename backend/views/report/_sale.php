@@ -263,7 +263,7 @@ $this->title = 'รายงานสรุปส่งออก';
                             'contentOptions' => ['style' => 'vertical-align: middle'],
                             'value' => function ($data) {
 
-                                $html = "<div class='btn btn-info' data-var='".$data->inv_no."' onclick='showPay($(this))'>ดูเอกสาร</div>";
+                                $html = "<div class='btn btn-info' data-var='".$data->sale_no."' onclick='showPay($(this))'>ดูเอกสาร</div>";
                                 return $html;
                             }
                         ],
