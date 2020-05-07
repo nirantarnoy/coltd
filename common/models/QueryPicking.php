@@ -53,7 +53,7 @@ class QueryPicking extends \yii\db\ActiveRecord
             [['month', 'customer_country', 'payment_status', 'currency'], 'integer'],
             [['picking_date', 'inv_date', 'kno_out_date', 'transport_out_date'], 'safe'],
             [['qty', 'price', 'rate_factor', 'rate'], 'number'],
-            [[ 'unit_name', 'inv_no', 'trans_out_no', 'kno_out_no', 'transport_out_no', 'customer_name', 'product_group', 'note', 'currency_name', 'sale_no'], 'string', 'max' => 255],
+            [[ 'unit_name', 'trans_out_no', 'kno_out_no', 'transport_out_no', 'customer_name', 'product_group', 'note', 'currency_name', 'sale_no'], 'string', 'max' => 255],
             [['country_name'], 'string', 'max' => 100],
         ];
     }
@@ -71,7 +71,7 @@ class QueryPicking extends \yii\db\ActiveRecord
             'unit_name' => 'Unit Name',
           //  'permit_no' => 'Permit No',
           //  'permit_date' => 'Permit Date',
-            'inv_no' => 'Inv No',
+          //  'inv_no' => 'Inv No',
             'price' => 'Price',
             'inv_date' => 'Inv Date',
             'trans_out_no' => 'Trans Out No',
