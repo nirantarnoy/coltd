@@ -191,7 +191,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $data->out_qty != null ? ($data->out_qty * -1) : 0;
                                 }
                             }],
-                        'invoice_no',
+                        [
+                            'label' => 'Inv.no',
+                            'value' => function ($data) {
+                                if ($data->inbound_id > 0) {
+                                    return $data->invoice_no;
+                                }else if($data->outbound_id > 0){
+                                    return \backend\models\Picking::findLineInv($data->outbound_id,$data->product_id);
+                                }
+                            }
+                        ],
                         ['attribute' => 'invoice_date', 'value' => function ($data) {
                             return date('Y', strtotime($data->invoice_date)) == 1970 ? '' : date('d-m-Y', strtotime($data->invoice_date));
                         }],
