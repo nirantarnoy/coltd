@@ -19,7 +19,7 @@ use kartik\time\TimePicker;
     <div class="panel panel-body">
         <div class="row">
             <div class="col-lg-4">
-                <?= $form->field($model, 'invoice_no')->textInput(['maxlength' => true, 'readonly' => 'readonly', 'value' => $model->isNewRecord ? $runno : $model->invoice_no]) ?>
+                <?= $form->field($model, 'invoice_no')->textInput(['maxlength' => true, 'value' => $model->isNewRecord ? $runno : $model->invoice_no]) ?>
             </div>
             <div class="col-lg-4">
                 <?php $model->invoice_date = $model->isNewRecord ? date('d/m/Y') : date('d/m/Y', strtotime($model->invoice_date)); ?>
