@@ -344,7 +344,7 @@ $js = <<<JS
     function showPay(e){
         var invoice_no = e.attr('data-var');
         if(invoice_no !=''){
-           alert(invoice_no);
+          // alert(invoice_no);
             $.ajax({
               'type':'post',
               'dataType': 'html',
