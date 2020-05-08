@@ -147,7 +147,7 @@ class ReportController extends Controller
         $no = \Yii::$app->request->post('inv_no');
         $html = '';
 
-        $model_chk = \backend\models\Querypicking::find()->where(['inv_no'=>trim($no)])->one();
+        $model_chk = \backend\models\Querypicking::find()->where(['sale_no'=>trim($no)])->one();
         if($model_chk !=null){
             if($model_chk->id > 0){
                 $model = \backend\models\Paymenttrans::find()->where(['sale_id'=>$model_chk->id])->all();
