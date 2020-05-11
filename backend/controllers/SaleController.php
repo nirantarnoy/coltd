@@ -223,6 +223,7 @@ class SaleController extends Controller
                             $modelline->save();
                         }
                     }
+                    $this->updateTotal($model->id);
                 }
                 if (count($removelist)) {
                     \backend\models\Quotationline::deleteAll(['id' => $removelist]);
@@ -240,6 +241,21 @@ class SaleController extends Controller
             'modeldoc' => $modeldoc
 
         ]);
+    }
+
+    public function updateTotal($id){
+        $model = \backend\models\Saleline::find()->where(['sale_id'])->all();
+        if($model){
+            $total = 0;
+            foreach($model as $value){
+                $total = $total + $value->line_amount;
+            }
+            $model_up = \backend\models\Sale::find()->where(['id'=>$id])->one();
+            if($model_up){
+                $model_up->total_amount = $total;
+                $model_up->save(false);
+            }
+        }
     }
 
     public function actionAttachfile()
