@@ -197,6 +197,20 @@ $this->registerCss('
                             <?php if (count($modelline) > 0): ?>
                                 <?php $i = 0; ?>
                                 <?php foreach ($modelline as $value): ?>
+                                    <?php
+                                      $line_cost_amt = 0;
+                                      $c_name = '';
+                                      $c_name = \backend\models\Currency::findName($value->currecy);
+                                      if($c_name !=''){
+                                         if($c_name == "USD"){
+                                             $line_cost_amt = \backend\models\Product::findProductinfo($value->product_id) != null ? \backend\models\Product::findProductinfo($value->product_id)->cost : 0 ;
+                                         }else{
+                                             $cost = \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb;
+                                             $line_cost_amt = $cost;
+                                         }
+                                      }
+
+                                    ?>
                                     <?php $i += 1; ?>
                                     <tr data-var="<?= $value->id ?>">
                                         <td style="vertical-align: middle;text-align: center">
@@ -247,7 +261,7 @@ $this->registerCss('
                                         </td>
                                         <td>
                                             <input type="text" class="form-control line_cost" name="cost[]"
-                                                   value="<?= \backend\models\Product::findProductinfo($value->product_id) != null ? \backend\models\Product::findProductinfo($value->product_id)->cost : 0 ?>"
+                                                   value="<?= $line_cost_amt ?>"
                                                    readonly>
                                         </td>
                                         <td>
