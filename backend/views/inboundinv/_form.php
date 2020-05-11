@@ -964,6 +964,56 @@ $js = <<<JS
       });
       $(".total-sum").text(parseFloat(totalall).toFixed(2));
  }
+// function checkRate(e){
+//      var c_m = 0;
+//      var q_date = new Date();
+//                  var q_date_arr = $("#invoice_date").val().split('/');
+//                  if(q_date_arr.length >0){
+//                      q_date = q_date_arr[2] +'/'+q_date_arr[1]+'/'+q_date_arr[0];
+//                      c_m = q_date_arr[1];
+//                  }
+//                  
+//     let id = e.val();
+//     if(id){
+//         //alert(c_m);
+//      
+//         $.ajax({
+//              'type':'post',
+//              'dataType': 'json',
+//              'async': false,
+//              'url': "$url_to_checkrate",
+//              'data': {'cur_id': id,'month': c_m},
+//              'success': function(data) {
+//                //  alert(data);
+//                if(data[0]!= null){
+//                 var exp_date = data[0]['exp_date'];
+//                 var rate_name = data[0]['currency'];
+//                 currency_name = rate_name;
+//                // alert(exp_date +' = '+ q_date);
+//                //alert(data);
+//                 if(exp_date < q_date && rate_name !='THB'){
+//                      $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว หรือ ยังไม่ได้ป้อนค่าอัตราแลกเปลี่ยน").show();
+//                      $(".rate").val('');
+//                      return false;
+//                 }
+//                 
+//                  if(data.length > 0){
+//                      $(".rate").val(data[0]['exc_rate']);
+//                      $(".alert-currency").hide();
+//                  }else{
+//                      $(".alert-currency").html("ไม่พบข้อมูลอัตราแลกเปลี่ยน").show();
+//                      $(".rate").val('');
+//                      return false;
+//                  }
+//                }else{
+//                     alert("ไม่พบอัตราแลกเปลี่ยน กรุณาตรวจสอบข้อมูลให้ถูกต้องด้วยครับ");
+//                }
+//                 
+//              }
+//         });
+//         re_cal();
+//     }
+// }
  function checkRate(e){
       var c_m = 0;
       var q_date = new Date();
@@ -976,45 +1026,38 @@ $js = <<<JS
      let id = e.val();
      if(id){
          //alert(c_m);
-      
          $.ajax({
               'type':'post',
               'dataType': 'json',
-              'async': false,
               'url': "$url_to_checkrate",
               'data': {'cur_id': id,'month': c_m},
               'success': function(data) {
-                //  alert(data);
-                if(data[0]!= null){
+                 //alert(data);
+                  // alert(new Date(data[0]['exp_date']));
+                  // alert(data[0]['exp_date']);
+                 //  alert(q_date);
                  var exp_date = data[0]['exp_date'];
                  var rate_name = data[0]['currency'];
                  currency_name = rate_name;
-                // alert(exp_date +' = '+ q_date);
-                //alert(data);
                  if(exp_date < q_date && rate_name !='THB'){
-                      $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว หรือ ยังไม่ได้ป้อนค่าอัตราแลกเปลี่ยน").show();
+                       $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว หรือ ยังไม่ได้ป้อนค่าอัตราแลกเปลี่ยน").show();
                       $(".rate").val('');
                       return false;
                  }
                  
                   if(data.length > 0){
                       $(".rate").val(data[0]['exc_rate']);
-                      $(".alert-currency").hide();
+                        $(".alert-currency").hide();
                   }else{
                       $(".alert-currency").html("ไม่พบข้อมูลอัตราแลกเปลี่ยน").show();
                       $(".rate").val('');
                       return false;
-                  }
-                }else{
-                     alert("ไม่พบอัตราแลกเปลี่ยน กรุณาตรวจสอบข้อมูลให้ถูกต้องด้วยครับ");
-                }
-                 
+                  } 
+                  re_cal();
               }
          });
-         re_cal();
      }
  }
- 
  function re_cal() {
      if(currency_name == "THB"){
             $(".table-quotation tbody tr").each(function() {
