@@ -60,7 +60,8 @@ $this->registerCss('
                             <?php $model->require_date = $model->isNewRecord ? date('d/m/Y') : date('d/m/Y', $model->require_date); ?>
                             <?= $form->field($model, 'require_date')->widget(DatePicker::className(),
                                 ['options' => [
-                                    'style' => 'font-weight: bold'
+                                    'style' => 'font-weight: bold',
+                                    'class' => 'require_date',
                                 ],
                                     'pluginOptions' => [
                                         'format' => 'dd/mm/yyyy',
@@ -1191,7 +1192,7 @@ $js = <<<JS
  function checkRate(e){
       var c_m = 0;
       var q_date = new Date();
-                  var q_date_arr = $(".quotation_date").val().split('/');
+                  var q_date_arr = $(".require_date").val().split('/');
                   if(q_date_arr.length >0){
                       q_date = q_date_arr[2] +'/'+q_date_arr[1]+'/'+q_date_arr[0];
                       c_m = q_date_arr[1];
