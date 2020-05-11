@@ -93,7 +93,8 @@ $this->registerCss('
                             <?= $form->field($model, 'currency')->widget(Select2::className(), [
                                 'data' => ArrayHelper::map(\backend\helpers\Currency::asArrayObject(), 'id', 'name'),
                                 'options' => [
-                                    'placeholder' => 'เลือกสกุลเงิน'
+                                    'placeholder' => 'เลือกสกุลเงิน',
+                                    'onchange' => 'checkRate($(this))',
                                 ],
                                 'pluginOptions' => [
                                     'allowClear' => true
@@ -175,6 +176,10 @@ $this->registerCss('
                                            name="cost[]" value="" readonly>
                                 </td>
                                 <td>
+                                    <input type="hidden" name="line_price_origin" class="line-price-origin"
+                                           value="">
+                                    <input type="hidden" name="line_price_origin_thb" class="line-price-origin-thb"
+                                           value="">
                                     <input style="text-align: right" type="text" class="form-control line_price"
                                            name="price[]" value="" onchange="cal_num($(this));">
                                 </td>
@@ -245,6 +250,14 @@ $this->registerCss('
                                                    readonly>
                                         </td>
                                         <td>
+                                            <input type="hidden" name="line_price_origin" class="line-price-origin"
+                                                   value="<?= \backend\models\Product::findProductinfo($value->product_id)->price_carton_usd ?>">
+                                            <input type="hidden" name="line_price_origin_thb"
+                                                   class="line-price-origin-thb"
+                                                   value="<?= \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb ?>">
+                                            <input type="hidden" name="line_price_origin_thb_origin"
+                                                   class="line-price-origin-thb-origin"
+                                                   value="<?= \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb ?>">
                                             <input style="text-align: right" type="text" class="form-control line_price"
                                                    name="price[]" value="<?= $value->price ?>"
                                                    onchange="cal_num($(this));">
@@ -299,6 +312,10 @@ $this->registerCss('
                                                readonly>
                                     </td>
                                     <td>
+                                        <input type="hidden" name="line_price_origin" class="line-price-origin"
+                                               value="">
+                                        <input type="hidden" name="line_price_origin_thb" class="line-price-origin-thb"
+                                               value="">
                                         <input style="text-align: right" type="text" class="form-control line_price"
                                                name="price[]" value="" onchange="cal_num($(this));">
                                     </td>
@@ -1168,6 +1185,92 @@ $js = <<<JS
           $("#form-payment-delete").submit();
        }
    }
+ }
+ 
+ function checkRate(e){
+      var c_m = 0;
+      var q_date = new Date();
+                  var q_date_arr = $(".quotation_date").val().split('/');
+                  if(q_date_arr.length >0){
+                      q_date = q_date_arr[2] +'/'+q_date_arr[1]+'/'+q_date_arr[0];
+                      c_m = q_date_arr[1];
+                  }
+                  
+     let id = e.val();
+     if(id){
+         //alert(c_m);
+         $.ajax({
+              'type':'post',
+              'dataType': 'json',
+              'url': "$url_to_checkrate",
+              'data': {'cur_id': id,'month': c_m},
+              'success': function(data) {
+                 //alert(data);
+                  // alert(new Date(data[0]['exp_date']));
+                  // alert(data[0]['exp_date']);
+                 //  alert(q_date);
+                 var exp_date = data[0]['exp_date'];
+                 var rate_name = data[0]['currency'];
+                 currency_name = rate_name;
+                 if(exp_date < q_date && rate_name !='THB'){
+                       $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว หรือ ยังไม่ได้ป้อนค่าอัตราแลกเปลี่ยน").show();
+                      $(".rate").val('');
+                      return false;
+                 }
+                 
+                  if(data.length > 0){
+                      $(".rate").val(data[0]['exc_rate']);
+                        $(".alert-currency").hide();
+                  }else{
+                      $(".alert-currency").html("ไม่พบข้อมูลอัตราแลกเปลี่ยน").show();
+                      $(".rate").val('');
+                      return false;
+                  } 
+                  re_cal();
+              }
+         });
+     }
+ }
+  function re_cal() {
+        if(currency_name == "THB"){
+            $(".table-quotation tbody tr").each(function() {
+                var line_price_usd =  $(this).closest('tr').find(".line-price-origin").val();
+                var line_price =  $(this).closest('tr').find(".line-price-origin-thb").val();
+                var new_price = parseFloat(line_price);  
+                
+                // if(action_mode == 1){
+                //       var new_price = parseFloat(line_price) * parseFloat(line_price_usd);  
+                // }else{
+                //      var new_price = parseFloat(line_price) * parseFloat(line_price_usd);
+                // }
+                //
+              
+                var line_qty =  $(this).closest('tr').find(".line_qty").val();
+             
+                var cur_rate = $(".rate").val();
+              
+                var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
+                $(this).closest('tr').find(".line_cost").val(parseFloat(new_price).toFixed(2));
+                $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
+                $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
+            });
+        }else{
+            $(".table-quotation tbody tr").each(function() {
+                var line_price =  $(this).closest('tr').find(".line-price-origin").val();
+                var line_qty =  $(this).closest('tr').find(".line_qty").val();
+              
+                var cur_rate = $(".rate").val();
+                var new_price = parseFloat(line_price).toFixed(2);
+                var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
+                
+                $(this).closest('tr').find(".line_cost").val(parseFloat(new_price).toFixed(2));
+                $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
+                $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
+           });
+        }
+        
+        cal_all();
+    
  }
  
 JS;
