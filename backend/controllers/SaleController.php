@@ -244,7 +244,7 @@ class SaleController extends Controller
     }
 
     public function updateTotal($id){
-        $model = \backend\models\Saleline::find()->where(['sale_id'])->all();
+        $model = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
         if($model){
             $total = 0;
             foreach($model as $value){
