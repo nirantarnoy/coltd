@@ -731,6 +731,7 @@ $url_to_createinvoice = Url::to(['sale/createinvoice'], true);
 $url_to_printpicking = Url::to(['sale/printpicking'], true);
 $url_to_createpacking = Url::to(['sale/createpacking'], true);
 $url_to_remove_file = Url::to(['sale/deletedoc'], true);
+$url_to_checkrate = Url::to(['quotation/check-rate'], true);
 $js = <<<JS
  var currow = 0;
  var  removelist = [];
