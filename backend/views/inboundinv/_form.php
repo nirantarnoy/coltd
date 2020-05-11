@@ -214,7 +214,7 @@ use kartik\time\TimePicker;
                                     </td>
                                     <td>
                                         <input type="hidden" name="line_price_origin" class="line-price-origin"
-                                               value="">
+                                               value="<?= \backend\models\Product::findProductinfo($value->product_id)->price_carton_usd ?>">
                                         <input type="hidden" name="line_price_origin_thb"
                                                class="line-price-origin-thb"
                                                value="<?= \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb ?>">
