@@ -200,7 +200,7 @@ $this->registerCss('
                                     <?php
                                       $line_cost_amt = 0;
                                       $c_name = '';
-                                      $c_name = \backend\models\Currency::findName($value->currecy);
+                                      $c_name = \backend\models\Currency::findName($value->currency);
                                       if($c_name !=''){
                                          if($c_name == "USD"){
                                              $line_cost_amt = \backend\models\Product::findProductinfo($value->product_id) != null ? \backend\models\Product::findProductinfo($value->product_id)->cost : 0 ;
