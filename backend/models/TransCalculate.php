@@ -98,6 +98,7 @@ class TransCalculate extends \yii\base\Model
                 $qty_out = 0;
                 $trans_no = '';
                 $trans_date = '';
+                $permit_date = '';
                 $kno_no = '';
                 $kno_date = '';
 
@@ -107,6 +108,7 @@ class TransCalculate extends \yii\base\Model
 
                     $trans_no = $param['transport_out_no'];
                     $trans_date = date('Y-m-d', strtotime($param['transport_out_date']));
+                    $permit_date = date('Y-m-d', strtotime($param['permit_date']));
                     $kno_no = $param['kno_out_no'];
                     $kno_date = date('Y-m-d', strtotime($param['kno_out_date']));
                 } else {
@@ -115,6 +117,7 @@ class TransCalculate extends \yii\base\Model
 
                     $trans_no = $param['transport_in_no'];
                     $trans_date = date('Y-m-d', strtotime($param['transport_in_date']));
+                    $permit_date = date('Y-m-d', strtotime($param['permit_date']));
                     $kno_no = $param['kno_no_in'];
                     $kno_date = date('Y-m-d', strtotime($param['kno_in_date']));
                 }
@@ -128,7 +131,7 @@ class TransCalculate extends \yii\base\Model
                 $modelstock->transport_in_date = $trans_date;
                 $modelstock->sequence = $param['sequence'];
                 $modelstock->permit_no = $param['permit_no'];
-                $modelstock->permit_date = date('Y-m-d', strtotime($param['permit_date']));
+                $modelstock->permit_date = $permit_date;
                 $modelstock->kno_no_in = $kno_no;
                 $modelstock->kno_in_date = $kno_date;
                 $modelstock->in_qty = $qty_in;

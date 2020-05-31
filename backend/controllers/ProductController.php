@@ -364,7 +364,12 @@ class ProductController extends Controller
                             continue;
                         }
 
-                        $per_origin = explode('/', $rowData[17]);
+                        $trans_origin = explode('/', trim($rowData[14]));
+                        if (count($trans_origin) > 0 && $trans_origin[0] != '') {
+                            $trans_date = $trans_origin[2] . "/" . $trans_origin[1] . "/" . $trans_origin[0];
+                        }
+
+                        $per_origin = explode('/', trim($rowData[17]));
                         if (count($per_origin) > 0 && $per_origin[0] != '') {
 
                             //print_r($per_origin);return;
@@ -374,12 +379,11 @@ class ProductController extends Controller
 //                            }
                         }
 
-                        $trans_origin = explode('/', $rowData[14]);
-                        if (count($trans_origin) > 0 && $trans_origin[0] != '') {
-                            $trans_date = $trans_origin[2] . "/" . $trans_origin[1] . "/" . $trans_origin[0];
-                        }
+//                        if($rowData[0] == 'B-001'){
+//                            echo $permit_date;return;
+//                        }
 
-                        $inv_origin = explode('/', $rowData[12]);
+                        $inv_origin = explode('/', trim($rowData[12]));
                         if (count($inv_origin) > 0 && $inv_origin[0] != '') {
                             $inv_date = $inv_origin[2] . "/" . $inv_origin[1] . "/" . $inv_origin[0];
                         }
@@ -397,12 +401,12 @@ class ProductController extends Controller
                         }
 
 
-                        if ($rowData[24] != '' && $rowData[24] != null) {
-                            $qty_separate = explode(' ', $rowData[24]);
+                        if ($rowData[20] != '' && $rowData[20] != null) {
+                            $qty_separate = explode(' ', $rowData[20]);
                             if (count($qty_separate) > 1) {
                                 $qty = $qty_separate[1] == NULL || $qty_separate[1] == '' ? 0 : str_replace(",", "", $qty_separate[1]);
                             } else {
-                                $qty = $rowData[24];
+                                $qty = $rowData[20];
                             }
                         }
 
@@ -453,7 +457,7 @@ class ProductController extends Controller
                                     'trans_type' => TransType::TRANS_ADJUST_IN,
                                     'permit_no' => $rowData[16],
 //                                 'permit_date' => date('Y-m-d',strtotime($rowData[17])),
-                                    'permit_date' => $permit_date,
+                                    'permit_date' => trim($permit_date),
                                     'transport_in_no' => $rowData[13],
                                     //  'transport_in_date' => date('Y-m-d',strtotime($rowData[14])),
                                     'transport_in_date' => $trans_date,
@@ -516,7 +520,7 @@ class ProductController extends Controller
                         $transport_in_no = '';
                         $transport_in_date = '';
                         $permit_no = '';
-                        $permit_date = '';
+                       // $permit_date = '';
                         $excise_no = '';
                         $excise_date = '';
 
@@ -533,7 +537,7 @@ class ProductController extends Controller
                                 'trans_type' => TransType::TRANS_ADJUST_IN,
                                 'permit_no' => $rowData[16],
 //                                 'permit_date' => date('Y-m-d',strtotime($rowData[17])),
-                                'permit_date' => $permit_date,
+                                'permit_date' => trim($permit_date),
                                 'transport_in_no' => $rowData[13],
                                 //  'transport_in_date' => date('Y-m-d',strtotime($rowData[14])),
                                 'transport_in_date' => $trans_date,
@@ -555,6 +559,7 @@ class ProductController extends Controller
                     }
                     //    print_r($qty_text);return;
                     $this->createInvoicefromimport($data);
+                    //print_r($data);return;
                     $update_stock = TransCalculate::createJournal($data);
                     if ($res > 0 && $update_stock) {
                         $session = Yii::$app->session;

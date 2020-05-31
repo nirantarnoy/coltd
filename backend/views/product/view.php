@@ -239,7 +239,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <th>วันที่</th>
                                         <th>จำนวน</th>
                                         <th>ราคา(USD)</th>
-                                        <th>ราคา(THB)</th>
+                                        <th>Rate THB</th>
                                     </tr>
                                 </thaed>
                                 <tbody>
@@ -267,14 +267,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                                        data-var="<?= $value->transport_in_no ?>"
                                                        onclick="showdoc($(this))"><?= $value->transport_in_no ?></a>
                                                 </td>
-                                                <td><?= date('d-m-Y', strtotime($value->transport_in_date)) ?></td>
+                                                <td><?= date('d/m/Y', strtotime($value->transport_in_date)) ?></td>
                                                 <td><?= $value->permit_no ?></td>
-                                                <td><?= date('d-m-Y', strtotime($value->permit_date)) ?></td>
+                                                <td><?= date('d/m/Y', strtotime($value->permit_date)) ?></td>
                                                 <td><?php echo $value->invoice_no ?></td>
-                                                <td><?php echo date('d-m-Y', strtotime($value->invoice_date)) ?></td>
+                                                <td><?php echo date('d/m/Y', strtotime($value->invoice_date)) ?></td>
                                                 <td><?php echo $html ?></td>
-                                                <td><?php echo number_format($value->usd_rate) ?></td>
-                                                <td><?php echo number_format($value->thb_amount) ?></td>
+                                                <td><?php echo number_format($value->usd_rate, 2) ?></td>
+                                                <td><?php echo number_format($value->thb_amount, 2) ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
