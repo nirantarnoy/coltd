@@ -145,7 +145,8 @@ use kartik\time\TimePicker;
                                        name="price[]" value="" onchange="cal_num($(this));">
                             </td>
                             <td>
-                                <input style="text-align: right" type="text" class="form-control line_total"
+                                <input type="hidden" class="line_total" value="">
+                                <input style="text-align: right" type="text" class="form-control line_total_show"
                                        name="linetotal[]" value="" readonly>
                             </td>
                             <td>
@@ -227,8 +228,9 @@ use kartik\time\TimePicker;
                                                onchange="cal_num($(this));">
                                     </td>
                                     <td>
-                                        <input style="text-align: right" type="text" class="form-control line_total"
-                                               name="linetotal[]" value="<?= $value->line_price * $value->line_qty ?>"
+                                        <input type="hidden" class="line_total" value="<?= $value->line_price * $value->line_qty ?>">
+                                        <input style="text-align: right" type="text" class="form-control line_total_show"
+                                               name="linetotal[]" value="<?= number_format($value->line_price * $value->line_qty, 2) ?>"
                                                readonly>
                                     </td>
                                     <td>
@@ -281,7 +283,8 @@ use kartik\time\TimePicker;
                                            name="price[]" value="" onchange="cal_num($(this));">
                                 </td>
                                 <td>
-                                    <input style="text-align: right" type="text" class="form-control line_total"
+                                    <input type="hidden" class="line_total" value="">
+                                    <input style="text-align: right" type="text" class="form-control line_total_show"
                                            name="linetotal[]" value="" readonly>
                                 </td>
                                 <td>
@@ -902,6 +905,9 @@ $js = <<<JS
      e.closest("tr").find(".line_total").val("");
      e.closest("tr").find(".line_total").val(parseFloat(total).toFixed(2));
      
+     e.closest("tr").find(".line_total_show").val("");
+     e.closest("tr").find(".line_total_show").val(addCommas(parseFloat(total).toFixed(2)));
+     
      cal_all();
    }
  
@@ -945,8 +951,8 @@ $js = <<<JS
               $(this).closest('tr').find(".line_packper").val(unitfactor);
               $(this).closest('tr').find(".line_litre").val(volumn_content);
               $(this).closest('tr').find(".line_percent").val(volumn);
-                $(this).closest('tr').find(".line-price-origin").val(prodprice);
-                $(this).closest('tr').find(".line-price-origin-thb").val(prodprice_thb);
+              $(this).closest('tr').find(".line-price-origin").val(prodprice);
+              $(this).closest('tr').find(".line-price-origin-thb").val(prodprice_thb);
         }
         cal_num($(this));
     });
@@ -962,8 +968,19 @@ $js = <<<JS
           
           totalall = parseFloat(totalall) + parseFloat(linetotal);
       });
-      $(".total-sum").text(parseFloat(totalall).toFixed(2));
+      $(".total-sum").text(addCommas(parseFloat(totalall).toFixed(2)));
  }
+ function addCommas(nStr) {
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
 // function checkRate(e){
 //      var c_m = 0;
 //      var q_date = new Date();

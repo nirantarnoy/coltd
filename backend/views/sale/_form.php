@@ -185,7 +185,9 @@ $this->registerCss('
                                            name="price[]" value="" onchange="cal_num($(this));">
                                 </td>
                                 <td>
-                                    <input style="text-align: right" type="text" class="form-control line_total"
+                                    <input type="hidden" class="line_total"
+                                           value="">
+                                    <input style="text-align: right" type="text" class="form-control line_total_show"
                                            name="linetotal[]" value="" readonly>
                                 </td>
                                 <td>
@@ -278,8 +280,10 @@ $this->registerCss('
                                                    onchange="cal_num($(this));">
                                         </td>
                                         <td>
-                                            <input style="text-align: right" type="text" class="form-control line_total"
-                                                   name="linetotal[]" value="<?= $value->price * $value->qty ?>"
+                                            <input type="hidden" class="line_total"
+                                                   value="<?= $value->price * $value->qty ?>">
+                                            <input style="text-align: right" type="text" class="form-control line_total_show"
+                                                   name="linetotal[]" value="<?= number_format($value->price * $value->qty,2) ?>"
                                                    readonly>
                                         </td>
                                         <td>
@@ -335,7 +339,9 @@ $this->registerCss('
                                                name="price[]" value="" onchange="cal_num($(this));">
                                     </td>
                                     <td>
-                                        <input style="text-align: right" type="text" class="form-control line_total"
+                                        <input type="hidden" class="line_total"
+                                               value="">
+                                        <input style="text-align: right" type="text" class="form-control line_total_show"
                                                name="linetotal[]" value="" readonly>
                                     </td>
                                     <td>
@@ -1121,6 +1127,9 @@ $js = <<<JS
      e.closest("tr").find(".line_total").val("");
      e.closest("tr").find(".line_total").val(parseFloat(total).toFixed(2));
      
+     e.closest("tr").find(".line_total_show").val("");
+     e.closest("tr").find(".line_total_show").val(addCommas(parseFloat(total).toFixed(2)));
+     
      cal_all();
    }
  
@@ -1174,8 +1183,20 @@ $js = <<<JS
           totalall = parseFloat(totalall) + parseFloat(linetotal);
       });
       $(".qty-sum").text(parseFloat(totalqty).toFixed(2));
-      $(".total-sum").text(parseFloat(totalall).toFixed(2));
+      $(".total-sum").text(addCommas(parseFloat(totalall).toFixed(2)));
  }
+ 
+   function addCommas(nStr) {
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
  
  function editpay(e) {
      var pay_id = e.attr("data-id");

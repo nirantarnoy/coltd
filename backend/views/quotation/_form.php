@@ -198,7 +198,9 @@ $this->registerCss('
                                                name="price[]" value="" onchange="cal_num($(this));">
                                     </td>
                                     <td>
-                                        <input style="text-align: right" type="text" class="form-control line_total"
+                                        <input type="hidden" class="line_total" value="">
+                                        <input style="text-align: right" type="text"
+                                               class="form-control line_total_show"
                                                name="linetotal[]" value="" readonly>
                                     </td>
                                     <td>
@@ -296,9 +298,12 @@ $this->registerCss('
                                                        value="<?= $value->price ?>" onchange="cal_num($(this));">
                                             </td>
                                             <td>
+                                                <input type="hidden" class="line_total"
+                                                       value="<?= $value->price * $value->qty ?>">
                                                 <input style="text-align: right" type="text"
-                                                       class="form-control line_total" name="linetotal[]"
-                                                       value="<?= $value->price * $value->qty ?>" readonly>
+                                                       class="form-control line_total_show" name="linetotal[]"
+                                                       value="<?= number_format($value->price * $value->qty, 2) ?>"
+                                                       readonly>
                                             </td>
                                             <td>
                                                 <div class="btn btn-sm btn-danger btn-removeline"
@@ -352,7 +357,9 @@ $this->registerCss('
                                                    name="price[]" value="" onchange="cal_num($(this));">
                                         </td>
                                         <td>
-                                            <input style="text-align: right" type="text" class="form-control line_total"
+                                            <input type="hidden" class="line_total" value="">
+                                            <input style="text-align: right" type="text"
+                                                   class="form-control line_total_show"
                                                    name="linetotal[]" value="" readonly>
                                         </td>
                                         <td>
@@ -441,46 +448,46 @@ $this->registerCss('
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
-<!--                <div class="table-responsive">-->
-                    <div class="wmd-view" style="overflow-x: scroll;overflow-y: hidden;width: 100%;;white-space:nowrap;">
-                        <div style="display: inline-block;">
-                            <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
-                            <table class="table table-bordered table-striped table-list">
-                                <thead>
-                                <tr>
-                                    <th style="text-align: center">เลือก</th>
-                                    <th>รหัสสินค้า</th>
-                                    <th>รายละเอียด</th>
-                                    <th>คงเหลือ</th>
-                                    <th>Origin</th>
-                                    <th>ปริมาณ/ลัง</th>
-                                    <th>ลิตร/ขวด</th>
-                                    <th>%</th>
-                                    <th>คลัง</th>
-                                    <th>inv</th>
-                                    <th>inv.date</th>
-                                    <th>ใบอนุญาต</th>
-                                    <th>วันที่</th>
-                                    <th>ใบขน</th>
-                                    <th>วันที่</th>
-                                    <th>ลำดับ</th>
-                                    <th>สรรพสามิตร</th>
-                                    <th>กนอ.</th>
-                                    <th>วันที่</th>
-                                    <th>เข้า</th>
-                                    <th>ออก</th>
+                <!--                <div class="table-responsive">-->
+                <div class="wmd-view" style="overflow-x: scroll;overflow-y: hidden;width: 100%;;white-space:nowrap;">
+                    <div style="display: inline-block;">
+                        <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
+                        <table class="table table-bordered table-striped table-list">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">เลือก</th>
+                                <th>รหัสสินค้า</th>
+                                <th>รายละเอียด</th>
+                                <th>คงเหลือ</th>
+                                <th>Origin</th>
+                                <th>ปริมาณ/ลัง</th>
+                                <th>ลิตร/ขวด</th>
+                                <th>%</th>
+                                <th>คลัง</th>
+                                <th>inv</th>
+                                <th>inv.date</th>
+                                <th>ใบอนุญาต</th>
+                                <th>วันที่</th>
+                                <th>ใบขน</th>
+                                <th>วันที่</th>
+                                <th>ลำดับ</th>
+                                <th>สรรพสามิตร</th>
+                                <th>กนอ.</th>
+                                <th>วันที่</th>
+                                <th>เข้า</th>
+                                <th>ออก</th>
 
-                                </tr>
-                                </thead>
-                                <tbody>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                                </tbody>
-                            </table>
-
-                        </div>
+                            </tbody>
+                        </table>
 
                     </div>
-<!--                </div>-->
+
+                </div>
+                <!--                </div>-->
 
             </div>
 
@@ -827,6 +834,9 @@ $js = <<<JS
      e.closest("tr").find(".line_total").val("");
      e.closest("tr").find(".line_total").val(parseFloat(total).toFixed(2));
      
+      e.closest("tr").find(".line_total_show").val("");
+     e.closest("tr").find(".line_total_show").val(addCommas(parseFloat(total).toFixed(2)));
+     
      cal_all();
    }
  
@@ -908,8 +918,20 @@ $js = <<<JS
           totalqty = parseFloat(totalqty) + parseFloat(lineqty);
       });
       $(".qty-sum").text(parseFloat(totalqty).toFixed(2));
-      $(".total-sum").text(parseFloat(totalall).toFixed(2));
+      $(".total-sum").text(addCommas(parseFloat(totalall).toFixed(2)));
  }
+ 
+  function addCommas(nStr) {
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
  
  function checkRate(e){
       var c_m = 0;

@@ -155,7 +155,7 @@ class ProductController extends Controller
         // $photoes = \backend\models\Productgallery::find()->where(['product_id'=>$id])->all();
         $productimage = \backend\models\Productimage::find()->where(['product_id' => $id])->all();
         //  $modelcost = \backend\models\Productcost::find()->where(['product_id'=>$id])->all();
-        $modelcost = \backend\models\Productstock::find()->where(['product_id' => $id])->andFilterWhere(['<>','invoice_no',''])->all();
+        $modelcost = \backend\models\Productstock::find()->where(['product_id' => $id])->andFilterWhere(['<>', 'invoice_no', ''])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'productimage' => $productimage,
@@ -359,7 +359,6 @@ class ProductController extends Controller
                         $excise_date = null;
 
 
-
                         if ($rowData[1] == '' || $i == 0) {
                             continue;
                         }
@@ -393,12 +392,13 @@ class ProductController extends Controller
                             $excise_date = $excise_origin[2] . "/" . $excise_origin[1] . "/" . $excise_origin[0];
                         }
 
-                        if ($rowData[19] != '' && $rowData[19] != null) {
-                            $kno_origin = explode('/', $rowData[19]);
-//                            if (count($kno_origin) > 0 && $kno_origin[0] != '') {
-//                                $kno_date = $kno_origin[2] . "/" . $kno_origin[1] . "/" . $kno_origin[0];
-//                            }
+
+                        //  if ($rowData[19] != '' && $rowData[19] != null) {
+                        $kno_origin = explode('/', trim($rowData[19]));
+                        if (count($kno_origin) > 0 && $kno_origin[0] != '') {
+                            $kno_date = $kno_origin[2] . "/" . $kno_origin[1] . "/" . $kno_origin[0];
                         }
+                        //    }
 
 
                         if ($rowData[20] != '' && $rowData[20] != null) {
@@ -488,7 +488,6 @@ class ProductController extends Controller
                         $thb_price = ($usd2 * $thb2);
 
 
-
                         $modelx = new \backend\models\Product();
                         $modelx->product_code = $rowData[0];
                         $modelx->barcode = $rowData[0];
@@ -507,7 +506,7 @@ class ProductController extends Controller
                         $modelx->all_qty = (int)$qty;
                         $modelx->price_carton_usd = $price;
                         $modelx->price_carton_thb = $thb_price; //ราคาต่อลัง
-                        $modelx->excise_date = date('Y-m-d',strtotime($excise_date)) ;// date('Y-m-d', strtotime($rowData[9]));
+                        $modelx->excise_date = date('Y-m-d', strtotime($excise_date));// date('Y-m-d', strtotime($rowData[9]));
                         $modelx->netweight = $rowData[27];
                         $modelx->grossweight = $rowData[28];
 
@@ -520,7 +519,7 @@ class ProductController extends Controller
                         $transport_in_no = '';
                         $transport_in_date = '';
                         $permit_no = '';
-                       // $permit_date = '';
+                        // $permit_date = '';
                         $excise_no = '';
                         $excise_date = '';
 
