@@ -1249,6 +1249,10 @@ $js = <<<JS
                  var exp_date = data[0]['exp_date'];
                  var rate_name = data[0]['currency'];
                  currency_name = rate_name;
+                 
+                 //alert(q_date);
+                 //alert(exp_date);
+                 
                  if(exp_date < q_date && rate_name !='THB'){
                        $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว หรือ ยังไม่ได้ป้อนค่าอัตราแลกเปลี่ยน").show();
                       $(".rate").val('');
@@ -1290,6 +1294,7 @@ $js = <<<JS
                 $(this).closest('tr').find(".line_cost").val(parseFloat(new_price).toFixed(2));
                 $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
                 $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
+                $(this).closest('tr').find(".line_total_show").val(addCommas(parseFloat(new_line_total).toFixed(2)));
             });
         }else{
             $(".table-quotation tbody tr").each(function() {
@@ -1303,6 +1308,7 @@ $js = <<<JS
                 $(this).closest('tr').find(".line_cost").val(parseFloat(new_price).toFixed(2));
                 $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
                 $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
+                 $(this).closest('tr').find(".line_total_show").val(addCommas(parseFloat(new_line_total).toFixed(2)));
            });
         }
         

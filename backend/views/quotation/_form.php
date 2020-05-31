@@ -999,6 +999,7 @@ $js = <<<JS
                 $(this).closest('tr').find(".line_cost").val(parseFloat(new_price).toFixed(2));
                 $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
                 $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
+                 $(this).closest('tr').find(".line_total_show").val(addCommas(parseFloat(new_line_total).toFixed(2)));
             });
         }else{
             $(".table-quotation tbody tr").each(function() {
@@ -1012,6 +1013,7 @@ $js = <<<JS
                 $(this).closest('tr').find(".line_cost").val(parseFloat(new_price).toFixed(2));
                 $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
                 $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
+                  $(this).closest('tr').find(".line_total_show").val(addCommas(parseFloat(new_line_total).toFixed(2)));
            });
         }
         

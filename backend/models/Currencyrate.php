@@ -40,8 +40,8 @@ class Currencyrate extends \common\models\CurrencyRate
     }
     public function findRateMonth($currency,$month,$type){
         if($currency){
-            $model = \backend\models\Currencyrate::find()->where(['from_currency'=>$currency,'MONTH(from_date)'=>$month,'rate_type'=>$type])->one();
-         //   $model = \backend\models\Currencyrate::find()->where(['from_currency'=>$currency,'rate_type'=>$type])->one();
+          //  $model = \backend\models\Currencyrate::find()->where(['from_currency'=>$currency,'MONTH(to_date)'=>$month,'rate_type'=>$type])->one();
+            $model = \backend\models\Currencyrate::find()->where(['from_currency'=>$currency,'rate_type'=>$type])->one();
             return count($model)>0?$model:null;
         }
     }
