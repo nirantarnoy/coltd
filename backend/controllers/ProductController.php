@@ -358,7 +358,6 @@ class ProductController extends Controller
                         $kno_date = null;
                         $excise_date = null;
 
-
                         if ($rowData[1] == '' || $i == 0) {
                             continue;
                         }
@@ -415,6 +414,7 @@ class ProductController extends Controller
                         // array_push($qty_text, $rowData[24]);continue;
                         $price = $rowData[21] == NULL || $rowData[21] == '' ? 0 : str_replace(",", "", $rowData[21]);
                         $catid = $this->checkCat($rowData[6]);
+                        $unit = $this->checkUnit($rowData[29]);
                         $whid = $this->checkWarehouse($rowData[10]);
 
                         if (!$whid) {
@@ -509,6 +509,7 @@ class ProductController extends Controller
                         $modelx->excise_date = date('Y-m-d', strtotime($excise_date));// date('Y-m-d', strtotime($rowData[9]));
                         $modelx->netweight = $rowData[27];
                         $modelx->grossweight = $rowData[28];
+                        $modelx->unit_id = $unit;
 
                         $this->updatePositiongroup($catid, $rowData[5]);
                         //  $modelx->all_qty = str_replace(',','', $rowData[8]);
@@ -915,7 +916,7 @@ class ProductController extends Controller
 
     public function checkUnit($name)
     {
-        $model = \backend\models\Unit::find()->where(['name' => $name])->one();
+        $model = \backend\models\Unit::find()->where(['name' => trim($name)])->one();
         if (count($model) > 0) {
             return $model->id;
         } else {
