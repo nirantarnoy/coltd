@@ -392,13 +392,14 @@ class QuotationController extends Controller
     public function actionCheckRate(){
         $id = \Yii::$app->request->post('cur_id');
         $m = \Yii::$app->request->post('month');
+        $old_rate = \Yii::$app->request->post('old_rate');
        //  echo (int)$id;return;
         $data = [];
         $rate_name = \backend\models\Currency::findName($id);
 
         if($rate_name == 'THB'){
             // echo $rate_name;return;
-            array_push($data,['exp_date'=>'1970/01/01','exc_rate'=>1,'currency'=>$rate_name]);
+            array_push($data,['exp_date'=>'1970/01/01','exc_rate'=>1,'currency'=>$rate_name,'old_rate'=>$old_rate]);
            // echo Json::encode($data);return;
         }
         if($id){
@@ -410,9 +411,9 @@ class QuotationController extends Controller
                     $final_date = $xdate[0].'/'.$xdate[1].'/'.$xdate[2];
                 }
                 //echo $final_date;return;
-                array_push($data,['exp_date'=>$final_date,'exc_rate'=>$model->rate,'currency'=>'']);
+                array_push($data,['exp_date'=>$final_date,'exc_rate'=>$model->rate,'currency'=>'','old_rate'=>$old_rate]);
             }else{
-                array_push($data,['exp_date'=>'1970/01/01','exc_rate'=>1,'currency'=>'']);
+                array_push($data,['exp_date'=>'1970/01/01','exc_rate'=>1,'currency'=>'','old_rate'=>$old_rate]);
             }
         }
         echo Json::encode($data);

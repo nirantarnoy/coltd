@@ -943,17 +943,18 @@ $js = <<<JS
                   }
                   
      let id = e.val();
+                  var old_rate = $(".rate").val();
      if(id){
          //alert(c_m);
          $.ajax({
               'type':'post',
               'dataType': 'json',
               'url': "$url_to_checkrate",
-              'data': {'cur_id': id,'month': c_m},
+              'data': {'cur_id': id,'month': c_m,'old_rate': old_rate},
               'success': function(data) {
                  //alert(data);
                   // alert(new Date(data[0]['exp_date']));
-                  // alert(data[0]['exp_date']);
+                          //   alert(data[0]['exc_rate']);
                  //  alert(q_date);
                  var exp_date = data[0]['exp_date'];
                  var rate_name = data[0]['currency'];
@@ -962,6 +963,8 @@ $js = <<<JS
                        $(".alert-currency").html("วันที่อัตราแลกเปลี่ยนหมดอายุแล้ว หรือ ยังไม่ได้ป้อนค่าอัตราแลกเปลี่ยน").show();
                       $(".rate").val('');
                       return false;
+                 }else{
+                     $(".rate").val(data[0]['exc_rate']);
                  }
                  
                   if(data.length > 0){
@@ -983,6 +986,11 @@ $js = <<<JS
                 var line_price_usd =  $(this).closest('tr').find(".line-price-origin").val();
                 var line_price =  $(this).closest('tr').find(".line-price-origin-thb").val();
                 var new_price = parseFloat(line_price);  
+               
+                alert(line_price_usd);
+               // alert(line_price);
+               //
+               //  var new_price = line_price_usd * line_price;  
                 
                 // if(action_mode == 1){
                 //       var new_price = parseFloat(line_price) * parseFloat(line_price_usd);  
@@ -997,7 +1005,7 @@ $js = <<<JS
               
                 var new_line_total = parseFloat(new_price) * parseFloat(line_qty);
                 $(this).closest('tr').find(".line_cost").val(parseFloat(new_price).toFixed(2));
-                $(this).closest('tr').find(".line_price").val(parseFloat(new_price).toFixed(2));
+                $(this).closest('tr').find(".line_price").val(parseFloat(line_price_usd * cur_rate).toFixed(2));
                 $(this).closest('tr').find(".line_total").val(parseFloat(new_line_total).toFixed(2));
                  $(this).closest('tr').find(".line_total_show").val(addCommas(parseFloat(new_line_total).toFixed(2)));
             });
@@ -1005,7 +1013,8 @@ $js = <<<JS
             $(".table-quotation tbody tr").each(function() {
                 var line_price =  $(this).closest('tr').find(".line-price-origin").val();
                 var line_qty =  $(this).closest('tr').find(".line_qty").val();
-              
+                
+                
                 var cur_rate = $(".rate").val();
                 var new_price = parseFloat(line_price).toFixed(2);
                 var new_line_total = parseFloat(new_price) * parseFloat(line_qty);

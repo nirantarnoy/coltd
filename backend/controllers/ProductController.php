@@ -71,8 +71,11 @@ class ProductController extends Controller
      * Lists all Product models.
      * @return mixed
      */
+
     public function actionIndex()
     {
+        //print_r($this->findRateImport(2));return;
+
         $group = [];
         $stockstatus = [];
         $searcname = '';
@@ -619,7 +622,15 @@ class ProductController extends Controller
                     $model = new \backend\models\Inboundinv();
                     $model->invoice_no = $inv_no;
                     $model->invoice_date = date('Y-m-d', strtotime($inv_date));
+                    $model->docin_no = $data[$i]['invoice_no'];
                     $model->status = 1;
+
+                    $rate_amount = 0;
+                    $rate_exc = \backend\models\Currencyrate::findRateImport(2); //2 = USD
+
+                    if($rate_exc != null){$rate_amount = $rate_exc->rate;}
+
+                    $model->currency_rate = $rate_amount;
                     $model->currency_id = 1; // USD default
                     if ($model->save(false)) {
                         $model_line = new \backend\models\Inboundinvline();
