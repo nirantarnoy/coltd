@@ -490,7 +490,6 @@ class ProductController extends Controller
 
                         $thb_price = ($usd2 * $thb2);
 
-
                         $modelx = new \backend\models\Product();
                         $modelx->product_code = $rowData[0];
                         $modelx->barcode = $rowData[0];
