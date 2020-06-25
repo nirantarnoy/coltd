@@ -987,7 +987,7 @@ $js = <<<JS
                 var line_price =  $(this).closest('tr').find(".line-price-origin-thb").val();
                 var new_price = parseFloat(line_price);  
                
-                alert(line_price_usd);
+                //alert(line_price_usd);
                // alert(line_price);
                //
                //  var new_price = line_price_usd * line_price;  

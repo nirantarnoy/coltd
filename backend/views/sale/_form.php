@@ -910,7 +910,7 @@ $js = <<<JS
               'async': false,
               'data': {'saleid': cid},
               'success': function(data) {
-                alert(data);
+               // alert(data);
               },
               'error':function(data){
                   //alert(data);
@@ -1047,7 +1047,7 @@ $js = <<<JS
          if(e.parent().parent().attr("data-var") !=''){
              removelist.push(e.parent().parent().attr("data-var"));
          }  
-         alert(removelist);
+        // alert(removelist);
          $(".remove-list").val(removelist);
          if($(".table-quotation tbody tr").length == 1){
              $(".table-quotation tbody tr").each(function(){
