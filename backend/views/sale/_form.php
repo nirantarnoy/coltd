@@ -200,17 +200,17 @@ $this->registerCss('
                                 <?php $i = 0; ?>
                                 <?php foreach ($modelline as $value): ?>
                                     <?php
-                                      $line_cost_amt = 0;
-                                      $c_name = '';
-                                      $c_name = \backend\models\Currency::findName($model->currency);
-                                      if($c_name !=''){
-                                         if($c_name == "USD"){
-                                             $line_cost_amt = \backend\models\Product::findProductinfo($value->product_id) != null ? \backend\models\Product::findProductinfo($value->product_id)->cost : 0 ;
-                                         }else{
-                                             $cost = \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb;
-                                             $line_cost_amt = $cost;
-                                         }
-                                      }
+                                    $line_cost_amt = 0;
+                                    $c_name = '';
+                                    $c_name = \backend\models\Currency::findName($model->currency);
+                                    if ($c_name != '') {
+                                        if ($c_name == "USD") {
+                                            $line_cost_amt = \backend\models\Product::findProductinfo($value->product_id) != null ? \backend\models\Product::findProductinfo($value->product_id)->cost : 0;
+                                        } else {
+                                            $cost = \backend\models\Product::findProductinfo($value->product_id)->price_carton_thb;
+                                            $line_cost_amt = $cost;
+                                        }
+                                    }
 
                                     ?>
                                     <?php $i += 1; ?>
@@ -282,8 +282,10 @@ $this->registerCss('
                                         <td>
                                             <input type="hidden" class="line_total"
                                                    value="<?= $value->price * $value->qty ?>">
-                                            <input style="text-align: right" type="text" class="form-control line_total_show"
-                                                   name="linetotal[]" value="<?= number_format($value->price * $value->qty,2) ?>"
+                                            <input style="text-align: right" type="text"
+                                                   class="form-control line_total_show"
+                                                   name="linetotal[]"
+                                                   value="<?= number_format($value->price * $value->qty, 2) ?>"
                                                    readonly>
                                         </td>
                                         <td>
@@ -341,7 +343,8 @@ $this->registerCss('
                                     <td>
                                         <input type="hidden" class="line_total"
                                                value="">
-                                        <input style="text-align: right" type="text" class="form-control line_total_show"
+                                        <input style="text-align: right" type="text"
+                                               class="form-control line_total_show"
                                                name="linetotal[]" value="" readonly>
                                     </td>
                                     <td>
@@ -576,39 +579,49 @@ $this->registerCss('
                 </div>
 
             </div>
-            <div class="modal-body" style="white-space:nowrap;overflow-y: auto">
-                <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
-                <table class="table table-bordered table-striped table-list">
-                    <thead>
-                    <tr>
-                        <th style="text-align: center">เลือก</th>
-                        <th>รหัสสินค้า</th>
-                        <th>รายละเอียด</th>
-                        <th>Origin</th>
-                        <th>ปริมาณ/ลัง</th>
-                        <th>ลิตร/ขวด</th>
-                        <th>%</th>
-                        <th>คลัง</th>
-                        <th>inv</th>
-                        <th>inv.date</th>
-                        <th>ใบอนุญาต</th>
-                        <th>วันที่</th>
-                        <th>ใบขน</th>
-                        <th>วันที่</th>
-                        <th>ลำดับ</th>
-                        <th>สรรพสามิตร</th>
-                        <th>กนอ.</th>
-                        <th>วันที่</th>
-                        <th>เข้า</th>
-                        <th>ออก</th>
-                        <th>คงเหลือ</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            <div class="modal-body">
 
-                    </tbody>
-                </table>
+                <div class="wmd-view-topscroll" style=" overflow-x: scroll;overflow-y: hidden;width: 100%;">
+                    <div id="div1" style="width: 2200px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="wmd-view" style="overflow-x: scroll;overflow-y: hidden;width: 100%;;white-space:nowrap;">
+                    <div style="display: inline-block;">
+                        <input type="hidden" name="line_qc_product" class="line_qc_product" value="">
+                        <table class="table table-bordered table-striped table-list">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">เลือก</th>
+                                <th>รหัสสินค้า</th>
+                                <th>รายละเอียด</th>
+                                <th>คงเหลือ</th>
+                                <th>Origin</th>
+                                <th>ปริมาณ/ลัง</th>
+                                <th>ลิตร/ขวด</th>
+                                <th>%</th>
+                                <th>คลัง</th>
+                                <th>inv</th>
+                                <th>inv.date</th>
+                                <th>ใบอนุญาต</th>
+                                <th>วันที่</th>
+                                <th>ใบขน</th>
+                                <th>วันที่</th>
+                                <th>ลำดับ</th>
+                                <th>สรรพสามิตร</th>
+                                <th>กนอ.</th>
+                                <th>วันที่</th>
+                                <th>เข้า</th>
+                                <th>ออก</th>
 
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i
@@ -759,6 +772,17 @@ $js = <<<JS
  var quote = '$model->id';
  $(function(){
      cal_all();
+     
+     $(".wmd-view-topscroll").scroll(function () {
+            $(".wmd-view")
+            .scrollLeft($(".wmd-view-topscroll").scrollLeft());
+        });
+
+        $(".wmd-view").scroll(function () {
+            $(".wmd-view-topscroll")
+            .scrollLeft($(".wmd-view").scrollLeft());
+        });
+     
      $(".btn-payment").click(function(){
        $("#form-payment").submit(); 
     });
@@ -792,6 +816,7 @@ $js = <<<JS
                      $(".table-list").show();
                      var html = "";
                      for(var i =0;i<=data.length -1;i++){
+                          var all_qty = data[i]['all_qty'] == null?0:data[i]['all_qty'];
                             var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
                          var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
                          html +="<tr ondblclick='getitem($(this));'>" +
@@ -811,6 +836,7 @@ $js = <<<JS
                            "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
                            "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
                            "</td>"+
+                           "<td>"+all_qty+"</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
                            "<td>"+data[i]['unit_factor']+"</td>"+
                           "<td>"+data[i]['volumn']+"</td>"+
@@ -828,7 +854,7 @@ $js = <<<JS
                            "<td>"+data[i]['kno_in_date']+"</td>" +
                            "<td>"+data[i]['in_qty']+"</td>" +
                            "<td>"+data[i]['out_qty']+"</td>" +
-                           "<td>"+data[i]['in_qty']+"</td>" +
+                       
                             "</tr>"
                           
                         }
@@ -1062,6 +1088,7 @@ $js = <<<JS
                      $(".table-list").show();
                      var html = "";
                       for(var i =0;i<=data.length -1;i++){
+                         var all_qty = data[i]['all_qty'] == null?0:data[i]['all_qty'];
                          var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
                          var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
                          
@@ -1089,6 +1116,7 @@ $js = <<<JS
                           "<input type='hidden' class='stock_refid' value='"+data[i]['stock_id']+"'/>" +
                           "<input type='hidden' class='stock_price' value='"+data[i]['thb_amount']+"'/>" +
                            "</td>"+
+                            "<td>"+all_qty+"</td>"+
                            "<td>"+data[i]['origin']+"</td>"+
                            "<td>"+data[i]['unit_factor']+"</td>"+
                           "<td>"+data[i]['volumn']+"</td>"+
@@ -1106,7 +1134,7 @@ $js = <<<JS
                            "<td>"+kno_date+"</td>" +
                            "<td style='color:green;text-align: right;'>"+parseFloat(in_q).toLocaleString()+"</td>" +
                            "<td style='color:red;text-align: right;'>"+parseFloat(out_q).toLocaleString()+"</td>" +
-                           "<td style='font-weight: bold;text-align: right;'>"+ parseFloat(in_q).toLocaleString()+"</td>" +
+                         
                            "</tr>"
                            
                      }
