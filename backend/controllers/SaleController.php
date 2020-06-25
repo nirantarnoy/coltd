@@ -725,6 +725,8 @@ class SaleController extends Controller
                             $pickline->inv_date = $stock_info->invoice_date;
                             $pickline->permit_no = $stock_info->permit_no;
                             $pickline->permit_date = $stock_info->permit_date;
+                            $pickline->transport_in_no = $stock_info->transport_in_no;
+                            $pickline->transport_in_date = date('Y-m-d', strtotime($stock_info->transport_in_date));
                             //   $pickline->excise_no = $stock_info->excise_no;
                             $pickline->price = $line_price[$i];
                             $pickline->transport_out_no = $trans_out_no[$i];
