@@ -169,7 +169,7 @@
                 <td></td>
                 <td></td>
                 <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"></td>
-                 <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"></td>
+                 <td style="font-size: 14px;font-weight: normal;text-align: center;padding-right: 10px;"><?=\backend\models\Currency::findName($model->currency)?></td>
                 <td style="font-size: 14px;font-weight: bold;text-align: center;padding-right: 10px;"><?=number_format($sumtotal,0)?></td>
 
             </tr>
