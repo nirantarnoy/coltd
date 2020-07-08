@@ -153,9 +153,10 @@ $this->registerCss('
                             </tr>
                             </thead>
                             <tbody>
+                            <?php $total_all = 0;?>
                             <?php if(count($modelline) >0):?>
                                 <?php $i=0;?>
-                                <?php $total_all = 0;?>
+
                                 <?php foreach ($modelline as $value):?>
                                 <?php
                                     $i+=1;
