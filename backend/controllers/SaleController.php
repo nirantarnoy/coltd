@@ -476,6 +476,7 @@ class SaleController extends Controller
     {
         $sale = \Yii::$app->request->post("sale_id");
         if ($sale) {
+           // echo $sale;return;
             $prod = \Yii::$app->request->post("product_id");
             $qty = \Yii::$app->request->post("line_qty");
             $price = \Yii::$app->request->post("line_price");
@@ -610,12 +611,12 @@ class SaleController extends Controller
 
             $model = \backend\models\Sale::find()->where(['id' => $id])->one();
             $modelline = \backend\models\Saleline::find()->where(['sale_id' => $id])->all();
-            $data = [];
-            if ($modelline) {
-                foreach ($modelline as $value) {
-                    array_push($data, $value->product_id);
-                }
-            }
+//            $data = [];
+//            if ($modelline) {
+//                foreach ($modelline as $value) {
+//                    array_push($data, $value->product_id);
+//                }
+//            }
 
             $sql = "SELECT t1.product_id,t1.qty,t1.price,t2.invoice_no,t2.invoice_date,t2.transport_in_no," .
                 "t2.transport_in_date,t2.sequence,t2.permit_no,t2.permit_date,t2.kno_no_in,t2.kno_in_date,t3.origin," .
@@ -629,13 +630,13 @@ class SaleController extends Controller
             //print_r($query);return;
 
 
-            $searchModel = new \backend\models\ProductstockSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            $dataProvider->query->andFilterWhere(['product_id' => $data]);
+//            $searchModel = new \backend\models\ProductstockSearch();
+//            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//            $dataProvider->query->andFilterWhere(['product_id' => $data]);
 
             return $this->render('_packingslip', [
                 'model' => $model,
-                'modelline' => $modelline,
+          //      'modelline' => $modelline,
                 'query' => $query
                 // 'searchModel'=> $searchModel,
                 // 'dataProvider' => $dataProvider,
