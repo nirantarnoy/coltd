@@ -31,13 +31,14 @@ $this->title = "Packing List";
                         <th>ราคาต่อลัง(บาท)</th>
                         <th >จำนวน</th>
                         <th >หน่วยนับ</th>
-                        <th style="background-color: #1b6d85;color: white">ราคารวม</th>
+<!--                        <th style="background-color: #1b6d85;color: white">ราคารวม</th>-->
                         <th style="text-align: center">เลขที่ใบนำเขา้</th>
                         <th style="text-align: center">วันที่</th>
                         <th style="text-align: center">รายการที่</th>
                         <th style="text-align: center">พิกัด</th>
-                        <th style="text-align: center">ประเทศต้นกำเหนิด</th>
+                        <th style="text-align: center">ประเทศต้นกำเนิด</th>
                         <th style="text-align: center">ใบขนขาออก</th>
+                        <th style="text-align: center">รายการที่</th>
                         <th style="text-align: center">วันที่</th>
                         <th style="text-align: center">invoice</th>
                         <th style="text-align: center">invoice/date</th>
@@ -77,9 +78,9 @@ $this->title = "Packing List";
                                 <td style="vertical-align: middle">
                                     <?=\backend\models\Unit::findName(\backend\models\Product::findProductInfo($query[$i]['product_id'])->unit_id)?>
                                 </td>
-                                <td style="vertical-align: middle;text-align: right;background-color: #1b6d85;color: white">
-                                    <?=number_format((float)$query[$i]['qty'] * (float)$query[$i]['price'],2);?>
-                                </td>
+<!--                                <td style="vertical-align: middle;text-align: right;background-color: #1b6d85;color: white">-->
+                                    <?php //echo number_format((float)$query[$i]['qty'] * (float)$query[$i]['price'],2);?>
+<!--                                </td>-->
                                 <td style="vertical-align: middle">
                                     <?=$query[$i]['transport_in_no']?>
                                 </td>
@@ -99,6 +100,9 @@ $this->title = "Packing List";
                                 </td>
                                 <td style="vertical-align: middle">
                                     <input type="text" class="form-control line_transport_out_no" name="line_transport_out_no[]" style="width: 100px;" value="<?=$query[$i]['transport_out_no']?>">
+                                </td>
+                                <td style="vertical-align: middle">
+                                    <input type="text" class="form-control line_transport_out_line_num" name="line_transport_out_line_num[]" readonly style="width: 100px;" value="<?=$query[$i]['transport_out_line_num']?>">
                                 </td>
                                 <td style="vertical-align: middle">
                                     <input type="date" class="form-control line_transport_out_date" name="line_transport_out_date[]" value="<?=date('Y-m-d', strtotime($query[$i]['transport_out_date']))?>">

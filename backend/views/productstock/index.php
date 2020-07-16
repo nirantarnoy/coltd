@@ -75,8 +75,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'value' => function ($data) {
                                     if ($data->inbound_id > 0) {
                                         return $data->invoice_no;
-                                    }else if($data->outbound_id > 0){
-                                        return \backend\models\Picking::findLineInv($data->outbound_id,$data->product_id);
+                                    } else if ($data->outbound_id > 0) {
+                                        return \backend\models\Picking::findLineInv($data->outbound_id, $data->product_id);
                                     }
                                 }
                             ],
@@ -196,8 +196,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($data) {
                                 if ($data->inbound_id > 0) {
                                     return $data->invoice_no;
-                                }else if($data->outbound_id > 0){
-                                    return \backend\models\Picking::findLineInv($data->outbound_id,$data->product_id);
+                                } else if ($data->outbound_id > 0) {
+                                    return \backend\models\Picking::findLineInv($data->outbound_id, $data->product_id);
                                 }
                             }
                         ],
@@ -219,7 +219,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['attribute' => 'kno_in_date', 'value' => function ($data) {
                             return date('Y', strtotime($data->kno_in_date)) == 1970 ? '' : date('d-m-Y', strtotime($data->kno_in_date));
                         }],
-                        'usd_rate',
+                        [
+                            'attribute' => 'usd_rate',
+                            'contentOptions' => ['style' => 'text-align: right'],
+                            'value' => function ($data) {
+                                return number_format($data->usd_rate, 2);
+                            }
+                        ],
 //            'thb_amount',
                         //'status',
                         //'created_at',

@@ -37,7 +37,7 @@ $this->registerCss('
 
 
 //$wh = \backend\models\Warehouse::find()->all();
-
+$model_check_packing = \backend\models\Picking::find()->where(['sale_id' => $model->id])->one();
 ?>
 
 <div class="sale-form">
@@ -372,14 +372,18 @@ $this->registerCss('
                         </tr>
                         </tfoot>
                     </table>
-                    <div class="btn btn-default btn-addline"><i class="fa fa-plus-circle"></i> เพิ่มรายการ</div>
+                    <?php if (!$model_check_packing): ?>
+                        <div class="btn btn-default btn-addline"><i class="fa fa-plus-circle"></i> เพิ่มรายการ</div>
+                    <?php endif; ?>
                 </div>
             </div>
 
             <hr/>
 
             <div class="form-group pull-right">
-                <?= Html::submitButton("<i class='fa fa-save'></i> บันทึก", ['class' => 'btn btn-success']) ?>
+                <?php if (!$model_check_packing): ?>
+                    <?= Html::submitButton("<i class='fa fa-save'></i> บันทึก", ['class' => 'btn btn-success']) ?>
+                <?php endif; ?>
             </div>
 
             <?php ActiveForm::end(); ?>
@@ -587,7 +591,7 @@ $this->registerCss('
             <div class="modal-body">
 
                 <div class="wmd-view-topscroll" style=" overflow-x: scroll;overflow-y: hidden;width: 100%;">
-                    <div id="div1" style="width: 2200px;">
+                    <div id="div1" style="width: 2500px;">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>

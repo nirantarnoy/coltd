@@ -663,6 +663,7 @@ class SaleController extends Controller
         $line_price = Yii::$app->request->post('line_price');
 
         $trans_out_no = Yii::$app->request->post('line_transport_out_no');
+        $trans_out_line_num = Yii::$app->request->post('line_transport_out_line_num');
         $trans_out_date = Yii::$app->request->post('line_transport_out_date');
         $kno_out_no = Yii::$app->request->post('line_kno_out_no');
         $kno_out_date = Yii::$app->request->post('line_kno_out_date');
@@ -731,6 +732,7 @@ class SaleController extends Controller
                             //   $pickline->excise_no = $stock_info->excise_no;
                             $pickline->price = $line_price[$i];
                             $pickline->transport_out_no = $trans_out_no[$i];
+                            $pickline->transport_out_line_num = $trans_out_line_num[$i];
                             $pickline->transport_out_date = date('Y-m-d', strtotime($trans_out_date_ok));
                             $pickline->kno_out_no = $kno_out_no[$i];
                             $pickline->kno_out_date = date('Y-m-d', strtotime($kno_out_date_ok));
