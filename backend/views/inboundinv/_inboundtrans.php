@@ -96,11 +96,11 @@ use yii\helpers\Url;
                                 <td><input type="text" style="width: 100px" class="form-control line_gross"
                                            name="line_gross[]" value="<?= $value->line_qty * $product_data->grossweight ?>" readonly></td>
                                 <td><input type="text" style="width: 200px" class="form-control line_transport_in_no"
-                                           name="line_transport_in_no[]" value="<?=$value->transport_in_no?>" required></td>
+                                           name="line_transport_in_no[]" value="<?=$modelinv->docin_no?>" required></td>
                                 <td><input type="date" id="cut_date_<?= $i ?>" style="width: 200px"
                                            class="form-control line_transport_in_date" name="line_transport_in_date[]"
                                            required
-                                           value="<?= $value->transport_in_date == '' || $value->transport_in_date == Null ? date('Y-d-m') : date('Y-d-m', strtotime($value->transport_in_date)) ?>"
+                                           value="<?= $value->transport_in_date == '' || $value->transport_in_date == Null ? date('Y-m-d', strtotime($modelinv->docin_date)) : date('Y-m-d',strtotime($value->transport_in_date)) ?>"
                                     >
                                 </td>
                                 <td><input type="text" style="width: 100px" class="form-control line_num"

@@ -35,7 +35,7 @@ class InboundInv extends \yii\db\ActiveRecord
     {
         return [
             [['invoice_no','supplier_id','currency'],'required'],
-            [['invoice_date'], 'safe'],
+            [['invoice_date','docin_date'], 'safe'],
             [['delivery_term','payment_status', 'created_at','currency_id','supplier_id', 'updated_at','currency_id', 'created_by', 'updated_by'], 'integer'],
             [['status'],'safe'],
             [['invoice_no', 'sold_to','customer_ref','docin_no'], 'string', 'max' => 255],
@@ -58,6 +58,7 @@ class InboundInv extends \yii\db\ActiveRecord
             'status' => 'สถานะ',
             'customer_ref' => 'เลขที่อ้างอิงลูกค้า',
             'docin_no' =>'เลขที่นำเข้า',
+            'docin_date' =>'วันที่นำเข้า',
             'currency_id' =>'สกุลเงิน',
             'currency_rate'=>'แลกเปลี่ยน',
             'created_at' => Yii::t('app', 'สร้างเมื่อ'),

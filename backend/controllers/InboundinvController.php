@@ -88,6 +88,12 @@ class InboundinvController extends Controller
                 $inv_date = $x_date[2] . '/' . $x_date[1] . '/' . $x_date[0];
             }
 
+            $doc_date = explode('/', $model->docin_date);
+            $doc_in_date = date('Y-m-d');
+            if (count($doc_date)) {
+                $doc_in_date = $doc_date[2] . '/' . $doc_date[1] . '/' . $doc_date[0];
+            }
+
             $cur = 1;
             if ($model->currency_id == '' || $model->currency_id == null) {
                 $cur = 1;
@@ -98,6 +104,7 @@ class InboundinvController extends Controller
             //echo $cur;return;
 
             $model->invoice_date = date('Y-m-d', strtotime($inv_date));
+            $model->docin_date = date('Y-m-d', strtotime($doc_in_date));
             $model->status = 1;
             $model->currency_id = $cur;
             if ($model->save(false)) {
@@ -114,6 +121,7 @@ class InboundinvController extends Controller
                         $modelline->kno_no_in = \backend\models\Plant::findKnoNo();
                         $modelline->kno_in_date = \backend\models\Plant::findKnoDate();
                         $modelline->line_num = $i + 1;
+                        $modelline->permit_date = null;
                         // $modelline->stock_id = $stockid[$i];
                         $modelline->save();
                     }
@@ -145,6 +153,7 @@ class InboundinvController extends Controller
     public function actionCreatetrans($id)
     {
         if ($id) {
+            $model_inv = \backend\models\Inboundinv::find()->where(['id'=>$id])->one();
             $model = \backend\models\Inboundinvline::find()->where(['invoice_id' => $id])->all();
 
             \backend\models\Importline::deleteAll(['import_id' => $id]);
@@ -167,6 +176,8 @@ class InboundinvController extends Controller
                     $modelimport->netweight = $prodinfo->netweight;;
                     $modelimport->grossweight = $prodinfo->grossweight;
                     $modelimport->excise_no = $prodinfo->excise_no;
+                    $modelimport->transport_in_no = $model_inv->docin_no;
+                    $modelimport->transport_in_date = $model_inv->docin_date;
 //                    $modelimport->kno_no_in = \backend\models\Plant::findKnoNo();
 //                    $modelimport->kno_in_date = \backend\models\Plant::findKnoDate();
                     $modelimport->save(false);
@@ -200,7 +211,14 @@ class InboundinvController extends Controller
                 $inv_date = $x_date[2] . '/' . $x_date[1] . '/' . $x_date[0];
             }
 
+            $doc_date = explode('/', $model->docin_date);
+            $doc_in_date = date('Y-m-d');
+            if (count($doc_date)) {
+                $doc_in_date = $doc_date[2] . '/' . $doc_date[1] . '/' . $doc_date[0];
+            }
+
             $model->invoice_date = date('Y-m-d', strtotime($inv_date));
+            $model->docin_date = date('Y-m-d', strtotime($doc_in_date));
             $model->status = 1;
             if ($model->save(false)) {
                 if (count($prodid) > 0) {
@@ -341,6 +359,7 @@ class InboundinvController extends Controller
         $linekno_no = Yii::$app->request->post('line_kno_no');
         $linekno_date = Yii::$app->request->post('line_kno_date');
 
+       // print_r($linekno_date);return;
         //return;
 
         $permit_date = null;
@@ -384,8 +403,9 @@ class InboundinvController extends Controller
                 if ($linetransportdate[$i] != '') {
                     //  echo  $linepermitdate[$i];return;
                     $trans_date = explode('-', $linetransportdate[$i]);
+                   // print_r($trans_date);return;
                     if (count($trans_date) > 0 && $trans_date[0] != '') {
-                        $transport_date = $trans_date[2] . "/" . $trans_date[1] . "/" . $trans_date[0];
+                        $transport_date = $trans_date[0] . "/" . $trans_date[1] . "/" . $trans_date[2];
                     }
                 }
                 if ($linekno_date[$i] != '') {

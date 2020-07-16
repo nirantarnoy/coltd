@@ -238,8 +238,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <th>invoice</th>
                                         <th>วันที่</th>
                                         <th>จำนวน</th>
-                                        <th>ราคา(USD)</th>
-                                        <th>Rate THB</th>
+                                        <th style="text-align: right">ราคา(USD)</th>
+                                        <th style="text-align: right">ราคาTHB</th>
                                     </tr>
                                 </thaed>
                                 <tbody>
@@ -273,8 +273,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <td><?php echo $value->invoice_no ?></td>
                                                 <td><?php echo date('d/m/Y', strtotime($value->invoice_date)) ?></td>
                                                 <td><?php echo $html ?></td>
-                                                <td><?php echo number_format($value->usd_rate, 2) ?></td>
-                                                <td><?php echo number_format($value->thb_amount, 2) ?></td>
+                                                <td style="text-align: right"><?php echo number_format($value->usd_rate, 2) ?></td>
+                                                <td style="text-align: right"><?php echo number_format($value->thb_amount, 2) ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php endif; ?>

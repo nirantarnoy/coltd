@@ -41,14 +41,26 @@ use kartik\time\TimePicker;
             <!--            <div class="col-lg-4">-->
             <!--                --><?php ////echo $form->field($model, 'delivery_term')->textInput(['maxlength' => true]) ?>
             <!--            </div>-->
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <?php $xstatus = $model->isNewRecord ? 'open' : \backend\helpers\QuotationStatus::getTypeById($model->status); ?>
                 <?= $form->field($model, 'status')->textInput(['value' => $xstatus, 'readonly' => 'readonly']) ?>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <?= $form->field($model, 'docin_no')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
+                <?php $model->docin_date = $model->isNewRecord ? date('d/m/Y') : date('d/m/Y', strtotime($model->docin_date)); ?>
+                <?= $form->field($model, 'docin_date')->widget(DatePicker::className(), [
+                    'value' => date('d/m/Y'),
+                    'options' => ['id' => 'docin_date', 'class' => 'docin_date'],
+                    'pluginOptions' => [
+                        'format' => 'dd/mm/yyyy',
+                        'todayHighlight' => true,
+                        'todayBtn' => true,
+                    ]
+                ]) ?>
+            </div>
+            <div class="col-lg-3">
                 <?= $form->field($model, 'supplier_id')->widget(\kartik\select2\Select2::className(), [
                     'data' => ArrayHelper::map(\backend\models\Vendor::find()->all(), 'id', 'name'),
                     'options' => [
