@@ -633,7 +633,7 @@ $js = <<<JS
                      $(".table-list").show();
                      var html = "";
                      for(var i =0;i<=data.length -1;i++){
-                           var all_qty = data[i]['all_qty'] == null?0:data[i]['all_qty'];
+                           var all_qty = data[i]['qty'] == null?0:data[i]['qty'];
                             var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
                          var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
                          html +="<tr ondblclick='getitem($(this));'>" +
@@ -744,7 +744,7 @@ $js = <<<JS
                     
                      var html = "";
                      for(var i =0;i<=data.length -1;i++){
-                         var all_qty = data[i]['all_qty'] == null?0:data[i]['all_qty'];
+                         var all_qty = data[i]['qty'] == null?0:data[i]['qty'];
                          var in_q = data[i]['in_qty'] == null?0:data[i]['in_qty'];
                          var out_q = data[i]['out_qty'] == null?0:data[i]['out_qty'];
                          
