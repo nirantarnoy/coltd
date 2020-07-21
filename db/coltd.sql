@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2020-02-25 18:17:13
+Date: 2020-07-17 16:59:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1659,12 +1659,13 @@ CREATE TABLE `currency_rate` (
   `updated_by` int(11) DEFAULT NULL,
   `rate_type` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of currency_rate
 -- ----------------------------
-INSERT INTO `currency_rate` VALUES ('4', 'USD2THB', '2', '1', '34', '1', '2020-05-02', '2020-05-30', '1', '1581953894', '1581953894', null, null, '2');
+INSERT INTO `currency_rate` VALUES ('4', 'USD2THB', '2', '1', '34', '1', '2020-01-27', '2020-07-03', '1', '1581953894', '1588666439', null, null, '1');
+INSERT INTO `currency_rate` VALUES ('5', 'USD2THB-EXPORT', '2', '1', '32.5', '1', '2020-03-01', '2020-07-31', '1', '1584434607', '1590940793', null, null, '2');
 
 -- ----------------------------
 -- Table structure for `customer`
@@ -10656,6 +10657,26 @@ CREATE TABLE `employee` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `export_file`
+-- ----------------------------
+DROP TABLE IF EXISTS `export_file`;
+CREATE TABLE `export_file` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sale_id` int(11) DEFAULT NULL,
+  `filename` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of export_file
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `import_file`
 -- ----------------------------
 DROP TABLE IF EXISTS `import_file`;
@@ -10669,11 +10690,13 @@ CREATE TABLE `import_file` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of import_file
 -- ----------------------------
+INSERT INTO `import_file` VALUES ('4', '21', '1583385839.png', null, '1583385839', '1583385839', null, null);
+INSERT INTO `import_file` VALUES ('5', '37', '1587028662.jpg', null, '1587028662', '1587028662', null, null);
 
 -- ----------------------------
 -- Table structure for `import_trans`
@@ -10690,13 +10713,11 @@ CREATE TABLE `import_trans` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of import_trans
 -- ----------------------------
-INSERT INTO `import_trans` VALUES ('1', 'xaasa455', '2019-06-06', null, '1', '1559363869', '1559363869', '2', null);
-INSERT INTO `import_trans` VALUES ('2', 'xaasa455', '2019-06-06', null, '1', '1559363869', '1559363869', '2', null);
 
 -- ----------------------------
 -- Table structure for `import_trans_line`
@@ -10736,33 +10757,11 @@ CREATE TABLE `import_trans_line` (
   `transport_in_date` date DEFAULT NULL,
   `posted` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of import_trans_line
 -- ----------------------------
-INSERT INTO `import_trans_line` VALUES ('1', '10', '2120', null, '18', '15', null, '100', '1500', '15', null, null, null, null, '1', '22083000', 'GB', '13020202005Nr000000250150701', null, null, null, null, null, null, '1582163223', '1582163223', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('2', '10', '2121', null, '2', '10', null, '30', '300', '10', null, null, null, null, '2', '22083000', 'GB', '130202020030t000000250130701', null, null, null, null, null, null, '1582163223', '1582163223', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('6', '11', '2120', null, '18', '3', null, '100', '300', '3', null, null, null, null, '1', '22083000', 'GB', '13020202005Nr000000250150701', null, null, null, null, null, null, '1582186514', '1582186514', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('7', '11', '2120', null, '18', '3', null, '100', '300', '3', null, null, null, null, '2', '22083000', 'GB', '13020202005Nr000000250150701', null, null, null, null, null, null, '1582186514', '1582186514', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('8', '11', '2113', null, null, '5', null, '300', '1500', '5', null, null, null, null, '3', '22042111', 'CL', '1301020100CzM000000333DE0701', null, null, null, null, null, null, '1582186514', '1582186514', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('10', '13', '2114', null, null, '1', null, '100', '100', '1', null, null, null, null, '1', '22042111', 'CL', '1301020200I5F000000030140701', null, null, null, null, null, null, '1582254723', '1582254723', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('11', '13', '2113', null, null, '1', null, '0', '0', '1', null, null, null, null, '2', '22042111', 'CL', '1301020100CzM000000333DE0701', null, null, null, null, null, null, '1582254723', '1582254723', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('12', '14', '2113', null, null, '1', null, '20', '20', '1', null, null, null, null, '1', '22042111', 'CL', '1301020100CzM000000333DE0701', null, null, null, null, null, null, '1582256005', '1582256005', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('13', '14', '2114', null, null, '1', null, '30', '30', '1', null, null, null, null, '2', '22042111', 'CL', '1301020200I5F000000030140701', null, null, null, null, null, null, '1582256005', '1582256005', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('14', '1', '2113', '0', '0', '10', null, '450', '4500', '10', null, '900', '1300', null, '1', '22042111', 'CL', '1301020100CzM000000333DE0701', null, null, null, null, null, null, '1582549041', '1582549041', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('15', '1', '2114', null, null, '10', null, '30', '300', '10', null, null, null, null, '2', '22042111', 'CL', '1301020200I5F000000030140701', null, null, null, null, null, null, '1582549041', '1582549041', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('16', '2', '2113', '0', '0', '13', null, '30', '390', '13', null, '900', '1300', null, '1', '22042111', 'CL', '1301020100CzM000000333DE0701', null, null, null, null, null, null, '1582552773', '1582552773', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('17', '2', '2114', null, null, '10', null, '40', '400', '10', null, null, null, null, '2', '22042111', 'CL', '1301020200I5F000000030140701', null, null, null, null, null, null, '1582552773', '1582552773', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('18', '3', '2113', '0', '0', '1', null, '450', '450', '1', null, '900', '1300', null, '1', '22042111', 'CL', '1301020100CzM000000333DE0701', null, null, null, null, null, null, '1582553423', '1582553423', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('20', '4', '2113', '0', '0', '1', null, '0', '0', '1', null, '900', '1300', null, '1', '22042111', 'CL', '1301020100CzM000000333DE0701', null, null, null, null, null, null, '1582594895', '1582594895', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('21', '5', '2114', null, null, '5', null, '560', '2800', '5', null, null, null, null, '1', '22042111', 'CL', '1301020200I5F000000030140701', null, null, null, null, null, null, '1582597904', '1582597904', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('22', '6', '2114', null, null, '5', null, '60', '300', '5', null, null, null, null, '1', '22042111', 'CL', '1301020200I5F000000030140701', null, null, null, null, null, null, '1582599334', '1582599334', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('23', '7', '2114', null, null, '1', null, '500', '500', '1', null, null, null, null, '1', '22042111', 'CL', '1301020200I5F000000030140701', null, null, null, null, null, null, '1582599688', '1582599688', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('25', '8', '2114', null, null, '2', null, '900', '1800', '2', null, null, null, null, '1', '22042111', 'CL', '1301020200I5F000000030140701', null, null, null, null, null, null, '1582600699', '1582600699', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('26', '9', '2114', null, null, '1', null, '560', '560', '1', null, null, null, null, '1', '22042111', 'CL', '1301020200I5F000000030140701', null, null, null, null, null, null, '1582601011', '1582601011', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('28', '16', '2113', '0', '0', '1', null, '220', '220', '1', null, '900', '1300', null, '1', '22042111', 'CL', '1301020100CzM000000333DE0701', null, null, null, null, null, null, '1582620512', '1582620512', '2', null, null, null, null, null);
-INSERT INTO `import_trans_line` VALUES ('29', '17', '2113', '0', '0', '2', null, '20', '40', '2', null, '900', '1300', null, '1', '22042111', 'CL', '1301020100CzM000000333DE0701', null, null, null, null, null, null, '1582626339', '1582626339', '2', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `inbound_inv`
@@ -10782,13 +10781,47 @@ CREATE TABLE `inbound_inv` (
   `customer_ref` varchar(255) DEFAULT NULL,
   `docin_no` varchar(255) DEFAULT NULL,
   `supplier_id` int(11) DEFAULT NULL,
+  `currency_id` int(11) DEFAULT NULL,
+  `currency_rate` float DEFAULT NULL,
+  `payment_status` int(11) DEFAULT NULL,
+  `total_amount` float DEFAULT NULL,
+  `docin_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=613 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of inbound_inv
 -- ----------------------------
-INSERT INTO `inbound_inv` VALUES ('17', 'JL20000001', '2020-02-25 00:00:00', null, null, '1', '1582626334', '1582626334', '2', null, 'TEST', 'JLD20009', '1');
+INSERT INTO `inbound_inv` VALUES ('583', '', '1970-01-01 00:00:00', null, null, '1', '1594955148', '1594955148', '2', null, null, '', null, '1', '34', null, null, null);
+INSERT INTO `inbound_inv` VALUES ('584', 'JLD06/2018 ', '2018-07-02 00:00:00', null, null, '1', '1594955148', '1594955148', '2', '2', null, 'JLD06/2018 ', null, '1', '34', null, '9570', null);
+INSERT INTO `inbound_inv` VALUES ('585', 'JLD12/2018  ', '2018-09-04 00:00:00', null, null, '1', '1594955148', '1594955148', '2', '2', null, 'JLD12/2018  ', null, '1', '34', null, '6215', null);
+INSERT INTO `inbound_inv` VALUES ('586', 'JLD13/2018  ', '2018-09-07 00:00:00', null, null, '1', '1594955148', '1594955148', '2', '2', null, 'JLD13/2018  ', null, '1', '34', null, '3300', null);
+INSERT INTO `inbound_inv` VALUES ('587', 'JLD02/2020  ', '2020-02-05 00:00:00', null, null, '1', '1594955148', '1594955148', '2', '2', null, 'JLD02/2020  ', null, '1', '34', null, '1800', null);
+INSERT INTO `inbound_inv` VALUES ('588', 'JLD05/2019', '2019-04-29 00:00:00', null, null, '1', '1594955148', '1594955148', '2', '2', null, 'JLD05/2019', null, '1', '34', null, '6640', null);
+INSERT INTO `inbound_inv` VALUES ('589', 'JLD04/2020 ', '2020-03-17 00:00:00', null, null, '1', '1594955148', '1594955148', '2', '2', null, 'JLD04/2020 ', null, '1', '34', null, '4950', null);
+INSERT INTO `inbound_inv` VALUES ('590', 'JLD03/2019 ', '2019-03-11 00:00:00', null, null, '1', '1594955148', '1594955148', '2', '2', null, 'JLD03/2019 ', null, '1', '34', null, '54000', null);
+INSERT INTO `inbound_inv` VALUES ('591', 'JLD08/2019  ', '2019-07-26 00:00:00', null, null, '1', '1594955148', '1594955148', '2', '2', null, 'JLD08/2019  ', null, '1', '34', null, '91500', null);
+INSERT INTO `inbound_inv` VALUES ('592', 'JLD13/2019 ', '2019-11-01 00:00:00', null, null, '1', '1594955148', '1594955148', '2', '2', null, 'JLD13/2019 ', null, '1', '34', null, '77720', null);
+INSERT INTO `inbound_inv` VALUES ('593', 'JLD11/2019  ', '2019-09-30 00:00:00', null, null, '1', '1594955148', '1594955148', '2', '2', null, 'JLD11/2019  ', null, '1', '34', null, '5150', null);
+INSERT INTO `inbound_inv` VALUES ('594', 'JLD01/2019 ', '2019-01-25 00:00:00', null, null, '1', '1594955148', '1594955148', '2', '2', null, 'JLD01/2019 ', null, '1', '34', null, '77600', null);
+INSERT INTO `inbound_inv` VALUES ('595', 'JLD07/2018  ', '2018-07-03 00:00:00', null, null, '1', '1594955149', '1594955149', '2', '2', null, 'JLD07/2018  ', null, '1', '34', null, '4900', null);
+INSERT INTO `inbound_inv` VALUES ('596', 'JLD15/2018 ', '2018-10-30 00:00:00', null, null, '1', '1594955149', '1594955149', '2', '2', null, 'JLD15/2018 ', null, '1', '34', null, '2450', null);
+INSERT INTO `inbound_inv` VALUES ('597', 'JLD06/2019   ', '2019-05-02 00:00:00', null, null, '1', '1594955149', '1594955149', '2', '2', null, 'JLD06/2019   ', null, '1', '34', null, '2400', null);
+INSERT INTO `inbound_inv` VALUES ('598', 'JLD03/2020', '2020-02-12 00:00:00', null, null, '1', '1594955149', '1594955149', '2', '2', null, 'JLD03/2020', null, '1', '34', null, '28600', null);
+INSERT INTO `inbound_inv` VALUES ('599', 'JLD06/2020', '2020-05-13 00:00:00', null, null, '1', '1594955149', '1594955149', '2', '2', null, 'JLD06/2020', null, '1', '34', null, '72000', null);
+INSERT INTO `inbound_inv` VALUES ('600', 'JLD11/2018  ', '2018-09-03 00:00:00', null, null, '1', '1594955149', '1594955149', '2', '2', null, 'JLD11/2018  ', null, '1', '34', null, '1120', null);
+INSERT INTO `inbound_inv` VALUES ('601', 'JLD15/2019  ', '2019-12-17 00:00:00', null, null, '1', '1594955149', '1594955149', '2', '2', null, 'JLD15/2019  ', null, '1', '34', null, '2150', null);
+INSERT INTO `inbound_inv` VALUES ('602', 'JLD18/2018  ', '2018-12-07 00:00:00', null, null, '1', '1594955149', '1594955149', '2', '2', null, 'JLD18/2018  ', null, '1', '34', null, '3150', null);
+INSERT INTO `inbound_inv` VALUES ('603', 'JLD07/2019', '2019-05-10 00:00:00', null, null, '1', '1594955149', '1594955149', '2', '2', null, 'JLD07/2019', null, '1', '34', null, '30705', null);
+INSERT INTO `inbound_inv` VALUES ('604', 'JLD10/2019  ', '2019-08-08 00:00:00', null, null, '1', '1594955149', '1594955149', '2', '2', null, 'JLD10/2019  ', null, '1', '34', null, '31500', null);
+INSERT INTO `inbound_inv` VALUES ('605', 'JLD02/2019  ', '2019-02-25 00:00:00', null, null, '1', '1594955149', '1594955149', '2', '2', null, 'JLD02/2019  ', null, '1', '34', null, '1850', null);
+INSERT INTO `inbound_inv` VALUES ('606', 'JLD014/2018 ', '2018-10-01 00:00:00', null, null, '1', '1594955150', '1594955150', '2', '2', null, 'JLD014/2018 ', null, '1', '34', null, '930', null);
+INSERT INTO `inbound_inv` VALUES ('607', 'JLD10/2018 ', '2018-07-24 00:00:00', null, null, '1', '1594955150', '1594955150', '2', '2', null, 'JLD10/2018 ', null, '1', '34', null, '12960', null);
+INSERT INTO `inbound_inv` VALUES ('608', 'JLD16/2018  ', '2018-10-16 00:00:00', null, null, '1', '1594955150', '1594955150', '2', '2', null, 'JLD16/2018  ', null, '1', '34', null, '27600', null);
+INSERT INTO `inbound_inv` VALUES ('609', 'JLD12/2019 ', '2019-10-10 00:00:00', null, null, '1', '1594955150', '1594955150', '2', '2', null, 'JLD12/2019 ', null, '1', '34', null, '42000', null);
+INSERT INTO `inbound_inv` VALUES ('610', 'JLD14/2019 ', '2019-11-06 00:00:00', null, null, '1', '1594955150', '1594955150', '2', '2', null, 'JLD14/2019 ', null, '1', '34', null, '76500', null);
+INSERT INTO `inbound_inv` VALUES ('611', 'JLD05/2018  ', '2018-06-20 00:00:00', null, null, '1', '1594955150', '1594955150', '2', '2', null, 'JLD05/2018  ', null, '1', '34', null, '48300', null);
+INSERT INTO `inbound_inv` VALUES ('612', 'JLD05/2020 ', '2020-03-18 00:00:00', null, null, '1', '1594955150', '1594955150', '2', '2', null, 'JLD05/2020 ', null, '1', '34', null, '4300', null);
 
 -- ----------------------------
 -- Table structure for `inbound_inv_line`
@@ -10816,13 +10849,316 @@ CREATE TABLE `inbound_inv_line` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   `line_num` int(11) DEFAULT NULL,
+  `unit_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5002 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of inbound_inv_line
 -- ----------------------------
-INSERT INTO `inbound_inv_line` VALUES ('19', '17', '2113', null, '2', null, null, 'EXSSS', '1970-01-01 00:00:00', null, null, null, '123456', '2020-02-22 00:00:00', '20', null, '1582626334', '1582626360', '2', '2', '1');
+INSERT INTO `inbound_inv_line` VALUES ('4724', '583', '7320', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4725', '583', '7321', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4726', '583', '7322', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4727', '584', '7323', null, '110', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '87', null, '1594955148', '1594955148', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4728', '584', '7324', null, '1', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '77', null, '1594955148', '1594955148', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4729', '585', '7325', null, '565', null, null, 'A0130610909085', '2018-09-13 00:00:00', null, '2561/0050-61-853-00435', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '11', null, '1594955148', '1594955148', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4730', '586', '7325', null, '300', null, null, 'A0130610913074', '2018-09-13 00:00:00', null, '2561/0050-61-853-00436', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '11', null, '1594955148', '1594955148', '2', null, '15', null);
+INSERT INTO `inbound_inv_line` VALUES ('4731', '587', '7325', null, '100', null, null, 'A0210630204389', '2020-02-21 00:00:00', null, '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '18', null, '1594955148', '1594955148', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4732', '583', '7326', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4733', '588', '7327', null, '40', null, null, 'A0080620507581', '2019-06-08 00:00:00', null, '2562/0050-62-853-00223', '2019-04-30 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '166', null, '1594955148', '1594955148', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4734', '589', '7327', null, '30', null, null, 'A0250630307131', '2020-03-19 00:00:00', null, '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '165', null, '1594955148', '1594955148', '2', null, '9', null);
+INSERT INTO `inbound_inv_line` VALUES ('4735', '590', '7328', null, '150', null, null, 'A0150620308756', '2019-03-15 00:00:00', null, '2562/0050-62-853-00169', '2019-03-12 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '360', null, '1594955148', '1594955148', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4736', '583', '7328', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4737', '591', '7329', null, '150', null, null, 'A0080620812781', '2019-08-08 00:00:00', null, '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '610', null, '1594955148', '1594955148', '2', null, '6', null);
+INSERT INTO `inbound_inv_line` VALUES ('4738', '592', '7329', null, '145', null, null, 'A0120621100553', '2019-11-11 00:00:00', null, '2563/0050-63-853-00047', '2019-11-07 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '536', null, '1594955148', '1594955148', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4739', '591', '7330', null, '10', null, null, 'A0080620812781', '2019-08-08 00:00:00', null, '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '1030', null, '1594955148', '1594955148', '2', null, '7', null);
+INSERT INTO `inbound_inv_line` VALUES ('4740', '593', '7330', null, '5', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '1030', null, '1594955148', '1594955148', '2', null, '8', null);
+INSERT INTO `inbound_inv_line` VALUES ('4741', '583', '7331', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4742', '594', '7331', null, '800', null, null, 'A0300620107141', '2019-01-30 00:00:00', null, '2562/0050-62-853-00121', '2019-01-28 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '97', null, '1594955148', '1594955148', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4743', '583', '7332', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4744', '588', '7333', null, '10', null, null, 'A008062050758', '2019-05-08 00:00:00', null, '2562/0050-62-853-00223', '2019-04-30 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '240', null, '1594955148', '1594955148', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4745', '593', '7333', null, '10', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '330', null, '1594955148', '1594955148', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4746', '593', '7334', null, '30', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '495', null, '1594955148', '1594955148', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4747', '583', '7335', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4748', '584', '7336', null, '1', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '43.33', null, '1594955148', '1594955148', '2', null, '5', null);
+INSERT INTO `inbound_inv_line` VALUES ('4749', '584', '7336', null, '69', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '52', null, '1594955148', '1594955148', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4750', '583', '7337', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4751', '583', '7338', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4752', '583', '7339', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4753', '583', '7340', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4754', '587', '7341', null, '10', null, null, 'A0210630204389', '2020-02-21 00:00:00', null, '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '430', null, '1594955148', '1594955148', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4755', '583', '7342', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4756', '583', '7343', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4757', '583', '7344', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4758', '583', '7345', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955148', '1594955148', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4759', '592', '7345', null, '165', null, null, 'A0120621100553', '2019-11-11 00:00:00', null, '2563/0050-63-853-00047', '2019-11-07 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '200', null, '1594955148', '1594955148', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4760', '587', '7345', null, '50', null, null, 'A0210630204389', '2020-02-21 00:00:00', null, '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '200', null, '1594955149', '1594955149', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4761', '583', '7345', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4762', '583', '7346', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4763', '595', '7346', null, '20', null, null, 'A0160610706631', '2018-07-16 00:00:00', null, '2561/0050-61-853-00393', '2018-07-09 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '245', null, '1594955149', '1594955149', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4764', '596', '7346', null, '10', null, null, 'A0070611105380', '2018-11-07 00:00:00', null, '2562/0050-62-853-00014', '2018-11-05 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '245', null, '1594955149', '1594955149', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4765', '588', '7346', null, '15', null, null, 'A0080620507581', '2019-05-08 00:00:00', null, '2562/0050-62-853-00223', '2019-04-30 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '245', null, '1594955149', '1594955149', '2', null, '6', null);
+INSERT INTO `inbound_inv_line` VALUES ('4766', '592', '7347', null, '185', null, null, 'A0120621100553', '2019-11-11 00:00:00', null, '2563/0050-63-853-00047', '2019-11-07 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '335', null, '1594955149', '1594955149', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4767', '586', '7347', null, '20', null, null, 'A0130610913074', '2018-09-13 00:00:00', null, '2561/0050-61-853-00436', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '530', null, '1594955149', '1594955149', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4768', '593', '7347', null, '10', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '560', null, '1594955149', '1594955149', '2', null, '6', null);
+INSERT INTO `inbound_inv_line` VALUES ('4769', '586', '7348', null, '10', null, null, 'A0130610913074', '2018-09-11 00:00:00', null, '2561/0050-61-853-00436', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '465', null, '1594955149', '1594955149', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4770', '586', '7348', null, '20', null, null, 'A0130610913074', '2018-09-11 00:00:00', null, '2561/0050-61-853-00436', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '465', null, '1594955149', '1594955149', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4771', '590', '7348', null, '20', null, null, 'A0150620308756', '2019-03-15 00:00:00', null, '2562/0050-62-853-00169', '2019-03-12 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '460', null, '1594955149', '1594955149', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4772', '592', '7348', null, '1', null, null, 'A0120621100553', '2019-11-11 00:00:00', null, '2563/0050-63-853-00047', '2019-11-07 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '460', null, '1594955149', '1594955149', '2', null, '10', null);
+INSERT INTO `inbound_inv_line` VALUES ('4773', '583', '7349', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4774', '583', '7350', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4775', '583', '7351', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4776', '583', '7352', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4777', '583', '7352', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4778', '583', '7353', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4779', '583', '7354', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4780', '583', '7355', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4781', '583', '7356', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4782', '583', '7357', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4783', '583', '7358', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4784', '583', '7359', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4785', '583', '7360', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4786', '583', '7360', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4787', '583', '7361', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4788', '583', '7362', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4789', '583', '7363', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4790', '584', '7364', null, '1', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '90', null, '1594955149', '1594955149', '2', null, '7', null);
+INSERT INTO `inbound_inv_line` VALUES ('4791', '584', '7364', null, '746', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '135', null, '1594955149', '1594955149', '2', null, '6', null);
+INSERT INTO `inbound_inv_line` VALUES ('4792', '583', '7365', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4793', '597', '7366', null, '2', null, null, 'A0280620507084', '2019-05-28 00:00:00', null, '2562/0050-62-853-00236', '2019-05-16 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '1200', null, '1594955149', '1594955149', '2', null, '6', null);
+INSERT INTO `inbound_inv_line` VALUES ('4794', '597', '7367', null, '2', null, null, 'A0280620507084', '2019-05-28 00:00:00', null, '2562/0050-62-853-00236', '2019-05-16 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '1140', null, '1594955149', '1594955149', '2', null, '7', null);
+INSERT INTO `inbound_inv_line` VALUES ('4795', '583', '7368', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4796', '583', '7369', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4797', '583', '7370', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4798', '583', '7371', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4799', '583', '7372', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4800', '583', '7373', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4801', '583', '7374', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4802', '583', '7375', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4803', '583', '7376', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4804', '583', '7377', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4805', '583', '7378', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4806', '583', '7379', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4807', '583', '7380', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4808', '583', '7381', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4809', '583', '7382', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4810', '583', '7383', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4811', '583', '7384', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4812', '598', '7385', null, '1100', null, null, 'A0210630204398', '2020-02-20 00:00:00', null, '2563/0050-63-853-00190', '2020-02-14 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '26', null, '1594955149', '1594955149', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4813', '583', '7386', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4814', '583', '7387', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4815', '583', '7388', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4816', '599', '7388', null, '200', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '360', null, '1594955149', '1594955149', '2', null, '14', null);
+INSERT INTO `inbound_inv_line` VALUES ('4817', '583', '7389', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4818', '599', '7390', null, '200', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '620', null, '1594955149', '1594955149', '2', null, '16', null);
+INSERT INTO `inbound_inv_line` VALUES ('4819', '583', '7391', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4820', '583', '7391', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4821', '583', '7391', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4822', '583', '7392', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4823', '599', '7389', null, '200', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '450', null, '1594955149', '1594955149', '2', null, '15', null);
+INSERT INTO `inbound_inv_line` VALUES ('4824', '600', '7393', null, '20', null, null, 'A0110610905765', '2018-09-11 00:00:00', null, '2561/0050-61-853-00434', '2018-09-07 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '56', null, '1594955149', '1594955149', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4825', '599', '7393', null, '50', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '90', null, '1594955149', '1594955149', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4826', '583', '7394', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4827', '593', '7394', null, '30', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '260', null, '1594955149', '1594955149', '2', null, '9', null);
+INSERT INTO `inbound_inv_line` VALUES ('4828', '599', '7394', null, '20', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '260', null, '1594955149', '1594955149', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4829', '583', '7395', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4830', '593', '7395', null, '15', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '360', null, '1594955149', '1594955149', '2', null, '10', null);
+INSERT INTO `inbound_inv_line` VALUES ('4831', '599', '7395', null, '20', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '360', null, '1594955149', '1594955149', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4832', '601', '7396', null, '5', null, null, 'A0250621203797', '2019-12-23 00:00:00', null, '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '430', null, '1594955149', '1594955149', '2', null, '6', null);
+INSERT INTO `inbound_inv_line` VALUES ('4833', '583', '7397', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4834', '583', '7398', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4835', '583', '7399', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4836', '589', '7400', null, '20', null, null, 'A0250630307131', '2020-03-19 00:00:00', null, '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '201', null, '1594955149', '1594955149', '2', null, '5', null);
+INSERT INTO `inbound_inv_line` VALUES ('4837', '600', '7401', null, '13', null, null, 'A0110610905765', '2018-09-11 00:00:00', null, '2561/0050-61-853-00434', '2018-09-07 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '251', null, '1594955149', '1594955149', '2', null, '7', null);
+INSERT INTO `inbound_inv_line` VALUES ('4838', '583', '7402', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4839', '583', '7403', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4840', '583', '7404', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4841', '589', '7405', null, '5', null, null, 'A0250630307131', '2020-03-19 00:00:00', null, '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '305', null, '1594955149', '1594955149', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4842', '589', '7406', null, '20', null, null, 'A0250630307131', '2020-03-19 00:00:00', null, '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '140', null, '1594955149', '1594955149', '2', null, '7', null);
+INSERT INTO `inbound_inv_line` VALUES ('4843', '591', '7407', null, '50', null, null, 'A0080620812781', '2019-08-08 00:00:00', null, '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '730', null, '1594955149', '1594955149', '2', null, '10', null);
+INSERT INTO `inbound_inv_line` VALUES ('4844', '601', '7407', null, '20', null, null, 'A0250621203797', '2019-12-23 00:00:00', null, '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '730', null, '1594955149', '1594955149', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4845', '589', '7407', null, '20', null, null, 'A0250630307131', '2020-03-19 00:00:00', null, '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '730', null, '1594955149', '1594955149', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4846', '599', '7407', null, '10', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '730', null, '1594955149', '1594955149', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4847', '583', '7408', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4848', '591', '7408', null, '20', null, null, 'A0080620812781', '2019-08-08 00:00:00', null, '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '1400', null, '1594955149', '1594955149', '2', null, '11', null);
+INSERT INTO `inbound_inv_line` VALUES ('4849', '589', '7408', null, '10', null, null, 'A0250630307131', '2020-03-19 00:00:00', null, '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '1400', null, '1594955149', '1594955149', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4850', '599', '7408', null, '5', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '1400', null, '1594955149', '1594955149', '2', null, '5', null);
+INSERT INTO `inbound_inv_line` VALUES ('4851', '583', '7409', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4852', '583', '7410', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4853', '583', '7411', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4854', '583', '7412', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4855', '591', '7413', null, '200', null, null, 'A0080620812781', '2019-08-08 00:00:00', null, '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '190', null, '1594955149', '1594955149', '2', null, '9', null);
+INSERT INTO `inbound_inv_line` VALUES ('4856', '599', '7413', null, '50', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '190', null, '1594955149', '1594955149', '2', null, '12', null);
+INSERT INTO `inbound_inv_line` VALUES ('4857', '583', '7414', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4858', '599', '7415', null, '200', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '200', null, '1594955149', '1594955149', '2', null, '17', null);
+INSERT INTO `inbound_inv_line` VALUES ('4859', '583', '7416', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4860', '583', '7417', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4861', '583', '7418', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4862', '595', '7419', null, '20', null, null, 'A0160610706631', '2018-07-16 00:00:00', null, '2561/0050-61-853-00393', '2018-07-09 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '610', null, '1594955149', '1594955149', '2', null, '11', null);
+INSERT INTO `inbound_inv_line` VALUES ('4863', '602', '7419', null, '5', null, null, 'A0170611217443', '2018-12-17 00:00:00', null, '2562/0050-62-853-00053', '2018-12-12 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '630', null, '1594955149', '1594955149', '2', null, '6', null);
+INSERT INTO `inbound_inv_line` VALUES ('4864', '588', '7419', null, '5', null, null, 'A0080620507581', '2019-05-08 00:00:00', null, '2562/0050-62-853-00223', '2019-04-30 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '660', null, '1594955149', '1594955149', '2', null, '10', null);
+INSERT INTO `inbound_inv_line` VALUES ('4865', '603', '7420', null, '445', null, null, 'A0170620506430', '2019-05-17 00:00:00', null, '2562/0050-62-853-00230', '2019-05-13 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '69', null, '1594955149', '1594955149', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4866', '591', '7420', null, '250', null, null, 'A0080620812781', '2019-08-08 00:00:00', null, '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '96', null, '1594955149', '1594955149', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4867', '601', '7420', null, '750', null, null, 'A0250621203797', '2019-12-23 00:00:00', null, '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '96', null, '1594955149', '1594955149', '2', null, '5', null);
+INSERT INTO `inbound_inv_line` VALUES ('4868', '587', '7420', null, '700', null, null, 'A0210630204389', '2020-02-21 00:00:00', null, '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '96', null, '1594955149', '1594955149', '2', null, '6', null);
+INSERT INTO `inbound_inv_line` VALUES ('4869', '589', '7420', null, '800', null, null, 'A0250630307131', '2020-03-19 00:00:00', null, '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '96', null, '1594955149', '1594955149', '2', null, '11', null);
+INSERT INTO `inbound_inv_line` VALUES ('4870', '604', '7421', null, '150', null, null, 'A0160620803125', '2019-08-16 00:00:00', null, '2562/0050-62-853-00309', '2019-08-09 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '210', null, '1594955149', '1594955149', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4871', '593', '7421', null, '300', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '210', null, '1594955149', '1594955149', '2', null, '13', null);
+INSERT INTO `inbound_inv_line` VALUES ('4872', '592', '7421', null, '100', null, null, 'A0120621100553', '2019-11-11 00:00:00', null, '2563/0050-63-853-00047', '2562-11-07 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '210', null, '1594955149', '1594955149', '2', null, '11', null);
+INSERT INTO `inbound_inv_line` VALUES ('4873', '599', '7421', null, '50', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '210', null, '1594955149', '1594955149', '2', null, '10', null);
+INSERT INTO `inbound_inv_line` VALUES ('4874', '596', '7422', null, '50', null, null, 'A0070611105380', '2018-11-07 00:00:00', null, '2562/0050-62-853-00014', '2018-11-05 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '250', null, '1594955149', '1594955149', '2', null, '6', null);
+INSERT INTO `inbound_inv_line` VALUES ('4875', '587', '7422', null, '20', null, null, 'A0210630204389', '2020-02-21 00:00:00', null, '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '250', null, '1594955149', '1594955149', '2', null, '5', null);
+INSERT INTO `inbound_inv_line` VALUES ('4876', '599', '7422', null, '20', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '250', null, '1594955149', '1594955149', '2', null, '6', null);
+INSERT INTO `inbound_inv_line` VALUES ('4877', '588', '7423', null, '30', null, null, 'A0080620507581', '2019-05-08 00:00:00', null, '2562/0050-62-853-00223', '2019-04-30 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '285', null, '1594955149', '1594955149', '2', null, '13', null);
+INSERT INTO `inbound_inv_line` VALUES ('4878', '591', '7423', null, '30', null, null, 'A0080620812781', '2019-08-08 00:00:00', null, '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '290', null, '1594955149', '1594955149', '2', null, '5', null);
+INSERT INTO `inbound_inv_line` VALUES ('4879', '593', '7423', null, '10', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '290', null, '1594955149', '1594955149', '2', null, '7', null);
+INSERT INTO `inbound_inv_line` VALUES ('4880', '596', '7424', null, '70', null, null, 'A0070611105380', '2018-11-07 00:00:00', null, '2562/0050-62-853-00014', '2018-11-05 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '185', null, '1594955149', '1594955149', '2', null, '9', null);
+INSERT INTO `inbound_inv_line` VALUES ('4881', '588', '7424', null, '50', null, null, 'A0080620507581', '2019-05-08 00:00:00', null, '2562/0050-62-853-0022330', '2019-04-30 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '143', null, '1594955149', '1594955149', '2', null, '11', null);
+INSERT INTO `inbound_inv_line` VALUES ('4882', '601', '7424', null, '20', null, null, 'A0250621203797', '2019-12-23 00:00:00', null, '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '143', null, '1594955149', '1594955149', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4883', '599', '7424', null, '50', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '143', null, '1594955149', '1594955149', '2', null, '13', null);
+INSERT INTO `inbound_inv_line` VALUES ('4884', '605', '7424', null, '10', null, null, 'A0040620308053', '2019-03-04 00:00:00', null, '2562/0050-62-853-00151', '2019-02-27 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '185', null, '1594955149', '1594955149', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4885', '593', '7424', null, '50', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '185', null, '1594955149', '1594955149', '2', null, '11', null);
+INSERT INTO `inbound_inv_line` VALUES ('4886', '601', '7424', null, '10', null, null, 'A0250621203797', '2019-12-23 00:00:00', null, '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '185', null, '1594955149', '1594955149', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4887', '599', '7424', null, '100', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '185', null, '1594955149', '1594955149', '2', null, '7', null);
+INSERT INTO `inbound_inv_line` VALUES ('4888', '583', '7425', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955149', '1594955149', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4889', '591', '7417', null, '10', null, null, 'A0080620812781', '2019-08-08 00:00:00', null, '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '265', null, '1594955150', '1594955150', '2', null, '12', null);
+INSERT INTO `inbound_inv_line` VALUES ('4890', '583', '7426', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4891', '583', '7427', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4892', '583', '7421', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4893', '583', '7428', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4894', '587', '7429', null, '5', null, null, 'A0210630204389', '2020-02-21 00:00:00', null, '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '265', null, '1594955150', '1594955150', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4895', '589', '7429', null, '20', null, null, 'A0250630307131', '2020-03-19 00:00:00', null, '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '265', null, '1594955150', '1594955150', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4896', '587', '7430', null, '10', null, null, 'A0210630204389', '2020-02-21 00:00:00', null, '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '245', null, '1594955150', '1594955150', '2', null, '7', null);
+INSERT INTO `inbound_inv_line` VALUES ('4897', '583', '7431', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4898', '600', '7432', null, '687', null, null, 'A0110610905765', '2018-06-11 00:00:00', null, '2558/0050-61-853-00434', '2018-09-07 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '11', null, '1594955150', '1594955150', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4899', '586', '7432', null, '270', null, null, 'A0130610913074', '2018-09-13 00:00:00', null, '2561/0050-61-853-00436', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '11', null, '1594955150', '1594955150', '2', null, '14', null);
+INSERT INTO `inbound_inv_line` VALUES ('4900', '593', '7432', null, '275', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '28', null, '1594955150', '1594955150', '2', null, '14', null);
+INSERT INTO `inbound_inv_line` VALUES ('4901', '601', '7432', null, '75', null, null, 'A0250621203797', '2019-12-23 00:00:00', null, '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '28', null, '1594955150', '1594955150', '2', null, '8', null);
+INSERT INTO `inbound_inv_line` VALUES ('4902', '600', '7432', null, '266', null, null, 'A0110610905765', '2018-06-11 00:00:00', null, '2561/0050-61-853-00434', '2018-09-07 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '15', null, '1594955150', '1594955150', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4903', '591', '7432', null, '75', null, null, 'A0080620812781', '2019-08-08 00:00:00', null, '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '25', null, '1594955150', '1594955150', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4904', '593', '7432', null, '75', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '35', null, '1594955150', '1594955150', '2', null, '15', null);
+INSERT INTO `inbound_inv_line` VALUES ('4905', '583', '7433', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4906', '583', '7434', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4907', '596', '7435', null, '90', null, null, 'A0070611105380', '2018-11-07 00:00:00', null, '2562/0050-62-853-00014', '2018-11-05 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '100', null, '1594955150', '1594955150', '2', null, '8', null);
+INSERT INTO `inbound_inv_line` VALUES ('4908', '583', '7436', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4909', '583', '7436', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4910', '583', '7437', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4911', '583', '7438', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4912', '583', '7439', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4913', '583', '7440', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4914', '583', '7441', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4915', '593', '7435', null, '100', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '126', null, '1594955150', '1594955150', '2', null, '5', null);
+INSERT INTO `inbound_inv_line` VALUES ('4916', '589', '7435', null, '20', null, null, 'A0250630307131', '2020-03-19 00:00:00', null, '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '126', null, '1594955150', '1594955150', '2', null, '8', null);
+INSERT INTO `inbound_inv_line` VALUES ('4917', '583', '7442', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4918', '583', '7443', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4919', '583', '7444', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4920', '583', '7445', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4921', '583', '7446', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4922', '583', '7447', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4923', '593', '7448', null, '10', null, null, 'A0170621013236', '2019-10-14 00:00:00', null, '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '450', null, '1594955150', '1594955150', '2', null, '12', null);
+INSERT INTO `inbound_inv_line` VALUES ('4924', '587', '7449', null, '20', null, null, 'A0210630204389', '2020-02-21 00:00:00', null, '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '450', null, '1594955150', '1594955150', '2', null, '8', null);
+INSERT INTO `inbound_inv_line` VALUES ('4925', '583', '7450', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4926', '583', '7451', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4927', '588', '7452', null, '60', null, null, 'A0080620507581', '2019-05-08 00:00:00', null, '2562/0050-62-853-00223', '2019-04-30 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '76.89', null, '1594955150', '1594955150', '2', null, '15', null);
+INSERT INTO `inbound_inv_line` VALUES ('4928', '583', '7453', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4929', '589', '7454', null, '20', null, null, 'A0250630307131', '2020-03-19 00:00:00', null, '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '220', null, '1594955150', '1594955150', '2', null, '6', null);
+INSERT INTO `inbound_inv_line` VALUES ('4930', '599', '7455', null, '5', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '180', null, '1594955150', '1594955150', '2', null, '8', null);
+INSERT INTO `inbound_inv_line` VALUES ('4931', '599', '7456', null, '5', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '220', null, '1594955150', '1594955150', '2', null, '9', null);
+INSERT INTO `inbound_inv_line` VALUES ('4932', '606', '7457', null, '1', null, null, 'A0100611005257', '2018-10-10 00:00:00', null, '2562/0050-62-853-00002', '2018-10-05 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '930', null, '1594955150', '1594955150', '2', null, '9', null);
+INSERT INTO `inbound_inv_line` VALUES ('4933', '583', '7458', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4934', '584', '7459', null, '48', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '142', null, '1594955150', '1594955150', '2', null, '8', null);
+INSERT INTO `inbound_inv_line` VALUES ('4935', '584', '7460', null, '13', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '142', null, '1594955150', '1594955150', '2', null, '9', null);
+INSERT INTO `inbound_inv_line` VALUES ('4936', '584', '7461', null, '40', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '152', null, '1594955150', '1594955150', '2', null, '10', null);
+INSERT INTO `inbound_inv_line` VALUES ('4937', '584', '7462', null, '28', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '147', null, '1594955150', '1594955150', '2', null, '11', null);
+INSERT INTO `inbound_inv_line` VALUES ('4938', '584', '7462', null, '1', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '122.5', null, '1594955150', '1594955150', '2', null, '12', null);
+INSERT INTO `inbound_inv_line` VALUES ('4939', '583', '7463', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4940', '597', '7464', null, '3', null, null, 'A0280620507084', '2019-05-28 00:00:00', null, '2562/0050-62-853-00236', '2019-05-16 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '1860', null, '1594955150', '1594955150', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4941', '583', '7465', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4942', '583', '7466', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4943', '583', '7467', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4944', '583', '7468', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4945', '583', '7469', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4946', '583', '7470', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4947', '583', '7471', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4948', '607', '7472', null, '60', null, null, 'A0040610905604', '2018-09-04 00:00:00', null, '2561/0050-61-853-00426', '2018-08-29 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '216', null, '1594955150', '1594955150', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4949', '583', '7473', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4950', '608', '7474', null, '50', null, null, 'A0260611114768', '2018-11-26 00:00:00', null, '2562/0050-62-853-00025', '2018-11-13 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '552', null, '1594955150', '1594955150', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4951', '597', '7475', null, '5', null, null, 'A0280620507084', '2019-05-28 00:00:00', null, '2562/0050-62-853-00236', '2019-05-16 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '588', null, '1594955150', '1594955150', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4952', '583', '7476', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4953', '609', '7477', null, '250', null, null, 'A0140621112313', '2019-11-12 00:00:00', null, '2563/0050-63-853-00048', '2019-11-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '168', null, '1594955150', '1594955150', '2', null, '5', null);
+INSERT INTO `inbound_inv_line` VALUES ('4954', '606', '7477', null, '70', null, null, 'A0100611005257', '2018-10-10 00:00:00', null, '2562/0050-62-853-00002', '2018-10-05 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '145', null, '1594955150', '1594955150', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4955', '609', '7478', null, '100', null, null, 'A0140621112313', '2019-11-12 00:00:00', null, '2563/0050-63-853-00048', '2019-11-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '204', null, '1594955150', '1594955150', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4956', '583', '7479', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4957', '583', '7480', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4958', '583', '7481', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4959', '583', '7482', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4960', '583', '7483', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4961', '583', '7484', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4962', '583', '7484', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4963', '583', '7485', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4964', '583', '7486', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4965', '583', '7487', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4966', '583', '7488', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4967', '583', '7489', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4968', '609', '7490', null, '300', null, null, 'A0140621112313', '2019-11-12 00:00:00', null, '2563/0050-63-853-00048', '2019-11-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '67.2', null, '1594955150', '1594955150', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4969', '609', '7491', null, '300', null, null, 'A0140621112313', '2019-11-12 00:00:00', null, '2563/0050-63-853-00048', '2019-11-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '67.2', null, '1594955150', '1594955150', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4970', '610', '7492', null, '750', null, null, 'A0020621218859', '2019-12-02 00:00:00', null, '2563/0050-63-853-00056', '2019-11-18 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '102', null, '1594955150', '1594955150', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4971', '610', '7493', null, '70', null, null, 'A0020621218859', '2019-12-02 00:00:00', null, '2563/0050-63-853-00056', '2019-11-18 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '204', null, '1594955150', '1594955150', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4972', '583', '7494', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4973', '583', '7495', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4974', '583', '7496', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4975', '600', '7496', null, '12', null, null, 'A0110610905765', '2018-09-11 00:00:00', null, '2561/0050-61-853-00434', '2018-09-07 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '66', null, '1594955150', '1594955150', '2', null, '5', null);
+INSERT INTO `inbound_inv_line` VALUES ('4976', '583', '7497', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4977', '583', '7498', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4978', '611', '7499', null, '1150', null, null, 'A0020610714562', '2018-07-02 00:00:00', null, '2561/0050-61-853-00376', '2018-06-25 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '42', null, '1594955150', '1594955150', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4979', '601', '7499', null, '100', null, null, 'A0250621203797', '2019-12-23 00:00:00', null, '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '43', null, '1594955150', '1594955150', '2', null, '9', null);
+INSERT INTO `inbound_inv_line` VALUES ('4980', '612', '7499', null, '100', null, null, 'A0250630307139', '2020-03-20 00:00:00', null, '2563/0050-63-853-00241', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '43', null, '1594955150', '1594955150', '2', null, '11', null);
+INSERT INTO `inbound_inv_line` VALUES ('4981', '583', '7500', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4982', '583', '7501', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4983', '583', '7502', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4984', '584', '7503', null, '179', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '29', null, '1594955150', '1594955150', '2', null, '13', null);
+INSERT INTO `inbound_inv_line` VALUES ('4985', '584', '7503', null, '1', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '9.67', null, '1594955150', '1594955150', '2', null, '14', null);
+INSERT INTO `inbound_inv_line` VALUES ('4986', '583', '7504', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4987', '583', '7505', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4988', '583', '7506', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4989', '583', '7507', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4990', '583', '7508', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4991', '583', '7509', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('4992', '591', '7510', null, '50', null, null, 'A0080620812781', '2019-08-08 00:00:00', null, '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '290', null, '1594955150', '1594955150', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4993', '589', '7511', null, '50', null, null, 'A0250630307131', '2020-03-19 00:00:00', null, '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '90', null, '1594955150', '1594955150', '2', null, '10', null);
+INSERT INTO `inbound_inv_line` VALUES ('4994', '599', '7511', null, '50', null, null, 'A0270630510280', '2020-05-28 00:00:00', null, '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '90', null, '1594955150', '1594955150', '2', null, '11', null);
+INSERT INTO `inbound_inv_line` VALUES ('4995', '585', '7512', null, '232', null, null, 'A0130610909085', '2018-09-13 00:00:00', null, '2561/0050-61-853-00435', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '9', null, '1594955150', '1594955150', '2', null, '2', null);
+INSERT INTO `inbound_inv_line` VALUES ('4996', '585', '7513', null, '99', null, null, 'A0130610909085', '2018-09-13 00:00:00', null, '2561/0050-61-853-00435', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '9', null, '1594955150', '1594955150', '2', null, '3', null);
+INSERT INTO `inbound_inv_line` VALUES ('4997', '585', '7514', null, '10', null, null, 'A0130610909085', '2018-09-13 00:00:00', null, '2561/0050-61-853-00435', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '9', null, '1594955150', '1594955150', '2', null, '4', null);
+INSERT INTO `inbound_inv_line` VALUES ('4998', '584', '7515', null, '1', null, null, 'A0090610718297', '2018-07-09 00:00:00', null, '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '64.8', null, '1594955150', '1594955150', '2', null, '1', null);
+INSERT INTO `inbound_inv_line` VALUES ('4999', '583', '7516', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('5000', '583', '7517', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+INSERT INTO `inbound_inv_line` VALUES ('5001', '583', '7518', null, '0', null, null, '', null, null, '', null, '', null, null, null, '1594955150', '1594955150', '2', null, null, null);
+
+-- ----------------------------
+-- Table structure for `inbound_payment`
+-- ----------------------------
+DROP TABLE IF EXISTS `inbound_payment`;
+CREATE TABLE `inbound_payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `trans_date` date DEFAULT NULL,
+  `inbound_id` int(11) DEFAULT NULL,
+  `amount` float DEFAULT NULL,
+  `payment_by` varchar(255) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `slip` varchar(255) DEFAULT NULL,
+  `trans_time` time DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of inbound_payment
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `journal`
@@ -10843,13 +11179,12 @@ CREATE TABLE `journal` (
   `trans_date` int(11) DEFAULT NULL,
   `journal_no` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of journal
 -- ----------------------------
-INSERT INTO `journal` VALUES ('59', null, null, null, null, '3', null, '1582626360', '1582626360', '2', null, null, 'JO20000001');
-INSERT INTO `journal` VALUES ('60', null, null, null, null, '4', null, '1582626461', '1582626461', '2', null, null, 'JO20000002');
+INSERT INTO `journal` VALUES ('114', null, null, null, null, '3', null, '1594955150', '1594955150', '2', null, null, 'JO20000001');
 
 -- ----------------------------
 -- Table structure for `journal_trans`
@@ -10879,13 +11214,289 @@ CREATE TABLE `journal_trans` (
   `stock_type` int(11) DEFAULT NULL,
   `trans_date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5823 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of journal_trans
 -- ----------------------------
-INSERT INTO `journal_trans` VALUES ('67', '59', '2113', '2', null, null, null, '1582626360', '1582626360', '2', null, null, null, null, null, '2', null, null, null, null, '0', '2020-02-25');
-INSERT INTO `journal_trans` VALUES ('68', '60', '2113', '1', null, null, null, '1582626461', '1582626461', '2', null, null, null, null, null, '2', null, null, null, null, '1', '2020-02-25');
+INSERT INTO `journal_trans` VALUES ('5545', '114', '7320', '0', null, null, null, '1594955150', '1594955150', '2', null, null, null, null, null, '1354', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5546', '114', '7321', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1355', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5547', '114', '7322', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1356', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5548', '114', '7323', '110', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1357', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5549', '114', '7324', '1', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1358', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5550', '114', '7325', '565', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1359', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5551', '114', '7325', '300', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1360', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5552', '114', '7325', '100', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1361', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5553', '114', '7326', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1362', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5554', '114', '7327', '40', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1363', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5555', '114', '7327', '30', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1364', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5556', '114', '7328', '150', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1365', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5557', '114', '7328', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1366', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5558', '114', '7329', '150', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1367', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5559', '114', '7329', '145', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1368', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5560', '114', '7330', '10', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1369', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5561', '114', '7330', '5', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1370', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5562', '114', '7331', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1371', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5563', '114', '7331', '800', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1372', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5564', '114', '7332', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1373', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5565', '114', '7333', '10', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1374', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5566', '114', '7333', '10', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1375', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5567', '114', '7334', '30', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1376', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5568', '114', '7335', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1377', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5569', '114', '7336', '1', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1378', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5570', '114', '7336', '69', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1379', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5571', '114', '7337', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1380', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5572', '114', '7338', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1381', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5573', '114', '7339', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1382', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5574', '114', '7340', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1383', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5575', '114', '7341', '10', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1384', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5576', '114', '7342', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1385', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5577', '114', '7343', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1386', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5578', '114', '7344', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1387', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5579', '114', '7345', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1388', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5580', '114', '7345', '165', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1389', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5581', '114', '7345', '50', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1390', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5582', '114', '7345', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1391', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5583', '114', '7346', '0', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1392', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5584', '114', '7346', '20', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1393', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5585', '114', '7346', '10', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1394', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5586', '114', '7346', '15', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1395', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5587', '114', '7347', '185', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1396', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5588', '114', '7347', '20', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1397', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5589', '114', '7347', '10', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1398', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5590', '114', '7348', '10', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1399', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5591', '114', '7348', '20', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1400', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5592', '114', '7348', '20', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1401', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5593', '114', '7348', '1', null, null, null, '1594955151', '1594955151', '2', null, null, null, null, null, '1402', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5594', '114', '7349', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1403', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5595', '114', '7350', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1404', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5596', '114', '7351', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1405', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5597', '114', '7352', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1406', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5598', '114', '7352', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1407', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5599', '114', '7353', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1408', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5600', '114', '7354', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1409', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5601', '114', '7355', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1410', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5602', '114', '7356', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1411', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5603', '114', '7357', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1412', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5604', '114', '7358', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1413', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5605', '114', '7359', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1414', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5606', '114', '7360', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1415', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5607', '114', '7360', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1416', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5608', '114', '7361', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1417', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5609', '114', '7362', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1418', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5610', '114', '7363', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1419', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5611', '114', '7364', '1', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1420', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5612', '114', '7364', '746', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1421', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5613', '114', '7365', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1422', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5614', '114', '7366', '2', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1423', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5615', '114', '7367', '2', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1424', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5616', '114', '7368', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1425', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5617', '114', '7369', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1426', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5618', '114', '7370', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1427', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5619', '114', '7371', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1428', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5620', '114', '7372', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1429', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5621', '114', '7373', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1430', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5622', '114', '7374', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1431', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5623', '114', '7375', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1432', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5624', '114', '7376', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1433', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5625', '114', '7377', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1434', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5626', '114', '7378', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1435', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5627', '114', '7379', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1436', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5628', '114', '7380', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1437', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5629', '114', '7381', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1438', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5630', '114', '7382', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1439', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5631', '114', '7383', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1440', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5632', '114', '7384', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1441', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5633', '114', '7385', '1100', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1442', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5634', '114', '7386', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1443', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5635', '114', '7387', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1444', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5636', '114', '7388', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1445', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5637', '114', '7388', '200', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1446', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5638', '114', '7389', '0', null, null, null, '1594955152', '1594955152', '2', null, null, null, null, null, '1447', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5639', '114', '7390', '200', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1448', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5640', '114', '7391', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1449', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5641', '114', '7391', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1450', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5642', '114', '7391', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1451', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5643', '114', '7392', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1452', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5644', '114', '7389', '200', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1453', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5645', '114', '7393', '20', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1454', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5646', '114', '7393', '50', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1455', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5647', '114', '7394', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1456', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5648', '114', '7394', '30', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1457', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5649', '114', '7394', '20', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1458', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5650', '114', '7395', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1459', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5651', '114', '7395', '15', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1460', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5652', '114', '7395', '20', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1461', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5653', '114', '7396', '5', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1462', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5654', '114', '7397', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1463', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5655', '114', '7398', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1464', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5656', '114', '7399', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1465', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5657', '114', '7400', '20', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1466', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5658', '114', '7401', '13', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1467', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5659', '114', '7402', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1468', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5660', '114', '7403', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1469', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5661', '114', '7404', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1470', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5662', '114', '7405', '5', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1471', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5663', '114', '7406', '20', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1472', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5664', '114', '7407', '50', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1473', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5665', '114', '7407', '20', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1474', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5666', '114', '7407', '20', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1475', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5667', '114', '7407', '10', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1476', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5668', '114', '7408', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1477', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5669', '114', '7408', '20', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1478', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5670', '114', '7408', '10', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1479', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5671', '114', '7408', '5', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1480', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5672', '114', '7409', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1481', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5673', '114', '7410', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1482', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5674', '114', '7411', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1483', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5675', '114', '7412', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1484', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5676', '114', '7413', '200', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1485', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5677', '114', '7413', '50', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1486', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5678', '114', '7414', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1487', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5679', '114', '7415', '200', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1488', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5680', '114', '7416', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1489', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5681', '114', '7417', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1490', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5682', '114', '7418', '0', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1491', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5683', '114', '7419', '20', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1492', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5684', '114', '7419', '5', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1493', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5685', '114', '7419', '5', null, null, null, '1594955153', '1594955153', '2', null, null, null, null, null, '1494', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5686', '114', '7420', '445', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1495', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5687', '114', '7420', '250', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1496', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5688', '114', '7420', '750', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1497', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5689', '114', '7420', '700', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1498', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5690', '114', '7420', '800', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1499', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5691', '114', '7421', '150', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1500', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5692', '114', '7421', '300', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1501', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5693', '114', '7421', '100', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1502', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5694', '114', '7421', '50', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1503', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5695', '114', '7422', '50', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1504', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5696', '114', '7422', '20', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1505', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5697', '114', '7422', '20', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1506', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5698', '114', '7423', '30', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1507', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5699', '114', '7423', '30', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1508', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5700', '114', '7423', '10', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1509', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5701', '114', '7424', '70', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1510', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5702', '114', '7424', '50', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1511', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5703', '114', '7424', '20', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1512', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5704', '114', '7424', '50', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1513', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5705', '114', '7424', '10', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1514', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5706', '114', '7424', '50', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1515', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5707', '114', '7424', '10', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1516', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5708', '114', '7424', '100', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1517', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5709', '114', '7425', '0', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1518', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5710', '114', '7417', '10', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1519', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5711', '114', '7426', '0', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1520', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5712', '114', '7427', '0', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1521', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5713', '114', '7421', '0', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1522', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5714', '114', '7428', '0', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1523', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5715', '114', '7429', '5', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1524', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5716', '114', '7429', '20', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1525', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5717', '114', '7430', '10', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1526', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5718', '114', '7431', '0', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1527', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5719', '114', '7432', '687', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1528', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5720', '114', '7432', '270', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1529', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5721', '114', '7432', '275', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1530', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5722', '114', '7432', '75', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1531', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5723', '114', '7432', '266', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1532', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5724', '114', '7432', '75', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1533', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5725', '114', '7432', '75', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1534', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5726', '114', '7433', '0', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1535', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5727', '114', '7434', '0', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1536', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5728', '114', '7435', '90', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1537', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5729', '114', '7436', '0', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1538', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5730', '114', '7436', '0', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1539', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5731', '114', '7437', '0', null, null, null, '1594955154', '1594955154', '2', null, null, null, null, null, '1540', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5732', '114', '7438', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1541', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5733', '114', '7439', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1542', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5734', '114', '7440', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1543', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5735', '114', '7441', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1544', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5736', '114', '7435', '100', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1545', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5737', '114', '7435', '20', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1546', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5738', '114', '7442', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1547', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5739', '114', '7443', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1548', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5740', '114', '7444', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1549', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5741', '114', '7445', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1550', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5742', '114', '7446', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1551', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5743', '114', '7447', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1552', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5744', '114', '7448', '10', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1553', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5745', '114', '7449', '20', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1554', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5746', '114', '7450', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1555', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5747', '114', '7451', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1556', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5748', '114', '7452', '60', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1557', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5749', '114', '7453', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1558', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5750', '114', '7454', '20', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1559', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5751', '114', '7455', '5', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1560', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5752', '114', '7456', '5', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1561', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5753', '114', '7457', '1', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1562', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5754', '114', '7458', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1563', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5755', '114', '7459', '48', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1564', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5756', '114', '7460', '13', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1565', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5757', '114', '7461', '40', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1566', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5758', '114', '7462', '28', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1567', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5759', '114', '7462', '1', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1568', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5760', '114', '7463', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1569', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5761', '114', '7464', '3', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1570', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5762', '114', '7465', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1571', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5763', '114', '7466', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1572', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5764', '114', '7467', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1573', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5765', '114', '7468', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1574', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5766', '114', '7469', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1575', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5767', '114', '7470', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1576', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5768', '114', '7471', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1577', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5769', '114', '7472', '60', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1578', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5770', '114', '7473', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1579', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5771', '114', '7474', '50', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1580', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5772', '114', '7475', '5', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1581', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5773', '114', '7476', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1582', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5774', '114', '7477', '250', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1583', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5775', '114', '7477', '70', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1584', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5776', '114', '7478', '100', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1585', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5777', '114', '7479', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1586', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5778', '114', '7480', '0', null, null, null, '1594955155', '1594955155', '2', null, null, null, null, null, '1587', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5779', '114', '7481', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1588', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5780', '114', '7482', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1589', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5781', '114', '7483', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1590', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5782', '114', '7484', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1591', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5783', '114', '7484', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1592', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5784', '114', '7485', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1593', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5785', '114', '7486', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1594', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5786', '114', '7487', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1595', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5787', '114', '7488', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1596', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5788', '114', '7489', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1597', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5789', '114', '7490', '300', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1598', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5790', '114', '7491', '300', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1599', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5791', '114', '7492', '750', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1600', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5792', '114', '7493', '70', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1601', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5793', '114', '7494', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1602', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5794', '114', '7495', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1603', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5795', '114', '7496', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1604', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5796', '114', '7496', '12', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1605', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5797', '114', '7497', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1606', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5798', '114', '7498', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1607', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5799', '114', '7499', '1150', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1608', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5800', '114', '7499', '100', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1609', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5801', '114', '7499', '100', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1610', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5802', '114', '7500', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1611', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5803', '114', '7501', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1612', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5804', '114', '7502', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1613', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5805', '114', '7503', '179', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1614', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5806', '114', '7503', '1', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1615', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5807', '114', '7504', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1616', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5808', '114', '7505', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1617', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5809', '114', '7506', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1618', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5810', '114', '7507', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1619', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5811', '114', '7508', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1620', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5812', '114', '7509', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1621', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5813', '114', '7510', '50', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1622', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5814', '114', '7511', '50', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1623', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5815', '114', '7511', '50', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1624', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5816', '114', '7512', '232', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1625', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5817', '114', '7513', '99', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1626', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5818', '114', '7514', '10', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1627', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5819', '114', '7515', '1', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1628', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5820', '114', '7516', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1629', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5821', '114', '7517', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1630', null, null, null, null, '0', '2020-07-17');
+INSERT INTO `journal_trans` VALUES ('5822', '114', '7518', '0', null, null, null, '1594955156', '1594955156', '2', null, null, null, null, null, '1631', null, null, null, null, '0', '2020-07-17');
 
 -- ----------------------------
 -- Table structure for `location`
@@ -11024,6 +11635,16 @@ INSERT INTO `migration` VALUES ('m200224_073841_add_inbound_id_column_to_product
 INSERT INTO `migration` VALUES ('m200224_122046_add_trans_out_no_column_to_picking_line_table', '1582546854');
 INSERT INTO `migration` VALUES ('m200225_014917_add_kno_out_no_column_to_picking_line_table', '1582595363');
 INSERT INTO `migration` VALUES ('m200225_044458_add_outbound_id_column_to_product_stock_table', '1582605915');
+INSERT INTO `migration` VALUES ('m200226_143346_add_currency_id_column_to_inbound_inv_table', '1582727742');
+INSERT INTO `migration` VALUES ('m200226_143715_add_unit_id_column_to_inbound_inv_line_table', '1582727844');
+INSERT INTO `migration` VALUES ('m200305_070758_create_export_file_table', '1583392085');
+INSERT INTO `migration` VALUES ('m200402_034652_add_currency_rate_column_to_inbound_inv_table', '1585799219');
+INSERT INTO `migration` VALUES ('m200408_082342_add_currency_rate_column_to_quotation_table', '1586334239');
+INSERT INTO `migration` VALUES ('m200408_082351_add_currency_rate_column_to_sale_table', '1586334239');
+INSERT INTO `migration` VALUES ('m200427_090946_create_inbound_payment_table', '1587978706');
+INSERT INTO `migration` VALUES ('m200427_092315_add_payment_status_column_to_inbound_inv_table', '1587979403');
+INSERT INTO `migration` VALUES ('m200716_013457_add_transport_out_line_num_column_to_picking_line_table', '1594863304');
+INSERT INTO `migration` VALUES ('m200716_024206_add_docin_date_column_to_inbound_inv_table', '1594867330');
 
 -- ----------------------------
 -- Table structure for `payment_trans`
@@ -11044,22 +11665,11 @@ CREATE TABLE `payment_trans` (
   `slip` varchar(255) DEFAULT NULL,
   `trans_time` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of payment_trans
 -- ----------------------------
-INSERT INTO `payment_trans` VALUES ('4', '2019-05-27', '1', '300', null, 'tyytyt', '1', '1558928838', '1558928838', '2', null, '60563608_2505243299487126_5265593268824965120_n.jpg', '10:45:00');
-INSERT INTO `payment_trans` VALUES ('5', '2019-07-30', '5', '9000', null, '', '1', '1564493088', '1564493088', '2', null, '', '20:15:00');
-INSERT INTO `payment_trans` VALUES ('6', '2019-07-30', '5', '9000', null, 'gghgh', '1', '1564493108', '1564493108', '2', null, 'quo1.png', '20:15:00');
-INSERT INTO `payment_trans` VALUES ('7', '2019-08-01', '5', '300', null, '', '1', '1564672147', '1564672147', '2', null, '', '22:00:00');
-INSERT INTO `payment_trans` VALUES ('8', '2019-08-02', '11', '9000', null, 'test ok', '1', '1564719398', '1564719398', '2', null, 'sourceza_logo.png', '11:15:00');
-INSERT INTO `payment_trans` VALUES ('9', '2019-08-02', '13', '10', null, '', '1', '1564720553', '1564720553', '2', null, '', '11:30:00');
-INSERT INTO `payment_trans` VALUES ('10', '2019-08-02', '13', '400', null, '', '1', '1564720561', '1564720561', '2', null, '', '11:30:00');
-INSERT INTO `payment_trans` VALUES ('11', '2019-08-02', '15', '300', null, 'เทสระบบ', '1', '1564730029', '1564730029', '2', null, '49914748_361387264658876_7107309755411988480_n.jpg', '14:00:00');
-INSERT INTO `payment_trans` VALUES ('12', '2019-08-02', '14', '9000', null, '', '1', '1564740513', '1564740513', '2', null, '', '17:00:00');
-INSERT INTO `payment_trans` VALUES ('13', '2019-08-02', '16', '300', null, '', '1', '1564740631', '1564740631', '2', null, '', '17:00:00');
-INSERT INTO `payment_trans` VALUES ('14', '2019-10-09', '18', '9000', null, '', '1', '1570608002', '1570608002', '2', null, 'ag2.png', '14:45:00');
 
 -- ----------------------------
 -- Table structure for `picking`
@@ -11079,12 +11689,11 @@ CREATE TABLE `picking` (
   `geninv` int(11) DEFAULT NULL,
   `picking_date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of picking
 -- ----------------------------
-INSERT INTO `picking` VALUES ('33', null, '1582563600', '7', null, null, '1582626460', '1582626460', '2', null, null, '2020-02-25');
 
 -- ----------------------------
 -- Table structure for `picking_line`
@@ -11120,13 +11729,13 @@ CREATE TABLE `picking_line` (
   `kno_out_date` datetime DEFAULT NULL,
   `transport_out_no` varchar(255) DEFAULT NULL,
   `transport_out_date` datetime DEFAULT NULL,
+  `transport_out_line_num` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of picking_line
 -- ----------------------------
-INSERT INTO `picking_line` VALUES ('36', '33', '2113', '1', null, '2', null, null, null, null, '1582626460', '1582626460', '2', null, null, 'ABC', '2020-02-25', null, null, null, null, '20', 'JLD20009', '2020-02-25', null, 'ABC', '2020-01-02 00:00:00', null, '1970-01-01 00:00:00');
 
 -- ----------------------------
 -- Table structure for `plant`
@@ -11224,202 +11833,210 @@ CREATE TABLE `product` (
   `price_carton_thb` float DEFAULT NULL,
   `price_carton_usd` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2304 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7519 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product
 -- ----------------------------
-INSERT INTO `product` VALUES ('2113', 'A-001', 'ALMAVIVA   2015  (6B/0.75L/14.50%)', '', 'A-001', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1582626461', '2', '2', '1', '1', null, null, 'ALMAVIVA   2015  (6B/0.75L/14.50%)', '0.75', '14.5', '6', 'CL', '900', '1300', '1301020100CzM000000333DE0701', '1970-01-01 00:00:00', '0', '0');
-INSERT INTO `product` VALUES ('2114', 'A-002', 'ALMAVIVA   2014 (6B/ 0.75L/15.0% )   ', '', 'A-002', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1582601036', '2', '2', '1', '1', null, null, 'ALMAVIVA   2014 (6B/ 0.75L/15.0% )   ', '0.75', '15', '6', 'CL', null, null, '1301020200I5F000000030140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2115', 'A-003', 'ALMAVIVA  VIN CHILIEN 2015 (6B/0.75L/14.50%)', '', 'A-003', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952183', '2', '2', '0', '0', null, null, 'ALMAVIVA  VIN CHILIEN 2015 (6B/0.75L/14.50%)', '0.75', '14.5', '6', 'CL', null, null, '1301020200DGS000000330140701', '2018-02-02 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2116', 'A-004', 'ABSOLUT  100 (12B/1L/50%)', '', 'A-004', null, '2', null, null, null, null, null, null, null, '87', '87', '1', '1581952180', '1582002533', '2', '2', '110', '110', null, null, 'ABSOLUT  100 (12B/1L/50%)', '1', '50', '12', 'SE', '0.9', '1.1', '1302020200BuF000000819Bh0701', '2018-04-07 00:00:00', '0', '0');
-INSERT INTO `product` VALUES ('2117', 'A-005', 'ABSOLUT RUBY RED (11B/1L/40%) ', '', 'A-005', null, '2', null, null, null, null, null, null, null, '77', '77', '1', '1581952180', '1581952183', '2', '2', '1', '1', null, null, 'ABSOLUT RUBY RED (11B/1L/40%) ', '1', '40', '11', 'SE', null, null, '13020202003hE000000259Bh0701', '2018-04-07 00:00:00', '1', null);
-INSERT INTO `product` VALUES ('2118', 'A-006', 'AYITA CABERNET SAUVIGNON SILVER 2012  (12B/0.75L/13.5%)', '', 'A-006', null, '1', null, null, null, null, null, null, null, '11', '11', '1', '1581952180', '1581952183', '2', '2', '550', '550', null, null, 'AYITA CABERNET SAUVIGNON SILVER 2012  (12B/0.75L/13.5%)', '0.75', '13.5', '12', 'CL', null, null, '1301020100H8A000000313hE0701', '2018-10-09 00:00:00', '250', null);
-INSERT INTO `product` VALUES ('2119', 'A-007', 'AYITA CABERNET SAUVIGNON RED 2013 (12B/0.75L/13%)', '', 'A-007', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952183', '2', '2', '0', '0', null, null, 'AYITA CABERNET SAUVIGNON RED 2013 (12B/0.75L/13%)', '0.75', '13', '12', 'CL', null, null, '1301020100H8E000000303hE0701', '2018-10-09 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2120', 'B-001', 'BALLANTINE S 12YO  (12B/1L/40%) ', '', 'B-001', null, '3', null, null, null, null, null, null, null, '166', '166', '1', '1581952180', '1582126255', '2', '2', '10', '10', null, null, 'BALLANTINE S 12YO  (12B/1L/40%) ', '1', '40', '12', 'GB', null, null, '13020202005Nr000000250150701', '2018-02-02 00:00:00', '18', null);
-INSERT INTO `product` VALUES ('2121', 'B-002', 'BALLANTINE S 17YO (12B/0.70L/40%) ', '', 'B-002', null, '3', null, null, null, null, null, null, null, '360', '360', '1', '1581952180', '1582166999', '2', '2', '10', '10', null, null, 'BALLANTINE S 17YO (12B/0.70L/40%) ', '0.7', '40', '12', 'GB', null, null, '130202020030t000000250130701', '1970-01-01 00:00:00', '2', null);
-INSERT INTO `product` VALUES ('2122', 'B-003', 'BALLANTINE S  17YO (12B/0.75L/40%)', '', 'B-003', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952183', '2', '2', '0', '0', null, null, 'BALLANTINE S  17YO (12B/0.75L/40%)', '0.75', '40', '12', 'GB', null, null, '130202020030t000000250140701', '2017-10-10 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2123', 'B-004', 'BALLANTINE S  21YO (12B/0.70Ll/40%)     ', '', 'B-004', null, '3', null, null, null, null, null, null, null, '610', '610', '1', '1581952180', '1581952183', '2', '2', '168', '168', null, null, 'BALLANTINE S  21YO (12B/0.70Ll/40%)     ', '0.7', '40', '12', 'GB', null, null, '130202020031k000000250130701', '2017-10-10 00:00:00', '23', null);
-INSERT INTO `product` VALUES ('2124', 'B-005', 'BALLANTINE S 30YO  (6B/0.70L/40%)', '', 'B-005', null, '3', null, null, null, null, null, null, null, '1030', '1030', '1', '1581952180', '1581952183', '2', '2', '10', '10', null, null, 'BALLANTINE S 30YO  (6B/0.70L/40%)', '0.7', '40', '6', 'GB', null, null, '130202020030u000000250130701', '2018-12-12 00:00:00', '5', null);
-INSERT INTO `product` VALUES ('2125', 'B-006', 'BALLANTINE S FINEST (12B/0.75L/40%)', '', 'B-006', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952183', '2', '2', '0', '0', null, null, 'BALLANTINE S FINEST (12B/0.75L/40%)', '0.75', '40', '12', 'UK', null, null, '130202020030S000000250140701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2126', 'B-007', 'BALLANTINE S FINEST (12B/1L/40%)', '', 'B-007', null, '3', null, null, null, null, null, null, null, '97', '97', '1', '1581952180', '1581952183', '2', '2', '50', '50', null, null, 'BALLANTINE S FINEST (12B/1L/40%)', '1', '40', '12', 'GB', null, null, '130202020030S000000259Ba0701', '2018-02-02 00:00:00', '50', null);
-INSERT INTO `product` VALUES ('2127', 'B-008', 'BALVENIE  12YO  DOUBLEWOOD  (12B/1L/40%)', '', 'B-008', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952183', '2', '2', '0', '0', null, null, 'BALVENIE  12YO  DOUBLEWOOD  (12B/1L/40%)', '1', '40', '12', 'GB', null, null, '1302020200DNO000000250150701', '2018-02-02 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2128', 'B-009', 'BALVENIE 14YO CARRIBEAN CASK (6B/0.70L/43%) ', '', 'B-009', null, '3', null, null, null, null, null, null, null, '240', '240', '1', '1581952180', '1581952183', '2', '2', '20', '20', null, null, 'BALVENIE 14YO CARRIBEAN CASK (6B/0.70L/43%) ', '0.7', '43', '6', 'GB', null, null, '1302020200VgG000000bS0130701', '2018-12-12 00:00:00', '10', null);
-INSERT INTO `product` VALUES ('2129', 'B-010', 'BALVENIE  17YO  DOUBLEWOOD  (6B/0.70L/43%)', '', 'B-010', null, '3', null, null, null, null, null, null, null, '495', '495', '1', '1581952180', '1581952183', '2', '2', '25', '25', null, null, 'BALVENIE  17YO  DOUBLEWOOD  (6B/0.70L/43%)', '0.7', '43', '6', 'GB', null, null, '1302020200RWa000000670130701', '2018-02-02 00:00:00', '25', null);
-INSERT INTO `product` VALUES ('2130', 'B-011', 'BALVENIE  21YO  PORTWOOD  (3B/0.70L/40%)', '', 'B-011', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952183', '2', '2', '0', '0', null, null, 'BALVENIE  21YO  PORTWOOD  (3B/0.70L/40%)', '0.7', '40', '3', 'GB', null, null, '1302020200Uwa000000250130701', '2018-02-02 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2131', 'B-012', 'BACARDI COCO (5B/1L/32%)', '', 'B-012', null, '4', null, null, null, null, null, null, null, '43.33', '43.33', '1', '1581952180', '1581952183', '2', '2', '1', '1', null, null, 'BACARDI COCO (5B/1L/32%)', '1', '32', '5', 'MX', null, null, '1302020200S10000000200150701', '2018-04-07 00:00:00', '1', null);
-INSERT INTO `product` VALUES ('2132', 'B-013', 'BACARDI COCO  (6B/1L/32%)', '', 'B-013', null, '4', null, null, null, null, null, null, null, '52', '52', '1', '1581952180', '1581952183', '2', '2', '69', '69', null, null, 'BACARDI COCO  (6B/1L/32%)', '1', '32', '6', 'MX', null, null, '1302020200S10000000209Bh0701', '2018-04-07 00:00:00', '69', null);
-INSERT INTO `product` VALUES ('2133', 'B-014', 'BERINGER  CALIFORNIA MERLOT 2014  (6B/1.50L/13%)', '', 'B-014', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952183', '2', '2', '0', '0', null, null, 'BERINGER  CALIFORNIA MERLOT 2014  (6B/1.50L/13%)', '1.5', '13', '6', 'US', null, null, '1301020100I5H000000300870701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2134', 'B-015', 'BOHEDAL TINTO JOVEN 2013 (12B/0.75L/14%)', '', 'B-015', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952183', '2', '2', '0', '0', null, null, 'BOHEDAL TINTO JOVEN 2013 (12B/0.75L/14%)', '0.75', '14', '12', 'ES', null, null, '1301020100GLB000000320140701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2135', 'B-016', 'BOMBAY SAPPHIRE GIN (12B/0.75L/47%) ', '', 'B-016', null, '5', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952183', '2', '2', '0', '0', null, null, 'BOMBAY SAPPHIRE GIN (12B/0.75L/47%) ', '0.75', '47', '12', 'UK', null, null, '130202020030K000000759AK0701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2136', 'B-017', 'BRUGAL 1888  (6B/0.70L/40%)', '', 'B-017', null, '4', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952183', '2', '2', '0', '0', null, null, 'BRUGAL 1888  (6B/0.70L/40%)', '0.7', '40', '6', 'DO', null, null, '1302020200NI7000000250130701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2137', 'B-018', 'BALVENIE  12YO TRIPLE CASK', '', 'B-018', null, '3', null, null, null, null, null, null, null, '520', '520', '1', '1581952180', '1581952183', '2', '2', '20', '20', null, null, 'BALVENIE  12YO TRIPLE CASK', '1', '40', '12', 'GB', null, null, '1302020200PvB000000259Bh0701', '2019-11-10 00:00:00', '20', null);
-INSERT INTO `product` VALUES ('2138', 'B-019', 'BALVENIE  16YO TRIPLE CASK', '', 'B-019', null, '3', null, null, null, null, null, null, null, '455', '455', '1', '1581952180', '1581952183', '2', '2', '5', '5', null, null, 'BALVENIE  16YO TRIPLE CASK', '0.7', '40', '6', 'GB', null, null, '1302020200PR7000000259AA0701', '2019-11-10 00:00:00', '5', null);
-INSERT INTO `product` VALUES ('2139', 'B-020', 'BALVENIE  12YO  DOUBLEWOOD ', '', 'B-020', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952183', '2', '2', '0', '0', null, null, 'BALVENIE  12YO  DOUBLEWOOD ', '0.7', '40', '6', 'GB', null, null, '1302020200PS0000000257990701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2140', 'C-001', 'CHIVAS  REGAL 12YO', '', 'C-001', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952183', '2', '2', '0', '0', null, null, 'CHIVAS  REGAL 12YO', '0.75', '40', '12', 'GB', null, null, '13020202003Ck000000250140701', '2018-05-11 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2141', 'C-002', 'CHIVAS REGAL 12YO', '', 'C-002', null, '3', null, null, null, null, null, null, null, '200', '200', '1', '1581952180', '1581952184', '2', '2', '98', '98', null, null, 'CHIVAS REGAL 12YO', '1', '40', '12', 'GB', null, null, '13020202003Ck000000250150701', '2018-10-10 00:00:00', '98', null);
-INSERT INTO `product` VALUES ('2142', 'C-003', 'CHIVAS REGAL 12YO  with Cardle', '', 'C-003', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CHIVAS REGAL 12YO  with Cardle', '4.5', '40', '2', 'GB', null, null, '13020202003Ck000000250970701', '2017-04-12 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2143', 'C-004', 'CHIVAS REGAL 18YO  ', '', 'C-004', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '29', '29', null, null, 'CHIVAS REGAL 18YO  ', '0.75', '40', '6', 'GB', null, null, '1302020200OTy000000250140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2144', 'C-006', 'CHIVAS REGAL ROYAL SALUTE 21YO ', '', 'C-006', null, '3', null, null, null, null, null, null, null, '335', '335', '1', '1581952180', '1581952184', '2', '2', '35', '35', null, null, 'CHIVAS REGAL ROYAL SALUTE 21YO ', '0.7', '40', '6', 'GB', null, null, '1302020200PBi000000257990701', '2017-04-12 00:00:00', '10', null);
-INSERT INTO `product` VALUES ('2145', 'C-008', 'CHIVAS REGAL  25YO ', '', 'C-008', null, '3', null, null, null, null, null, null, null, '465', '465', '1', '1581952180', '1581952184', '2', '2', '26', '26', null, null, 'CHIVAS REGAL  25YO ', '0.7', '40', '3', 'GB', null, null, '1302020200OUD000000250130701', '2017-04-12 00:00:00', '5', null);
-INSERT INTO `product` VALUES ('2146', 'C-009', 'CHIVAS REGAL ROYAL SALUTE  32YO ', '', 'C-009', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CHIVAS REGAL ROYAL SALUTE  32YO ', '0.5', '40', '3', 'GB', null, null, '1302020200THM000000250670701', '2018-09-07 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2147', 'C-010', 'CHATEAU CLERC  MILON  1997   PAUILLAC ', '', 'C-010', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CHATEAU CLERC  MILON  1997   PAUILLAC ', '0.75', '12.5', '12', 'FR', null, null, '1301020200DGb000000293DE0701', '2018-02-02 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2148', 'C-011', 'CHATEAU CLERC  MILON  2013   PAUILLAC', '', 'C-011', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CHATEAU CLERC  MILON  2013   PAUILLAC', '0.75', '13', '6', 'FR', null, null, '1301020200DGc000000303DE0701', '2018-02-02 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2149', 'C-012', 'CHATEAU CLERC  MILON  2015   PAUILLAC   ', '', 'C-012', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CHATEAU CLERC  MILON  2015   PAUILLAC   ', '0.75', '13.5', '12', 'FR', null, null, '1301020200DGd000000310140701', '2018-02-02 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2150', 'C-014', 'CHOYA GOLD EDITION ', '', 'C-014', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CHOYA GOLD EDITION ', '0.5', '19', '6', 'JP', null, null, '1301020200GKJ000000070670701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2151', 'C-015', 'CHOYA YUZU  ', '', 'C-015', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CHOYA YUZU  ', '0.7', '15', '6', 'JP', null, null, '1301020100GKM000000030130701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2152', 'C-016', 'CH. CLERC MILON  2001 ', '', 'C-016', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CH. CLERC MILON  2001 ', '0.75', '12.5', '12', 'FR', null, null, '1301020200I8I000000290140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2153', 'C-017', 'CH. CLERC MILON  2006 ', '', 'C-017', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CH. CLERC MILON  2006 ', '0.75', '13', '6', 'FR', null, null, '1301020200GrH000000300140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2154', 'C-018', 'CH. CLERC MILON  2008', '', 'C-018', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CH. CLERC MILON  2008', '0.75', '13', '12', 'FR', null, null, '1301020200I8J000000300140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2155', 'C-019', 'CH. CLERC MILON 2009', '', 'C-019', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CH. CLERC MILON 2009', '0.75', '13', '12', 'FR', null, null, '1301020200I8K000000300140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2156', 'C-020', 'CH. CLERC MILON  2010', '', 'C-020', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CH. CLERC MILON  2010', '0.75', '13', '12', 'FR', null, null, '1301020200I8L000000300140801', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2157', 'C-021', 'CH. CLERC MILON 2012  ', '', 'C-021', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CH. CLERC MILON 2012  ', '12', '13', '6', 'FR', null, null, '1301020200Grl000000300140702', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2158', 'C-022', 'CH. CLERC MILON  2012 ', '', 'C-022', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CH. CLERC MILON  2012 ', '0.75', '13', '12', 'FR', null, null, '1301020200Grl000000300140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2159', 'C-023', 'CH. CLERC MILON  2013 ', '', 'C-023', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CH. CLERC MILON  2013 ', '0.75', '13.5', '12', 'FR', null, null, '1301020200HmL000000310140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2160', 'C-024', 'CH. CLERC MILON  2014 ', '', 'C-024', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CH. CLERC MILON  2014 ', '0.75', '13.5', '12', 'FR', null, null, '1301020200I8M000000310140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2161', 'C-025', 'CK MONDAVI CABERNET ', '', 'C-025', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CK MONDAVI CABERNET ', '0.75', '13.6', '12', 'US', null, null, '1301020100I5I000000FI0140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2162', 'C-026', 'CIROC  VODKA  ', '', 'C-026', null, '2', null, null, null, null, null, null, null, '90', '90', '1', '1581952180', '1581952184', '2', '2', '1', '1', null, null, 'CIROC  VODKA  ', '0.75', '40', '8', 'FR', null, null, '1302020200FPy000000250140701', '2018-04-07 00:00:00', '1', null);
-INSERT INTO `product` VALUES ('2163', 'C-028', 'CORONA EXTRA BOTTLE ', '', 'C-028', null, '6', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952184', '2', '2', '0', '0', null, null, 'CORONA EXTRA BOTTLE ', '0.355', '4.5', '24', 'MX', null, null, '1301010000GKD000000990090701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2164', 'C-029', 'CH. CLERC MILON  2000', '', 'C-029', null, '1', null, null, null, null, null, null, null, '1200', '1200', '1', '1581952180', '1581952185', '2', '2', '1', '1', null, null, 'CH. CLERC MILON  2000', '0.75', '12.5', '12', 'FR', null, null, '1301020200Knq003Mk0LX0140701', '1970-01-01 00:00:00', '1', null);
-INSERT INTO `product` VALUES ('2165', 'C-030', 'CH. CLERC MILON  1998', '', 'C-030', null, '1', null, null, null, null, null, null, null, '1140', '1140', '1', '1581952180', '1581952185', '2', '2', '1', '1', null, null, 'CH. CLERC MILON  1998', '0.75', '12.5', '12', 'FR', null, null, '1301020200Knr003Mk0LX0140701', '1970-01-01 00:00:00', '1', null);
-INSERT INTO `product` VALUES ('2166', 'C-031', 'CH. CLERC MILON  1995', '', 'C-031', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952185', '2', '2', '0', '0', null, null, 'CH. CLERC MILON  1995', '0.75', '12.5', '12', 'FR', null, null, '1301020200Kns003Mk0LX0140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2167', 'C-032', 'CHATEAU LA MISSION HAUT-BRION 1958 PESSAC-LEOGNAN ROUGE AOC', '', 'C-032', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU LA MISSION HAUT-BRION 1958 PESSAC-LEOGNAN ROUGE AOC', '0.75', '12.5', '1', 'CL', null, null, '1301020200OMQ003Lw0290140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2168', 'C-033', 'CHATEAU TALBOT 1959 SAINT-JULIEN AOC', '', 'C-033', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU TALBOT 1959 SAINT-JULIEN AOC', '0.75', '12.5', '1', 'CL', null, null, '1301020200OMR003Lw0290140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2169', 'C-034', 'CHATEAU MOUTON ROTHSCHILD 1958 PAUILLAC AOC', '', 'C-034', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU MOUTON ROTHSCHILD 1958 PAUILLAC AOC', '0.75', '12.5', '1', 'CL', null, null, '1301020200OMS003Lw0290140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2170', 'C-035', 'CHATEAU MONTROSE 1990 - SAINT-ESTEPHE AOC', '', 'C-035', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU MONTROSE 1990 - SAINT-ESTEPHE AOC', '0.75', '13', '1', 'CL', null, null, '1301020200OMT003Lw0300140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2171', 'C-036', 'CHATEAU CANON LA GAFFELIERE 1985 - SAINT-EMILION GRAND CRU AOC', '', 'C-036', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU CANON LA GAFFELIERE 1985 - SAINT-EMILION GRAND CRU AOC', '0.75', '12.5', '1', 'CL', null, null, '1301020200OMU003Lw0290140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2172', 'C-037', 'CHATEAU PICHON COMTESSE DE LALANDE 1955 - PAUILLAC AOC', '', 'C-037', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU PICHON COMTESSE DE LALANDE 1955 - PAUILLAC AOC', '0.75', '12.5', '1', 'CL', null, null, '1301020200OMV003Lw0290140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2173', 'C-038', 'CHATEAU MARGAUX 1994 - MARGAUX AOC', '', 'C-038', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU MARGAUX 1994 - MARGAUX AOC', '0.75', '12.5', '1', 'CL', null, null, '1301020200OMW003Lw0290140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2174', 'C-039', 'CHATEAU PICHON COMTESSE DE LALANDE 2012 - PAUILLAC AOC', '', 'C-039', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU PICHON COMTESSE DE LALANDE 2012 - PAUILLAC AOC', '0.75', '13', '4', 'CL', null, null, '1301020200OMX003Lw0300140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2175', 'C-040', 'CHATEAU CLERC MILON 2015 - PAUILLAC AOC', '', 'C-040', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU CLERC MILON 2015 - PAUILLAC AOC', '0.75', '13.5', '20', 'CL', null, null, '1301200200OMY003Lw0310140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2176', 'C-041', 'CHATEAU COS D\'ESTOURNEL 2012 -SAINT-ESTEPHE AOC', '', 'C-041', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952180', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU COS D\'ESTOURNEL 2012 -SAINT-ESTEPHE AOC', '0.75', '14', '18', 'CL', null, null, '1301020200OMZ003Lw0320140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2177', 'C-042', 'CHATEAU LA MISSION HAUT-BRION 1988 - PESSAC-LEOGNAN AOC', '', 'C-042', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU LA MISSION HAUT-BRION 1988 - PESSAC-LEOGNAN AOC', '0.75', '12.5', '1', 'CL', null, null, '1301020200OMe003Lw0290140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2178', 'C-043', 'CHATEAU LA MISSION HAUT-BRION 1984 - PESSAC-LEOGNAN AOC', '', 'C-043', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU LA MISSION HAUT-BRION 1984 - PESSAC-LEOGNAN AOC', '0.75', '12.5', '1', 'CL', null, null, '1301020200OMf003Lw0290140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2179', 'C-044', 'CHATEAU MOUTON ROTHSCHILD 1990 -  PAUILLAC AOC', '', 'C-044', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU MOUTON ROTHSCHILD 1990 -  PAUILLAC AOC', '0.75', '12.5', '1', 'CL', null, null, '1301020200OMg003Lw0290140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2180', 'C-045', 'CHATEAU PICHON COMTESSE DE LALANDE 2011 -PAUILLAC AOC', '', 'C-045', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU PICHON COMTESSE DE LALANDE 2011 -PAUILLAC AOC', '0.75', '13', '8', 'CL', null, null, '1301020200OMh003Lw0300140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2181', 'C-046', 'CHATEAU MONTROSE 2011 - SAINT-ESTEPHE AOC', '', 'C-046', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU MONTROSE 2011 - SAINT-ESTEPHE AOC', '0.75', '13', '10', 'CL', null, null, '1301020200OMi003Lw0300140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2182', 'C-047', 'CHATEAU COS D\'ESTOURNEL 2008 - SAINT-ESTEPHE AOC', '', 'C-047', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'CHATEAU COS D\'ESTOURNEL 2008 - SAINT-ESTEPHE AOC', '0.75', '13.5', '1', 'CL', null, null, '1301020200OMj003Lw0310140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2183', 'C-048', 'CARLO ROSSI CALIFORNIA RED', '', 'C-048', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'CARLO ROSSI CALIFORNIA RED', '1.5', '12', '6', 'US', null, null, '', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2184', 'D-001', 'DE MULLER VINO DE MISA DULCE SUPERIOR ', '', 'D-001', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'DE MULLER VINO DE MISA DULCE SUPERIOR ', '0.75', '13.5', '12', 'ES', null, null, '1301020100GL9000000313hE0701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2185', 'D-002', 'DE BORTOLI DB FAMILY SELECTION MERLOT', '', 'D-002', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'DE BORTOLI DB FAMILY SELECTION MERLOT', '0.75', '14', '12', 'AU', null, null, '1301020100GLJ000000320140701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2186', 'F-001', 'FAMOUS GROUSE  ', '', 'F-001', null, '3', null, null, null, null, null, null, null, '56', '56', '1', '1581952181', '1581952185', '2', '2', '15', '15', null, null, 'FAMOUS GROUSE  ', '0.7', '40', '12', 'GB', null, null, '13020202003vq000000250130701', '2018-07-09 00:00:00', '15', null);
-INSERT INTO `product` VALUES ('2187', 'G-001', 'GLENFIDDICH  12YO ', '', 'G-001', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '39', '39', null, null, 'GLENFIDDICH  12YO ', '0.7', '40', '12', 'UK', null, null, '13020202006yX000000250130701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2188', 'G-003', 'GLENFIDDICH  15YO', '', 'G-003', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '10', '10', null, null, 'GLENFIDDICH  15YO', '0.7', '40', '12', 'UK', null, null, '13020202004w9000000250130701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2189', 'G-005', 'GLENFIDDICH  18YO ', '', 'G-005', null, '3', null, null, null, null, null, null, null, '430', '430', '1', '1581952181', '1581952185', '2', '2', '3', '3', null, null, 'GLENFIDDICH  18YO ', '0.7', '40', '12', 'GB', null, null, '13020202006yZ000000250130701', '2018-01-08 00:00:00', '3', null);
-INSERT INTO `product` VALUES ('2190', 'G-006', 'GLENFIDDICH 19YO AGE OF DISCOVERY RED WINE ', '', 'G-006', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'GLENFIDDICH 19YO AGE OF DISCOVERY RED WINE ', '0.7', '40', '6', 'GB', null, null, '1302020200Uwb000000250130701', '2018-02-02 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2191', 'G-007', 'GLENFIDDICH  19YO  AGE OF DISCOVERY BOURBON ', '', 'G-007', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'GLENFIDDICH  19YO  AGE OF DISCOVERY BOURBON ', '0.7', '40', '6', 'GB', null, null, '1302020200VW9000000250130701', '2018-10-09 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2192', 'G-008', 'GLENFIDDICH  19YO  AGE OF DISCOVERY MADEIRO  ', '', 'G-008', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'GLENFIDDICH  19YO  AGE OF DISCOVERY MADEIRO  ', '0.7', '40', '6', 'GB', null, null, '1302020200Vby000000250130701', '2018-05-11 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2193', 'G-009', 'GLENLIVET 15YO FRENCE OAK', '', 'G-009', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952185', '2', '2', '0', '0', null, null, 'GLENLIVET 15YO FRENCE OAK', '0.7', '40', '6', 'GB', null, null, '1302020200Uwc000000250130701', '2018-02-02 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2194', 'G-010', 'GLENLIVET MASTER DIST. RES. ', '', 'G-010', null, '3', null, null, null, null, null, null, null, '250', '250', '1', '1581952181', '1581952186', '2', '2', '18', '18', null, null, 'GLENLIVET MASTER DIST. RES. ', '1', '40', '12', 'GB', null, null, '1302020200Og8000000250150701', '2017-04-12 00:00:00', '15', null);
-INSERT INTO `product` VALUES ('2195', 'G-011', 'GUINNESS STOUT', '', 'G-011', null, '6', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952186', '2', '2', '0', '0', null, null, 'GUINNESS STOUT', '0.33', '6.8', '24', 'IE', null, null, '1301010000306000000CF0550701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2196', 'G-012', 'GREY GOOSE VODKA', '', 'G-012', null, '2', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952186', '2', '2', '0', '0', null, null, 'GREY GOOSE VODKA', '1', '40', '6', 'FR', null, null, '1302020200MyW000000250150701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2197', 'G-013', 'GLENFIDDICH 12 YO MALT', '', 'G-013', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952186', '2', '2', '0', '0', null, null, 'GLENFIDDICH 12 YO MALT', '0.75', '40', '12', 'GB', null, null, '', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2198', 'H-001', 'HENNESSY VSOP ', '', 'H-001', null, '7', null, null, null, null, null, null, null, '730', '730', '1', '1581952181', '1581952186', '2', '2', '66', '66', null, null, 'HENNESSY VSOP ', '1', '40', '12', 'FR', null, null, '1302020200Jmj000000250150701', '2017-10-10 00:00:00', '46', null);
-INSERT INTO `product` VALUES ('2199', 'H-002', 'HENNESSY XO', '', 'H-002', null, '7', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952186', '2', '2', '15', '15', null, null, 'HENNESSY XO', '0.7', '40', '6', 'FR', null, null, '1302020200OTW000000250130701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2200', 'H-004', 'HOEGAARDEN ROSEE BOTTLE ', '', 'H-004', null, '6', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952186', '2', '2', '0', '0', null, null, 'HOEGAARDEN ROSEE BOTTLE ', '0.25', '3', '24', 'BE', null, null, '13010100003v3000000JG4q70701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2201', 'H-005', 'HOEGAARDEN  WHITE  BOTTLE', '', 'H-005', null, '6', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952186', '2', '2', '0', '0', null, null, 'HOEGAARDEN  WHITE  BOTTLE', '0.33', '4.9', '24', 'BE', null, null, '13010100003SE000000973h10701', '2017-10-11 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2202', 'H-006', 'HOEGAARDEN  BEER BOTTLE ', '', 'H-006', null, '6', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952186', '2', '2', '0', '0', null, null, 'HOEGAARDEN  BEER BOTTLE ', '0.33', '4.9', '24', 'BE', null, null, '13010100003SE000000973h10701', '2017-10-11 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2203', 'H-007', 'HAVANA CLUB 7YO (12B/0.75CL/40%)', '', 'H-007', null, '4', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952186', '2', '2', '0', '0', null, null, 'HAVANA CLUB 7YO (12B/0.75CL/40%)', '0.75', '40', '12', 'CU', null, null, '13020202004TK000000250140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2204', 'J-001', 'JACK  DANIEL ', '', 'J-001', null, '3', null, null, null, null, null, null, null, '190', '190', '1', '1581952181', '1581952186', '2', '2', '110', '110', null, null, 'JACK  DANIEL ', '1', '40', '12', 'US', null, null, '130202020069e000000250150701', '1970-01-01 00:00:00', '110', null);
-INSERT INTO `product` VALUES ('2205', 'J-002', 'JACK  DANIEL SINGLE BARREL', '', 'J-002', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952186', '2', '2', '0', '0', null, null, 'JACK  DANIEL SINGLE BARREL', '0.75', '50', '6', 'US', null, null, '1302020200OFO000000810140701', '2019-07-11 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2206', 'JW-001', 'JOHNNIE WALKER SPICE ROAD', '', 'JW-001', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952186', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER SPICE ROAD', '1', '40', '12', 'GB', null, null, '1302020200HPF000000250150101', '2017-10-10 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2207', 'JW-002', 'JOHNNIE WALKER PLATINUM 18YO ', '', 'JW-002', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '5', '5', null, null, 'JOHNNIE WALKER PLATINUM 18YO ', '0.75', '40', '6', 'GB', null, null, '1302020200EbA000000259Ba0701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2208', 'JW-003', 'JOHNNIE WALKER GOLD RESERVE ICE  BULLION ', '', 'JW-003', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952186', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER GOLD RESERVE ICE  BULLION ', '1', '40', '6', 'GB', null, null, '1302020200SKl000000250150701', '2017-10-10 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2209', 'JW-004', 'JOHNNIE WALKER BLUE LABEL ', '', 'JW-004', null, '3', null, null, null, null, null, null, null, '610', '610', '1', '1581952181', '1581952186', '2', '2', '28', '28', null, null, 'JOHNNIE WALKER BLUE LABEL ', '1', '40', '6', 'GB', null, null, '13020202003I7000000250150701', '2017-10-10 00:00:00', '18', null);
-INSERT INTO `product` VALUES ('2210', 'JW-005', 'JOHNNIE WALKER RED LABEL ', '', 'JW-005', null, '3', null, null, null, null, null, null, null, '96', '96', '1', '1581952181', '1581952186', '2', '2', '1937', '1937', null, null, 'JOHNNIE WALKER RED LABEL ', '1', '40', '12', 'GB', null, null, '13020202003I6000000250150701', '2017-10-10 00:00:00', '42', null);
-INSERT INTO `product` VALUES ('2211', 'JW-006', 'JOHNNIE WALKER BLACK LABEL ', '', 'JW-006', null, '3', null, null, null, null, null, null, null, '210', '210', '1', '1581952181', '1581952187', '2', '2', '567', '567', null, null, 'JOHNNIE WALKER BLACK LABEL ', '1', '40', '12', 'GB', null, null, '13020202003I5000000250150701', '2017-10-10 00:00:00', '17', null);
-INSERT INTO `product` VALUES ('2212', 'JW-007', 'JOHNNIE WALKER DOUBLE BLACK ', '', 'JW-007', null, '3', null, null, null, null, null, null, null, '250', '250', '1', '1581952181', '1581952186', '2', '2', '120', '120', null, null, 'JOHNNIE WALKER DOUBLE BLACK ', '1', '40', '12', 'GB', null, null, '1302020200Mlw000000250150101', '2017-10-10 00:00:00', '70', null);
-INSERT INTO `product` VALUES ('2213', 'JW-008', 'JOHNNIE WALKER SWING', '', 'JW-008', null, '3', null, null, null, null, null, null, null, '285', '285', '1', '1581952181', '1581952186', '2', '2', '45', '45', null, null, 'JOHNNIE WALKER SWING', '0.75', '40', '12', 'GB', null, null, '13020202003I8000000250140701', '2017-10-10 00:00:00', '5', null);
-INSERT INTO `product` VALUES ('2214', 'JW-009', 'JOHNNIE WALKER GOLD RESERVE ', '', 'JW-009', null, '3', null, null, null, null, null, null, null, '185', '185', '1', '1581952181', '1581952187', '2', '2', '142', '142', null, null, 'JOHNNIE WALKER GOLD RESERVE ', '0.75', '40', '6', 'GB', null, null, '1302020200OTU000000250140701', '2017-04-12 00:00:00', '5', null);
-INSERT INTO `product` VALUES ('2215', 'JW-011', 'JOHNNIE WALKER  ISLAND GREEN', '', 'JW-011', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER  ISLAND GREEN', '1', '43', '6', 'GB', null, null, '1302020200Uwd000000670150701', '2018-02-02 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2216', 'JW-013', 'JOHNNIE WALKER GREEN LABEL', '', 'JW-013', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER GREEN LABEL', '0.75', '43', '6', 'UK', null, null, '13020202003ID000000bS0140701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2217', 'JW-014', 'JOHNNIE WALKER KING GEORGE ', '', 'JW-014', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER KING GEORGE ', '0.75', '43', '3', 'GB', null, null, '1302020200A4L000000bS0140701', '2018-12-12 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2218', 'JW-016', 'JOHNNIE WALKER XR 21 YO', '', 'JW-016', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER XR 21 YO', '0.75', '40', '6', 'GB', null, null, '1302020200EbB000000250140701', '2019-02-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2219', 'JW-017', 'JOHNNIE WALKER GOLD 18YO', '', 'JW-017', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER GOLD 18YO', '1', '40', '6', 'GB', null, null, '', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2220', 'JW-018', 'JOHNNIE WALKER WHITE WALKER ', '', 'JW-018', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER WHITE WALKER ', '1', '41.7', '12', 'GB', null, null, '', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2221', 'K-001', 'KAIKEN TERROIR SERIES MALBEC ', '', 'K-001', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'KAIKEN TERROIR SERIES MALBEC ', '0.75', '12', '12', 'CL', null, null, '1301020100GLK000000320140701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2222', 'K-002', 'KING ROBERT II FINEST SCOTCH WHISKY  ', '', 'K-002', null, '3', null, null, null, null, null, null, null, '11', '11', '1', '1581952181', '1581952187', '2', '2', '1027', '1027', null, null, 'KING ROBERT II FINEST SCOTCH WHISKY  ', '0.7', '40', '12', 'GB', null, null, '13020202004mp000000250130701', '2018-07-09 00:00:00', '332', null);
-INSERT INTO `product` VALUES ('2223', 'L-001', 'LAPHROAIG 10YO', '', 'L-001', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'LAPHROAIG 10YO', '0.7', '40', '6', 'GB', null, null, '', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2224', 'M-001', 'MACALLAN SELECT OAK ', '', 'M-001', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'MACALLAN SELECT OAK ', '1', '40', '12', 'GB', null, null, '1302020200OTV000000250150701', '2017-10-10 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2225', 'M-002', 'MONKEY SHOULDER', '', 'M-002', null, '3', null, null, null, null, null, null, null, '100', '100', '1', '1581952181', '1581952187', '2', '2', '100', '100', null, null, 'MONKEY SHOULDER', '0.7', '40', '6', 'GB', null, null, '', '1970-01-01 00:00:00', '10', null);
-INSERT INTO `product` VALUES ('2226', 'M-003', 'MARTELL XO ', '', 'M-003', null, '7', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'MARTELL XO ', '0.7', '40', '10', 'FR', null, null, '130202020032p00000057990701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2227', 'M-004', 'MARTELL XO SUPREME', '', 'M-004', null, '7', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'MARTELL XO SUPREME', '0.7', '40', '12', 'FR', null, null, '130202020032p000000250130701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2228', 'M-005', 'MOUTON CADET BARON PHILLIPE DE ROTHSCHILD R/W ', '', 'M-005', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'MOUTON CADET BARON PHILLIPE DE ROTHSCHILD R/W ', '0.75', '13.5', '6', 'FR', null, null, '1301020100GLA000000310140701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2229', 'M-006', 'MOUTES RESERVA CABERNET SAUVIGNON', '', 'M-006', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'MOUTES RESERVA CABERNET SAUVIGNON', '0.75', '14', '12', 'CL', null, null, '1301020100GLI000000320140701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2230', 'M-007', 'MOET & CHANDON', '', 'M-007', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'MOET & CHANDON', '0.75', '12', '6', 'FR', null, null, '1301020200HBo000000283hE0701', '2018-10-09 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2231', 'M-008', 'MACALLAN RARE BLACK ', '', 'M-008', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'MACALLAN RARE BLACK ', '0.7', '48', '6', 'GB', null, null, '1302020200VgH000000770130701', '2018-12-12 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2232', 'M-009', 'MALIBU LIQUEUR ', '', 'M-009', null, '4', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'MALIBU LIQUEUR ', '0.75', '21', '12', 'CL', null, null, '1302020200DCm000000090140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2233', 'M-011', 'MARTELL CORDON  BLEU ', '', 'M-011', null, '7', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952187', '2', '2', '0', '0', null, null, 'MARTELL CORDON  BLEU ', '0.7', '40', '12', 'FR', null, null, '', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2234', 'M-012', 'MOUTON CADET ROUGE 2014 A.O.C. BORDEAUX', '', 'M-012', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952188', '2', '2', '0', '0', null, null, 'MOUTON CADET ROUGE 2014 A.O.C. BORDEAUX', '0.75', '13', '12', 'FR', null, null, 'ในประเทศ', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2235', 'M-013', 'MOUTON CADET ROUGE 2015 A.O.C. BORDEAUX  ', '', 'M-013', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952188', '2', '2', '0', '0', null, null, 'MOUTON CADET ROUGE 2015 A.O.C. BORDEAUX  ', '0.75', '13.5', '12', 'FR', null, null, '1301020100KXs000000313hE0701  ', '2019-07-05 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2236', 'M-014', 'MOUTON CADET ROUGE 2016 A.O.C. BORDEAUX  ', '', 'M-014', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952188', '2', '2', '0', '0', null, null, 'MOUTON CADET ROUGE 2016 A.O.C. BORDEAUX  ', '0.75', '13.5', '12', 'FR', null, null, '1301020100KXt000000313hE0701', '2019-07-05 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2237', 'M-015', 'MACALLAN 12 YEAR SHERRY OAK', '', 'M-015', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952181', '1581952188', '2', '2', '0', '0', null, null, 'MACALLAN 12 YEAR SHERRY OAK', '0.75', '43', '12', 'GB', null, null, '1302020200W2J000000bS0140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2238', 'M-016', 'MACALLAN SHERRY OAK', '', 'M-016', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952188', '2', '2', '0', '0', null, null, 'MACALLAN SHERRY OAK', '0.7', '40', '12', 'GB', null, null, '1302020200WBc000000257990701', '2019-02-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2239', 'M-017', 'MACALLAN QUEST', '', 'M-017', null, '3', null, null, null, null, null, null, null, '450', '450', '1', '1581952182', '1581952188', '2', '2', '7', '7', null, null, 'MACALLAN QUEST', '1', '40', '12', 'GB', null, null, '1302020200Uw5000000259Bh0701', '2019-11-10 00:00:00', '7', null);
-INSERT INTO `product` VALUES ('2240', 'M-018', 'MACALLAN ENIGMA', '', 'M-018', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952188', '2', '2', '0', '0', null, null, 'MACALLAN ENIGMA', '0.7', '44.9', '6', 'GB', null, null, '1302020200Uw8000000as7990701', '2019-07-11 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2241', 'M-019', 'MACALLAN LUMINA', '', 'M-019', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952188', '2', '2', '0', '0', null, null, 'MACALLAN LUMINA', '0.7', '41.3', '6', 'GB', null, null, '1302020200Uw6000000EF7990701', '2019-07-11 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2242', 'M-020', 'MONTON CADET ROUGE 2015 A.O.C. BORDEAUX', '', 'M-020', null, '1', null, null, null, null, null, null, null, '76.89', '76.89', '1', '1581952182', '1581952188', '2', '2', '15', '15', null, null, 'MONTON CADET ROUGE 2015 A.O.C. BORDEAUX', '0.75', '13.5', '12', 'US', null, null, '1301020100KXs000000313hE0701  ', '1970-01-01 00:00:00', '15', null);
-INSERT INTO `product` VALUES ('2243', 'M-021', 'MONTON CADET ROUGE 2016 A.O.C. BORDEAUX', '', 'M-021', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952188', '2', '2', '0', '0', null, null, 'MONTON CADET ROUGE 2016 A.O.C. BORDEAUX', '0.75', '13.5', '12', 'US', null, null, '1301020100KXt000000313hE0701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2244', 'O-001', 'OPUS ONE 2014  ', '', 'O-001', null, '1', null, null, null, null, null, null, null, '1860', '1860', '1', '1581952182', '1581952188', '2', '2', '1', '1', null, null, 'OPUS ONE 2014  ', '0.75', '14.5', '3', 'USA', null, null, '1301020200BX5000000330140702', '2018-05-10 00:00:00', '1', null);
-INSERT INTO `product` VALUES ('2245', 'O-002', 'OPUS ONE  2014  ', '', 'O-002', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952191', '2', '2', '0', '0', null, null, 'OPUS ONE  2014  ', '0.75', '14.5', '6', 'USA', null, null, '1301020200BX5000000330140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2246', 'O-003', 'OVAL 24', '', 'O-003', null, '2', null, null, null, null, null, null, null, '142', '142', '1', '1581952182', '1581952191', '2', '2', '48', '48', null, null, 'OVAL 24', '0.7', '24', '6', 'FR', null, null, '1302020200MAr000000120130701', '2018-04-07 00:00:00', '48', null);
-INSERT INTO `product` VALUES ('2247', 'O-004', 'OVAL 42', '', 'O-004', null, '2', null, null, null, null, null, null, null, '142', '142', '1', '1581952182', '1581952191', '2', '2', '13', '13', null, null, 'OVAL 42', '0.7', '42', '6', 'FR', null, null, '1302020200MAn000000EO0130701', '2018-04-07 00:00:00', '13', null);
-INSERT INTO `product` VALUES ('2248', 'O-005', 'OVAL 42 ROWAN BERRY', '', 'O-005', null, '2', null, null, null, null, null, null, null, '152', '152', '1', '1581952182', '1581952191', '2', '2', '40', '40', null, null, 'OVAL 42 ROWAN BERRY', '0.7', '42', '6', 'FR', null, null, '1302020200MAp000000EO0130701', '2018-04-07 00:00:00', '40', null);
-INSERT INTO `product` VALUES ('2249', 'O-006', 'OVAL 56 ', '', 'O-006', null, '2', null, null, null, null, null, null, null, '147', '147', '1', '1581952182', '1581952191', '2', '2', '28', '28', null, null, 'OVAL 56 ', '0.7', '56', '6', 'FR', null, null, '1302020200MAu000000Rl0130701', '2018-04-07 00:00:00', '28', null);
-INSERT INTO `product` VALUES ('2250', 'O-008', 'OLD PARR 12YO  ', '', 'O-008', null, '3', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952191', '2', '2', '0', '0', null, null, 'OLD PARR 12YO  ', '1', '40', '12', 'GB', null, null, '13020202005DV000000250150701', '2018-04-05 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2251', 'O-009', 'OPUS  ONE  2015', '', 'O-009', null, '1', null, null, null, null, null, null, null, '1860', '1860', '1', '1581952182', '1581952191', '2', '2', '2', '2', null, null, 'OPUS  ONE  2015', '0.75', '14.5', '6', 'US', null, null, '1301020200IN1003PN0330140701', '1970-01-01 00:00:00', '2', null);
-INSERT INTO `product` VALUES ('2252', 'O-010', 'OPUS ONE 2016 -NAPA VALLEY ROUGE', '', 'O-010', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952191', '2', '2', '0', '0', null, null, 'OPUS ONE 2016 -NAPA VALLEY ROUGE', '0.75', '14.5', '10', 'CL', null, null, '1301020200OML003Lw0330140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2253', 'P-001', 'PENFOLD  BIN2  SHIRAZ  MATARO  ', '', 'P-001', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952191', '2', '2', '0', '0', null, null, 'PENFOLD  BIN2  SHIRAZ  MATARO  ', '0.75', '14.5', '6', 'AU', null, null, '', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2254', 'P-002', 'PENFOLD BIN8 CABERNET SHIRAZ ', '', 'P-002', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952191', '2', '2', '0', '0', null, null, 'PENFOLD BIN8 CABERNET SHIRAZ ', '0.75', '14.5', '6', 'AU', null, null, '', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2255', 'P-003', 'PENFOLDS Rwsn Ret Cabernet Shiraz Red ', '', 'P-003', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952191', '2', '2', '0', '0', null, null, 'PENFOLDS Rwsn Ret Cabernet Shiraz Red ', '0.75', '13.5', '6', 'AU', null, null, '', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2256', 'R-001', 'ROBERT MONDAVI WINERY CABERNET SAUVIGNON ', '', 'R-001', null, '1', null, null, null, null, null, null, null, '193.91', '193.91', '1', '1581952182', '1581952191', '2', '2', '100', '100', null, null, 'ROBERT MONDAVI WINERY CABERNET SAUVIGNON ', '0.75', '13.5', '12', 'US', null, null, '1301020100Fol000000310140701', '1970-01-01 00:00:00', '100', null);
-INSERT INTO `product` VALUES ('2257', 'R-002', 'ROBERT MONDAVI  TWIN OAKS  INTL CABERNET SAUVIGNON CA INT  ', '', 'R-002', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952191', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI  TWIN OAKS  INTL CABERNET SAUVIGNON CA INT  ', '0.75', '13.5', '6', 'US', null, null, '1301020100Fnd000000310140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2258', 'R-003', 'ROBERT MONDAVI TWIN OAKS INTL CHARDONNAY  CA INT', '', 'R-003', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952191', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI TWIN OAKS INTL CHARDONNAY  CA INT', '0.75', '13.5', '6', 'US', null, null, '1301020100Fne000000310140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2259', 'R-004', 'ROBERT MONDAVI   CABERNET SAUVIGNON  2015', '', 'R-004', null, '1', null, null, null, null, null, null, null, '216', '216', '1', '1581952182', '1581952191', '2', '2', '46', '46', null, null, 'ROBERT MONDAVI   CABERNET SAUVIGNON  2015', '0.75', '14.5', '12', 'USA', null, null, '1301020100Gpl000000330140701', '1970-01-01 00:00:00', '46', null);
-INSERT INTO `product` VALUES ('2260', 'R-005', 'ROBERT MONDAVI  PRIVATE  SELECTION CABERNET SAUVIGNON 2015', '', 'R-005', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952191', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI  PRIVATE  SELECTION CABERNET SAUVIGNON 2015', '0.75', '13.5', '12', 'USA', null, null, '1301020100BYe000000310140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2261', 'R-006', 'ROBERT MONDAVI  RESERVE CABERNET SAUVIGNON  2015 ', '', 'R-006', null, '1', null, null, null, null, null, null, null, '552', '552', '1', '1581952182', '1581952191', '2', '2', '3', '3', null, null, 'ROBERT MONDAVI  RESERVE CABERNET SAUVIGNON  2015 ', '0.75', '14', '6', 'US', null, null, '1301020200I8H000000320140701', '1970-01-01 00:00:00', '3', null);
-INSERT INTO `product` VALUES ('2262', 'R-006', 'ROBERT MONDAVI  RESERVE CABERNET SAUVIGNON  2016', '', 'R-006', null, '1', null, null, null, null, null, null, null, '588', '588', '1', '1581952182', '1581952191', '2', '2', '5', '5', null, null, 'ROBERT MONDAVI  RESERVE CABERNET SAUVIGNON  2016', '0.75', '14', '6', 'US', null, null, '\'1301020200I8H000000320140701', '1970-01-01 00:00:00', '5', null);
-INSERT INTO `product` VALUES ('2263', 'R-007', 'ROBERT MONDAVI NAPA VALLEY CABERNET SAUVIGNON ', '', 'R-007', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952191', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI NAPA VALLEY CABERNET SAUVIGNON ', '0.75', '15', '12', 'USA', null, null, '1301020100CEo000000030140701', '2017-04-12 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2264', 'R-008', 'ROBERT MONDAVI MESTRO 2014 ', '', 'R-008', null, '1', null, null, null, null, null, null, null, '180', '180', '1', '1581952182', '1581952191', '2', '2', '285', '285', null, null, 'ROBERT MONDAVI MESTRO 2014 ', '0.75', '14.5', '6', 'USA', null, null, '1301020100Gpm000000330140701', '1970-01-01 00:00:00', '5', null);
-INSERT INTO `product` VALUES ('2265', 'R-009', 'ROBERT MONDAVI OAKVILLE  2014 ', '', 'R-009', null, '1', null, null, null, null, null, null, null, '204', '204', '1', '1581952182', '1581952191', '2', '2', '121', '121', null, null, 'ROBERT MONDAVI OAKVILLE  2014 ', '0.75', '15', '6', 'USA', null, null, '1301020200Gpn000000030140701', '1970-01-01 00:00:00', '21', null);
-INSERT INTO `product` VALUES ('2266', 'R-010', 'ROBERT MONDAVI NAPA CABERNET', '', 'R-010', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '120', '120', null, null, 'ROBERT MONDAVI NAPA CABERNET', '0.75', '14.5', '12', 'US', null, null, '1301020100HZt000000330140701', '2018-05-10 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2267', 'R-011', 'ROBERT MONDAVI MESTRO 2013 ', '', 'R-011', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI MESTRO 2013 ', '0.75', '14.5', '6', 'US', null, null, '1301020100HZu000000330140701', '2018-05-10 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2268', 'R-012', 'ROBERT MONDAVI  OAKVILLE  CABERNET 2011 ', '', 'R-012', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI  OAKVILLE  CABERNET 2011 ', '0.75', '14', '6', 'US', null, null, '1301020100HZv000000320140701', '2018-05-10 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2269', 'R-013', 'ROBERT MONDAVI RESERVE CABERNET 2011 ', '', 'R-013', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI RESERVE CABERNET 2011 ', '0.75', '14', '6', 'USA', null, null, '1301020200HZw000000320140701', '2018-05-10 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2270', 'R-014', 'REMY MARTIN XO  ', '', 'R-014', null, '7', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'REMY MARTIN XO  ', '0.7', '40', '12', 'FR', null, null, '1302020200H7O000000257990701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2271', 'R-015', 'REMY MARTIN VSOP  ', '', 'R-015', null, '7', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'REMY MARTIN VSOP  ', '1', '40', '12', 'FR', null, null, '1302020200NqV000000259Bh0701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2272', 'R-017', 'ROBERT MONDAVI WINERY RESERVE CABERNET SAUVIGNON NAPA VALLEY 2014 ', '', 'R-017', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI WINERY RESERVE CABERNET SAUVIGNON NAPA VALLEY 2014 ', '0.75', '14.5', '6', 'US', null, null, 'ในประเทศ', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2273', 'R-018', 'ROBERT MONDAVI WINERY  CABERNET SAUVIGNON NAPA VALLEY 2014   ', '', 'R-018', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI WINERY  CABERNET SAUVIGNON NAPA VALLEY 2014   ', '0.75', '15', '12', 'US', null, null, 'ในประเทศ', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2274', 'R-019', 'ROBERT MONDAVI PRIVATE SELECTION 2016', '', 'R-019', null, '1', null, null, null, null, null, null, null, '84', '84', '1', '1581952182', '1581952192', '2', '2', '105', '105', null, null, 'ROBERT MONDAVI PRIVATE SELECTION 2016', '0.75', '14.5', '12', 'US', null, null, '1301020100Knm003PN0330140701', '1970-01-01 00:00:00', '105', null);
-INSERT INTO `product` VALUES ('2275', 'R-020', 'ROBERT MONDAVI NAPA CABERNET SAUVIGNON 2016', '', 'R-020', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI NAPA CABERNET SAUVIGNON 2016', '0.75', '14', '12', 'US', null, null, '1301020100Knn003PN0320140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2276', 'R-021', 'ROBERT MONDAVI  WINERY  CABERNET SAUVIGNON  NAPA VALLEY 2015', '', 'R-021', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI  WINERY  CABERNET SAUVIGNON  NAPA VALLEY 2015', '0.75', '15', '12', 'US', null, null, 'ในประเทศ', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2277', 'R-022', 'ROBERT MONDAVI CABERNET SAUVIGNON  ', '', 'R-022', null, '1', null, null, null, null, null, null, null, '67.2', '67.2', '1', '1581952182', '1581952192', '2', '2', '300', '300', null, null, 'ROBERT MONDAVI CABERNET SAUVIGNON  ', '0.75', '14.5', '12', 'US', null, null, '1301020100NGD003PN0330140701', '2019-11-11 00:00:00', '300', null);
-INSERT INTO `product` VALUES ('2278', 'R-023', 'ROBERT MONDAVI MERLOT', '', 'R-023', null, '1', null, null, null, null, null, null, null, '67.2', '67.2', '1', '1581952182', '1581952192', '2', '2', '300', '300', null, null, 'ROBERT MONDAVI MERLOT', '0.75', '14', '12', 'US', null, null, '1301020100NG5003PN0320140701', '2019-11-11 00:00:00', '300', null);
-INSERT INTO `product` VALUES ('2279', 'R-024', 'ROBERT MONDAVI PRIVATE SELECTION ', '', 'R-024', null, '1', null, null, null, null, null, null, null, '102', '102', '1', '1581952182', '1581952192', '2', '2', '1000', '1000', null, null, 'ROBERT MONDAVI PRIVATE SELECTION ', '0.75', '14.5', '12', 'US', null, null, '1301020100IXw003PN0330140701', '2019-11-11 00:00:00', '250', null);
-INSERT INTO `product` VALUES ('2280', 'R-025', 'ROBERT MONDAVI  OAKVILLE  CABERNET ', '', 'R-025', null, '1', null, null, null, null, null, null, null, '204', '204', '1', '1581952182', '1581952192', '2', '2', '70', '70', null, null, 'ROBERT MONDAVI  OAKVILLE  CABERNET ', '0.75', '14.5', '6', 'US', null, null, '1301020200NLK003PN0330140701', '1970-01-01 00:00:00', '70', null);
-INSERT INTO `product` VALUES ('2281', 'S-001', 'SANTA RITA HEROES CABERNET SAUVIGNON ', '', 'S-001', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'SANTA RITA HEROES CABERNET SAUVIGNON ', '0.75', '13', '6', 'CL', null, null, '1301020100GLG000000300140701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2282', 'S-002', 'SANTA RITA RESERVA CABERNET SAUVIGNON', '', 'S-002', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'SANTA RITA RESERVA CABERNET SAUVIGNON', '0.75', '13.5', '12', 'CL', null, null, '1301020100GLH000000310140701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2283', 'S-003', 'SMIRNOFF RED', '', 'S-003', null, '2', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '10', '10', null, null, 'SMIRNOFF RED', '1', '40', '8', 'GB', null, null, '1302020200JmA000000250150702', '2018-07-09 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2284', 'S-005', 'STELLA ARTOIS BEER BOTTLE ', '', 'S-005', null, '6', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'STELLA ARTOIS BEER BOTTLE ', '0.33', '5', '24', 'BE', null, null, '1301010000GKF000000010550701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2285', 'T-001', 'TIAN CHAO  SHANGPIN  GUIRENJIU ', '', 'T-001', null, '8', null, null, null, null, null, null, null, '42', '42', '1', '1581952182', '1581952192', '2', '2', '935', '935', null, null, 'TIAN CHAO  SHANGPIN  GUIRENJIU ', '0.5', '53', '6', 'CN', null, null, '1302020200VMY000000EQ0670701', '1970-01-01 00:00:00', '835', null);
-INSERT INTO `product` VALUES ('2286', 'T-002', 'TAIWAN SWEET TOUCH WHITE GRAPE BEER ', '', 'T-002', null, '6', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'TAIWAN SWEET TOUCH WHITE GRAPE BEER ', '0.33', '3.5', '24', 'TW', null, null, '1301010000GKG000000AW0550701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2287', 'T-003', 'TEQUILA PATRON REPOSADO (12B/0.75CL/40%)', '', 'T-003', null, '9', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'TEQUILA PATRON REPOSADO (12B/0.75CL/40%)', '0.75', '40', '12', 'MX', null, null, '1302020200N7z000000259AK0701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2288', 'T-004', 'TEQUILA PATRON SILVER (12B/0.75CL/40%)', '', 'T-004', null, '9', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'TEQUILA PATRON SILVER (12B/0.75CL/40%)', '0.75', '40', '12', 'MX', null, null, '1302020200ON0000000250140701', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2289', 'U-001', 'URSUS  VODKA  NATUR ', '', 'U-001', null, '2', null, null, null, null, null, null, null, '29', '29', '1', '1581952182', '1581952192', '2', '2', '179', '179', null, null, 'URSUS  VODKA  NATUR ', '1', '40', '6', 'FR', null, null, '1302020200MAv000000250150701', '2018-04-07 00:00:00', '179', null);
-INSERT INTO `product` VALUES ('2290', 'V-001', 'VIVRA CABERNET', '', 'V-001', null, '1', null, null, null, null, null, null, null, '54', '54', '1', '1581952182', '1581952192', '2', '2', '40', '40', null, null, 'VIVRA CABERNET', '0.75', '14.8', '6', 'US', null, null, '1301020100NLJ003PN0EM0140701', '1970-01-01 00:00:00', '40', null);
-INSERT INTO `product` VALUES ('2291', 'W-001', 'WOODBRIDGE BY MONDAVI MERLOT   ', '', 'W-001', null, '1', null, null, null, null, null, null, null, '45', '45', '1', '1581952182', '1581952192', '2', '2', '61', '61', null, null, 'WOODBRIDGE BY MONDAVI MERLOT   ', '0.75', '13.5', '12', 'US', null, null, '1301020100CCW000000310140701', '2017-04-12 00:00:00', '61', null);
-INSERT INTO `product` VALUES ('2292', 'W-002', 'WOODBRIDGE CABERNET SAUVIGNON ', '', 'W-002', null, '1', null, null, null, null, null, null, null, '46', '46', '1', '1581952182', '1581952192', '2', '2', '44', '44', null, null, 'WOODBRIDGE CABERNET SAUVIGNON ', '0.75', '13.5', '12', 'US', null, null, '1301020100CaJ0008J0313DE0701', '1970-01-01 00:00:00', '44', null);
-INSERT INTO `product` VALUES ('2293', 'W-003', 'WOODBRIDGE BY MONDAVI PINOT NOIR', '', 'W-003', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952192', '2', '2', '0', '0', null, null, 'WOODBRIDGE BY MONDAVI PINOT NOIR', '0.75', '13', '12', 'US', null, null, '', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2294', 'W-004', 'WOODBRIDGE BY MONDAVI ZINFANDEL', '', 'W-004', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952193', '2', '2', '0', '0', null, null, 'WOODBRIDGE BY MONDAVI ZINFANDEL', '0.75', '13.5', '12', 'US', null, null, '', '1970-01-01 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2295', 'W-005', 'WOODBRIDGE BY ROBERT MONDAVI CABERNET SAUVIGNON CALIFORNIA 2016', '', 'W-005', null, '1', null, null, null, null, null, null, null, '76.5', '76.5', '1', '1581952182', '1581952193', '2', '2', '50', '50', null, null, 'WOODBRIDGE BY ROBERT MONDAVI CABERNET SAUVIGNON CALIFORNIA 2016', '0.75', '13.5', '12', 'US', null, null, '1301020100B9s000000310140701', '2019-07-05 00:00:00', '50', null);
-INSERT INTO `product` VALUES ('2296', 'W-006 ', 'WOODBRIDGE CABERNET', '', 'W-006 ', null, '1', null, null, null, null, null, null, null, '290', '290', '1', '1581952182', '1581952193', '2', '2', '50', '50', null, null, 'WOODBRIDGE CABERNET', '0.75', '15', '12', 'US', null, null, '1301020100Lie003PN0033hE0701', '2019-05-08 00:00:00', '50', null);
-INSERT INTO `product` VALUES ('2297', 'Z-001', 'ZIPZ CABERNET SAUVIGNON ', '', 'Z-001', null, '1', null, null, null, null, null, null, null, '9', '9', '1', '1581952182', '1581952193', '2', '2', '232', '232', null, null, 'ZIPZ CABERNET SAUVIGNON ', '0.187', '13.5', '24', 'US', null, null, '1301020100H8B000000310020701', '2018-10-09 00:00:00', '232', null);
-INSERT INTO `product` VALUES ('2298', 'Z-002', 'ZIPZ CH.ARDONNAY', '', 'Z-002', null, '1', null, null, null, null, null, null, null, '9', '9', '1', '1581952182', '1581952193', '2', '2', '99', '99', null, null, 'ZIPZ CH.ARDONNAY', '0.187', '13.5', '24', 'US', null, null, '1301020100H8C000000310020701', '2018-10-09 00:00:00', '99', null);
-INSERT INTO `product` VALUES ('2299', 'Z-003', 'ZIPZ MOSCATO ', '', 'Z-003', null, '1', null, null, null, null, null, null, null, '9', '9', '1', '1581952182', '1581952193', '2', '2', '10', '10', null, null, 'ZIPZ MOSCATO ', '0.187', '13.5', '24', 'US', null, null, '1301020100H8D000000310020701', '2018-10-09 00:00:00', '10', null);
-INSERT INTO `product` VALUES ('2300', '1-001', '100 PIPERS ', '', '1-001', null, '3', null, null, null, null, null, null, null, '64.8', '64.8', '1', '1581952182', '1581952193', '2', '2', '1', '1', null, null, '100 PIPERS ', '1', '40', '9', 'GB', null, null, '1302020200AUY000000259Bh0701', '2018-04-07 00:00:00', '1', null);
-INSERT INTO `product` VALUES ('2301', '2-001', 'II FITTO SYRAH DOC CORTONA 2012 ', '', '2-001', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952182', '1581952193', '2', '2', '0', '0', null, null, 'II FITTO SYRAH DOC CORTONA 2012 ', '0.75', '14', '12', 'IT', null, null, '1301020100GLC000000320140701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2302', '2-002', 'II FITTO SANGIOVESE DOC CORTONA 2013', '', '2-002', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952183', '1581952193', '2', '2', '0', '0', null, null, 'II FITTO SANGIOVESE DOC CORTONA 2013', '0.75', '14', '12', 'IT', null, null, '1301020100GLD000000320140701', '2018-01-08 00:00:00', null, null);
-INSERT INTO `product` VALUES ('2303', '2-003', 'II FITTO AMPELOS ROSSO DI TOSCANA 2013 ', '', '2-003', null, '1', null, null, null, null, null, null, null, '0', '0', '1', '1581952183', '1581952193', '2', '2', '0', '0', null, null, 'II FITTO AMPELOS ROSSO DI TOSCANA 2013 ', '0.75', '12.5', '12', 'IT', null, null, '1301020100GLE000000LX0140701', '2018-01-08 00:00:00', null, null);
+INSERT INTO `product` VALUES ('7320', 'A-001', 'ALMAVIVA 2015 ', '??????????  2015', 'A-001', null, '289', null, '2', null, null, null, null, null, '0', '0', '1', '1594955143', '1594955150', '2', '2', '0', '0', null, null, 'ALMAVIVA 2015 ', '0.75', '14.5', '6', 'CL', '4.5', '13.21', '1301020100CzM000000333DE0701', '2018-08-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7321', 'A-002', 'ALMAVIVA 2014 ', '??????????  2014', 'A-002', null, '290', null, '2', null, null, null, null, null, '0', '0', '1', '1594955143', '1594955151', '2', '2', '0', '0', null, null, 'ALMAVIVA 2014 ', '0.75', '15', '6', 'CL', '4.5', '7.5', '1301020200I5F000000030140701', '2018-11-13 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7322', 'A-003', 'ALMAVIVA VIN CHILIEN 2015', '?????????? ?Թ ???Թ 2015', 'A-003', null, '291', null, '2', null, null, null, null, null, '0', '0', '1', '1594955143', '1594955151', '2', '2', '0', '0', null, null, 'ALMAVIVA VIN CHILIEN 2015', '0.75', '14.5', '6', 'CL', '4.5', '13', '1301020200DGS000000330140701', '2018-02-02 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7323', 'A-004', 'ABSOLUT 100 ', '???????ٷ 100', 'A-004', null, '292', null, '2', null, null, null, null, null, '87', '87', '1', '1594955143', '1594955151', '2', '2', '110', '110', null, null, 'ABSOLUT 100 ', '1', '50', '12', 'SE', '12', '18', '1302020200BuF000000819Bh0701', '2018-07-04 00:00:00', '2857.53', '87');
+INSERT INTO `product` VALUES ('7324', 'A-005', 'ABSOLUT RUBY RED', '?ͻ???ٷ?ʹ??? 1?Ե?', 'A-005', null, '293', null, '2', null, null, null, null, null, '77', '77', '1', '1594955143', '1594955151', '2', '2', '1', '1', null, null, 'ABSOLUT RUBY RED', '1', '40', '11', 'SE', '11', '18', '13020202003hE000000259Bh0701', '2018-07-04 00:00:00', '2529.08', '77');
+INSERT INTO `product` VALUES ('7325', 'A-006', 'AYITA CABERNET SAUVIGNON SILVER 2012 ', '???Ե?? ???????? 2012', 'A-006', null, '294', null, '2', null, null, null, null, null, '11', '11', '1', '1594955143', '1594955151', '2', '2', '965', '965', null, null, 'AYITA CABERNET SAUVIGNON SILVER 2012 ', '0.75', '13.5', '12', 'CL', '9', '18', '1301020100H8A000000313hE0701', '2018-09-10 00:00:00', '364.232', '11');
+INSERT INTO `product` VALUES ('7326', 'A-007', 'AYITA CABERNET SAUVIGNON RED 2013 ', '???Ե?? ???????? 2013', 'A-007', null, '297', null, '2', null, null, null, null, null, '0', '0', '1', '1594955143', '1594955151', '2', '2', '0', '0', null, null, 'AYITA CABERNET SAUVIGNON RED 2013 ', '0.75', '13', '12', 'CL', '9', '14.73', '1301020100H8E000000303hE0701', '2018-09-10 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7327', 'B-001', 'BALLANTINE S 12YO  ', '???Ź䷹? 12 ??   1 ?Ե?', 'B-001', null, '298', null, '2', null, null, null, null, null, '166', '166', '1', '1594955143', '1594955151', '2', '2', '70', '70', null, null, 'BALLANTINE S 12YO  ', '1', '40', '12', 'GB', '12', '24', '13020202005Nr000000250150701', '2018-02-02 00:00:00', '5312.37', '166');
+INSERT INTO `product` VALUES ('7328', 'B-002', 'BALLANTINE S 17YO', '???Ź䷹? 17 ??  0.70 ?Ե?', 'B-002', null, '300', null, '2', null, null, null, null, null, '360', '360', '1', '1594955143', '1594955151', '2', '2', '150', '150', null, null, 'BALLANTINE S 17YO', '0.7', '40', '12', 'GB', '8.4', '16', '130202020030t000000250130701', '2018-03-30 00:00:00', '11289.9', '360');
+INSERT INTO `product` VALUES ('7329', 'B-004', 'BALLANTINE S 21YO ', '???Ź䷹? 21 ??  0.70 ?Ե?', 'B-004', null, '302', null, '2', null, null, null, null, null, '610', '610', '1', '1594955143', '1594955151', '2', '2', '295', '295', null, null, 'BALLANTINE S 21YO ', '0.7', '40', '12', 'GB', '8.4', '23', '130202020031k000000250130701', '2017-10-10 00:00:00', '18929.8', '610');
+INSERT INTO `product` VALUES ('7330', 'B-005', 'BALLANTINE S 30YO  ', '???Ź䷹?  30 ??  0.70 ?Ե?', 'B-005', null, '304', null, '2', null, null, null, null, null, '1030', '1030', '1', '1594955143', '1594955151', '2', '2', '15', '15', null, null, 'BALLANTINE S 30YO  ', '0.7', '40', '6', 'GB', '4.2', '22', '130202020030u000000250130701', '2018-12-12 00:00:00', '31963.4', '1030');
+INSERT INTO `product` VALUES ('7331', 'B-006', 'BALLANTINE S FINEST ', '???Ź䷹? ?????? 0.75 ?Ե?', 'B-006', null, '306', null, '2', null, null, null, null, null, '0', '0', '1', '1594955143', '1594955151', '2', '2', '800', '800', null, null, 'BALLANTINE S FINEST ', '0.75', '40', '12', 'UK', '9', '16.63', '130202020030S000000250140701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7332', 'B-008', 'BALVENIE 12YO DOUBLEWOOD ', '?????ǹ??? 12 ??  1 ?Ե?', 'B-008', null, '308', null, '2', null, null, null, null, null, '0', '0', '1', '1594955143', '1594955151', '2', '2', '0', '0', null, null, 'BALVENIE 12YO DOUBLEWOOD ', '1', '40', '12', 'GB', '12', '22', '1302020200DNO000000250150701', '2018-02-02 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7333', 'B-009', 'BALVENIE 14YO CARRIBEAN CASK ', '?????ǹ??? 14 ??  ????ູ', 'B-009', null, '309', null, '2', null, null, null, null, null, '240', '240', '1', '1594955143', '1594955151', '2', '2', '20', '20', null, null, 'BALVENIE 14YO CARRIBEAN CASK ', '0.7', '43', '6', 'GB', '4.2', '14', '1302020200VgG000000bS0130701', '2018-12-12 00:00:00', '7680.53', '240');
+INSERT INTO `product` VALUES ('7334', 'B-010', 'BALVENIE 17YO DOUBLEWOOD ', '?????ǹ??? 17 ??  ', 'B-010', null, '311', null, '2', null, null, null, null, null, '495', '495', '1', '1594955143', '1594955151', '2', '2', '30', '30', null, null, 'BALVENIE 17YO DOUBLEWOOD ', '0.7', '43', '6', 'GB', '4.2', '14', '1302020200RWa000000670130701', '2018-02-02 00:00:00', '15197.1', '495');
+INSERT INTO `product` VALUES ('7335', 'B-011', 'BALVENIE 21YO PORTWOOD  ', '?????ǹ???  21  ??  ??????ٴ', 'B-011', null, '312', null, '2', null, null, null, null, null, '0', '0', '1', '1594955143', '1594955151', '2', '2', '0', '0', null, null, 'BALVENIE 21YO PORTWOOD  ', '0.7', '40', '3', 'GB', '2.1', '5', '1302020200Uwa000000250130701', '2018-02-02 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7336', 'B-012', 'BACARDI COCO', '?Ҥ?Ҵ?? ?????', 'B-012', null, '313', null, '2', null, null, null, null, null, '43.33', '43.33', '1', '1594955143', '1594955151', '2', '2', '70', '70', null, null, 'BACARDI COCO', '1', '32', '5', 'MX', '5', '9.8', '1302020200S10000000200150701', '2018-07-04 00:00:00', '1423.18', '43.33');
+INSERT INTO `product` VALUES ('7337', 'B-014', 'BERINGER CALIFORNIA MERLOT 2014 ', '???Թ????? ?????Կ??????? ??????  2014', 'B-014', null, '315', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955151', '2', '2', '0', '0', null, null, 'BERINGER CALIFORNIA MERLOT 2014 ', '1.5', '13', '6', 'US', null, null, '1301020100I5H000000300870701', '2018-11-13 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7338', 'B-015', 'BOHEDAL TINTO JOVEN 2013', '?͡??? ??????????? 2013', 'B-015', null, '316', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955151', '2', '2', '0', '0', null, null, 'BOHEDAL TINTO JOVEN 2013', '0.75', '14', '12', 'ES', '9', '15.63', '1301020100GLB000000320140701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7339', 'B-016', 'BOMBAY SAPPHIRE GIN ', '????????Թ 75??.', 'B-016', null, '317', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955151', '2', '2', '0', '0', null, null, 'BOMBAY SAPPHIRE GIN ', '0.75', '47', '12', 'UK', '9', '16.63', '130202020030K000000759AK0701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7340', 'B-017', 'BRUGAL 1888  ', '??١?? 1888', 'B-017', null, '318', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955151', '2', '2', '0', '0', null, null, 'BRUGAL 1888  ', '0.7', '40', '6', 'DO', '4.2', '9.63', '1302020200NI7000000250130701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7341', 'B-018', 'BALVENIE 12YO TRIPLE CASK', '?????ǹ???  12 ??  ', 'B-018', null, '319', null, '2', null, null, null, null, null, '430', '430', '1', '1594955144', '1594955151', '2', '2', '10', '10', null, null, 'BALVENIE 12YO TRIPLE CASK', '1', '40', '12', 'GB', '12', '23', '1302020200PvB000000259Bh0701', '2019-10-11 00:00:00', '13150.3', '430');
+INSERT INTO `product` VALUES ('7342', 'B-019', 'BALVENIE 16YO TRIPLE CASK', '?????ǹ???  16 ??  ', 'B-019', null, '320', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955151', '2', '2', '0', '0', null, null, 'BALVENIE 16YO TRIPLE CASK', '0.7', '40', '6', 'GB', '4.2', '14', '1302020200PR7000000259AA0701', '2019-10-11 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7343', 'B-020', 'BALVENIE  12YO  DOUBLEWOOD ', '?????ǹ???  12 ??  ?Ѻ??????ٴ', 'B-020', null, '321', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955151', '2', '2', '0', '0', null, null, 'BALVENIE  12YO  DOUBLEWOOD ', '0.7', '40', '6', 'GB', '4.2', '12', '1302020200PS0000000257990701', '2019-12-20 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7344', 'B-021', 'BAILEY S IRISH CREAM ', '??????? ???Ԫ ????', 'B-021', null, '322', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955151', '2', '2', '0', '0', null, null, 'BAILEY S IRISH CREAM ', '0.7', '17', '12', 'IE', '8.4', '18', ' 1302020200Ihr000000AC7990701 ', '2020-03-18 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7345', 'C-001', 'CHIVAS REGAL 12YO', '????? ?ա?? 12 ?? 0.75 ?Ե?', 'C-001', null, '323', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955151', '2', '2', '215', '215', null, null, 'CHIVAS REGAL 12YO', '0.75', '40', '12', 'GB', '12', '20', '13020202003Ck000000250140701', '2018-11-05 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7346', 'C-004', 'CHIVAS REGAL 18YO  ', '????? ?ա?? 18 ?? 0.75 ?Ե?', 'C-004', null, '327', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955151', '2', '2', '45', '45', null, null, 'CHIVAS REGAL 18YO  ', '0.75', '40', '6', 'GB', '4.5', '12.5', '1302020200OTy000000250140701', '2019-03-12 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7347', 'C-006', 'CHIVAS REGAL ROYAL SALUTE 21YO ', '????? ?ա?? ??-??? ???ٵ 21 ?? 0.70 ?Ե?', 'C-006', null, '331', null, '2', null, null, null, null, null, '335', '335', '1', '1594955144', '1594955151', '2', '2', '215', '215', null, null, 'CHIVAS REGAL ROYAL SALUTE 21YO ', '0.7', '40', '6', 'GB', '4.2', '11', '1302020200PBi000000257990701', '2017-12-04 00:00:00', '10204', '335');
+INSERT INTO `product` VALUES ('7348', 'C-008', 'CHIVAS REGAL 25YO ', '????? ?ա?? 25 ?? 0.70 ?Ե?', 'C-008', null, '334', null, '2', null, null, null, null, null, '465', '465', '1', '1594955144', '1594955152', '2', '2', '51', '51', null, null, 'CHIVAS REGAL 25YO ', '0.7', '40', '3', 'GB', '2.1', '10', '1302020200OUD000000250130701', '2017-12-04 00:00:00', '15397.1', '465');
+INSERT INTO `product` VALUES ('7349', 'C-009', 'CHIVAS REGAL ROYAL SALUTE  32YO ', '????? ?ա??', 'C-009', null, '338', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHIVAS REGAL ROYAL SALUTE  32YO ', '0.5', '40', '3', 'GB', '1.5', '6.3', '1302020200THM000000250670701', '2018-07-09 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7350', 'C-010', 'CHATEAU CLERC MILON 1997 PAUILLAC ', '??꡵Ҥ?? 1997', 'C-010', null, '339', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU CLERC MILON 1997 PAUILLAC ', '0.75', '12.5', '12', 'FR', null, null, '1301020200DGb000000293DE0701', '2018-02-02 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7351', 'C-011', 'CHATEAU CLERC MILON 2013 PAUILLAC', '??꡵Ҥ?? 2013', 'C-011', null, '340', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU CLERC MILON 2013 PAUILLAC', '0.75', '13', '6', 'FR', '4.5', '11.2', '1301020200DGc000000303DE0701', '2018-02-02 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7352', 'C-012', 'CHATEAU CLERC MILON 2015 PAUILLAC   ', '??꡵Ҥ?? 2015', 'C-012', null, '341', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU CLERC MILON 2015 PAUILLAC   ', '0.75', '13.5', '12', 'FR', '9', '19', '1301020200DGd000000310140701', '2018-02-02 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7353', 'C-014', 'CHOYA GOLD EDITION ', '⪭? ??? ?ʹԪ???', 'C-014', null, '343', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHOYA GOLD EDITION ', '0.5', '19', '6', 'JP', '3', '8.63', '1301020200GKJ000000070670701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7354', 'C-015', 'CHOYA YUZU  ', '⪭?? ?٫??', 'C-015', null, '344', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHOYA YUZU  ', '0.7', '15', '6', 'JP', '4.2', '9.63', '1301020100GKM000000030130701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7355', 'C-016', 'CH.CLREC MILON 2001 ', '??꡵Ҥ?? 2001', 'C-016', null, '345', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CH.CLREC MILON 2001 ', '0.75', '12.5', '12', 'FR', null, null, '1301020200I8I000000290140701', '2018-11-13 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7356', 'C-017', 'CH.CLREC MILON 2006 ', '??꡵Ҥ?? 2006', 'C-017', null, '346', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CH.CLREC MILON 2006 ', '0.75', '13', '6', 'FR', null, null, '1301020200GrH000000300140701', '2018-08-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7357', 'C-018', 'CH.CLREC MILON 2008', '??꡵Ҥ?? 2008', 'C-018', null, '347', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CH.CLREC MILON 2008', '0.75', '13', '12', 'FR', null, null, '1301020200I8J000000300140701', '2018-11-13 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7358', 'C-019', 'CH.CLREC MILON 2009', '??꡵Ҥ?? 2009', 'C-019', null, '348', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CH.CLREC MILON 2009', '0.75', '13', '12', 'FR', null, null, '1301020200I8K000000300140701', '2018-11-13 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7359', 'C-020', 'CH.CLREC MILON 2010', '??꡵Ҥ?? 2010', 'C-020', null, '349', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CH.CLREC MILON 2010', '0.75', '13', '12', 'FR', null, null, '1301020200I8L000000300140801', '2018-11-13 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7360', 'C-021', 'CH.CLREC MILON 2012  ', '??꡵Ҥ?? 2012', 'C-021', null, '350', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CH.CLREC MILON 2012  ', '0.75', '13', '6', 'FR', null, null, '1301020200Grl000000300140702', '2018-08-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7361', 'C-023', 'CH.CLREC MILON 2013 ', '??꡵Ҥ?? 2013', 'C-023', null, '352', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CH.CLREC MILON 2013 ', '0.75', '13.5', '12', 'FR', null, null, '1301020200HmL000000310140701', '2018-11-13 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7362', 'C-024', 'CH.CLREC MILON 2014 ', '??꡵Ҥ?? 2014', 'C-024', null, '353', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CH.CLREC MILON 2014 ', '0.75', '13.5', '12', 'FR', null, null, '1301020200I8M000000310140701', '2018-11-13 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7363', 'C-025', 'CK MONDAVI CABERNET ', '?? ?? ?͹????? ???????????', 'C-025', null, '354', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CK MONDAVI CABERNET ', '0.75', '13.6', '12', 'US', null, null, '1301020100I5I000000FI0140701', '2018-11-13 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7364', 'C-026', 'CIROC VODKA  ', '???͡ ?ʹ???', 'C-026', null, '355', null, '2', null, null, null, null, null, '90', '90', '1', '1594955144', '1594955152', '2', '2', '747', '747', null, null, 'CIROC VODKA  ', '0.75', '40', '8', 'FR', '6', '18', '1302020200FPy000000250140701', '2018-07-04 00:00:00', '2956.07', '90');
+INSERT INTO `product` VALUES ('7365', 'C-028', 'CORONA EXTRA BOTTLE ', '???ù?? ??꡵???', 'C-028', null, '357', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CORONA EXTRA BOTTLE ', '0.355', '4.5', '24', 'MX', '8.52', '13.63', '1301010000GKD000000990090701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7366', 'C-029', 'CH.CLERC MILON 2000', '??꡵Ҥ?? 2010', 'C-029', null, '358', null, '2', null, null, null, null, null, '1200', '1200', '1', '1594955144', '1594955152', '2', '2', '2', '2', null, null, 'CH.CLERC MILON 2000', '0.75', '12.5', '12', 'FR', '9', '18.5', '1301020200Knq003Mk0LX0140701', '2019-05-16 00:00:00', '38402.6', '1200');
+INSERT INTO `product` VALUES ('7367', 'C-030', 'CH.CLERC MILON 1998', '??꡵Ҥ?? 1998', 'C-030', null, '359', null, '2', null, null, null, null, null, '1140', '1140', '1', '1594955144', '1594955152', '2', '2', '2', '2', null, null, 'CH.CLERC MILON 1998', '0.75', '12.5', '12', 'FR', '9', '18.5', '1301020200Knr003Mk0LX0140701', '2019-05-16 00:00:00', '36482.5', '1140');
+INSERT INTO `product` VALUES ('7368', 'C-031', 'CH.CLERC MILON 1995', '??꡵Ҥ?? 1995', 'C-031', null, '360', null, '2', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CH.CLERC MILON 1995', '0.75', '12.5', '12', 'FR', '9', '19', '1301020200Kns003Mk0LX0140701', '2019-05-16 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7369', 'C-032', 'CHATEAU LA MISSION HAUT-BRION 1958 PESSAC-LEOGNAN ROUGE AOC', '????? ?? ??ʪ???', 'C-032', null, '361', null, '3', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU LA MISSION HAUT-BRION 1958 PESSAC-LEOGNAN ROUGE AOC', '0.75', '12.5', '1', 'CL', '0.75', '1.82', '1301020200OMQ003Lw0290140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7370', 'C-033', 'CHATEAU TALBOT 1959 SAINT-JULIEN AOC', '????? ??Ǻ?͵', 'C-033', null, '362', null, '3', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU TALBOT 1959 SAINT-JULIEN AOC', '0.75', '12.5', '1', 'CL', '0.75', '1.82', '1301020200OMR003Lw0290140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7371', 'C-034', 'CHATEAU MOUTON ROTHSCHILD 1958 PAUILLAC AOC', '????? ?ٵ?ͧ', 'C-034', null, '363', null, '3', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU MOUTON ROTHSCHILD 1958 PAUILLAC AOC', '0.75', '12.5', '1', 'CL', '0.75', '1.82', '1301020200OMS003Lw0290140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7372', 'C-035', 'CHATEAU MONTROSE 1990-SAINT-ESTEPHE AOC', '????? ?͹????', 'C-035', null, '364', null, '3', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU MONTROSE 1990-SAINT-ESTEPHE AOC', '0.75', '13', '1', 'CL', '0.75', '1.82', '1301020200OMT003Lw0300140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7373', 'C-036', 'CHATEAU CANON LA GAFFELIERE 1985-SAINT-EMILION GRAND CRU AOC', '????? ᤹͹', 'C-036', null, '365', null, '3', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU CANON LA GAFFELIERE 1985-SAINT-EMILION GRAND CRU AOC', '0.75', '12.5', '1', 'CL', '0.75', '1.82', '1301020200OMU003Lw0290140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7374', 'C-037', 'CHATEAU PICHON COMTESSE DE LALANDE 1955-PAUILLAC AOC', '????? ?Ԫ͹ 1995', 'C-037', null, '366', null, '3', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU PICHON COMTESSE DE LALANDE 1955-PAUILLAC AOC', '0.75', '12.5', '1', 'CL', '0.75', '1.82', '1301020200OMV003Lw0290140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7375', 'C-038', 'CHATEAU MARGAUX 1994-MARGAUX AOC', '????? ?ҡ?͡', 'C-038', null, '367', null, '3', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU MARGAUX 1994-MARGAUX AOC', '0.75', '12.5', '1', 'CL', '0.75', '1.82', '1301020200OMW003Lw0290140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7376', 'C-039', 'CHATEAU PICHON COMTESSE DE LALANDE 2012-PAUILLAC AOC', '????? ?Ԫ͹ 2012', 'C-039', null, '368', null, '3', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU PICHON COMTESSE DE LALANDE 2012-PAUILLAC AOC', '0.75', '13', '4', 'CL', '3', '1.82', '1301020200OMX003Lw0300140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7377', 'C-040', 'CHATEAU CLERC MILON 2015-PAUILLAC AOC', '??꡵Ҥ?? 2015', 'C-040', null, '369', null, '3', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU CLERC MILON 2015-PAUILLAC AOC', '0.75', '13.5', '20', 'CL', '15', '1.82', '1301200200OMY003Lw0310140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7378', 'C-041', 'CHATEAU COS D\'ESTOURNEL 2012-SAINT-ESTEPHE AOC', '????? ???', 'C-041', null, '370', null, '3', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU COS D\'ESTOURNEL 2012-SAINT-ESTEPHE AOC', '0.75', '14', '18', 'CL', '13.5', '1.82', '1301020200OMZ003Lw0320140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7379', 'C-042', 'CHATEAU LA MISSION HAUT-BRION 1988-PESSAC-LEOGNAN AOC', '????? ?? ??ʪ??? 1988', 'C-042', null, '371', null, '3', null, null, null, null, null, '0', '0', '1', '1594955144', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU LA MISSION HAUT-BRION 1988-PESSAC-LEOGNAN AOC', '0.75', '12.5', '1', 'CL', '0.75', '1.82', '1301020200OMe003Lw0290140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7380', 'C-043', 'CHATEAU LA MISSION HAUT-BRION 1984-PESSAC-LEOGNAN AOC', '????? ?? ??ʪ??? 1984', 'C-043', null, '372', null, '3', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU LA MISSION HAUT-BRION 1984-PESSAC-LEOGNAN AOC', '0.75', '12.5', '1', 'CL', '0.75', '1.82', '1301020200OMf003Lw0290140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7381', 'C-044', 'CHATEAU MOUTON ROTHSCHILD 1990-PAUILLAC AOC', '????? ?ٵ?ͧ 1990', 'C-044', null, '373', null, '3', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU MOUTON ROTHSCHILD 1990-PAUILLAC AOC', '0.75', '12.5', '1', 'CL', '0.75', '1.82', '1301020200OMg003Lw0290140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7382', 'C-045', 'CHATEAU PICHON COMTESSE DE LALANDE 2011-PAUILLAC AOC', '????? ?Ԫ͹ 2011', 'C-045', null, '374', null, '3', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU PICHON COMTESSE DE LALANDE 2011-PAUILLAC AOC', '0.75', '13', '8', 'CL', '6', '1.82', '1301020200OMh003Lw0300140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7383', 'C-046', 'CHATEAU MONTROSE 2011-SAINT-ESTEPHE AOC', '????? ?͹???? 2011', 'C-046', null, '375', null, '3', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU MONTROSE 2011-SAINT-ESTEPHE AOC', '0.75', '13', '10', 'CL', '7.5', '1.82', '1301020200OMi003Lw0300140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7384', 'C-047', 'CHATEAU COS D\'ESTOURNEL 2008-SAINT-ESTEPHE AOC', '????? ??? 2008', 'C-047', null, '376', null, '3', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955152', '2', '2', '0', '0', null, null, 'CHATEAU COS D\'ESTOURNEL 2008-SAINT-ESTEPHE AOC', '0.75', '13.5', '1', 'CL', '0.75', '1.82', '1301020200OMj003Lw0310140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7385', 'C-048', 'CARLO ROSSI CALIFORNIA RED', '????? ??ʫ??', 'C-048', null, '377', null, '2', null, null, null, null, null, '26', '26', '1', '1594955145', '1594955152', '2', '2', '1100', '1100', null, null, 'CARLO ROSSI CALIFORNIA RED', '1.5', '12', '6', 'US', '9', '18', '1301020100B0O003PN0280870701', '2020-02-14 00:00:00', '795.137', '26');
+INSERT INTO `product` VALUES ('7386', 'D-001', 'DE MULLER VINO DE MISA DULCE SUPERIOR ', '??? ??????? ?????', 'D-001', null, '378', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955152', '2', '2', '0', '0', null, null, 'DE MULLER VINO DE MISA DULCE SUPERIOR ', '0.75', '13.5', '12', 'ES', '9', '16.63', '1301020100GL9000000313hE0701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7387', 'D-002', 'DE BORTOLI DB FAMILY SELECTION MERLOT', '??? ??????? ?պ?', 'D-002', null, '379', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955152', '2', '2', '0', '0', null, null, 'DE BORTOLI DB FAMILY SELECTION MERLOT', '0.75', '14', '12', 'AU', '9', '15.63', '1301020100GLJ000000320140701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7388', 'D-003', 'DALMORE 12YO', '???????? 12 ??', 'D-003', null, '380', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955152', '2', '2', '200', '200', null, null, 'DALMORE 12YO', '1', '40', '12', 'GB', '12', '24', '1302020200RUT000000250150701', '2020-03-18 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7389', 'D-005', 'DALMORE 15YO', '???????? 15 ??', 'D-005', null, '382', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '200', '200', null, null, 'DALMORE 15YO', '1', '40', '12', 'GB', '12', '24', '1302020200PUB000000250150701', '2020-03-18 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7390', 'D-006', 'DALMORE 18YO', '???????? 18 ??', 'D-006', null, '383', null, '2', null, null, null, null, null, '620', '620', '1', '1594955145', '1594955153', '2', '2', '200', '200', null, null, 'DALMORE 18YO', '0.7', '43', '6', 'GB', '4.2', '13', '1302020200Vw1000000677990701', '2020-03-18 00:00:00', '20241.5', '620');
+INSERT INTO `product` VALUES ('7391', 'D-007', 'DALMORE CIGAR SINGLE MALT ', '??????? ?ԡ????? ', 'D-007', null, '384', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'DALMORE CIGAR SINGLE MALT ', '0.7', '44', '6', 'GB', '4.2', '12', '1302020200Wpd000000bT7990701', '2020-03-18 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7392', 'D-010', 'DALMORE KING ALEXANDER III SINGLE MALT ', '???????? ?ԧ', 'D-010', null, '387', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'DALMORE KING ALEXANDER III SINGLE MALT ', '0.75', '44', '6', 'GB', '4.2', '14', '1302020200Wpe000000257990701', '2020-03-18 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7393', 'F-001', 'FAMOUS GROUSE  ', '????? ???ҫ  0.70 ?Ե?', 'F-001', null, '389', null, '2', null, null, null, null, null, '56', '56', '1', '1594955145', '1594955153', '2', '2', '70', '70', null, null, 'FAMOUS GROUSE  ', '0.7', '40', '12', 'GB', '8.4', '15.26', '13020202003vq000000250130701', '2018-09-07 00:00:00', '1854.27', '56');
+INSERT INTO `product` VALUES ('7394', 'G-001', 'GLENFIDDICH 12YO ', '??Ź?ԴԴ 12 ??  0.7 ?Ե?', 'G-001', null, '391', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '50', '50', null, null, 'GLENFIDDICH 12YO ', '0.7', '40', '12', 'GB', '8.4', '16.63', '13020202006yX000000250130701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7395', 'G-003', 'GLENFIDDICH 15YO', '??Ź?ԴԴ 15 ?? 0.7 ?Ե?', 'G-003', null, '394', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '35', '35', null, null, 'GLENFIDDICH 15YO', '0.7', '40', '12', 'GB', '8.4', '16.63', '13020202004w9000000250130701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7396', 'G-005', 'GLENFIDDICH 18YO ', '??Ź?ԴԴ 18 ?? 0.7 ?Ե?', 'G-005', null, '397', null, '2', null, null, null, null, null, '430', '430', '1', '1594955145', '1594955153', '2', '2', '5', '5', null, null, 'GLENFIDDICH 18YO ', '0.7', '40', '12', 'GB', '8.4', '1.75', '13020202006yZ000000250130701', '2018-08-01 00:00:00', '13063.2', '430');
+INSERT INTO `product` VALUES ('7397', 'G-006', 'GLENFIDDICH 19YO AGE OF DISCOVERY RED WINE ', '??Ź?ԴԴ 19 ??  ??????????? ??? ?ǹ?', 'G-006', null, '398', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'GLENFIDDICH 19YO AGE OF DISCOVERY RED WINE ', '0.7', '40', '6', 'GB', null, null, '1302020200Uwb000000250130701', '2018-02-02 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7398', 'G-007', 'GLENFIDDICH 19YO AGE OF DISCOVERY BOURBON ', '??Ź?ԴԴ 19 ??  ??????????? ??ٺ͹', 'G-007', null, '399', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'GLENFIDDICH 19YO AGE OF DISCOVERY BOURBON ', '0.7', '40', '6', 'GB', null, null, '1302020200VW9000000250130701', '2018-09-10 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7399', 'G-008', 'GLENFIDDICH 19YO AGE OF DISCOVERY MADEIRO  ', '??Ź?ԴԴ 19 ??  ??????????? ?????????', 'G-008', null, '400', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'GLENFIDDICH 19YO AGE OF DISCOVERY MADEIRO  ', '0.7', '40', '6', 'GB', null, null, '1302020200Vby000000250130701', '2018-11-05 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7400', 'G-009', 'GLENLIVET 15YO FRENCE OAK', '???????Ƿ 15 ??', 'G-009', null, '401', null, '2', null, null, null, null, null, '201', '201', '1', '1594955145', '1594955153', '2', '2', '20', '20', null, null, 'GLENLIVET 15YO FRENCE OAK', '0.7', '40', '6', 'GB', '4.2', '12', '1302020200Uwc000000250130701', '2018-02-02 00:00:00', '6307.38', '201');
+INSERT INTO `product` VALUES ('7401', 'G-010', 'GLENLIVET MASTER DIST. RES. ', '??ú???Ƿ ???????', 'G-010', null, '402', null, '2', null, null, null, null, null, '251', '251', '1', '1594955145', '1594955153', '2', '2', '13', '13', null, null, 'GLENLIVET MASTER DIST. RES. ', '1', '40', '12', 'GB', null, null, '1302020200Og8000000250150701', '2017-12-04 00:00:00', '8311.11', '251');
+INSERT INTO `product` VALUES ('7402', 'G-011', 'GUINNESS STOUT', '??ù???Ƿ ??????', 'G-011', null, '403', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'GUINNESS STOUT', '0.33', '6.8', '24', 'IE', '7.92', '13.63', '1301010000306000000CF0550701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7403', 'G-012', 'GREY GOOSE VODKA', '??á?? ?ʹ??? 1 ?Ե?', 'G-012', null, '404', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'GREY GOOSE VODKA', '1', '40', '6', 'FR', '6', '2.5', '1302020200MyW000000250150701', '2019-02-27 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7404', 'G-013', 'GLENFIDDICH 12YO MALT', '??ù?ԴԪ 12 ??', 'G-013', null, '405', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'GLENFIDDICH 12YO MALT', '0.75', '40', '12', 'GB', null, null, '', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7405', 'G-014', 'GLENLIVET 18YO', '??ù???Ƿ 18 ??', 'G-014', null, '406', null, '2', null, null, null, null, null, '305', '305', '1', '1594955145', '1594955153', '2', '2', '5', '5', null, null, 'GLENLIVET 18YO', '0.75', '43', '6', 'GB', '4.5', '14', '13020202006hN000000679AK0701', '2020-03-18 00:00:00', '9570.9', '305');
+INSERT INTO `product` VALUES ('7406', 'G-015', 'GLENLIVET 12YO FIRST FILL', '??ù???Ƿ 12 ??', 'G-015', null, '407', null, '2', null, null, null, null, null, '140', '140', '1', '1594955145', '1594955153', '2', '2', '20', '20', null, null, 'GLENLIVET 12YO FIRST FILL', '0.7', '40', '6', 'GB', '4.2', '12', '1302020200Wpb000000257990701', '2020-03-18 00:00:00', '4393.2', '140');
+INSERT INTO `product` VALUES ('7407', 'H-001', 'HENNESSY VSOP ', '?ι??? ??? ??-??ͻ 1 ?Ե?', 'H-001', null, '408', null, '2', null, null, null, null, null, '730', '730', '1', '1594955145', '1594955153', '2', '2', '100', '100', null, null, 'HENNESSY VSOP ', '1', '40', '12', 'FR', '12', '23.9', '1302020200Jmj000000250150701', '2017-10-10 00:00:00', '22653.7', '730');
+INSERT INTO `product` VALUES ('7408', 'H-002', 'HENNESSY XO', '?ι??? ???  ????-?? ', 'H-002', null, '412', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '35', '35', null, null, 'HENNESSY XO', '0.7', '40', '6', 'FR', '4.2', '9.63', '1302020200OTW000000250130701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7409', 'H-004', 'HOEGAARDEN ROSEE BOTTLE ', '?١???ഹ??????շ??????', 'H-004', null, '416', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'HOEGAARDEN ROSEE BOTTLE ', '0.25', '3', '24', 'BE', '6', '13.63', '13010100003v3000000JG4q70701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7410', 'H-005', 'HOEGAARDEN WHITE  BOTTLE', '?١???ഹ ?ǹ? ??????', 'H-005', null, '417', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'HOEGAARDEN WHITE  BOTTLE', '0.33', '4.9', '24', 'BE', '7.92', '13.63', '13010100003SE000000973h10701', '2017-11-10 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7411', 'H-006', 'HOEGAARDEN BEER BOTTLE ', '?١???ഹ  ??????  ', 'H-006', null, '418', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'HOEGAARDEN BEER BOTTLE ', '0.33', '4.9', '24', 'BE', null, null, '13010100003SE000000973h10701', '2017-11-10 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7412', 'H-007', 'HAVANA CLUB 7YO', '???ҹ?? ??Ѻ 7 ?? ', 'H-007', null, '419', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'HAVANA CLUB 7YO', '0.75', '40', '12', 'CU', '9', '15', '13020202004TK000000250140701', '2019-03-15 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7413', 'J-001', 'JACK DANIEL ', '??????????? 1 ?Ե?', 'J-001', null, '420', null, '2', null, null, null, null, null, '190', '190', '1', '1594955145', '1594955153', '2', '2', '250', '250', null, null, 'JACK DANIEL ', '1', '40', '12', 'GB', '12', '22', '130202020069e000000250150701', '2019-03-12 00:00:00', '5896.16', '190');
+INSERT INTO `product` VALUES ('7414', 'J-002', 'JACK DANIEL SINGLE BARREL', '???? ?ԧ????? ????? ', 'J-002', null, '422', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'JACK DANIEL SINGLE BARREL', '0.75', '50', '6', 'US', '4.5', '11', '1302020200OFO000000810140701', '2019-11-07 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7415', 'J-003', 'JAGERMEISTER', '', 'J-003', null, '423', null, '2', null, null, null, null, null, '200', '200', '1', '1594955145', '1594955153', '2', '2', '200', '200', null, null, 'JAGERMEISTER', '0.7', '35', '6', 'GE', '4.2', '10', '13020202004Hh000000230130701', '2020-05-15 00:00:00', '6529.52', '200');
+INSERT INTO `product` VALUES ('7416', 'JW-001', 'JOHNNIE WALKER SPICE ROAD', '????? ????????? ?????? ?ô 1 ?Ե?', 'JW-001', null, '424', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955153', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER SPICE ROAD', '1', '40', '12', 'GB', '12', '21.8', '1302020200HPF000000250150101', '2017-10-10 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7417', 'JW-002', 'JOHNNIE WALKER PLATINUM 18YO ', '????? ????????? ???緵Թ?? 18 ?? ', 'JW-002', null, '425', null, '2', null, null, null, null, null, '0', '0', '1', '1594955145', '1594955154', '2', '2', '10', '10', null, null, 'JOHNNIE WALKER PLATINUM 18YO ', '0.75', '40', '6', 'GB', '6', '16', '1302020200EbA000000259Ba0701', '2017-10-20 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7418', 'JW-003', 'JOHNNIE WALKER GOLD RESERVE ICE BULLION ', '????? ???????? ??? ????Կ ?ͫ?', 'JW-003', null, '426', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955153', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER GOLD RESERVE ICE BULLION ', '1', '40', '6', 'GB', null, null, '1302020200SKl000000250150701', '2017-10-10 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7419', 'JW-004', 'JOHNNIE WALKER BLUE LABEL ', '????? ???????? ??? 1 ?Ե?', 'JW-004', null, '427', null, '2', null, null, null, null, null, '610', '610', '1', '1594955146', '1594955154', '2', '2', '30', '30', null, null, 'JOHNNIE WALKER BLUE LABEL ', '1', '40', '6', 'GB', '6', '23', '13020202003I7000000250150701', '2017-10-10 00:00:00', '20035.6', '610');
+INSERT INTO `product` VALUES ('7420', 'JW-005', 'JOHNNIE WALKER RED LABEL ', '????? ???????? ?ô 1 ?Ե?', 'JW-005', null, '430', null, '2', null, null, null, null, null, '69', '69', '1', '1594955146', '1594955154', '2', '2', '2945', '2945', null, null, 'JOHNNIE WALKER RED LABEL ', '1', '40', '12', 'GB', '12', '20', '13020202003I6000000250150701', '2017-10-10 00:00:00', '2208.15', '69');
+INSERT INTO `product` VALUES ('7421', 'JW-006', 'JOHNNIE WALKER BLACK LABEL ', '????? ???????? ????? 1 ?Ե?', 'JW-006', null, '435', null, '2', null, null, null, null, null, '210', '210', '1', '1594955146', '1594955154', '2', '2', '600', '600', null, null, 'JOHNNIE WALKER BLACK LABEL ', '1', '40', '12', 'GB', '12', '23', '13020202003I5000000250150701', '2017-10-10 00:00:00', '6516.8', '210');
+INSERT INTO `product` VALUES ('7422', 'JW-007', 'JOHNNIE WALKER DOUBLE BLACK ', '????? ?????????  ?Ѻ????? ????? 1 ?Ե?', 'JW-007', null, '439', null, '2', null, null, null, null, null, '250', '250', '1', '1594955146', '1594955154', '2', '2', '90', '90', null, null, 'JOHNNIE WALKER DOUBLE BLACK ', '1', '40', '12', 'GB', '12', '24', '1302020200Mlw000000250150101', '2017-10-10 00:00:00', '8207.65', '250');
+INSERT INTO `product` VALUES ('7423', 'JW-008', 'JOHNNIE WALKER SWING', '?͹????? ?ͤ????? ??ԧ 0.75 ?Ե?', 'JW-008', null, '442', null, '2', null, null, null, null, null, '285', '285', '1', '1594955146', '1594955154', '2', '2', '70', '70', null, null, 'JOHNNIE WALKER SWING', '0.75', '40', '12', 'GB', '9', '23', '13020202003I8000000250140701', '2017-10-10 00:00:00', '9120.63', '285');
+INSERT INTO `product` VALUES ('7424', 'JW-009', 'JOHNNIE WALKER GOLD RESERVE ', '????? ????????? ??Ŵ? ?????Կ  0.75 ?Ե?', 'JW-009', null, '445', null, '2', null, null, null, null, null, '185', '185', '1', '1594955146', '1594955154', '2', '2', '360', '360', null, null, 'JOHNNIE WALKER GOLD RESERVE ', '0.75', '40', '6', 'GB', '4.5', '12', '1302020200OTU000000250140701', '2017-12-04 00:00:00', '6073.66', '185');
+INSERT INTO `product` VALUES ('7425', 'JW-011', 'JOHNNIE WALKER  ISLAND GREEN', '????? ????????  ?ͫ??Ź?? ??չ  1 ?Ե?', 'JW-011', null, '453', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955154', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER  ISLAND GREEN', '1', '43', '6', 'GB', null, null, '1302020200Uwd000000670150701', '2018-02-02 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7426', 'JW-013', 'JOHNNIE WALKER GREEN LABEL', '????? ???????? ??չ', 'JW-013', null, '455', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955154', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER GREEN LABEL', '0.75', '43', '6', 'UK', '4.5', '9.63', '13020202003ID000000bS0140701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7427', 'JW-014', 'JOHNNIE WALKER KING GEORGE ', '????? ????????? ?ԧ ', 'JW-014', null, '456', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955154', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER KING GEORGE ', '0.75', '43', '3', 'GB', null, null, '1302020200A4L000000bS0140701', '2018-12-12 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7428', 'JW-016', 'JOHNNIE WALKER XR 21 YO', '????? ???????? 21??', 'JW-016', null, '458', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955154', '2', '2', '0', '0', null, null, 'JOHNNIE WALKER XR 21 YO', '0.75', '40', '6', 'GB', '4.5', '3', '1302020200EbB000000250140701', '2019-08-02 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7429', 'JW-017', 'JOHNNIE WALKER GOLD 18YO', '????? ???????? ??? 18 ?? 1?Ե?', 'JW-017', null, '459', null, '2', null, null, null, null, null, '265', '265', '1', '1594955146', '1594955154', '2', '2', '25', '25', null, null, 'JOHNNIE WALKER GOLD 18YO', '1', '40', '6', 'GB', '6', '20', '13020202005BM000000259Bh0701', '2020-02-07 00:00:00', '8104.28', '265');
+INSERT INTO `product` VALUES ('7430', 'JW-018', 'JOHNNIE WALKER WHITE WALKER ', '????? ???????? ?ǹ? 1 ?Ե?', 'JW-018', null, '461', null, '2', null, null, null, null, null, '245', '245', '1', '1594955146', '1594955154', '2', '2', '10', '10', null, null, 'JOHNNIE WALKER WHITE WALKER ', '1', '41.7', '12', 'GB', '12', '23', '1302020200VoR000000aw0150701', '2020-02-07 00:00:00', '7492.64', '245');
+INSERT INTO `product` VALUES ('7431', 'K-001', 'KAIKEN TERROIR SERIES MALBEC ', '?????? ?????? ', 'K-001', null, '462', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955154', '2', '2', '0', '0', null, null, 'KAIKEN TERROIR SERIES MALBEC ', '0.75', '14', '12', 'CL', '9', '15.63', '1301020100GLK000000320140701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7432', 'K-002', 'KING ROBERT II FINEST SCOTCH WHISKY  ', '?ԧ ????Դ?? ?? ?????? ʡ?͵ ??ʡ?? 0.7 ?Ե?', 'K-002', null, '463', null, '2', null, null, null, null, null, '11', '11', '1', '1594955146', '1594955154', '2', '2', '1723', '1723', null, null, 'KING ROBERT II FINEST SCOTCH WHISKY  ', '0.7', '40', '12', 'GB', '8.4', '21', '13020202004mp000000250130701', '2018-09-07 00:00:00', '364.232', '11');
+INSERT INTO `product` VALUES ('7433', 'L-001', 'LAPHROAIG 10YO', '?????ԡ 10??', 'L-001', null, '470', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955154', '2', '2', '0', '0', null, null, 'LAPHROAIG 10YO', '0.7', '40', '6', 'GB', null, null, '', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7434', 'M-001', 'MACALLAN SELECT OAK ', '????????? ?????? ????', 'M-001', null, '471', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955154', '2', '2', '0', '0', null, null, 'MACALLAN SELECT OAK ', '1', '40', '12', 'GB', '12', '22', '1302020200OTV000000250150701', '2017-10-10 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7435', 'M-002', 'MONKEY SHOULDER', '??駡?? ???????? 0.70 ?Ե?', 'M-002', null, '472', null, '2', null, null, null, null, null, '100', '100', '1', '1594955146', '1594955155', '2', '2', '210', '210', null, null, 'MONKEY SHOULDER', '0.7', '40', '6', 'GB', null, null, '', '1970-01-01 00:00:00', '3283.06', '100');
+INSERT INTO `product` VALUES ('7436', 'M-003', 'MARTELL XO ', '????? ??????', 'M-003', null, '473', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955154', '2', '2', '0', '0', null, null, 'MARTELL XO ', '0.7', '40', '10', 'FR', '7', '13.63', '130202020032p00000057990701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7437', 'M-005', 'MOUTON CADET BARON PHILLIPE DE ROTHSCHILD R/W ', '?ٵ?ͧ', 'M-005', null, '475', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955155', '2', '2', '0', '0', null, null, 'MOUTON CADET BARON PHILLIPE DE ROTHSCHILD R/W ', '0.75', '13.5', '6', 'FR', '4.5', '9.63', '1301020100GLA000000310140701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7438', 'M-006', 'MOUTES RESERVA CABERNET SAUVIGNON', '????? ????Կ', 'M-006', null, '476', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955155', '2', '2', '0', '0', null, null, 'MOUTES RESERVA CABERNET SAUVIGNON', '0.75', '14', '12', 'CL', '9', '15.63', '1301020100GLI000000320140701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7439', 'M-007', 'MOET & CHANDON', '???͵ ?͹?? ᪹?͹', 'M-007', null, '477', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955155', '2', '2', '0', '0', null, null, 'MOET & CHANDON', '0.75', '12', '6', 'FR', '4.5', '10', '1301020200H8o000000283hE0701', '2018-09-10 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7440', 'M-008', 'MACALLAN RARE BLACK ', '???????Ź ???? ????? 0.7 ?Ե?', 'M-008', null, '478', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955155', '2', '2', '0', '0', null, null, 'MACALLAN RARE BLACK ', '0.7', '48', '6', 'GB', '4.2', '23', '1302020200VgH000000770130701', '2018-12-12 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7441', 'M-009', 'MALIBU LIQUEUR ', '???Ժ? ???????', 'M-009', null, '479', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955155', '2', '2', '0', '0', null, null, 'MALIBU LIQUEUR ', '0.75', '21', '12', 'CA', '9', '22', '1302020200DCm000000090140701', '2019-03-19 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7442', 'M-011', 'MARTELL CORDON  BLEU ', '????? ?????ͧ ??? 0.70 ?Ե? ', 'M-011', null, '482', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955155', '2', '2', '0', '0', null, null, 'MARTELL CORDON  BLEU ', '0.7', '40', '12', 'FR', null, null, '', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7443', 'M-012', 'MOUTON CADET ROUGE 2014 A.O.C. BORDEAUX', '?ٵͧ ????വ 2014', 'M-012', null, '483', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955155', '2', '2', '0', '0', null, null, 'MOUTON CADET ROUGE 2014 A.O.C. BORDEAUX', '0.75', '13', '12', 'FR', null, null, '㹻?????', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7444', 'M-013', 'MOUTON CADET ROUGE 2015 A.O.C. BORDEAUX  ', '?ٵͧ ????വ 2015', 'M-013', null, '484', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955155', '2', '2', '0', '0', null, null, 'MOUTON CADET ROUGE 2015 A.O.C. BORDEAUX  ', '0.75', '13.5', '12', 'FR', null, null, '', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7445', 'M-014', 'MOUTON CADET ROUGE 2016 A.O.C. BORDEAUX  ', '?ٵͧ ????വ 2016', 'M-014', null, '485', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955155', '2', '2', '0', '0', null, null, 'MOUTON CADET ROUGE 2016 A.O.C. BORDEAUX  ', '0.75', '13.5', '12', 'FR', '9', '19', '', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7446', 'M-015', 'MACALLAN 12YEAR SHERRY OAK', '???????Ź 12?? ?????? ????', 'M-015', null, '486', null, '2', null, null, null, null, null, '0', '0', '1', '1594955146', '1594955155', '2', '2', '0', '0', null, null, 'MACALLAN 12YEAR SHERRY OAK', '0.75', '43', '12', 'GB', '9', '18.6', '1302020200W2J000000bS0140701', '2019-05-16 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7447', 'M-016', 'MACALLAN SHERRY OAK', '???????Ź ?????? ????', 'M-016', null, '487', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'MACALLAN SHERRY OAK', '0.7', '40', '12', 'GB', '8.4', '20', '1302020200WBc000000257990701', '2019-08-02 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7448', 'M-017', 'MACALLAN QUEST', '????????? ????', 'M-017', null, '488', null, '2', null, null, null, null, null, '450', '450', '1', '1594955147', '1594955155', '2', '2', '10', '10', null, null, 'MACALLAN QUEST', '1', '40', '12', 'GB', '12', '25', '1302020200Uw5000000259Bh0701', '2019-10-11 00:00:00', '13815.5', '450');
+INSERT INTO `product` VALUES ('7449', 'M-017', 'MACALLAN QUEST', '????????? ????', 'M-017', null, '489', null, '2', null, null, null, null, null, '450', '450', '1', '1594955147', '1594955155', '2', '2', '20', '20', null, null, 'MACALLAN QUEST', '1', '40', '12', 'GB', '12', '25', '1302020200Uw5000000259Bh0701', '2019-10-11 00:00:00', '13762', '450');
+INSERT INTO `product` VALUES ('7450', 'M-018', 'MACALLAN ENIGMA', '????????? ?͹ԡ???', 'M-018', null, '490', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'MACALLAN ENIGMA', '0.7', '44.9', '6', 'GB', '4.2', '25', '1302020200Uw8000000as7990701', '2019-11-07 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7451', 'M-019', 'MACALLAN LUMINA', '????????? ???չ??', 'M-019', null, '491', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'MACALLAN LUMINA', '0.7', '41.3', '6', 'GB', '4.2', '11', '1302020200Uw6000000EF7990701', '2019-11-07 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7452', 'M-020', 'MONTON CADET ROUGE 2015 A.O.C. BORDEAUX', '?ٵ?ͧ 2015', 'M-020', null, '492', null, '2', null, null, null, null, null, '76.89', '76.89', '1', '1594955147', '1594955155', '2', '2', '60', '60', null, null, 'MONTON CADET ROUGE 2015 A.O.C. BORDEAUX', '0.75', '13.5', '12', 'US', null, null, '1301020100KXs000000313hE0701  ', '2019-04-30 00:00:00', '2460.65', '76.89');
+INSERT INTO `product` VALUES ('7453', 'M-021', 'MONTON CADET ROUGE 2016 A.O.C. BORDEAUX', '?ٵ?ͧ 2016', 'M-021', null, '493', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'MONTON CADET ROUGE 2016 A.O.C. BORDEAUX', '0.75', '13.5', '12', 'US', null, null, '1301020100KXt000000313hE0701', '2019-04-30 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7454', 'M-022', 'MACALLAN 12YO TRIPLE OAK', '????????? 12 ??', 'M-022', null, '494', null, '2', null, null, null, null, null, '220', '220', '1', '1594955147', '1594955155', '2', '2', '20', '20', null, null, 'MACALLAN 12YO TRIPLE OAK', '0.7', '40', '6', 'GB', '4.2', '12', '1302020200Wpa000000257990701', '2020-03-18 00:00:00', '6903.6', '220');
+INSERT INTO `product` VALUES ('7455', 'M-023', 'MOET & CHANDON BRUT IMPERIAL ', '???͵ ?͹?? ᪹?͹', 'M-023', null, '495', null, '2', null, null, null, null, null, '180', '180', '1', '1594955147', '1594955155', '2', '2', '5', '5', null, null, 'MOET & CHANDON BRUT IMPERIAL ', '0.75', '12', '6', 'FR', '4.5', '12', '1301020200JLN003mk0280140701', '2020-05-15 00:00:00', '5876.57', '180');
+INSERT INTO `product` VALUES ('7456', 'M-024', 'MOET & CHANDON ROSE IMPERIAL ', '???͵ ?͹?? ᪹?͹', 'M-024', null, '496', null, '2', null, null, null, null, null, '220', '220', '1', '1594955147', '1594955155', '2', '2', '5', '5', null, null, 'MOET & CHANDON ROSE IMPERIAL ', '0.75', '12.5', '6', 'FR', '4.5', '12', '1301020200BB9003Mk0290140701', '2020-05-15 00:00:00', '7182.47', '220');
+INSERT INTO `product` VALUES ('7457', 'O-001', 'OPUS ONE 2014  ', '?? ???? ?ѹ 2014', 'O-001', null, '497', null, '2', null, null, null, null, null, '930', '930', '1', '1594955147', '1594955155', '2', '2', '1', '1', null, null, 'OPUS ONE 2014  ', '0.75', '14.5', '3', 'USA', '2.25', '6.7', '1301020200BX5000000330140702', '2018-10-05 00:00:00', '30413.2', '930');
+INSERT INTO `product` VALUES ('7458', 'O-002', 'OPUS ONE  2014  ', '?? ???? ?ѹ 2014', 'O-002', null, '498', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'OPUS ONE  2014  ', '0.75', '14.5', '6', 'USA', '4.5', '13.1', '1301020200BX5000000330140701', '2018-08-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7459', 'O-003', 'OVAL 24', '????? 24', 'O-003', null, '499', null, '2', null, null, null, null, null, '142', '142', '1', '1594955147', '1594955155', '2', '2', '48', '48', null, null, 'OVAL 24', '0.7', '24', '6', 'FR', '4.2', '10', '1302020200MAr000000120130701', '2018-07-04 00:00:00', '4664.02', '142');
+INSERT INTO `product` VALUES ('7460', 'O-004', 'OVAL 42', '????? 42', 'O-004', null, '500', null, '2', null, null, null, null, null, '142', '142', '1', '1594955147', '1594955155', '2', '2', '13', '13', null, null, 'OVAL 42', '0.7', '42', '6', 'FR', '4.2', '9.8', '1302020200MAn000000EO0130701', '2018-07-04 00:00:00', '4664.02', '142');
+INSERT INTO `product` VALUES ('7461', 'O-005', 'OVAL 42 ROWAN BERRY', '????? 42 ???ҹ ??????', 'O-005', null, '501', null, '2', null, null, null, null, null, '152', '152', '1', '1594955147', '1594955155', '2', '2', '40', '40', null, null, 'OVAL 42 ROWAN BERRY', '0.7', '42', '6', 'FR', '4.2', '9.8', '1302020200MAp000000EO0130701', '2018-07-04 00:00:00', '4992.47', '152');
+INSERT INTO `product` VALUES ('7462', 'O-006', 'OVAL 56 ', '????? 56', 'O-006', null, '502', null, '2', null, null, null, null, null, '147', '147', '1', '1594955147', '1594955155', '2', '2', '29', '29', null, null, 'OVAL 56 ', '0.7', '56', '6', 'FR', '4.2', '9.5', '1302020200MAu000000RI0130701', '2018-07-04 00:00:00', '4828.24', '147');
+INSERT INTO `product` VALUES ('7463', 'O-008', 'OLD PARR 12YO  ', '?ͻ??? 12 ??', 'O-008', null, '504', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'OLD PARR 12YO  ', '1', '40', '12', 'GB', '12', '20', '13020202005DV000000250150701', '2018-05-04 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7464', 'O-009', 'OPUS ONE  2015', '?? ???? ?ѹ 2015', 'O-009', null, '505', null, '2', null, null, null, null, null, '1860', '1860', '1', '1594955147', '1594955155', '2', '2', '3', '3', null, null, 'OPUS ONE  2015', '0.75', '14.5', '6', 'US', '4.5', '9.33', '1301020200IN1003PN0330140701', '2019-05-16 00:00:00', '59524.1', '1860');
+INSERT INTO `product` VALUES ('7465', 'O-010', 'OPUS ONE 2016-NAPA VALLEY ROUGE', '?? ???? ?ѹ 2016', 'O-010', null, '506', null, '3', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'OPUS ONE 2016-NAPA VALLEY ROUGE', '0.75', '14.5', '10', 'CL', '7.5', '1.82', '1301020200OML003Lw0330140701', '2020-01-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7466', 'P-001', 'PENFOLD BIN2 SHIRAZ MATARO  ', '?Թ 2', 'P-001', null, '507', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'PENFOLD BIN2 SHIRAZ MATARO  ', '0.75', '14.5', '6', 'AU', '4.5', '9.63', '', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7467', 'P-002', 'PENFOLD BIN8 CABERNET SHIRAZ ', '?Թ 8', 'P-002', null, '508', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'PENFOLD BIN8 CABERNET SHIRAZ ', '0.75', '14.5', '6', 'AU', '4.5', '9.63', '', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7468', 'P-003', 'PENFOLDS Rwsn Ret Cabernet Shiraz Red ', 'ྐྵ??ŵ?  ???ѹ ?շ ?????? ?????ͧ ???ҷ ?ô   0.75 ?Ե?', 'P-003', null, '509', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'PENFOLDS Rwsn Ret Cabernet Shiraz Red ', '0.75', '13.5', '6', 'AU', null, null, '', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7469', 'R-001', 'ROBERT MONDAVI WINERY CABERNET SAUVIGNON ', '?????Դ ?͹????? ?Թ??? ????????????? ???ԭͧ', 'R-001', null, '510', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI WINERY CABERNET SAUVIGNON ', '0.75', '13.5', '12', 'US', '9', '15.42', '1301020100Fol000000310140701', '2018-06-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7470', 'R-002', 'ROBERT MONDAVI TWIN OAKS  INTL CABERNET SAUVIGNON CA INT  ', '?????Դ ?͹?????  ??Թ???? ????????????? ???ԭͧ ', 'R-002', null, '511', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI TWIN OAKS  INTL CABERNET SAUVIGNON CA INT  ', '0.75', '13.5', '6', 'US', null, null, '1301020100Fnd000000310140701', '2018-06-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7471', 'R-003', 'ROBERT MONDAVI TWIN OAKS INTL CHARDONNAY CA INT', '?????Դ ?͹?????  ??Թ????  ??????????', 'R-003', null, '512', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI TWIN OAKS INTL CHARDONNAY CA INT', '0.75', '13.5', '6', 'US', null, null, '1301020100Fne000000310140701', '2018-06-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7472', 'R-004', 'ROBERT MONDAVI CABERNET SAUVIGNON  2015', '?????Դ ?͹?????  ????????????? ???ԭͧ 2015', 'R-004', null, '513', null, '2', null, null, null, null, null, '216', '216', '1', '1594955147', '1594955155', '2', '2', '60', '60', null, null, 'ROBERT MONDAVI CABERNET SAUVIGNON  2015', '0.75', '14.5', '12', 'USA', null, null, '1301020100Gpl000000330140701', '2018-08-29 00:00:00', '7152.19', '216');
+INSERT INTO `product` VALUES ('7473', 'R-005', 'ROBERT MONDAVI  PRIVATE  SELECTION CABERNET SAUVIGNON 2015', '?????Դ ?͹?????  ????Ƿ ???Ť????  ????????????? ???ԭͧ  2015', 'R-005', null, '514', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI  PRIVATE  SELECTION CABERNET SAUVIGNON 2015', '0.75', '13.5', '12', 'USA', null, null, '1301020100BYe000000310140701', '2018-08-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7474', 'R-006', 'ROBERT MONDAVI  RESERVE CABERNET SAUVIGNON  2015 ', '?????Դ ?͹?????  ????????  ????????????? ???ԭͧ', 'R-006', null, '515', null, '2', null, null, null, null, null, '552', '552', '1', '1594955147', '1594955155', '2', '2', '50', '50', null, null, 'ROBERT MONDAVI  RESERVE CABERNET SAUVIGNON  2015 ', '0.75', '14', '6', 'US', '4.5', '9.4', '1301020200I8H000000320140701', '2018-11-13 00:00:00', '18122.5', '552');
+INSERT INTO `product` VALUES ('7475', 'R-006', 'ROBERT MONDAVI  RESERVE CABERNET SAUVIGNON 2015', '?????Դ ?͹?????  ????????  ????????????? ???ԭͧ', 'R-006', null, '516', null, '2', null, null, null, null, null, '588', '588', '1', '1594955147', '1594955155', '2', '2', '5', '5', null, null, 'ROBERT MONDAVI  RESERVE CABERNET SAUVIGNON 2015', '0.75', '14', '6', 'US', '4.5', '9.4', '1301020200I8H000000320140701', '2018-11-13 00:00:00', '18817.3', '588');
+INSERT INTO `product` VALUES ('7476', 'R-007', 'ROBERT MONDAVI NAPA VALLEY CABERNET SAUVIGNON ', '?????Դ ??????? ?һ?? ??????  ????????????? ???ԭͧ 0.75 ?Ե?', 'R-007', null, '517', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI NAPA VALLEY CABERNET SAUVIGNON ', '0.75', '15', '12', 'USA', null, null, '1301020100CEo000000030140701', '2017-12-04 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7477', 'R-008', 'ROBERT MONDAVI MESTRO 2014 ', '?????Դ ?͹?????  ?????? 2014', 'R-008', null, '518', null, '2', null, null, null, null, null, '168', '168', '1', '1594955147', '1594955155', '2', '2', '320', '320', null, null, 'ROBERT MONDAVI MESTRO 2014 ', '0.75', '14.5', '6', 'USA', '4.5', '12', '1301020100Gpm000000033hE0701', '2019-08-02 00:00:00', '5117.25', '168');
+INSERT INTO `product` VALUES ('7478', 'R-009', 'ROBERT MONDAVI OAKVILLE 2014 ', '?????Դ ?͹?????  ???? 2014', 'R-009', null, '520', null, '2', null, null, null, null, null, '204', '204', '1', '1594955147', '1594955155', '2', '2', '100', '100', null, null, 'ROBERT MONDAVI OAKVILLE 2014 ', '0.75', '15', '6', 'USA', '4.5', '12', '1301020200Gpn000000030140701', '2018-08-29 00:00:00', '6213.8', '204');
+INSERT INTO `product` VALUES ('7479', 'R-010', 'ROBERT MONDAVI NAPA CABERNET', '?????Դ ??????? ?һ?? ?????????????', 'R-010', null, '521', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955155', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI NAPA CABERNET', '0.75', '14.5', '12', 'US', '9', '19', '1301020100HZt000000330140701', '2018-10-05 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7480', 'R-011', 'ROBERT MONDAVI MESTRO 2013 ', '?????Դ ?͹?????  ?????? 2013', 'R-011', null, '522', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955156', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI MESTRO 2013 ', '0.75', '14.5', '6', 'US', '4.5', '13.9', '1301020100HZu000000330140701', '2018-10-05 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7481', 'R-012', 'ROBERT MONDAVI OAKVILLE CABERNET 2011 ', '?????Դ ??????? ???? ????????????? 2011', 'R-012', null, '523', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955156', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI OAKVILLE CABERNET 2011 ', '0.75', '14', '6', 'US', '4.5', '13.9', '1301020100HZv000000320140701', '2018-10-05 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7482', 'R-013', 'ROBERT MONDAVI RESERVE CABERNET 2011 ', '?????Դ ?͹?????  ????????  ?????????????  2011', 'R-013', null, '524', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955156', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI RESERVE CABERNET 2011 ', '0.75', '14', '6', 'US', '4.5', '13.9', '1301020200HZw000000320140701', '2018-10-05 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7483', 'R-014', 'REMY MARTIN XO  ', '????? ?ҵԹ ???? ??', 'R-014', null, '525', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955156', '2', '2', '0', '0', null, null, 'REMY MARTIN XO  ', '0.7', '40', '12', 'FR', '8.4', '16.63', '1302020200H7O000000257990701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7484', 'R-015', 'REMY MARTIN VSOP  ', '????? ?ҵԹ ??????;?', 'R-015', null, '526', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955156', '2', '2', '0', '0', null, null, 'REMY MARTIN VSOP  ', '1', '40', '12', 'FR', '12', '17.63', '1302020200NqV000000259Bh0701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7485', 'R-017', 'ROBERT MONDAVI WINERY RESERVE CABERNET SAUVIGNON NAPA VALLEY 2014 ', '???????? ?͹????? ????Կ ????????? ???խ͹', 'R-017', null, '528', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955156', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI WINERY RESERVE CABERNET SAUVIGNON NAPA VALLEY 2014 ', '0.75', '14.5', '6', 'US', '4.5', '14.59', '㹻?????', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7486', 'R-018', 'ROBERT MONDAVI WINERY CABERNET SAUVIGNON NAPA VALLEY 2014   ', '???????? ?͹????? ????????? ???խ͹ ?һ?? 2014', 'R-018', null, '529', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955156', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI WINERY CABERNET SAUVIGNON NAPA VALLEY 2014   ', '0.75', '15', '12', 'US', null, null, '㹻?????', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7487', 'R-019', 'ROBERT MONDAVI PRIVATE SELECTION 2016', '?????Դ ?͹?????  ????Ƿ ???Ť???? 2016', 'R-019', null, '530', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955156', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI PRIVATE SELECTION 2016', '0.75', '14.5', '12', 'US', '9', '18.6', '1301020100Knm003PN0330140701', '2019-05-16 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7488', 'R-020', 'ROBERT MONDAVI NAPA CABERNET SAUVIGNON 2016', '?????Դ ?͹?????  ?һ?? ????????????? ???ԭͧ 2016', 'R-020', null, '531', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955156', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI NAPA CABERNET SAUVIGNON 2016', '0.75', '14', '12', 'US', '9', '18.62', '1301020100Knn003PN0320140701', '2019-05-16 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7489', 'R-021', 'ROBERT MONDAVI WINERY CABERNET SAUVIGNON  NAPA VALLEY 2015', '???????? ?͹????? ????????? ???խ͹ ?һ?? 2015', 'R-021', null, '532', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955156', '2', '2', '0', '0', null, null, 'ROBERT MONDAVI WINERY CABERNET SAUVIGNON  NAPA VALLEY 2015', '0.75', '15', '12', 'US', null, null, '㹻?????', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7490', 'R-022', 'ROBERT MONDAVI CABERNET SAUVIGNON  ', '?????Դ ?͹?????  ????????????? ???ԭͧ', 'R-022', null, '533', null, '2', null, null, null, null, null, '67.2', '67.2', '1', '1594955147', '1594955156', '2', '2', '300', '300', null, null, 'ROBERT MONDAVI CABERNET SAUVIGNON  ', '0.75', '14.5', '12', 'US', '9', '18', '1301020100NGD003PN0330140701', '2019-11-11 00:00:00', '2046.9', '67.2');
+INSERT INTO `product` VALUES ('7491', 'R-023', 'ROBERT MONDAVI MERLOT', '???????? ?͹????? ??????', 'R-023', null, '534', null, '2', null, null, null, null, null, '67.2', '67.2', '1', '1594955147', '1594955156', '2', '2', '300', '300', null, null, 'ROBERT MONDAVI MERLOT', '0.75', '14', '12', 'US', '9', '18', '1301020100NG5003PN0320140701', '2019-11-11 00:00:00', '2046.9', '67.2');
+INSERT INTO `product` VALUES ('7492', 'R-024', 'ROBERT MONDAVI PRIVATE SELECTION ', '?????Դ ?͹?????  ????Ƿ ???Ť????', 'R-024', null, '535', null, '2', null, null, null, null, null, '102', '102', '1', '1594955147', '1594955156', '2', '2', '750', '750', null, null, 'ROBERT MONDAVI PRIVATE SELECTION ', '0.75', '14.5', '12', 'US', '9', '18.5', '1301020100IXw003PN0330140701', '2019-11-11 00:00:00', '3098.72', '102');
+INSERT INTO `product` VALUES ('7493', 'R-025', 'ROBERT MONDAVI OAKVILLE  CABERNET ', '?????Դ ??????? ???? ?????????????', 'R-025', null, '536', null, '2', null, null, null, null, null, '204', '204', '1', '1594955147', '1594955156', '2', '2', '70', '70', null, null, 'ROBERT MONDAVI OAKVILLE  CABERNET ', '0.75', '14.5', '6', 'US', '4.5', '18.5', '1301020200NLK003PN0330140701', '2019-11-18 00:00:00', '6197.44', '204');
+INSERT INTO `product` VALUES ('7494', 'S-001', 'SANTA RITA HEROES CABERNET SAUVIGNON ', '?ҹ??? ?Ե?? ?????', 'S-001', null, '537', null, '2', null, null, null, null, null, '0', '0', '1', '1594955147', '1594955156', '2', '2', '0', '0', null, null, 'SANTA RITA HEROES CABERNET SAUVIGNON ', '0.75', '13', '6', 'CL', '4.5', '9.63', '1301020100GLG000000300140701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7495', 'S-002', 'SANTA RITA RESERVA CABERNET SAUVIGNON', '?ҹ??? ?Ե?? ????Կ', 'S-002', null, '538', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'SANTA RITA RESERVA CABERNET SAUVIGNON', '0.75', '13.5', '12', 'CL', '9', '15.63', '1301020100GLH000000310140701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7496', 'S-003', 'SMIRNOFF RED', '???????Ϳ ?ô 1 ?Ե?', 'S-003', null, '539', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '12', '12', null, null, 'SMIRNOFF RED', '1', '40', '8', 'GB', '8', '13', '1302020200JmA000000250150702', '2018-09-07 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7497', 'S-005', 'STELLA ARTOIS BEER BOTTLE ', '???????? ????? ??????', 'S-005', null, '541', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'STELLA ARTOIS BEER BOTTLE ', '0.33', '5', '24', 'BE', '7.92', '13.63', '1301010000GKF000000010550701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7498', 'S-006', 'SINGLETON OF GLEN ORD 12YO', '?ԧ???ŵѹ', 'S-006', null, '542', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'SINGLETON OF GLEN ORD 12YO', '0.7', '40', '6', 'GB', '4.2', '13', '1302020200M1o000000257990701', '2020-03-18 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7499', 'T-001', 'TIAN CHAO SHANGPIN GUIRENJIU ', '????Ҩչ', 'T-001', null, '543', null, '2', null, null, null, null, null, '42', '42', '1', '1594955148', '1594955156', '2', '2', '1350', '1350', null, null, 'TIAN CHAO SHANGPIN GUIRENJIU ', '0.5', '53', '6', 'CN', '3', '12', '1302020200VMY000000EQ0670701', '2018-06-25 00:00:00', '1356.76', '42');
+INSERT INTO `product` VALUES ('7500', 'T-002', 'TAIWAN SWEET TOUCH WHITE GRAPE BEER ', '?????? ?????ѹ ͧ?蹢?? ??ҹ', 'T-002', null, '546', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'TAIWAN SWEET TOUCH WHITE GRAPE BEER ', '0.33', '3.5', '24', 'TW', '7.92', '13.63', '1301010000GKG000000AW0550701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7501', 'T-003', 'TEQUILA PATRON REPOSADO ', 'ൡ???? ?ҵ?͹ ??⾫???? 0.75 ?Ե?', 'T-003', null, '547', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'TEQUILA PATRON REPOSADO ', '0.75', '40', '12', 'GB', '9', '20', '1302020200N7z000000259AK0701', '2019-03-15 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7502', 'T-004', 'TEQUILA PATRON SILVER ', 'ൡ???? ?ҵ?͹ ???????? 0.75 ?Ե?', 'T-004', null, '548', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'TEQUILA PATRON SILVER ', '0.75', '40', '12', 'GB', '9', '20', '1302020200ON0000000250140701', '2019-03-15 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7503', 'U-001', 'URSUS VODKA NATUR ', '??ͫ?? ?ʹ??? ', 'U-001', null, '549', null, '2', null, null, null, null, null, '29', '29', '1', '1594955148', '1594955156', '2', '2', '180', '180', null, null, 'URSUS VODKA NATUR ', '1', '40', '6', 'FR', '6', '9.5', '1302020200MAv000000250150701', '2018-07-04 00:00:00', '952.511', '29');
+INSERT INTO `product` VALUES ('7504', 'V-001', 'VIVRA CABERNET', '????? ???????????', 'V-001', null, '551', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'VIVRA CABERNET', '0.75', '14.8', '6', 'US', '4.5', '3', '1301020100NLJ003PN0EM0140701', '2019-11-18 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7505', 'W-001', 'WOODBRIDGE BY MONDAVI MERLOT   ', '?ٴ??Դ?? ?͹????? ???????ͷ 0.75 ?Ե?', 'W-001', null, '552', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'WOODBRIDGE BY MONDAVI MERLOT   ', '0.75', '13.5', '12', 'US', null, null, '1301020100CCW000000310140701', '2017-12-04 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7506', 'W-002', 'WOODBRIDGE CABERNET SAUVIGNON ', '?ش??Դ??  ????????? ???ԭͧ  0.75 ?Ե?', 'W-002', null, '553', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'WOODBRIDGE CABERNET SAUVIGNON ', '0.75', '13.5', '12', 'US', '9', '19', '1301020100Fnb000000310140701', '2018-06-29 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7507', 'W-003', 'WOODBRIDGE BY MONDAVI PINOT NOIR', '?ٴ??Դ?? ?͹????? ????-????? 0.75 ?Ե?', 'W-003', null, '554', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'WOODBRIDGE BY MONDAVI PINOT NOIR', '0.75', '13', '12', 'US', null, null, '', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7508', 'W-004', 'WOODBRIDGE BY MONDAVI ZINFANDEL', '?ش??Դ??  ?͹????? ?ԹΌ??? 0.75 ?Ե?', 'W-004', null, '555', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'WOODBRIDGE BY MONDAVI ZINFANDEL', '0.75', '13.5', '12', 'US', null, null, '', '1970-01-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7509', 'W-005', 'WOODBRIDGE BY ROBERT MONDAVI CABERNET SAUVIGNON CALIFORNIA 2016', '?ش??Դ?? ????????? ???ԭͧ', 'W-005', null, '556', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'WOODBRIDGE BY ROBERT MONDAVI CABERNET SAUVIGNON CALIFORNIA 2016', '0.75', '13.5', '12', 'US', '9', '19', '1301020100B9S000000310140701 ', '2019-04-30 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7510', 'W-006 ', 'WOODBRIDGE CABERNET', '?ش??Դ??  ?????????', 'W-006 ', null, '557', null, '2', null, null, null, null, null, '290', '290', '1', '1594955148', '1594955156', '2', '2', '50', '50', null, null, 'WOODBRIDGE CABERNET', '0.75', '15', '12', 'US', '9', '17', '1301020100Lie003PN0033hE0701', '2019-08-05 00:00:00', '8999.4', '290');
+INSERT INTO `product` VALUES ('7511', 'W-007', 'WHISKY PASSPORT SCOTCH ', '??ʻ????', 'W-007', null, '558', null, '2', null, null, null, null, null, '90', '90', '1', '1594955148', '1594955156', '2', '2', '100', '100', null, null, 'WHISKY PASSPORT SCOTCH ', '1', '40', '12', 'GB', '12', '20', '1302020200Wpc000000250150701', '2020-03-18 00:00:00', '2824.2', '90');
+INSERT INTO `product` VALUES ('7512', 'Z-001', 'ZIPZ CABERNET SAUVIGNON ', '?Ի ????????-???խ?   0.187 ?Ե?', 'Z-001', null, '560', null, '2', null, null, null, null, null, '9', '9', '1', '1594955148', '1594955156', '2', '2', '232', '232', null, null, 'ZIPZ CABERNET SAUVIGNON ', '0.187', '13.5', '24', 'US', '4.49', '7.59', '1301020100H8B000000310020701', '2018-09-10 00:00:00', '298.008', '9');
+INSERT INTO `product` VALUES ('7513', 'Z-002', 'ZIPZ CARDONNAY', '?Ի ?????͹????  ?Ƿ? ?ǹ? 0.187 ?Ե?', 'Z-002', null, '561', null, '2', null, null, null, null, null, '9', '9', '1', '1594955148', '1594955156', '2', '2', '99', '99', null, null, 'ZIPZ CARDONNAY', '0.187', '13.5', '24', 'US', '4.49', '7.6', '1301020100H8C000000310020701', '2018-09-10 00:00:00', '298.008', '9');
+INSERT INTO `product` VALUES ('7514', 'Z-003', 'ZIPZ MOSCATO ', '?Ի ??ʡ???? 0.187 ?Ե?', 'Z-003', null, '562', null, '2', null, null, null, null, null, '9', '9', '1', '1594955148', '1594955156', '2', '2', '10', '10', null, null, 'ZIPZ MOSCATO ', '0.187', '13.5', '24', 'US', '4.49', '7.6', '1301020100H8D000000310020701', '2018-09-10 00:00:00', '298.008', '9');
+INSERT INTO `product` VALUES ('7515', '1-001', '100 PIPERS ', '?ѹ??? ???????', '1-001', null, '563', null, '2', null, null, null, null, null, '64.8', '64.8', '1', '1594955148', '1594955156', '2', '2', '1', '1', null, null, '100 PIPERS ', '1', '40', '9', 'GB', '9', '18.5', '1302020200AUY000000259Bh0701', '2018-07-04 00:00:00', '2128.37', '64.8');
+INSERT INTO `product` VALUES ('7516', '2-001', 'II FITTO SYRAH DOC CORTONA 2012 ', '?Ե??2 ?????', '2-001', null, '564', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'II FITTO SYRAH DOC CORTONA 2012 ', '0.75', '14', '12', 'IT', '9', '15.63', '1301020100GLC000000320140701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7517', '2-002', 'II FITTO SANGIOVESE DOC CORTONA 2013', '?Ե??2 ᫧??ç???', '2-002', null, '565', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'II FITTO SANGIOVESE DOC CORTONA 2013', '0.75', '14', '12', 'IT', '9', '15.63', '1301020100GLD000000320140701', '2018-08-01 00:00:00', '0', '0');
+INSERT INTO `product` VALUES ('7518', '2-003', 'II FITTO AMPELOS ROSSO DI TOSCANA 2013 ', '?Ե??2 ????? ?????????', '2-003', null, '566', null, '2', null, null, null, null, null, '0', '0', '1', '1594955148', '1594955156', '2', '2', '0', '0', null, null, 'II FITTO AMPELOS ROSSO DI TOSCANA 2013 ', '0.75', '12.5', '12', 'IT', '9', '15.63', '1301020100GLE000000LX0140701', '2018-08-01 00:00:00', '0', '0');
 
 -- ----------------------------
 -- Table structure for `product_category`
@@ -11436,7 +12053,7 @@ CREATE TABLE `product_category` (
   `updated_by` int(11) DEFAULT NULL,
   `geolocation` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=567 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_category
@@ -11450,6 +12067,563 @@ INSERT INTO `product_category` VALUES ('6', 'เบียร์', '', '1', '1581
 INSERT INTO `product_category` VALUES ('7', 'บรั่นดี', '', '1', '1581947779', '1582001551', '2', '2', '22082050');
 INSERT INTO `product_category` VALUES ('8', 'สุราจีน', '', '1', '1581947780', '1582001620', '2', '2', '22089099');
 INSERT INTO `product_category` VALUES ('9', 'เตกีล่า', '', '1', '1581947780', '1582001607', '2', '2', '22087090');
+INSERT INTO `product_category` VALUES ('10', 'ลิเคียว', null, '1', '1585636892', '1585636892', '2', null, null);
+INSERT INTO `product_category` VALUES ('11', '?ǹ?', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('12', '?ǹ?', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('13', '?ǹ?', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('14', '?ʹ???', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('15', '?ʹ???', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('16', '?ǹ?', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('17', '?ǹ?', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('18', '?ǹ?', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('19', '?ǹ?', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('20', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('21', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('22', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('23', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('24', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('25', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('26', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('27', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('28', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('29', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('30', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('31', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('32', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('33', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('34', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('35', '???', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('36', '???', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('37', '?ǹ?', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('38', '?ǹ?', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('39', '?Թ', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('40', '???', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('41', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('42', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('43', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('44', '???????', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('45', '??ʡ??', null, '1', '1594907525', '1594907525', '2', null, null);
+INSERT INTO `product_category` VALUES ('46', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('47', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('48', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('49', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('50', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('51', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('52', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('53', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('54', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('55', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('56', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('57', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('58', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('59', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('60', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('61', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('62', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('63', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('64', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('65', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('66', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('67', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('68', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('69', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('70', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('71', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('72', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('73', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('74', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('75', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('76', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('77', '?ʹ???', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('78', '?ʹ???', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('79', '??????', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('80', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('81', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('82', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('83', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('84', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('85', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('86', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('87', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('88', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('89', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('90', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('91', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('92', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('93', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('94', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('95', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('96', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('97', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('98', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('99', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('100', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('101', '?ǹ?', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('102', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('103', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('104', '??ʡ??', null, '1', '1594907526', '1594907526', '2', null, null);
+INSERT INTO `product_category` VALUES ('105', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('106', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('107', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('108', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('109', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('110', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('111', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('112', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('113', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('114', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('115', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('116', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('117', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('118', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('119', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('120', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('121', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('122', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('123', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('124', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('125', '??????', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('126', '?ʹ???', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('127', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('128', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('129', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('130', '???蹴?', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('131', '???蹴?', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('132', '???蹴?', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('133', '???蹴?', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('134', '???蹴?', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('135', '???蹴?', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('136', '???蹴?', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('137', '???蹴?', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('138', '??????', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('139', '??????', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('140', '??????', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('141', '???', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('142', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('143', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('144', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('145', '???????', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('146', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('147', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('148', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('149', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('150', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('151', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('152', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('153', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('154', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('155', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('156', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('157', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('158', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('159', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('160', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('161', '??ʡ??', null, '1', '1594907527', '1594907527', '2', null, null);
+INSERT INTO `product_category` VALUES ('162', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('163', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('164', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('165', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('166', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('167', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('168', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('169', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('170', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('171', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('172', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('173', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('174', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('175', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('176', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('177', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('178', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('179', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('180', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('181', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('182', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('183', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('184', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('185', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('186', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('187', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('188', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('189', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('190', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('191', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('192', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('193', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('194', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('195', '???蹴?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('196', '???蹴?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('197', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('198', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('199', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('200', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('201', '???', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('202', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('203', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('204', '???蹴?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('205', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('206', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('207', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('208', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('209', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('210', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('211', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('212', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('213', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('214', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('215', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('216', '??ʡ??', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('217', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('218', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('219', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('220', '?ǹ?', null, '1', '1594907528', '1594907528', '2', null, null);
+INSERT INTO `product_category` VALUES ('221', '?ʹ???', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('222', '?ʹ???', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('223', '?ʹ???', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('224', '?ʹ???', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('225', '?ʹ???', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('226', '??ʡ??', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('227', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('228', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('229', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('230', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('231', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('232', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('233', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('234', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('235', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('236', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('237', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('238', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('239', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('240', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('241', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('242', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('243', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('244', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('245', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('246', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('247', '???蹴?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('248', '???蹴?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('249', '???蹴?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('250', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('251', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('252', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('253', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('254', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('255', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('256', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('257', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('258', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('259', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('260', '?ǹ?', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('261', '?ʹ???', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('262', '?ʹ???', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('263', '??????', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('264', '??ʡ??', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('265', '???Ҩչ', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('266', '???Ҩչ', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('267', '???Ҩչ', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('268', '??????', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('269', 'ൡ????', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('270', 'ൡ????', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('271', '?ʹ???', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('272', '?ʹ???', null, '1', '1594907529', '1594907529', '2', null, null);
+INSERT INTO `product_category` VALUES ('273', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('274', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('275', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('276', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('277', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('278', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('279', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('280', '??ʡ??', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('281', '??ʡ??', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('282', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('283', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('284', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('285', '??ʡ??', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('286', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('287', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('288', '?ǹ?', null, '1', '1594907530', '1594907530', '2', null, null);
+INSERT INTO `product_category` VALUES ('289', '?ǹ?', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('290', '?ǹ?', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('291', '?ǹ?', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('292', '?ʹ???', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('293', '?ʹ???', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('294', '?ǹ?', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('295', '?ǹ?', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('296', '?ǹ?', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('297', '?ǹ?', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('298', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('299', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('300', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('301', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('302', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('303', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('304', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('305', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('306', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('307', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('308', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('309', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('310', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('311', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('312', '??ʡ??', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('313', '???', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('314', '???', null, '1', '1594955143', '1594955143', '2', null, null);
+INSERT INTO `product_category` VALUES ('315', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('316', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('317', '?Թ', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('318', '???', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('319', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('320', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('321', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('322', '???????', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('323', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('324', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('325', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('326', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('327', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('328', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('329', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('330', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('331', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('332', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('333', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('334', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('335', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('336', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('337', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('338', '??ʡ??', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('339', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('340', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('341', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('342', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('343', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('344', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('345', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('346', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('347', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('348', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('349', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('350', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('351', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('352', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('353', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('354', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('355', '?ʹ???', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('356', '?ʹ???', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('357', '??????', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('358', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('359', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('360', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('361', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('362', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('363', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('364', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('365', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('366', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('367', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('368', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('369', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('370', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('371', '?ǹ?', null, '1', '1594955144', '1594955144', '2', null, null);
+INSERT INTO `product_category` VALUES ('372', '?ǹ?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('373', '?ǹ?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('374', '?ǹ?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('375', '?ǹ?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('376', '?ǹ?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('377', '?ǹ?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('378', '?ǹ?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('379', '?ǹ?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('380', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('381', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('382', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('383', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('384', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('385', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('386', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('387', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('388', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('389', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('390', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('391', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('392', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('393', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('394', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('395', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('396', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('397', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('398', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('399', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('400', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('401', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('402', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('403', '??????', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('404', '?ʹ???', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('405', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('406', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('407', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('408', '???蹴?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('409', '???蹴?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('410', '???蹴?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('411', '???蹴?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('412', '???蹴?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('413', '???蹴?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('414', '???蹴?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('415', '???蹴?', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('416', '??????', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('417', '??????', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('418', '??????', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('419', '???', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('420', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('421', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('422', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('423', '???????', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('424', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('425', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('426', '??ʡ??', null, '1', '1594955145', '1594955145', '2', null, null);
+INSERT INTO `product_category` VALUES ('427', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('428', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('429', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('430', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('431', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('432', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('433', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('434', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('435', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('436', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('437', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('438', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('439', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('440', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('441', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('442', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('443', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('444', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('445', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('446', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('447', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('448', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('449', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('450', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('451', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('452', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('453', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('454', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('455', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('456', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('457', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('458', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('459', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('460', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('461', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('462', '?ǹ?', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('463', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('464', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('465', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('466', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('467', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('468', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('469', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('470', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('471', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('472', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('473', '???蹴?', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('474', '???蹴?', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('475', '?ǹ?', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('476', '?ǹ?', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('477', '?ǹ?', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('478', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('479', '???', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('480', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('481', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('482', '???蹴?', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('483', '?ǹ?', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('484', '?ǹ?', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('485', '?ǹ?', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('486', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('487', '??ʡ??', null, '1', '1594955146', '1594955146', '2', null, null);
+INSERT INTO `product_category` VALUES ('488', '??ʡ??', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('489', '??ʡ??', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('490', '??ʡ??', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('491', '??ʡ??', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('492', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('493', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('494', '??ʡ??', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('495', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('496', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('497', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('498', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('499', '?ʹ???', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('500', '?ʹ???', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('501', '?ʹ???', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('502', '?ʹ???', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('503', '?ʹ???', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('504', '??ʡ??', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('505', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('506', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('507', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('508', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('509', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('510', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('511', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('512', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('513', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('514', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('515', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('516', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('517', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('518', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('519', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('520', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('521', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('522', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('523', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('524', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('525', '???蹴?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('526', '???蹴?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('527', '???蹴?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('528', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('529', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('530', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('531', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('532', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('533', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('534', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('535', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('536', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('537', '?ǹ?', null, '1', '1594955147', '1594955147', '2', null, null);
+INSERT INTO `product_category` VALUES ('538', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('539', '?ʹ???', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('540', '?ʹ???', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('541', '??????', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('542', '??ʡ??', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('543', '???Ҩչ', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('544', '???Ҩչ', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('545', '???Ҩչ', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('546', '??????', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('547', 'ൡ????', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('548', 'ൡ????', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('549', '?ʹ???', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('550', '?ʹ???', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('551', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('552', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('553', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('554', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('555', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('556', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('557', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('558', '??ʡ??', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('559', '??ʡ??', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('560', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('561', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('562', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('563', '??ʡ??', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('564', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('565', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
+INSERT INTO `product_category` VALUES ('566', '?ǹ?', null, '1', '1594955148', '1594955148', '2', null, null);
 
 -- ----------------------------
 -- Table structure for `product_cost`
@@ -11496,11 +12670,12 @@ CREATE TABLE `product_image` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_image
 -- ----------------------------
+INSERT INTO `product_image` VALUES ('1', 'ag2.png', null, '2113', null, null, '1583745398', '1583745398', null, null);
 
 -- ----------------------------
 -- Table structure for `product_stock`
@@ -11532,13 +12707,289 @@ CREATE TABLE `product_stock` (
   `inbound_id` int(11) DEFAULT NULL,
   `outbound_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5495 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_stock
 -- ----------------------------
-INSERT INTO `product_stock` VALUES ('22', '2113', '2', '2', '0', 'JLD20009', '2020-02-25 00:00:00', 'EXSSS', '2020-02-25 00:00:00', '1', 'ABC', '2020-02-25 00:00:00', '123456', '2020-02-22 00:00:00', '20', '20', null, '1582626360', '1582626360', '2', null, '2', '17', '0');
-INSERT INTO `product_stock` VALUES ('23', '2113', '2', '0', '1', 'IV20000001', '1970-01-01 00:00:00', null, '1970-01-01 00:00:00', '1', 'ABC', '2020-02-25 00:00:00', 'ABC', '2020-01-02 00:00:00', '20', '20', null, '1582626461', '1582626461', '2', null, '-1', '0', '7');
+INSERT INTO `product_stock` VALUES ('5217', '7320', '1354', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955150', '1594955150', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5218', '7321', '1355', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5219', '7322', '1356', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5220', '7323', '1357', '110', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '2', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '87', '32.8452', null, '1594955151', '1594955151', '2', null, '110', null, null);
+INSERT INTO `product_stock` VALUES ('5221', '7324', '1358', '1', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '3', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '77', '32.8452', null, '1594955151', '1594955151', '2', null, '1', null, null);
+INSERT INTO `product_stock` VALUES ('5222', '7325', '1359', '565', '0', 'JLD12/2018  ', '2018-09-04 00:00:00', 'A0130610909085', '2018-09-13 00:00:00', '1', '2561/0050-61-853-00435', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '11', '33.112', null, '1594955151', '1594955151', '2', null, '565', null, null);
+INSERT INTO `product_stock` VALUES ('5223', '7325', '1360', '300', '0', 'JLD13/2018  ', '2018-09-07 00:00:00', 'A0130610913074', '2018-09-13 00:00:00', '15', '2561/0050-61-853-00436', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '11', '33.112', null, '1594955151', '1594955151', '2', null, '300', null, null);
+INSERT INTO `product_stock` VALUES ('5224', '7325', '1361', '100', '0', 'JLD02/2020  ', '2020-02-05 00:00:00', 'A0210630204389', '2020-02-21 00:00:00', '1', '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '18', '30.5822', null, '1594955151', '1594955151', '2', null, '100', null, null);
+INSERT INTO `product_stock` VALUES ('5225', '7326', '1362', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5226', '7327', '1363', '40', '0', 'JLD05/2019', '2019-04-29 00:00:00', 'A0080620507581', '2019-06-08 00:00:00', '1', '2562/0050-62-853-00223', '2019-04-30 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '166', '32.0022', null, '1594955151', '1594955151', '2', null, '40', null, null);
+INSERT INTO `product_stock` VALUES ('5227', '7327', '1364', '30', '0', 'JLD04/2020 ', '2020-03-17 00:00:00', 'A0250630307131', '2020-03-19 00:00:00', '9', '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '165', '31.38', null, '1594955151', '1594955151', '2', null, '30', null, null);
+INSERT INTO `product_stock` VALUES ('5228', '7328', '1365', '150', '0', 'JLD03/2019 ', '2019-03-11 00:00:00', 'A0150620308756', '2019-03-15 00:00:00', '1', '2562/0050-62-853-00169', '2019-03-12 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '360', '31.3607', null, '1594955151', '1594955151', '2', null, '150', null, null);
+INSERT INTO `product_stock` VALUES ('5229', '7328', '1366', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5230', '7329', '1367', '150', '0', 'JLD08/2019  ', '2019-07-26 00:00:00', 'A0080620812781', '2019-08-08 00:00:00', '6', '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '610', '31.0324', null, '1594955151', '1594955151', '2', null, '150', null, null);
+INSERT INTO `product_stock` VALUES ('5231', '7329', '1368', '145', '0', 'JLD13/2019 ', '2019-11-01 00:00:00', 'A0120621100553', '2019-11-11 00:00:00', '2', '2563/0050-63-853-00047', '2019-11-07 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '536', '30.4598', null, '1594955151', '1594955151', '2', null, '145', null, null);
+INSERT INTO `product_stock` VALUES ('5232', '7330', '1369', '10', '0', 'JLD08/2019  ', '2019-07-26 00:00:00', 'A0080620812781', '2019-08-08 00:00:00', '7', '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '1030', '31.0324', null, '1594955151', '1594955151', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5233', '7330', '1370', '5', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '8', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '1030', '30.7012', null, '1594955151', '1594955151', '2', null, '5', null, null);
+INSERT INTO `product_stock` VALUES ('5234', '7331', '1371', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5235', '7331', '1372', '800', '0', 'JLD01/2019 ', '2019-01-25 00:00:00', 'A0300620107141', '2019-01-30 00:00:00', '1', '2562/0050-62-853-00121', '2019-01-28 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '97', '32.8609', null, '1594955151', '1594955151', '2', null, '800', null, null);
+INSERT INTO `product_stock` VALUES ('5236', '7332', '1373', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5237', '7333', '1374', '10', '0', 'JLD05/2019', '2019-04-29 00:00:00', 'A008062050758', '2019-05-08 00:00:00', '4', '2562/0050-62-853-00223', '2019-04-30 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '240', '32.0022', null, '1594955151', '1594955151', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5238', '7333', '1375', '10', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '2', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '330', '30.7012', null, '1594955151', '1594955151', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5239', '7334', '1376', '30', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '4', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '495', '30.7012', null, '1594955151', '1594955151', '2', null, '30', null, null);
+INSERT INTO `product_stock` VALUES ('5240', '7335', '1377', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5241', '7336', '1378', '1', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '5', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '43.33', '32.8452', null, '1594955151', '1594955151', '2', null, '1', null, null);
+INSERT INTO `product_stock` VALUES ('5242', '7336', '1379', '69', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '4', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '52', '32.8452', null, '1594955151', '1594955151', '2', null, '69', null, null);
+INSERT INTO `product_stock` VALUES ('5243', '7337', '1380', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5244', '7338', '1381', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5245', '7339', '1382', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5246', '7340', '1383', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5247', '7341', '1384', '10', '0', 'JLD02/2020  ', '2020-02-05 00:00:00', 'A0210630204389', '2020-02-21 00:00:00', '2', '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '430', '30.5822', null, '1594955151', '1594955151', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5248', '7342', '1385', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5249', '7343', '1386', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5250', '7344', '1387', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5251', '7345', '1388', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5252', '7345', '1389', '165', '0', 'JLD13/2019  ', '2019-11-01 00:00:00', 'A0120621100553', '2019-11-11 00:00:00', '3', '2563/0050-63-853-00047', '2019-11-07 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '200', '30.4598', null, '1594955151', '1594955151', '2', null, '165', null, null);
+INSERT INTO `product_stock` VALUES ('5253', '7345', '1390', '50', '0', 'JLD02/2020', '2020-02-05 00:00:00', 'A0210630204389', '2020-02-21 00:00:00', '3', '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '200', '30.5822', null, '1594955151', '1594955151', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5254', '7345', '1391', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5255', '7346', '1392', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955151', '1594955151', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5256', '7346', '1393', '20', '0', 'JLD07/2018  ', '2018-07-03 00:00:00', 'A0160610706631', '2018-07-16 00:00:00', '2', '2561/0050-61-853-00393', '2018-07-09 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '245', '32.8452', null, '1594955151', '1594955151', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5257', '7346', '1394', '10', '0', 'JLD15/2018 ', '2018-10-30 00:00:00', 'A0070611105380', '2018-11-07 00:00:00', '4', '2562/0050-62-853-00014', '2018-11-05 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '245', '32.8306', null, '1594955151', '1594955151', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5258', '7346', '1395', '15', '0', 'JLD05/2019', '2019-04-29 00:00:00', 'A0080620507581', '2019-05-08 00:00:00', '6', '2562/0050-62-853-00223', '2019-04-30 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '245', '32.0022', null, '1594955151', '1594955151', '2', null, '15', null, null);
+INSERT INTO `product_stock` VALUES ('5259', '7347', '1396', '185', '0', 'JLD13/2019  ', '2019-11-01 00:00:00', 'A0120621100553', '2019-11-11 00:00:00', '4', '2563/0050-63-853-00047', '2019-11-07 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '335', '30.4598', null, '1594955151', '1594955151', '2', null, '185', null, null);
+INSERT INTO `product_stock` VALUES ('5260', '7347', '1397', '20', '0', 'JLD13/2018  ', '2018-09-07 00:00:00', 'A0130610913074', '2018-09-13 00:00:00', '1', '2561/0050-61-853-00436', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '530', '33.112', null, '1594955151', '1594955151', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5261', '7347', '1398', '10', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '6', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '560', '30.7012', null, '1594955151', '1594955151', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5262', '7348', '1399', '10', '0', 'JLD13/2018  ', '2018-09-07 00:00:00', 'A0130610913074', '2018-09-11 00:00:00', '2', '2561/0050-61-853-00436', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '465', '33.112', null, '1594955151', '1594955151', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5263', '7348', '1400', '20', '0', 'JLD13/2018  ', '2018-09-07 00:00:00', 'A0130610913074', '2018-09-11 00:00:00', '3', '2561/0050-61-853-00436', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '465', '33.112', null, '1594955151', '1594955151', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5264', '7348', '1401', '20', '0', 'JLD03/2019  ', '2019-03-11 00:00:00', 'A0150620308756', '2019-03-15 00:00:00', '4', '2562/0050-62-853-00169', '2019-03-12 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '460', '31.3607', null, '1594955151', '1594955151', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5265', '7348', '1402', '1', '0', 'JLD13/2019  ', '2019-11-01 00:00:00', 'A0120621100553', '2019-11-11 00:00:00', '10', '2563/0050-63-853-00047', '2019-11-07 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '460', '30.4598', null, '1594955151', '1594955151', '2', null, '1', null, null);
+INSERT INTO `product_stock` VALUES ('5266', '7349', '1403', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5267', '7350', '1404', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5268', '7351', '1405', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5269', '7352', '1406', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5270', '7352', '1407', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5271', '7353', '1408', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5272', '7354', '1409', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5273', '7355', '1410', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5274', '7356', '1411', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5275', '7357', '1412', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5276', '7358', '1413', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5277', '7359', '1414', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5278', '7360', '1415', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5279', '7360', '1416', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5280', '7361', '1417', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5281', '7362', '1418', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5282', '7363', '1419', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5283', '7364', '1420', '1', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '7', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '90', '32.8452', null, '1594955152', '1594955152', '2', null, '1', null, null);
+INSERT INTO `product_stock` VALUES ('5284', '7364', '1421', '746', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '6', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '135', '32.8452', null, '1594955152', '1594955152', '2', null, '746', null, null);
+INSERT INTO `product_stock` VALUES ('5285', '7365', '1422', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5286', '7366', '1423', '2', '0', 'JLD06/2019   ', '2019-05-02 00:00:00', 'A0280620507084', '2019-05-28 00:00:00', '6', '2562/0050-62-853-00236', '2019-05-16 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '1200', '32.0022', null, '1594955152', '1594955152', '2', null, '2', null, null);
+INSERT INTO `product_stock` VALUES ('5287', '7367', '1424', '2', '0', 'JLD06/2019   ', '2019-05-02 00:00:00', 'A0280620507084', '2019-05-28 00:00:00', '7', '2562/0050-62-853-00236', '2019-05-16 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '1140', '32.0022', null, '1594955152', '1594955152', '2', null, '2', null, null);
+INSERT INTO `product_stock` VALUES ('5288', '7368', '1425', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5289', '7369', '1426', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5290', '7370', '1427', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5291', '7371', '1428', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5292', '7372', '1429', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5293', '7373', '1430', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5294', '7374', '1431', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5295', '7375', '1432', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5296', '7376', '1433', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5297', '7377', '1434', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5298', '7378', '1435', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5299', '7379', '1436', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5300', '7380', '1437', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5301', '7381', '1438', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5302', '7382', '1439', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5303', '7383', '1440', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5304', '7384', '1441', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5305', '7385', '1442', '1100', '0', 'JLD03/2020', '2020-02-12 00:00:00', 'A0210630204398', '2020-02-20 00:00:00', '1', '2563/0050-63-853-00190', '2020-02-14 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '26', '30.5822', null, '1594955152', '1594955152', '2', null, '1100', null, null);
+INSERT INTO `product_stock` VALUES ('5306', '7386', '1443', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5307', '7387', '1444', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5308', '7388', '1445', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5309', '7388', '1446', '200', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '14', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '360', '32.6476', null, '1594955152', '1594955152', '2', null, '200', null, null);
+INSERT INTO `product_stock` VALUES ('5310', '7389', '1447', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955152', '1594955152', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5311', '7390', '1448', '200', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '16', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '620', '32.6476', null, '1594955153', '1594955153', '2', null, '200', null, null);
+INSERT INTO `product_stock` VALUES ('5312', '7391', '1449', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5313', '7391', '1450', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5314', '7391', '1451', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5315', '7392', '1452', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5316', '7389', '1453', '200', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '15', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '450', '32.6476', null, '1594955153', '1594955153', '2', null, '200', null, null);
+INSERT INTO `product_stock` VALUES ('5317', '7393', '1454', '20', '0', 'JLD11/2018  ', '2018-09-03 00:00:00', 'A0110610905765', '2018-09-11 00:00:00', '4', '2561/0050-61-853-00434', '2018-09-07 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '56', '33.112', null, '1594955153', '1594955153', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5318', '7393', '1455', '50', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '1', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '90', '32.6476', null, '1594955153', '1594955153', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5319', '7394', '1456', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5320', '7394', '1457', '30', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '9', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '260', '30.7012', null, '1594955153', '1594955153', '2', null, '30', null, null);
+INSERT INTO `product_stock` VALUES ('5321', '7394', '1458', '20', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '2', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '260', '32.6476', null, '1594955153', '1594955153', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5322', '7395', '1459', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5323', '7395', '1460', '15', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '10', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '360', '30.7012', null, '1594955153', '1594955153', '2', null, '15', null, null);
+INSERT INTO `product_stock` VALUES ('5324', '7395', '1461', '20', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '3', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '360', '32.6476', null, '1594955153', '1594955153', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5325', '7396', '1462', '5', '0', 'JLD15/2019  ', '2019-12-17 00:00:00', 'A0250621203797', '2019-12-23 00:00:00', '6', '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '430', '30.3796', null, '1594955153', '1594955153', '2', null, '5', null, null);
+INSERT INTO `product_stock` VALUES ('5326', '7397', '1463', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5327', '7398', '1464', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5328', '7399', '1465', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5329', '7400', '1466', '20', '0', 'JLD04/2020 ', '2020-03-17 00:00:00', 'A0250630307131', '2020-03-19 00:00:00', '5', '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '201', '31.38', null, '1594955153', '1594955153', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5330', '7401', '1467', '13', '0', 'JLD11/2018', '2018-09-03 00:00:00', 'A0110610905765', '2018-09-11 00:00:00', '7', '2561/0050-61-853-00434', '2018-09-07 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '251', '33.112', null, '1594955153', '1594955153', '2', null, '13', null, null);
+INSERT INTO `product_stock` VALUES ('5331', '7402', '1468', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5332', '7403', '1469', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5333', '7404', '1470', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5334', '7405', '1471', '5', '0', 'JLD04/2020 ', '2020-03-17 00:00:00', 'A0250630307131', '2020-03-19 00:00:00', '3', '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '305', '31.38', null, '1594955153', '1594955153', '2', null, '5', null, null);
+INSERT INTO `product_stock` VALUES ('5335', '7406', '1472', '20', '0', 'JLD04/2020 ', '2020-03-17 00:00:00', 'A0250630307131', '2020-03-19 00:00:00', '7', '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '140', '31.38', null, '1594955153', '1594955153', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5336', '7407', '1473', '50', '0', 'JLD08/2019  ', '2019-07-26 00:00:00', 'A0080620812781', '2019-08-08 00:00:00', '10', '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '730', '31.0324', null, '1594955153', '1594955153', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5337', '7407', '1474', '20', '0', 'JLD15/2019 ', '2019-12-17 00:00:00', 'A0250621203797', '2019-12-23 00:00:00', '4', '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '730', '30.3796', null, '1594955153', '1594955153', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5338', '7407', '1475', '20', '0', 'JLD04/2020 ', '2020-03-17 00:00:00', 'A0250630307131', '2020-03-19 00:00:00', '2', '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '730', '31.38', null, '1594955153', '1594955153', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5339', '7407', '1476', '10', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '4', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '730', '32.6476', null, '1594955153', '1594955153', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5340', '7408', '1477', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5341', '7408', '1478', '20', '0', 'JLD08/2019 ', '2019-07-26 00:00:00', 'A0080620812781', '2019-08-08 00:00:00', '11', '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '1400', '31.0324', null, '1594955153', '1594955153', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5342', '7408', '1479', '10', '0', 'JLD04/2020 ', '2020-03-17 00:00:00', 'A0250630307131', '2020-03-19 00:00:00', '1', '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '1400', '31.38', null, '1594955153', '1594955153', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5343', '7408', '1480', '5', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '5', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '1400', '32.6476', null, '1594955153', '1594955153', '2', null, '5', null, null);
+INSERT INTO `product_stock` VALUES ('5344', '7409', '1481', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5345', '7410', '1482', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5346', '7411', '1483', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5347', '7412', '1484', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5348', '7413', '1485', '200', '0', 'JLD08/2019 ', '2019-07-26 00:00:00', 'A0080620812781', '2019-08-08 00:00:00', '9', '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '190', '31.0324', null, '1594955153', '1594955153', '2', null, '200', null, null);
+INSERT INTO `product_stock` VALUES ('5349', '7413', '1486', '50', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '12', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '190', '32.6476', null, '1594955153', '1594955153', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5350', '7414', '1487', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5351', '7415', '1488', '200', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '17', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '200', '32.6476', null, '1594955153', '1594955153', '2', null, '200', null, null);
+INSERT INTO `product_stock` VALUES ('5352', '7416', '1489', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5353', '7417', '1490', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5354', '7418', '1491', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955153', '1594955153', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5355', '7419', '1492', '20', '0', 'JLD07/2018   ', '2018-07-03 00:00:00', 'A0160610706631', '2018-07-16 00:00:00', '11', '2561/0050-61-853-00393', '2018-07-09 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '610', '32.8452', null, '1594955153', '1594955153', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5356', '7419', '1493', '5', '0', 'JLD18/2018  ', '2018-12-07 00:00:00', 'A0170611217443', '2018-12-17 00:00:00', '6', '2562/0050-62-853-00053', '2018-12-12 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '630', '33.1131', null, '1594955153', '1594955153', '2', null, '5', null, null);
+INSERT INTO `product_stock` VALUES ('5357', '7419', '1494', '5', '0', 'JLD05/2019  ', '2019-04-29 00:00:00', 'A0080620507581', '2019-05-08 00:00:00', '10', '2562/0050-62-853-00223', '2019-04-30 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '660', '32.0022', null, '1594955154', '1594955154', '2', null, '5', null, null);
+INSERT INTO `product_stock` VALUES ('5358', '7420', '1495', '445', '0', 'JLD07/2019', '2019-05-10 00:00:00', 'A0170620506430', '2019-05-17 00:00:00', '1', '2562/0050-62-853-00230', '2019-05-13 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '69', '32.0022', null, '1594955154', '1594955154', '2', null, '445', null, null);
+INSERT INTO `product_stock` VALUES ('5359', '7420', '1496', '250', '0', 'JLD08/2019  ', '2019-07-26 00:00:00', 'A0080620812781', '2019-08-08 00:00:00', '4', '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '96', '31.0324', null, '1594955154', '1594955154', '2', null, '250', null, null);
+INSERT INTO `product_stock` VALUES ('5360', '7420', '1497', '750', '0', 'JLD15/2019 ', '2019-12-17 00:00:00', 'A0250621203797', '2019-12-23 00:00:00', '5', '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '96', '30.3796', null, '1594955154', '1594955154', '2', null, '750', null, null);
+INSERT INTO `product_stock` VALUES ('5361', '7420', '1498', '700', '0', 'JLD02/2020  ', '2020-02-05 00:00:00', 'A0210630204389', '2020-02-21 00:00:00', '6', '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '96', '30.5822', null, '1594955154', '1594955154', '2', null, '700', null, null);
+INSERT INTO `product_stock` VALUES ('5362', '7420', '1499', '800', '0', 'JLD04/2020 ', '2020-03-17 00:00:00', 'A0250630307131', '2020-03-19 00:00:00', '11', '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '96', '31.38', null, '1594955154', '1594955154', '2', null, '800', null, null);
+INSERT INTO `product_stock` VALUES ('5363', '7421', '1500', '150', '0', 'JLD10/2019  ', '2019-08-08 00:00:00', 'A0160620803125', '2019-08-16 00:00:00', '3', '2562/0050-62-853-00309', '2019-08-09 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '210', '31.0324', null, '1594955154', '1594955154', '2', null, '150', null, null);
+INSERT INTO `product_stock` VALUES ('5364', '7421', '1501', '300', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '13', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '210', '30.7012', null, '1594955154', '1594955154', '2', null, '300', null, null);
+INSERT INTO `product_stock` VALUES ('5365', '7421', '1502', '100', '0', 'JLD13/2019 ', '2019-11-01 00:00:00', 'A0120621100553', '2019-11-11 00:00:00', '11', '2563/0050-63-853-00047', '1970-01-01 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '210', '30.4598', null, '1594955154', '1594955154', '2', null, '100', null, null);
+INSERT INTO `product_stock` VALUES ('5366', '7421', '1503', '50', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '10', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '210', '32.6476', null, '1594955154', '1594955154', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5367', '7422', '1504', '50', '0', 'JLD15/2018 ', '2018-10-30 00:00:00', 'A0070611105380', '2018-11-07 00:00:00', '6', '2562/0050-62-853-00014', '2018-11-05 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '250', '32.8306', null, '1594955154', '1594955154', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5368', '7422', '1505', '20', '0', 'JLD02/2020  ', '2020-02-05 00:00:00', 'A0210630204389', '2020-02-21 00:00:00', '5', '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '250', '30.5822', null, '1594955154', '1594955154', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5369', '7422', '1506', '20', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '6', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '250', '32.6476', null, '1594955154', '1594955154', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5370', '7423', '1507', '30', '0', 'JLD05/2019 ', '2019-04-29 00:00:00', 'A0080620507581', '2019-05-08 00:00:00', '13', '2562/0050-62-853-00223', '2019-04-30 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '285', '32.0022', null, '1594955154', '1594955154', '2', null, '30', null, null);
+INSERT INTO `product_stock` VALUES ('5371', '7423', '1508', '30', '0', 'JLD08/2019  ', '2019-07-26 00:00:00', 'A0080620812781', '2019-08-08 00:00:00', '5', '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '290', '31.0324', null, '1594955154', '1594955154', '2', null, '30', null, null);
+INSERT INTO `product_stock` VALUES ('5372', '7423', '1509', '10', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '7', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '290', '30.7012', null, '1594955154', '1594955154', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5373', '7424', '1510', '70', '0', 'JLD15/2018 ', '2018-10-30 00:00:00', 'A0070611105380', '2018-11-07 00:00:00', '9', '2562/0050-62-853-00014', '2018-11-05 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '185', '32.8306', null, '1594955154', '1594955154', '2', null, '70', null, null);
+INSERT INTO `product_stock` VALUES ('5374', '7424', '1511', '50', '0', 'JLD05/2019  ', '2019-04-29 00:00:00', 'A0080620507581', '2019-05-08 00:00:00', '11', '2562/0050-62-853-0022330', '2019-04-30 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '143', '32.0022', null, '1594955154', '1594955154', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5375', '7424', '1512', '20', '0', 'JLD15/2019 ', '2019-12-17 00:00:00', 'A0250621203797', '2019-12-23 00:00:00', '3', '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '143', '30.3796', null, '1594955154', '1594955154', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5376', '7424', '1513', '50', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '13', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '143', '32.6476', null, '1594955154', '1594955154', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5377', '7424', '1514', '10', '0', 'JLD02/2019  ', '2019-02-25 00:00:00', 'A0040620308053', '2019-03-04 00:00:00', '4', '2562/0050-62-853-00151', '2019-02-27 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '185', '31.3607', null, '1594955154', '1594955154', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5378', '7424', '1515', '50', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '11', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '185', '30.7012', null, '1594955154', '1594955154', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5379', '7424', '1516', '10', '0', 'JLD15/2019 ', '2019-12-17 00:00:00', 'A0250621203797', '2019-12-23 00:00:00', '2', '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '185', '30.3796', null, '1594955154', '1594955154', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5380', '7424', '1517', '100', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '7', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '185', '32.6476', null, '1594955154', '1594955154', '2', null, '100', null, null);
+INSERT INTO `product_stock` VALUES ('5381', '7425', '1518', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955154', '1594955154', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5382', '7417', '1519', '10', '0', 'JLD08/2019 ', '2019-07-26 00:00:00', 'A0080620812781', '2019-08-08 00:00:00', '12', '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '265', '31.0324', null, '1594955154', '1594955154', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5383', '7426', '1520', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955154', '1594955154', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5384', '7427', '1521', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955154', '1594955154', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5385', '7421', '1522', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955154', '1594955154', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5386', '7428', '1523', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955154', '1594955154', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5387', '7429', '1524', '5', '0', 'JLD02/2020', '2020-02-05 00:00:00', 'A0210630204389', '2020-02-21 00:00:00', '4', '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '265', '30.5822', null, '1594955154', '1594955154', '2', null, '5', null, null);
+INSERT INTO `product_stock` VALUES ('5388', '7429', '1525', '20', '0', 'JLD04/2020 ', '2020-03-17 00:00:00', 'A0250630307131', '2020-03-19 00:00:00', '4', '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '265', '31.38', null, '1594955154', '1594955154', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5389', '7430', '1526', '10', '0', 'JLD02/2020', '2020-02-05 00:00:00', 'A0210630204389', '2020-02-21 00:00:00', '7', '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '245', '30.5822', null, '1594955154', '1594955154', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5390', '7431', '1527', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955154', '1594955154', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5391', '7432', '1528', '687', '0', 'JLD11/2018  ', '2018-09-03 00:00:00', 'A0110610905765', '2018-06-11 00:00:00', '1', '2558/0050-61-853-00434', '2018-09-07 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '11', '33.112', null, '1594955154', '1594955154', '2', null, '687', null, null);
+INSERT INTO `product_stock` VALUES ('5392', '7432', '1529', '270', '0', 'JLD13/2018  ', '2018-08-07 00:00:00', 'A0130610913074', '2018-09-13 00:00:00', '14', '2561/0050-61-853-00436', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '11', '33.112', null, '1594955154', '1594955154', '2', null, '270', null, null);
+INSERT INTO `product_stock` VALUES ('5393', '7432', '1530', '275', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '14', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '28', '30.7012', null, '1594955154', '1594955154', '2', null, '275', null, null);
+INSERT INTO `product_stock` VALUES ('5394', '7432', '1531', '75', '0', 'JLD15/2019 ', '2019-12-17 00:00:00', 'A0250621203797', '2019-12-23 00:00:00', '8', '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '28', '30.3796', null, '1594955154', '1594955154', '2', null, '75', null, null);
+INSERT INTO `product_stock` VALUES ('5395', '7432', '1532', '266', '0', 'JLD11/2018  ', '2018-09-03 00:00:00', 'A0110610905765', '2018-06-11 00:00:00', '2', '2561/0050-61-853-00434', '2018-09-07 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '15', '33.112', null, '1594955154', '1594955154', '2', null, '266', null, null);
+INSERT INTO `product_stock` VALUES ('5396', '7432', '1533', '75', '0', 'JLD08/2019 ', '2019-07-26 00:00:00', 'A0080620812781', '2019-08-08 00:00:00', '3', '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '25', '31.0324', null, '1594955154', '1594955154', '2', null, '75', null, null);
+INSERT INTO `product_stock` VALUES ('5397', '7432', '1534', '75', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '15', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '35', '30.7012', null, '1594955154', '1594955154', '2', null, '75', null, null);
+INSERT INTO `product_stock` VALUES ('5398', '7433', '1535', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955154', '1594955154', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5399', '7434', '1536', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955154', '1594955154', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5400', '7435', '1537', '90', '0', 'JLD15/2018  ', '2018-10-30 00:00:00', 'A0070611105380', '2018-11-07 00:00:00', '8', '2562/0050-62-853-00014', '2018-11-05 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '100', '32.8306', null, '1594955154', '1594955154', '2', null, '90', null, null);
+INSERT INTO `product_stock` VALUES ('5401', '7436', '1538', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955154', '1594955154', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5402', '7436', '1539', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955154', '1594955154', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5403', '7437', '1540', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5404', '7438', '1541', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5405', '7439', '1542', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5406', '7440', '1543', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5407', '7441', '1544', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5408', '7435', '1545', '100', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '5', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '126', '30.7012', null, '1594955155', '1594955155', '2', null, '100', null, null);
+INSERT INTO `product_stock` VALUES ('5409', '7435', '1546', '20', '0', 'JLD04/2020 ', '2020-03-17 00:00:00', 'A0250630307131', '2020-03-19 00:00:00', '8', '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '126', '31.38', null, '1594955155', '1594955155', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5410', '7442', '1547', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5411', '7443', '1548', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5412', '7444', '1549', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5413', '7445', '1550', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5414', '7446', '1551', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5415', '7447', '1552', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5416', '7448', '1553', '10', '0', 'JLD11/2019  ', '2019-09-30 00:00:00', 'A0170621013236', '2019-10-14 00:00:00', '12', '2563/0050-63-853-00012', '2019-10-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '450', '30.7012', null, '1594955155', '1594955155', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5417', '7449', '1554', '20', '0', 'JLD02/2020  ', '2020-02-05 00:00:00', 'A0210630204389', '2020-02-21 00:00:00', '8', '2563/0050-63-853-00181', '2020-02-07 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '450', '30.5822', null, '1594955155', '1594955155', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5418', '7450', '1555', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5419', '7451', '1556', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5420', '7452', '1557', '60', '0', 'JLD05/2019  ', '2019-04-29 00:00:00', 'A0080620507581', '2019-05-08 00:00:00', '15', '2562/0050-62-853-00223', '2019-04-30 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '76.89', '32.0022', null, '1594955155', '1594955155', '2', null, '60', null, null);
+INSERT INTO `product_stock` VALUES ('5421', '7453', '1558', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5422', '7454', '1559', '20', '0', 'JLD04/2020 ', '2020-03-17 00:00:00', 'A0250630307131', '2020-03-19 00:00:00', '6', '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '220', '31.38', null, '1594955155', '1594955155', '2', null, '20', null, null);
+INSERT INTO `product_stock` VALUES ('5423', '7455', '1560', '5', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '8', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '180', '32.6476', null, '1594955155', '1594955155', '2', null, '5', null, null);
+INSERT INTO `product_stock` VALUES ('5424', '7456', '1561', '5', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '9', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '220', '32.6476', null, '1594955155', '1594955155', '2', null, '5', null, null);
+INSERT INTO `product_stock` VALUES ('5425', '7457', '1562', '1', '0', 'JLD014/2018 ', '2018-10-01 00:00:00', 'A0100611005257', '2018-10-10 00:00:00', '9', '2562/0050-62-853-00002', '2018-10-05 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '930', '32.7024', null, '1594955155', '1594955155', '2', null, '1', null, null);
+INSERT INTO `product_stock` VALUES ('5426', '7458', '1563', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5427', '7459', '1564', '48', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '8', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '142', '32.8452', null, '1594955155', '1594955155', '2', null, '48', null, null);
+INSERT INTO `product_stock` VALUES ('5428', '7460', '1565', '13', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '9', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '142', '32.8452', null, '1594955155', '1594955155', '2', null, '13', null, null);
+INSERT INTO `product_stock` VALUES ('5429', '7461', '1566', '40', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '10', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '152', '32.8452', null, '1594955155', '1594955155', '2', null, '40', null, null);
+INSERT INTO `product_stock` VALUES ('5430', '7462', '1567', '28', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '11', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '147', '32.8452', null, '1594955155', '1594955155', '2', null, '28', null, null);
+INSERT INTO `product_stock` VALUES ('5431', '7462', '1568', '1', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '12', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '122.5', '32.8452', null, '1594955155', '1594955155', '2', null, '1', null, null);
+INSERT INTO `product_stock` VALUES ('5432', '7463', '1569', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5433', '7464', '1570', '3', '0', 'JLD06/2019', '2019-05-02 00:00:00', 'A0280620507084', '2019-05-28 00:00:00', '4', '2562/0050-62-853-00236', '2019-05-16 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '1860', '32.0022', null, '1594955155', '1594955155', '2', null, '3', null, null);
+INSERT INTO `product_stock` VALUES ('5434', '7465', '1571', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5435', '7466', '1572', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5436', '7467', '1573', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5437', '7468', '1574', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5438', '7469', '1575', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5439', '7470', '1576', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5440', '7471', '1577', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5441', '7472', '1578', '60', '0', 'JLD10/2018 ', '2018-07-24 00:00:00', 'A0040610905604', '2018-09-04 00:00:00', '1', '2561/0050-61-853-00426', '2018-08-29 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '216', '33.112', null, '1594955155', '1594955155', '2', null, '60', null, null);
+INSERT INTO `product_stock` VALUES ('5442', '7473', '1579', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5443', '7474', '1580', '50', '0', 'JLD16/2018  ', '2018-10-16 00:00:00', 'A0260611114768', '2018-11-26 00:00:00', '3', '2562/0050-62-853-00025', '2018-11-13 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '552', '32.8306', null, '1594955155', '1594955155', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5444', '7475', '1581', '5', '0', 'JLD06/2019', '2019-05-02 00:00:00', 'A0280620507084', '2019-05-28 00:00:00', '1', '2562/0050-62-853-00236', '2019-05-16 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '588', '32.0022', null, '1594955155', '1594955155', '2', null, '5', null, null);
+INSERT INTO `product_stock` VALUES ('5445', '7476', '1582', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5446', '7477', '1583', '250', '0', 'JLD12/2019 ', '2019-10-10 00:00:00', 'A0140621112313', '2019-11-12 00:00:00', '5', '2563/0050-63-853-00048', '2019-11-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '168', '30.4598', null, '1594955155', '1594955155', '2', null, '250', null, null);
+INSERT INTO `product_stock` VALUES ('5447', '7477', '1584', '70', '0', 'JLD014/2018', '2018-10-01 00:00:00', 'A0100611005257', '2018-10-10 00:00:00', '3', '2562/0050-62-853-00002', '2018-10-05 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '145', '32.7024', null, '1594955155', '1594955155', '2', null, '70', null, null);
+INSERT INTO `product_stock` VALUES ('5448', '7478', '1585', '100', '0', 'JLD12/2019 ', '2019-10-10 00:00:00', 'A0140621112313', '2019-11-12 00:00:00', '4', '2563/0050-63-853-00048', '2019-11-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '204', '30.4598', null, '1594955155', '1594955155', '2', null, '100', null, null);
+INSERT INTO `product_stock` VALUES ('5449', '7479', '1586', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5450', '7480', '1587', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955155', '1594955155', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5451', '7481', '1588', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5452', '7482', '1589', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5453', '7483', '1590', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5454', '7484', '1591', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5455', '7484', '1592', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5456', '7485', '1593', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5457', '7486', '1594', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5458', '7487', '1595', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5459', '7488', '1596', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5460', '7489', '1597', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5461', '7490', '1598', '300', '0', 'JLD12/2019  ', '2019-10-10 00:00:00', 'A0140621112313', '2019-11-12 00:00:00', '1', '2563/0050-63-853-00048', '2019-11-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '67.2', '30.4598', null, '1594955156', '1594955156', '2', null, '300', null, null);
+INSERT INTO `product_stock` VALUES ('5462', '7491', '1599', '300', '0', 'JLD12/2019  ', '2019-10-10 00:00:00', 'A0140621112313', '2019-11-12 00:00:00', '2', '2563/0050-63-853-00048', '2019-11-11 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '67.2', '30.4598', null, '1594955156', '1594955156', '2', null, '300', null, null);
+INSERT INTO `product_stock` VALUES ('5463', '7492', '1600', '750', '0', 'JLD14/2019 ', '2019-11-06 00:00:00', 'A0020621218859', '2019-12-02 00:00:00', '1', '2563/0050-63-853-00056', '2019-11-18 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '102', '30.3796', null, '1594955156', '1594955156', '2', null, '750', null, null);
+INSERT INTO `product_stock` VALUES ('5464', '7493', '1601', '70', '0', 'JLD14/2019 ', '2019-11-06 00:00:00', 'A0020621218859', '2019-12-02 00:00:00', '3', '2563/0050-63-853-00056', '2019-11-18 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '204', '30.3796', null, '1594955156', '1594955156', '2', null, '70', null, null);
+INSERT INTO `product_stock` VALUES ('5465', '7494', '1602', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5466', '7495', '1603', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5467', '7496', '1604', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5468', '7496', '1605', '12', '0', 'JLD11/2018  ', '2018-09-03 00:00:00', 'A0110610905765', '2018-09-11 00:00:00', '5', '2561/0050-61-853-00434', '2018-09-07 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '66', '33.112', null, '1594955156', '1594955156', '2', null, '12', null, null);
+INSERT INTO `product_stock` VALUES ('5469', '7497', '1606', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5470', '7498', '1607', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5471', '7499', '1608', '1150', '0', 'JLD05/2018  ', '2018-06-20 00:00:00', 'A0020610714562', '2018-07-02 00:00:00', '1', '2561/0050-61-853-00376', '2018-06-25 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '42', '32.3039', null, '1594955156', '1594955156', '2', null, '1150', null, null);
+INSERT INTO `product_stock` VALUES ('5472', '7499', '1609', '100', '0', 'JLD15/2019  ', '2019-12-17 00:00:00', 'A0250621203797', '2019-12-23 00:00:00', '9', '2563/0050-63-853-00109', '2019-12-20 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '43', '30.3796', null, '1594955156', '1594955156', '2', null, '100', null, null);
+INSERT INTO `product_stock` VALUES ('5473', '7499', '1610', '100', '0', 'JLD05/2020 ', '2020-03-18 00:00:00', 'A0250630307139', '2020-03-20 00:00:00', '11', '2563/0050-63-853-00241', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '43', '31.38', null, '1594955156', '1594955156', '2', null, '100', null, null);
+INSERT INTO `product_stock` VALUES ('5474', '7500', '1611', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5475', '7501', '1612', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5476', '7502', '1613', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5477', '7503', '1614', '179', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '13', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '29', '32.8452', null, '1594955156', '1594955156', '2', null, '179', null, null);
+INSERT INTO `product_stock` VALUES ('5478', '7503', '1615', '1', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '14', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '9.67', '32.8452', null, '1594955156', '1594955156', '2', null, '1', null, null);
+INSERT INTO `product_stock` VALUES ('5479', '7504', '1616', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5480', '7505', '1617', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5481', '7506', '1618', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5482', '7507', '1619', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5483', '7508', '1620', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5484', '7509', '1621', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5485', '7510', '1622', '50', '0', 'JLD08/2019  ', '2019-07-26 00:00:00', 'A0080620812781', '2019-08-08 00:00:00', '2', '2562/0050-62-853-00301', '2019-08-02 00:00:00', '3-2-42-118498-2562', '2019-01-11 00:00:00', '290', '31.0324', null, '1594955156', '1594955156', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5486', '7511', '1623', '50', '0', 'JLD04/2020 ', '2020-03-17 00:00:00', 'A0250630307131', '2020-03-19 00:00:00', '10', '2563/0050-63-853-00240', '2020-03-18 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '90', '31.38', null, '1594955156', '1594955156', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5487', '7511', '1624', '50', '0', 'JLD06/2020', '2020-05-13 00:00:00', 'A0270630510280', '2020-05-28 00:00:00', '11', '2563/0050-63-853-00299', '2020-05-15 00:00:00', '3-2-42-000175-2563', '2020-01-15 00:00:00', '90', '32.6476', null, '1594955156', '1594955156', '2', null, '50', null, null);
+INSERT INTO `product_stock` VALUES ('5488', '7512', '1625', '232', '0', 'JLD12/2018  ', '2018-09-04 00:00:00', 'A0130610909085', '2018-09-13 00:00:00', '2', '2561/0050-61-853-00435', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '9', '33.112', null, '1594955156', '1594955156', '2', null, '232', null, null);
+INSERT INTO `product_stock` VALUES ('5489', '7513', '1626', '99', '0', 'JLD12/2018  ', '2018-09-04 00:00:00', 'A0130610909085', '2018-09-13 00:00:00', '3', '2561/0050-61-853-00435', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '9', '33.112', null, '1594955156', '1594955156', '2', null, '99', null, null);
+INSERT INTO `product_stock` VALUES ('5490', '7514', '1627', '10', '0', 'JLD12/2018  ', '2018-09-04 00:00:00', 'A0130610909085', '2018-09-13 00:00:00', '4', '2561/0050-61-853-00435', '2018-09-11 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '9', '33.112', null, '1594955156', '1594955156', '2', null, '10', null, null);
+INSERT INTO `product_stock` VALUES ('5491', '7515', '1628', '1', '0', 'JLD06/2018 ', '2018-07-02 00:00:00', 'A0090610718297', '2018-07-09 00:00:00', '1', '2561/0050-61-853-00385', '2018-07-04 00:00:00', '3-2-42-114049-2561', '2018-01-12 00:00:00', '64.8', '32.8452', null, '1594955156', '1594955156', '2', null, '1', null, null);
+INSERT INTO `product_stock` VALUES ('5492', '7516', '1629', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5493', '7517', '1630', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
+INSERT INTO `product_stock` VALUES ('5494', '7518', '1631', '0', '0', '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, '', '1970-01-01 00:00:00', '', '1970-01-01 00:00:00', null, null, null, '1594955156', '1594955156', '2', null, '0', null, null);
 
 -- ----------------------------
 -- Table structure for `province`
@@ -11656,13 +13107,13 @@ CREATE TABLE `quotation` (
   `updated_at` int(11) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
+  `currency_rate` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of quotation
 -- ----------------------------
-INSERT INTO `quotation` VALUES ('7', 'QT20000001', null, '1582563600', '1', 'tr', null, '1', null, null, null, null, '', '1', '1582626422', '1582626422', '2', null);
 
 -- ----------------------------
 -- Table structure for `quotation_line`
@@ -11687,12 +13138,11 @@ CREATE TABLE `quotation_line` (
   `updated_by` int(11) DEFAULT NULL,
   `stock_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of quotation_line
 -- ----------------------------
-INSERT INTO `quotation_line` VALUES ('7', '7', '2113', null, '1', '20', null, null, null, null, null, null, '1582626422', '1582626422', '2', null, '22');
 
 -- ----------------------------
 -- Table structure for `sale`
@@ -11719,13 +13169,13 @@ CREATE TABLE `sale` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   `payment_status` int(11) DEFAULT NULL,
+  `currency_rate` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sale
 -- ----------------------------
-INSERT INTO `sale` VALUES ('7', 'IV20000001', null, '1582563600', '1', null, null, '1', null, null, null, '20', '7', '', '1', '1582626428', '1582626428', '2', null, '0');
 
 -- ----------------------------
 -- Table structure for `sale_invoice`
@@ -11805,12 +13255,11 @@ CREATE TABLE `sale_line` (
   `unit_id` int(11) DEFAULT NULL,
   `stock_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sale_line
 -- ----------------------------
-INSERT INTO `sale_line` VALUES ('7', '7', '2113', null, '1', '20', null, null, null, null, null, null, '1582626428', '1582626428', '2', null, null, '22');
 
 -- ----------------------------
 -- Table structure for `section`
@@ -11904,12 +13353,14 @@ CREATE TABLE `unit` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of unit
 -- ----------------------------
 INSERT INTO `unit` VALUES ('1', 'เส้น', 'เส้น', '1', '1581910301', '1581910301', '2', null);
+INSERT INTO `unit` VALUES ('2', 'CT', null, '1', '1591069600', '1591069600', '2', null);
+INSERT INTO `unit` VALUES ('3', 'BO', null, '1', '1591069600', '1591069600', '2', null);
 
 -- ----------------------------
 -- Table structure for `user`
@@ -11996,7 +13447,7 @@ CREATE TABLE `warehouse` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1076 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1632 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of warehouse
@@ -13076,18 +14527,604 @@ INSERT INTO `warehouse` VALUES ('1072', 'ʵ?͡?????', null, null, '1', '15819476
 INSERT INTO `warehouse` VALUES ('1073', '??ѡ', null, null, '1', '1581947661', '1581947661', '2', null);
 INSERT INTO `warehouse` VALUES ('1074', '??ѡ', null, null, '1', '1581947661', '1581947661', '2', null);
 INSERT INTO `warehouse` VALUES ('1075', '??ѡ', null, null, '1', '1581947661', '1581947661', '2', null);
+INSERT INTO `warehouse` VALUES ('1076', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1077', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1078', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1079', '?????', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1080', '?????', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1081', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1082', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1083', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1084', '??ѡ ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1085', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1086', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1087', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1088', '??ѡ ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1089', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1090', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1091', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1092', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1093', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1094', '??ѡ ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1095', '??ѡ ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1096', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1097', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1098', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1099', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1100', '?????', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1101', '?????', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1102', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1103', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1104', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1105', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1106', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1107', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1108', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1109', '??ѡ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1110', '??ѡ ', null, null, '1', '1594907525', '1594907525', '2', null);
+INSERT INTO `warehouse` VALUES ('1111', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1112', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1113', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1114', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1115', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1116', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1117', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1118', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1119', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1120', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1121', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1122', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1123', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1124', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1125', '??ѡ ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1126', '??ѡ ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1127', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1128', '??ѡ ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1129', '??ѡ ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1130', '??ѡ ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1131', '??ѡ ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1132', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1133', '??ѡ ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1134', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1135', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1136', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1137', '??ѡ ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1138', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1139', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1140', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1141', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1142', '?????', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1143', '?????', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1144', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1145', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1146', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1147', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1148', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1149', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1150', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1151', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1152', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1153', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1154', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1155', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1156', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1157', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1158', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1159', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1160', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1161', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1162', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1163', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1164', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1165', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1166', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1167', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1168', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1169', '??ѡ', null, null, '1', '1594907526', '1594907526', '2', null);
+INSERT INTO `warehouse` VALUES ('1170', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1171', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1172', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1173', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1174', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1175', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1176', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1177', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1178', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1179', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1180', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1181', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1182', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1183', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1184', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1185', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1186', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1187', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1188', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1189', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1190', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1191', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1192', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1193', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1194', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1195', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1196', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1197', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1198', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1199', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1200', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1201', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1202', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1203', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1204', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1205', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1206', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1207', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1208', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1209', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1210', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1211', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1212', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1213', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1214', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1215', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1216', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1217', '??ѡ ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1218', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1219', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1220', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1221', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1222', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1223', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1224', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1225', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1226', '??ѡ', null, null, '1', '1594907527', '1594907527', '2', null);
+INSERT INTO `warehouse` VALUES ('1227', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1228', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1229', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1230', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1231', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1232', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1233', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1234', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1235', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1236', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1237', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1238', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1239', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1240', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1241', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1242', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1243', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1244', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1245', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1246', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1247', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1248', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1249', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1250', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1251', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1252', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1253', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1254', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1255', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1256', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1257', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1258', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1259', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1260', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1261', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1262', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1263', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1264', '??ѡ ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1265', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1266', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1267', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1268', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1269', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1270', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1271', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1272', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1273', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1274', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1275', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1276', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1277', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1278', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1279', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1280', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1281', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1282', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1283', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1284', 'ʵ?͡????Է', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1285', '??ѡ', null, null, '1', '1594907528', '1594907528', '2', null);
+INSERT INTO `warehouse` VALUES ('1286', 'ʵ?͡?????', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1287', 'ʵ?͡?????', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1288', 'ʵ?͡?????', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1289', 'ʵ?͡?????', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1290', 'ʵ?͡?????', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1291', '??ѡ ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1292', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1293', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1294', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1295', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1296', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1297', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1298', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1299', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1300', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1301', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1302', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1303', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1304', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1305', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1306', 'ʵ?͡????Է', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1307', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1308', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1309', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1310', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1311', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1312', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1313', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1314', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1315', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1316', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1317', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1318', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1319', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1320', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1321', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1322', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1323', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1324', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1325', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1326', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1327', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1328', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1329', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1330', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1331', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1332', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1333', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1334', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1335', '??ѡ', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1336', 'ʵ?͡?????', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1337', 'ʵ?͡?????', null, null, '1', '1594907529', '1594907529', '2', null);
+INSERT INTO `warehouse` VALUES ('1338', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1339', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1340', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1341', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1342', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1343', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1344', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1345', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1346', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1347', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1348', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1349', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1350', 'ʵ?͡?????', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1351', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1352', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1353', '??ѡ', null, null, '1', '1594907530', '1594907530', '2', null);
+INSERT INTO `warehouse` VALUES ('1354', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1355', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1356', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1357', '?????', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1358', '?????', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1359', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1360', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1361', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1362', '??ѡ ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1363', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1364', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1365', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1366', '??ѡ ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1367', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1368', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1369', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1370', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1371', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1372', '??ѡ ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1373', '??ѡ ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1374', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1375', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1376', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1377', '??ѡ', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1378', '?????', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1379', '?????', null, null, '1', '1594955143', '1594955143', '2', null);
+INSERT INTO `warehouse` VALUES ('1380', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1381', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1382', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1383', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1384', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1385', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1386', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1387', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1388', '??ѡ ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1389', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1390', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1391', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1392', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1393', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1394', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1395', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1396', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1397', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1398', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1399', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1400', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1401', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1402', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1403', '??ѡ ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1404', '??ѡ ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1405', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1406', '??ѡ ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1407', '??ѡ ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1408', '??ѡ ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1409', '??ѡ ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1410', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1411', '??ѡ ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1412', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1413', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1414', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1415', '??ѡ ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1416', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1417', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1418', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1419', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1420', '?????', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1421', '?????', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1422', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1423', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1424', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1425', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1426', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1427', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1428', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1429', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1430', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1431', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1432', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1433', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1434', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1435', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1436', '??ѡ', null, null, '1', '1594955144', '1594955144', '2', null);
+INSERT INTO `warehouse` VALUES ('1437', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1438', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1439', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1440', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1441', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1442', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1443', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1444', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1445', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1446', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1447', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1448', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1449', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1450', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1451', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1452', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1453', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1454', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1455', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1456', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1457', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1458', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1459', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1460', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1461', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1462', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1463', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1464', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1465', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1466', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1467', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1468', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1469', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1470', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1471', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1472', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1473', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1474', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1475', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1476', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1477', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1478', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1479', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1480', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1481', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1482', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1483', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1484', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1485', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1486', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1487', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1488', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1489', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1490', '??ѡ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1491', '??ѡ ', null, null, '1', '1594955145', '1594955145', '2', null);
+INSERT INTO `warehouse` VALUES ('1492', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1493', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1494', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1495', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1496', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1497', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1498', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1499', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1500', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1501', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1502', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1503', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1504', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1505', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1506', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1507', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1508', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1509', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1510', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1511', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1512', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1513', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1514', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1515', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1516', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1517', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1518', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1519', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1520', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1521', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1522', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1523', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1524', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1525', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1526', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1527', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1528', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1529', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1530', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1531', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1532', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1533', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1534', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1535', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1536', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1537', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1538', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1539', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1540', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1541', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1542', '??ѡ ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1543', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1544', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1545', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1546', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1547', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1548', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1549', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1550', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1551', '??ѡ', null, null, '1', '1594955146', '1594955146', '2', null);
+INSERT INTO `warehouse` VALUES ('1552', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1553', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1554', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1555', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1556', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1557', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1558', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1559', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1560', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1561', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1562', 'ʵ?͡????Է', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1563', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1564', 'ʵ?͡?????', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1565', 'ʵ?͡?????', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1566', 'ʵ?͡?????', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1567', 'ʵ?͡?????', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1568', 'ʵ?͡?????', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1569', '??ѡ ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1570', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1571', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1572', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1573', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1574', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1575', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1576', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1577', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1578', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1579', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1580', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1581', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1582', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1583', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1584', 'ʵ?͡????Է', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1585', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1586', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1587', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1588', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1589', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1590', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1591', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1592', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1593', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1594', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1595', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1596', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1597', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1598', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1599', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1600', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1601', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1602', '??ѡ', null, null, '1', '1594955147', '1594955147', '2', null);
+INSERT INTO `warehouse` VALUES ('1603', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1604', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1605', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1606', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1607', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1608', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1609', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1610', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1611', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1612', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1613', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1614', 'ʵ?͡?????', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1615', 'ʵ?͡?????', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1616', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1617', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1618', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1619', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1620', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1621', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1622', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1623', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1624', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1625', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1626', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1627', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1628', 'ʵ?͡?????', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1629', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1630', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+INSERT INTO `warehouse` VALUES ('1631', '??ѡ', null, null, '1', '1594955148', '1594955148', '2', null);
+
+-- ----------------------------
+-- View structure for `query_inbound`
+-- ----------------------------
+DROP VIEW IF EXISTS `query_inbound`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `query_inbound` AS select `inbound_inv`.`invoice_no` AS `invoice_no`,`inbound_inv`.`invoice_date` AS `invoice_date`,`inbound_inv`.`supplier_id` AS `supplier_id`,`inbound_inv`.`docin_no` AS `docin_no`,`inbound_inv_line`.`permit_no` AS `permit_no`,`inbound_inv_line`.`permit_date` AS `permit_date`,`inbound_inv_line`.`transport_in_no` AS `transport_in_no`,`inbound_inv_line`.`transport_in_date` AS `transport_in_date`,sum(`inbound_inv_line`.`line_qty`) AS `line_qty`,sum((`inbound_inv_line`.`line_qty` * `inbound_inv_line`.`line_price`)) AS `line_price`,`vendor`.`name` AS `name`,`currency`.`name` AS `currency_name`,`unit`.`name` AS `unit_name`,month(`inbound_inv`.`invoice_date`) AS `month`,`inbound_inv`.`currency_rate` AS `currency_rate` from ((((((`inbound_inv` join `inbound_inv_line` on((`inbound_inv`.`id` = `inbound_inv_line`.`invoice_id`))) left join `vendor` on((`inbound_inv`.`supplier_id` = `vendor`.`id`))) left join `currency` on((`inbound_inv`.`currency_id` = `currency`.`id`))) join `product` on((`inbound_inv_line`.`product_id` = `product`.`id`))) left join `unit` on((`product`.`unit_id` = `unit`.`id`))) left join `product_category` on((`product`.`category_id` = `product_category`.`id`))) group by `inbound_inv`.`invoice_no`,`inbound_inv`.`invoice_date`,`inbound_inv`.`supplier_id`,`inbound_inv`.`docin_no`,`inbound_inv_line`.`permit_no`,`inbound_inv_line`.`permit_date`,`inbound_inv_line`.`transport_in_no`,`inbound_inv_line`.`transport_in_date`,`vendor`.`name`,`currency`.`name`,`unit`.`name`,`inbound_inv`.`currency_rate`;
+
+-- ----------------------------
+-- View structure for `query_invoice_category`
+-- ----------------------------
+DROP VIEW IF EXISTS `query_invoice_category`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `query_invoice_category` AS select `inbound_inv`.`docin_no` AS `docin_no`,`product_category`.`name` AS `name` from (((`inbound_inv` join `inbound_inv_line` on((`inbound_inv`.`id` = `inbound_inv_line`.`invoice_id`))) join `product` on((`inbound_inv_line`.`product_id` = `product`.`id`))) left join `product_category` on((`product`.`category_id` = `product_category`.`id`))) group by `inbound_inv`.`invoice_no`,`inbound_inv`.`invoice_date`,`inbound_inv`.`supplier_id`,`inbound_inv`.`docin_no`,`inbound_inv_line`.`permit_no`,`inbound_inv_line`.`permit_date`,`inbound_inv_line`.`transport_in_no`,`inbound_inv_line`.`transport_in_date`,`product_category`.`name`;
+
+-- ----------------------------
+-- View structure for `query_invoice_out_category`
+-- ----------------------------
+DROP VIEW IF EXISTS `query_invoice_out_category`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `query_invoice_out_category` AS select `picking`.`picking_no` AS `picking_no`,`sale`.`sale_no` AS `sale_no`,`product_category`.`name` AS `name` from ((((`picking` left join `picking_line` on((`picking`.`id` = `picking_line`.`picking_id`))) join `sale` on((`picking`.`sale_id` = `sale`.`id`))) join `product` on((`picking_line`.`product_id` = `product`.`id`))) join `product_category` on((`product`.`category_id` = `product_category`.`id`)));
 
 -- ----------------------------
 -- View structure for `query_picking`
 -- ----------------------------
 DROP VIEW IF EXISTS `query_picking`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `query_picking` AS select `picking`.`picking_no` AS `picking_no`,`picking`.`picking_date` AS `picking_date`,`picking_line`.`product_id` AS `product_id`,`product`.`product_code` AS `product_code`,`product`.`name` AS `name`,`picking_line`.`qty` AS `qty`,`unit`.`name` AS `unit_name`,`picking_line`.`permit_no` AS `permit_no`,`picking_line`.`permit_date` AS `permit_date`,`picking_line`.`inv_no` AS `inv_no`,`picking_line`.`price` AS `price`,`picking_line`.`inv_date` AS `inv_date`,`picking_line`.`trans_out_no` AS `trans_out_no`,`picking_line`.`kno_out_no` AS `kno_out_no`,`picking_line`.`kno_out_date` AS `kno_out_date`,`picking_line`.`transport_out_no` AS `transport_out_no`,`picking_line`.`transport_out_date` AS `transport_out_date`,`customer`.`name` AS `customer_name`,`customer`.`customer_country` AS `customer_country`,`countries`.`country_name` AS `country_name` from ((((((`picking` join `picking_line` on((`picking`.`id` = `picking_line`.`picking_id`))) join `product` on((`picking_line`.`product_id` = `product`.`id`))) left join `unit` on((`product`.`unit_id` = `unit`.`id`))) join `sale` on((`picking`.`sale_id` = `sale`.`id`))) left join `customer` on((`sale`.`customer_id` = `customer`.`id`))) join `countries` on((`customer`.`customer_country` = `countries`.`id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `query_picking` AS select month(`picking`.`picking_date`) AS `month`,sum(`picking_line`.`qty`) AS `qty`,`unit`.`name` AS `unit_name`,sum((`picking_line`.`qty` * `picking_line`.`price`)) AS `price`,`picking_line`.`trans_out_no` AS `trans_out_no`,`picking_line`.`kno_out_no` AS `kno_out_no`,`picking_line`.`kno_out_date` AS `kno_out_date`,`picking_line`.`transport_out_no` AS `transport_out_no`,`picking_line`.`transport_out_date` AS `transport_out_date`,`customer`.`name` AS `customer_name`,`customer`.`customer_country` AS `customer_country`,`countries`.`country_name` AS `country_name`,`sale`.`payment_status` AS `payment_status`,`sale`.`note` AS `note`,`sale`.`currency` AS `currency`,`currency`.`name` AS `currency_name`,`sale`.`sale_no` AS `sale_no`,`sale`.`id` AS `id`,`sale`.`revise` AS `revise`,`sale`.`require_date` AS `require_date`,`sale`.`customer_id` AS `customer_id`,`sale`.`customer_ref` AS `customer_ref`,`sale`.`delvery_to` AS `delvery_to`,`sale`.`sale_id` AS `sale_id`,`sale`.`disc_amount` AS `disc_amount`,`sale`.`disc_percent` AS `disc_percent`,`sale`.`total_amount` AS `total_amount`,`sale`.`quotation_id` AS `quotation_id`,`sale`.`status` AS `status`,`sale`.`created_at` AS `created_at`,`sale`.`updated_at` AS `updated_at`,`sale`.`created_by` AS `created_by`,`sale`.`updated_by` AS `updated_by`,`sale`.`currency_rate` AS `rate`,`picking`.`picking_date` AS `picking_date` from (((((((`picking` join `picking_line` on((`picking`.`id` = `picking_line`.`picking_id`))) left join `product` on((`picking_line`.`product_id` = `product`.`id`))) left join `unit` on((`product`.`unit_id` = `unit`.`id`))) join `sale` on((`picking`.`sale_id` = `sale`.`id`))) left join `customer` on((`sale`.`customer_id` = `customer`.`id`))) left join `countries` on((`customer`.`customer_country` = `countries`.`id`))) left join `currency` on((`sale`.`currency` = `currency`.`id`))) group by `picking`.`picking_no`,`picking`.`picking_date`,`unit`.`name`,`picking_line`.`inv_date`,`picking_line`.`trans_out_no`,`picking_line`.`kno_out_no`,`picking_line`.`kno_out_date`,`picking_line`.`transport_out_no`,`picking_line`.`transport_out_date`,`customer`.`name`,`customer`.`customer_country`,`countries`.`country_name`,`sale`.`payment_status`,`sale`.`note`,`sale`.`currency`,`currency`.`name`,`sale`.`sale_no`,`sale`.`id`;
+
+-- ----------------------------
+-- View structure for `query_picking_copy`
+-- ----------------------------
+DROP VIEW IF EXISTS `query_picking_copy`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `query_picking_copy` AS select `picking`.`picking_no` AS `picking_no`,month(`picking`.`picking_date`) AS `month`,`picking`.`picking_date` AS `picking_date`,sum(`picking_line`.`qty`) AS `qty`,`unit`.`name` AS `unit_name`,`picking_line`.`permit_no` AS `permit_no`,`picking_line`.`permit_date` AS `permit_date`,`picking_line`.`inv_no` AS `inv_no`,sum((`picking_line`.`price` * `picking_line`.`qty`)) AS `price`,`picking_line`.`inv_date` AS `inv_date`,`picking_line`.`trans_out_no` AS `trans_out_no`,`picking_line`.`kno_out_no` AS `kno_out_no`,`picking_line`.`kno_out_date` AS `kno_out_date`,`picking_line`.`transport_out_no` AS `transport_out_no`,`picking_line`.`transport_out_date` AS `transport_out_date`,`customer`.`name` AS `customer_name`,`customer`.`customer_country` AS `customer_country`,`countries`.`country_name` AS `country_name`,`product_category`.`name` AS `product_group`,`sale`.`payment_status` AS `payment_status`,`sale`.`note` AS `note`,`sale`.`currency` AS `currency`,`currency`.`name` AS `currency_name`,`currency_rate`.`rate_factor` AS `rate_factor`,`sale`.`sale_no` AS `sale_no`,`currency_rate`.`rate` AS `rate` from (((((((((`picking` join `picking_line` on((`picking`.`id` = `picking_line`.`picking_id`))) join `product` on((`picking_line`.`product_id` = `product`.`id`))) left join `unit` on((`product`.`unit_id` = `unit`.`id`))) join `sale` on((`picking`.`sale_id` = `sale`.`id`))) left join `customer` on((`sale`.`customer_id` = `customer`.`id`))) join `countries` on((`customer`.`customer_country` = `countries`.`id`))) left join `product_category` on((`product`.`category_id` = `product_category`.`id`))) left join `currency` on((`sale`.`currency` = `currency`.`id`))) left join `currency_rate` on((`sale`.`currency` = `currency_rate`.`from_currency`))) group by `picking`.`picking_no`,`picking`.`picking_date`,`unit`.`name`,`picking_line`.`permit_no`,`picking_line`.`permit_date`,`picking_line`.`inv_no`,`picking_line`.`inv_date`,`picking_line`.`trans_out_no`,`picking_line`.`kno_out_no`,`picking_line`.`kno_out_date`,`picking_line`.`transport_out_no`,`picking_line`.`transport_out_date`,`customer`.`name`,`customer`.`customer_country`,`countries`.`country_name`,`product_category`.`name`,`sale`.`payment_status`,`sale`.`note`,`sale`.`currency`,`currency`.`name`,`currency_rate`.`rate_factor`,`sale`.`sale_no`,`currency_rate`.`rate`;
 
 -- ----------------------------
 -- View structure for `query_product`
 -- ----------------------------
 DROP VIEW IF EXISTS `query_product`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `query_product` AS select `product`.`product_code` AS `product_code`,`product`.`name` AS `name`,`product`.`id` AS `id`,`product`.`description` AS `description`,`product`.`category_id` AS `category_id`,`product`.`product_type_id` AS `product_type_id`,`product`.`unit_id` AS `unit_id`,`product`.`min_stock` AS `min_stock`,`product`.`max_stock` AS `max_stock`,`product`.`barcode` AS `barcode`,`product`.`is_hold` AS `is_hold`,`product`.`bom_type` AS `bom_type`,`product`.`cost` AS `cost`,`product`.`price` AS `price`,`product`.`status` AS `status`,`product`.`all_qty` AS `all_qty`,`product`.`origin` AS `origin`,`product`.`unit_factor` AS `unit_factor`,`product`.`volumn_content` AS `volumn_content`,`product`.`volumn` AS `volumn`,`product`.`engname` AS `engname`,`product`.`netweight` AS `netweight`,`product`.`grossweight` AS `grossweight`,`product`.`excise_date` AS `excise_date`,`product_category`.`name` AS `group_name`,`product_stock`.`warehouse_id` AS `warehouse_id`,`warehouse`.`name` AS `warehouse_name`,`product_stock`.`in_qty` AS `in_qty`,`product_stock`.`out_qty` AS `out_qty`,`product_stock`.`invoice_no` AS `invoice_no`,date_format(`product_stock`.`invoice_date`,'%d-%m-%Y') AS `invoice_date`,`product_stock`.`transport_in_no` AS `transport_in_no`,date_format(`product_stock`.`transport_in_date`,'%d-%m-%Y') AS `transport_in_date`,`product_stock`.`sequence` AS `sequence`,`product_stock`.`permit_no` AS `permit_no`,date_format(`product_stock`.`permit_date`,'%d-%m-%Y') AS `permit_date`,`product_stock`.`kno_no_in` AS `kno_no_in`,date_format(`product_stock`.`kno_in_date`,'%d-%m-%Y') AS `kno_in_date`,`product`.`excise_no` AS `excise_no`,`product_stock`.`usd_rate` AS `usd_rate`,`product_stock`.`thb_amount` AS `thb_amount`,`product_stock`.`status` AS `stock_status`,`product_stock`.`id` AS `stock_id` from (((`product` left join `product_category` on((`product`.`category_id` = `product_category`.`id`))) left join `product_stock` on((`product`.`id` = `product_stock`.`product_id`))) left join `warehouse` on((`product_stock`.`warehouse_id` = `warehouse`.`id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `query_product` AS select `product`.`product_code` AS `product_code`,`product`.`name` AS `name`,`product`.`id` AS `id`,`product`.`description` AS `description`,`product`.`category_id` AS `category_id`,`product`.`product_type_id` AS `product_type_id`,`product`.`unit_id` AS `unit_id`,`product`.`min_stock` AS `min_stock`,`product`.`max_stock` AS `max_stock`,`product`.`barcode` AS `barcode`,`product`.`is_hold` AS `is_hold`,`product`.`bom_type` AS `bom_type`,`product`.`cost` AS `cost`,`product`.`price` AS `price`,`product`.`status` AS `status`,`product`.`all_qty` AS `all_qty`,`product`.`origin` AS `origin`,`product`.`unit_factor` AS `unit_factor`,`product`.`volumn_content` AS `volumn_content`,`product`.`volumn` AS `volumn`,`product`.`engname` AS `engname`,`product`.`netweight` AS `netweight`,`product`.`grossweight` AS `grossweight`,`product`.`excise_date` AS `excise_date`,`product_category`.`name` AS `group_name`,`product_stock`.`warehouse_id` AS `warehouse_id`,`warehouse`.`name` AS `warehouse_name`,`product_stock`.`in_qty` AS `in_qty`,`product_stock`.`out_qty` AS `out_qty`,`product_stock`.`invoice_no` AS `invoice_no`,date_format(`product_stock`.`invoice_date`,'%d-%m-%Y') AS `invoice_date`,`product_stock`.`transport_in_no` AS `transport_in_no`,date_format(`product_stock`.`transport_in_date`,'%d-%m-%Y') AS `transport_in_date`,`product_stock`.`sequence` AS `sequence`,`product_stock`.`permit_no` AS `permit_no`,date_format(`product_stock`.`permit_date`,'%d-%m-%Y') AS `permit_date`,`product_stock`.`kno_no_in` AS `kno_no_in`,date_format(`product_stock`.`kno_in_date`,'%d-%m-%Y') AS `kno_in_date`,`product`.`excise_no` AS `excise_no`,`product_stock`.`usd_rate` AS `usd_rate`,`product_stock`.`thb_amount` AS `thb_amount`,`product_stock`.`status` AS `stock_status`,`product_stock`.`id` AS `stock_id`,`product_category`.`geolocation` AS `geolocation`,`product_stock`.`qty` AS `qty` from (((`product` left join `product_category` on((`product`.`category_id` = `product_category`.`id`))) left join `product_stock` on((`product`.`id` = `product_stock`.`product_id`))) left join `warehouse` on((`product_stock`.`warehouse_id` = `warehouse`.`id`))) where (`product_stock`.`invoice_no` <> '');
+
+-- ----------------------------
+-- View structure for `query_product_inbound`
+-- ----------------------------
+DROP VIEW IF EXISTS `query_product_inbound`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `query_product_inbound` AS select `product`.`product_code` AS `product_code`,`product`.`name` AS `name`,`product`.`id` AS `id`,`product`.`description` AS `description`,`product`.`category_id` AS `category_id`,`product`.`product_type_id` AS `product_type_id`,`product`.`unit_id` AS `unit_id`,`product`.`min_stock` AS `min_stock`,`product`.`max_stock` AS `max_stock`,`product`.`barcode` AS `barcode`,`product`.`is_hold` AS `is_hold`,`product`.`bom_type` AS `bom_type`,`product`.`cost` AS `cost`,`product`.`price` AS `price`,`product`.`status` AS `status`,`product`.`all_qty` AS `all_qty`,`product`.`origin` AS `origin`,`product`.`unit_factor` AS `unit_factor`,`product`.`volumn_content` AS `volumn_content`,`product`.`volumn` AS `volumn`,`product`.`engname` AS `engname`,`product`.`netweight` AS `netweight`,`product`.`grossweight` AS `grossweight`,`product`.`excise_date` AS `excise_date`,`product_category`.`name` AS `group_name`,`product`.`excise_no` AS `excise_no`,`product_category`.`geolocation` AS `geolocation` from (`product` left join `product_category` on((`product`.`category_id` = `product_category`.`id`)));
 
 -- ----------------------------
 -- View structure for `query_trans`

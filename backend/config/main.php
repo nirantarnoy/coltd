@@ -12,6 +12,13 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
+        'backup' => [
+            'class' => 'ellera\backup\Module',
+            'databases' => [
+                'db',
+                'db2'
+            ],
+        ],
         'gridview' => ['class' => 'kartik\grid\Module'],
 
         'db-manager' => [
@@ -45,13 +52,13 @@ return [
                 'rules' => [
                     [
                         'allow' => true,
-                       // 'roles' => ['admin'],
+                        // 'roles' => ['admin'],
                     ],
                 ],
             ],
         ],
     ],
-    'aliases'=>[
+    'aliases' => [
         '@klolofil' => '@backend/themes/klolofil',
 
     ],

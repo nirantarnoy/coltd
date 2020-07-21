@@ -98,6 +98,7 @@ class SaleController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $prodid = Yii::$app->request->post('productid');
+            $linestock_id = Yii::$app->request->post('line_stock_id');
             $lineqty = Yii::$app->request->post('qty');
             $lineprice = Yii::$app->request->post('price');
             $removelist = Yii::$app->request->post('removelist');
@@ -121,6 +122,7 @@ class SaleController extends Controller
                             $modelcheck->qty = $lineqty[$i];
                             $modelcheck->price = $lineprice[$i];
                             $modelcheck->line_amount = $lineqty[$i] * $lineprice[$i];
+                            $modelcheck->stock_id = $linestock_id[$i];
                             $modelcheck->save();
                         } else {
                             $modelline = new \backend\models\Saleline();
@@ -129,6 +131,7 @@ class SaleController extends Controller
                             $modelline->qty = $lineqty[$i];
                             $modelline->price = $lineprice[$i];
                             $modelline->line_amount = $lineqty[$i] * $lineprice[$i];
+                            $modelcheck->stock_id = $linestock_id[$i];
                             $modelline->save();
                         }
                     }
@@ -160,6 +163,7 @@ class SaleController extends Controller
         $modelline = \backend\models\Saleline::find()->where(['sale_id' => $id])->all();
         $modelpayment = \backend\models\Paymenttrans::find()->where(['sale_id' => $id])->all();
         $modeldoc = \backend\models\Exportfile::find()->where(['sale_id' => $id])->all();
+
 
         $pickinglist = [];
 
@@ -194,6 +198,7 @@ class SaleController extends Controller
             $lineqty = Yii::$app->request->post('qty');
             $lineprice = Yii::$app->request->post('price');
             $removelist = Yii::$app->request->post('removelist');
+            $linestock_id = Yii::$app->request->post('line_stock_id');
 
             $tdate = explode('/', $model->require_date);
             $t_date = $tdate[2] . '/' . $tdate[1] . '/' . $tdate[0];
@@ -212,6 +217,7 @@ class SaleController extends Controller
                             $modelcheck->qty = $lineqty[$i];
                             $modelcheck->price = $lineprice[$i];
                             $modelcheck->line_amount = $lineqty[$i] * $lineprice[$i];
+                            $modelcheck->stock_id = $linestock_id[$i];
                             $modelcheck->save();
                         } else {
                             $modelline = new \backend\models\Saleline();
@@ -220,6 +226,7 @@ class SaleController extends Controller
                             $modelline->qty = $lineqty[$i];
                             $modelline->price = $lineprice[$i];
                             $modelline->line_amount = $lineqty[$i] * $lineprice[$i];
+                            $modelcheck->stock_id = $linestock_id[$i];
                             $modelline->save();
                         }
                     }

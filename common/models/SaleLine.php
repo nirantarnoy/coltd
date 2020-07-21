@@ -40,7 +40,7 @@ class SaleLine extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sale_id', 'product_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['sale_id', 'product_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','stock_id'], 'integer'],
             [['qty', 'price', 'disc_amount', 'disc_percent', 'line_amount', 'vat'], 'number'],
             [['noneitem_name', 'note'], 'string', 'max' => 255],
         ];
@@ -63,6 +63,7 @@ class SaleLine extends \yii\db\ActiveRecord
             'line_amount' => 'Line Amount',
             'vat' => 'Vat',
             'note' => 'Note',
+            'stock_id' => 'Stock ID',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

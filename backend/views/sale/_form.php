@@ -156,6 +156,7 @@ $model_check_packing = \backend\models\Picking::find()->where(['sale_id' => $mod
                                 </td>
                                 <td>
                                     <input type="hidden" class="productid" name="productid[]">
+                                    <input type="hidden" class="line_stock_id" name="line_stock_id[]">
                                     <input type="text" autocomplete="off" class="form-control productcode"
                                            name="prodcode[]" value="" onchange="itemchange($(this));"
                                            ondblclick="showfind($(this))">
@@ -234,6 +235,7 @@ $model_check_packing = \backend\models\Picking::find()->where(['sale_id' => $mod
                                         <td>
                                             <input type="hidden" class="productid" name="productid[]"
                                                    value="<?= $value->product_id ?>">
+                                            <input type="hidden" class="line_stock_id" name="line_stock_id[]" value="<?=$value->stock_id?>">
                                             <input type="hidden" class="recid" name="recid[]"
                                                    value="<?= $value->id ?>">
                                             <input type="text" autocomplete="off" class="form-control productcode"
@@ -1193,7 +1195,7 @@ $js = <<<JS
               $(this).closest('tr').find(".productname").val(prodname);
               $(this).closest('tr').find(".productid").val(prodid);
               $(this).closest('tr').find(".line_qty").val(1);
-              $(this).closest('tr').find(".stock-id").val(stock_id);
+              $(this).closest('tr').find(".line_stock_id").val(stock_id);
               $(this).closest('tr').find(".line_cost").val(prodcost);
               $(this).closest('tr').find(".line_origin").val(prodorigin);
               $(this).closest('tr').find(".line_price").val(prodcost);
