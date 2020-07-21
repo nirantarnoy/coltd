@@ -156,7 +156,7 @@ $model_check_packing = \backend\models\Picking::find()->where(['sale_id' => $mod
                                 </td>
                                 <td>
                                     <input type="hidden" class="productid" name="productid[]">
-                                    <input type="hidden" class="line_stock_id" name="line_stock_id[]">
+                                    <input type="hidden" class="line_stock_id" name="line_stock_id[]" value="">
                                     <input type="text" autocomplete="off" class="form-control productcode"
                                            name="prodcode[]" value="" onchange="itemchange($(this));"
                                            ondblclick="showfind($(this))">
