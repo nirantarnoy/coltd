@@ -200,6 +200,8 @@ class SaleController extends Controller
             $removelist = Yii::$app->request->post('removelist');
             $linestock_id = Yii::$app->request->post('line_stock_id');
 
+           // print_r($linestock_id);return;
+
             $tdate = explode('/', $model->require_date);
             $t_date = $tdate[2] . '/' . $tdate[1] . '/' . $tdate[0];
 
@@ -226,7 +228,7 @@ class SaleController extends Controller
                             $modelline->qty = $lineqty[$i];
                             $modelline->price = $lineprice[$i];
                             $modelline->line_amount = $lineqty[$i] * $lineprice[$i];
-                            $modelcheck->stock_id = $linestock_id[$i];
+                            $modelline->stock_id = $linestock_id[$i];
                             $modelline->save();
                         }
                     }
