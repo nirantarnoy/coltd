@@ -475,7 +475,8 @@ class ProductController extends Controller
                                     'out_qty' => 0,
                                     'usd_rate' => $usd,
                                     'thb_amount' => $thb,
-                                    'line_num' => $rowData[15]
+                                    'line_num' => $rowData[15],
+                                    'stock_id_ref' => ''
 
 
                                 ]);
@@ -554,8 +555,8 @@ class ProductController extends Controller
                                 'out_qty' => 0,
                                 'usd_rate' => $usd,
                                 'thb_amount' => $thb,
-                                'line_num' => $rowData[15]
-
+                                'line_num' => $rowData[15],
+                                'stock_id_ref' => ''
                             ]);
                         }
                     }
@@ -627,7 +628,9 @@ class ProductController extends Controller
                     $rate_amount = 0;
                     $rate_exc = \backend\models\Currencyrate::findRateImport(2); //2 = USD
 
-                    if($rate_exc != null){$rate_amount = $rate_exc->rate;}
+                    if ($rate_exc != null) {
+                        $rate_amount = $rate_exc->rate;
+                    }
 
                     $model->currency_rate = $rate_amount;
                     $model->currency_id = 1; // USD default

@@ -68,14 +68,23 @@ class TransCalculate extends \yii\base\Model
     public static function createStocksum($param, $stocktype)
     {
         if ($param) {
-            $model_stock = Productstock::find()
-                ->where(['product_id' => $param['prod_id'],
-                    'warehouse_id' => $param['warehouse_id'],
-                    'invoice_no' => $param['invoice_no'],
-                    'transport_in_no' => $param['transport_in_no'],
-                    'permit_no' => $param['permit_no']
-                ])
-                ->one();
+            $model_stock = null;
+
+            if($param['stock_id_ref'] != ''){
+                $model_stock = Productstock::find()
+                    ->where(['id' => $param['stock_id_ref']])
+                    ->one();
+            }else{
+                $model_stock = Productstock::find()
+                    ->where(['product_id' => $param['prod_id'],
+                        'warehouse_id' => $param['warehouse_id'],
+                        'invoice_no' => $param['invoice_no'],
+                        'transport_in_no' => $param['transport_in_no'],
+                        'permit_no' => $param['permit_no']
+                    ])
+                    ->one();
+            }
+
             if ($model_stock) {
                 if ($stocktype == 1) { // picking out
                     $model_stock->qty = (int)$model_stock->qty - (int)$param['qty'];

@@ -38,7 +38,7 @@ class PickingLine extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['picking_id','transport_out_line_num', 'product_id', 'site_id', 'warehouse_id', 'location_id', 'lot_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['picking_id','transport_out_line_num', 'product_id','stock_id_ref', 'site_id', 'warehouse_id', 'location_id', 'lot_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['qty'], 'number'],
             [['note'], 'string', 'max' => 255],
             [['permit_no','excise_no','transport_in_no'],'string'],
@@ -69,6 +69,7 @@ class PickingLine extends \yii\db\ActiveRecord
             'excise_date' => 'วันที่',
             'transport_out_line_num'=>'รายการที่',
             'transport_in_date' => 'วันที่',
+            'stock_id_ref' => 'อ้างอิง',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

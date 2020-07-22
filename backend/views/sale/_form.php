@@ -37,7 +37,7 @@ $this->registerCss('
 
 
 //$wh = \backend\models\Warehouse::find()->all();
-$model_check_packing = \backend\models\Picking::find()->where(['sale_id' => $model->id])->one();
+$model_check_packing = \backend\models\Picking::find()->where(['sale_id' => $model->id])->andFilterWhere(['!=','status',100])->one();
 ?>
 
 <div class="sale-form">
@@ -423,6 +423,9 @@ $model_check_packing = \backend\models\Picking::find()->where(['sale_id' => $mod
                                                                           class="btn btn-pincking-invoice btn-danger"
                                                                           onclick="pickinginv($(this))"><i
                                                             class='fa fa-print'></i>  พิมพ์</div></span>
+                                            <span class="pull-right">
+                                                <div class="btn btn-default" data-var="<?= $value->id ?>" onclick="cancelpacking($(this))"><i class="fa fa-ban"></i> ยกเลิก</div>
+                                            </span>
                                         </h4>
                                         <form id="form-<?= $value->id ?>" method="post"
                                               action="<?= Url::to(['sale/bill', 'id' => $value->id], true) ?>"
@@ -766,8 +769,14 @@ $model_check_packing = \backend\models\Picking::find()->where(['sale_id' => $mod
     <input type="hidden" name="recid_delete" class="recid-delete" value="">
     <input type="hidden" name="inbound_id" value="<?= $model->id ?>">
 </form>
-
+<form id="form-packing-cancel" action="<?=Url::to(['sale/cancelpacking'],true)?>" method="post">
+    <input type="hidden" name="cancel_packing_id" class="cancel_packing_id" value="">
+</form>
 <?php
+
+$this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
+$this->registerCssFile( '@web/css/sweetalert.css');
+
 $url_to_find = Url::to(['quotation/finditem'], true);
 $url_to_find_product = Url::to(['product/searchitem'], true);
 $url_to_find_wh = Url::to(['sale/findwarehouse'], true);
@@ -778,6 +787,7 @@ $url_to_printpicking = Url::to(['sale/printpicking'], true);
 $url_to_createpacking = Url::to(['sale/createpacking'], true);
 $url_to_remove_file = Url::to(['sale/deletedoc'], true);
 $url_to_checkrate = Url::to(['quotation/check-rate'], true);
+$url_to_cancelpacking = Url::to(['sale/cancelpacking'], true);
 $js = <<<JS
  var currow = 0;
  var  removelist = [];
@@ -1354,6 +1364,34 @@ $js = <<<JS
         
         cal_all();
     
+ }
+ 
+ function cancelpacking(e) {
+     var packing_id = e.attr("data-var");
+     var url = "$url_to_cancelpacking";
+     //alert(packing_id);
+     swal({
+              title: "ต้องการลบรายการนี้ใช่หรือไม่ ระบบจะทำการคืนยอดทุกรายการ",
+              text: "",
+              type: "error",
+              showCancelButton: true,
+              closeOnConfirm: false,
+              showLoaderOnConfirm: true
+            }, function () {
+         //alert();
+                operclick(packing_id);
+              // e.attr("href",url); 
+              // e.trigger("click");        
+        });
+ }
+ 
+ function operclick(e){
+     // alert(e);
+     if(e != ''){
+         $(".cancel_packing_id").val(e);
+         $("form#form-packing-cancel").submit();
+     }
+     //location.reload();
  }
  
 JS;
