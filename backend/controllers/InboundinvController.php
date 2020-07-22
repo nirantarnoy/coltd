@@ -468,8 +468,8 @@ class InboundinvController extends Controller
                     'usd_rate' => $usd,
                     'thb_amount' => $thb,
                     'inbound_id' => $invoiceid,
-                    'outbound_id' => 0
-
+                    'outbound_id' => 0,
+                    'stock_id_ref' => '',
                 ]);
 
 

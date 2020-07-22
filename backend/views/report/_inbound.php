@@ -188,7 +188,7 @@ $this->title = 'รายงานสรุปนำเข้า';
 //                            'filterInputOptions' => ['placeholder' => 'เลือกประเภทสินค้า']
 //                        ],
                             [
-                                'attribute' => 'docin_no',
+                                'attribute' => 'invoice_no',
                                 'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
                                 'label' => 'INV No.'
                             ],
