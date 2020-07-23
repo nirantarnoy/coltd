@@ -131,7 +131,7 @@ class SaleController extends Controller
                             $modelline->qty = $lineqty[$i];
                             $modelline->price = $lineprice[$i];
                             $modelline->line_amount = $lineqty[$i] * $lineprice[$i];
-                            $modelcheck->stock_id = $linestock_id[$i];
+                            $modelline->stock_id = $linestock_id[$i];
                             $modelline->save();
                         }
                     }
