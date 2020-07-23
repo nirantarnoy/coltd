@@ -346,11 +346,11 @@ class QuotationController extends Controller
 
             ]);
 
-            $defaultConfig = (new ConfigVariables())->getDefaults();
-            $fontDirs = $defaultConfig['fontDir'];
-
-            $defaultFontConfig = (new FontVariables())->getDefaults();
-            $fontData = $defaultFontConfig['fontdata'];
+//            $defaultConfig = (new ConfigVariables())->getDefaults();
+//            $fontDirs = $defaultConfig['fontDir'];
+//
+//            $defaultFontConfig = (new FontVariables())->getDefaults();
+//            $fontData = $defaultFontConfig['fontdata'];
 
 
 //            $pdf->options['fontDir'] = array_merge($fontDirs, [
@@ -358,16 +358,16 @@ class QuotationController extends Controller
 //                Yii::$app->basePath
 //            ]);
 
-            $pdf->options = array_merge($pdf->options , [
-                'fontDir' => array_merge($fontDirs, [ Yii::$app->basePath . '/web/fonts']),  // make sure you refer the right physical path
-                'fontdata' => array_merge($fontData, [
-                    'angsana' => [
-                        'R' => 'angsa.ttf',
-//                        'I' => 'THSarabunNew Italic.ttf',
-//                        'B' => 'THSarabunNew Bold.ttf',
-                    ]
-                ])
-            ]);
+//            $pdf->options = array_merge($pdf->options , [
+//                'fontDir' => array_merge($fontDirs, [ Yii::$app->basePath . '/web/fonts']),  // make sure you refer the right physical path
+//                'fontdata' => array_merge($fontData, [
+//                    'angsana' => [
+//                        'R' => 'angsa.ttf',
+////                        'I' => 'THSarabunNew Italic.ttf',
+////                        'B' => 'THSarabunNew Bold.ttf',
+//                    ]
+//                ])
+//            ]);
             //return $this->redirect(['genbill']);
             Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
             Yii::$app->response->headers->add('Content-Type', 'application/pdf');
