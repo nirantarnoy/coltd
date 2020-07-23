@@ -39,7 +39,7 @@
                     <table width="100%">
                         <tr>
                             <td style="text-align: right;font-size: 13px;font-weight: bold">Invoice No: </td>
-                            <td style="text-align: left;font-size: 13px;font-weight: bold"><?=$model->docin_no?></td>
+                            <td style="text-align: left;font-size: 13px;font-weight: bold"><?=$model->invoice_no?></td>
                         </tr>
                         <tr>
                             <td style="text-align: right;font-size: 13px;font-weight: bold">Invoice Date: </td>
