@@ -229,7 +229,7 @@ class DbrestoreController extends Controller
             $cmd.= "mysqldump -h {$host} -u {$username} {$database_name} > " . '../web/uploads/backup/' . "{$date_string}_{$database_name}.sql";
 
         }else{
-            $cmd = "mysqldump -h {$host} -u {$username} -p {$password} {$database_name} > " . '../web/uploads/backup/' . "{$date_string}_{$database_name}.sql";
+            $cmd = "/usr/bin/mysqldump -h {$host} -u {$username} -p {$password} {$database_name} > " . '../web/uploads/backup/' . "{$date_string}_{$database_name}.sql";
         }
 
 
