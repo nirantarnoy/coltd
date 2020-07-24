@@ -17,6 +17,7 @@ use yii\web\UploadedFile;
 class DbrestoreController extends Controller
 {
     public $enableCsrfValidation = false;
+
     /**
      * {@inheritdoc}
      */
@@ -32,7 +33,8 @@ class DbrestoreController extends Controller
         ];
     }
 
-    public function actionIndex2(){
+    public function actionIndex2()
+    {
 //        $os = php_uname();
 //        if(strpos($os,'ndow') > 0){
 //            echo $os;
@@ -143,8 +145,8 @@ class DbrestoreController extends Controller
 
     public function actionRestoredb()
     {
-        $conn = mysqli_connect("localhost", "root", "", "coltd");
-
+        //   $conn = mysqli_connect("localhost", "root", "", "coltd");
+        $conn = \Yii::$app->db;
         $uploaded = UploadedFile::getInstanceByName('restore_file');
         if (!empty($uploaded)) {
             //print_r($uploaded);return;
@@ -161,7 +163,8 @@ class DbrestoreController extends Controller
 
                     $response = $this->restoreMysqlDB($conn, $upfiles);
 
-                    print_r($response);return;
+                    print_r($response);
+                    return;
 
                 }
 
@@ -175,9 +178,9 @@ class DbrestoreController extends Controller
     {
         $sql = '';
         $error = '';
-        $filePath = '../web/uploads/backup/'.$filename;
+        $filePath = '../web/uploads/backup/' . $filename;
         if (file_exists($filePath)) {
-          // return 'has';
+            // return 'has';
             $lines = file($filePath);
 
             foreach ($lines as $line) {
@@ -190,7 +193,8 @@ class DbrestoreController extends Controller
                 $sql .= $line;
 
                 if (substr(trim($line), -1, 1) == ';') {
-                    $result = mysqli_query($conn, $sql);
+                   // $result = mysqli_query($conn, $sql);
+                    $result = \Yii::$app->db->createCommand($sql)->query();
                     if (!$result) {
                         $error .= mysqli_error($conn) . "\n";
                     }
@@ -212,24 +216,28 @@ class DbrestoreController extends Controller
         } // end if file exists
         return $response;
     }
-    public function actionBackuplist(){
+
+    public function actionBackuplist()
+    {
         return $this->render('_backuplist');
     }
-    public function actionExrestore(){
+
+    public function actionExrestore()
+    {
         $host = "localhost";
         $username = "root";
-        $password = "'"."Coltd!1234"."'";
+        $password = "'" . "Coltd!1234" . "'";
         $database_name = "coltd";
         $date_string = time();
 
         $cmd = '';
         $os = php_uname();
-        if(strpos($os,'ndow') > 0){
-            $cmd ='D:/xampp/mysql/bin/';
-            $cmd.= "mysqldump -h {$host} -u {$username} {$database_name} > " . '../web/uploads/backup/' . "pc_{$date_string}_{$database_name}.sql";
+        if (strpos($os, 'ndow') > 0) {
+            $cmd = 'D:/xampp/mysql/bin/';
+            $cmd .= "mysqldump -h {$host} -u {$username} {$database_name} > " . '../web/uploads/backup/' . "pc_{$date_string}_{$database_name}.sql";
 
-        }else{
-        //    $cmd ='/usr/bin/';
+        } else {
+            //    $cmd ='/usr/bin/';
             $cmd = "/usr/bin/mysqldump -u {$username} -p {$password} {$database_name} > " . '../web/uploads/backup/' . "web_{$date_string}_{$database_name}.sql";
         }
 
@@ -239,6 +247,7 @@ class DbrestoreController extends Controller
         return $this->redirect(['dbrestore/backuplist']);
 
     }
+
     public function backup_tables($host, $user, $pass, $name, $tables = '*')
     {
 
@@ -317,33 +326,36 @@ class DbrestoreController extends Controller
     }
 
 
-    public function actionDownloadbak($id){
-       if($id != ''){
-           $filepath = "../web/uploads/backup/" . $id;
+    public function actionDownloadbak($id)
+    {
+        if ($id != '') {
+            $filepath = "../web/uploads/backup/" . $id;
 
-           // Process download
-           if(file_exists($filepath)) {
-               header('Content-Description: File Transfer');
-               header('Content-Type: application/octet-stream');
-               header('Content-Disposition: attachment; filename="'.basename($filepath).'"');
-               header('Expires: 0');
-               header('Cache-Control: must-revalidate');
-               header('Pragma: public');
-               header('Content-Length: ' . filesize($filepath));
-               flush(); // Flush system output buffer
-               readfile($filepath);
-               die();
-           } else {
-              // echo "no";return;
-               http_response_code(404);
-               die();
-           }
-       }
+            // Process download
+            if (file_exists($filepath)) {
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename="' . basename($filepath) . '"');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($filepath));
+                flush(); // Flush system output buffer
+                readfile($filepath);
+                die();
+            } else {
+                // echo "no";return;
+                http_response_code(404);
+                die();
+            }
+        }
         return $this->redirect(['dbrestore/backuplist']);
     }
-    public function actionDeletebak($id){
-        if($id != ''){
-            unlink('../web/uploads/backup/'.$id);
+
+    public function actionDeletebak($id)
+    {
+        if ($id != '') {
+            unlink('../web/uploads/backup/' . $id);
         }
         return $this->redirect(['dbrestore/backuplist']);
     }
