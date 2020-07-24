@@ -161,8 +161,9 @@ class DbrestoreController extends Controller
                     );
                 } else {
                     $response = $this->restoreMysqlDB($conn, $upfiles);
-                    print_r($response);
-                    return;
+                    //print_r($response);
+                    \Yii::$app->session->setFlash('msg','Restore ข้อมูลสำเร็จ');
+                    return $this->redirect(['dbrestore/restorepage']);
 
                 }
 
@@ -229,7 +230,7 @@ class DbrestoreController extends Controller
         $date_string = time();
 
         $cmd = '';
-        
+
         $os = php_uname();
         if (strpos($os, 'ndow') > 0) {
             $cmd = 'D:/xampp/mysql/bin/';

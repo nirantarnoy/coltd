@@ -224,7 +224,7 @@ $last_message = null;
                             <ul class="nav">
                                 <li><a href="index.php?r=dbrestore/restorepage"
                                        class="dbrestore">อัพโหลดกู้คืนข้อมูล</a></li>
-                                <li><a href="index.php?r=db-manager" class="default">ตั้งค่าการสำรองข้อมูล</a></li>
+<!--                                <li><a href="index.php?r=db-manager" class="default">ตั้งค่าการสำรองข้อมูล</a></li>-->
                                 <li><a href="index.php?r=dbrestore/backuplist" class="backuplist">สำรองข้อมูล</a></li>
                             </ul>
                         </div>
