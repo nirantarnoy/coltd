@@ -160,9 +160,7 @@ class DbrestoreController extends Controller
                         "message" => "Invalid File Type"
                     );
                 } else {
-
                     $response = $this->restoreMysqlDB($conn, $upfiles);
-
                     print_r($response);
                     return;
 
@@ -231,6 +229,7 @@ class DbrestoreController extends Controller
         $date_string = time();
 
         $cmd = '';
+        
         $os = php_uname();
         if (strpos($os, 'ndow') > 0) {
             $cmd = 'D:/xampp/mysql/bin/';
@@ -238,7 +237,7 @@ class DbrestoreController extends Controller
 
         } else {
             //    $cmd ='/usr/bin/';
-            $cmd = "/usr/bin/mysqldump -u {$username} -p {$password} {$database_name} > " . '../web/uploads/backup/' . "web_{$date_string}_{$database_name}.sql";
+            $cmd = "/usr/bin/mysqldump -u {$username} -p{$password} {$database_name} > " . '../web/uploads/backup/' . "web_{$date_string}_{$database_name}.sql";
         }
 
 
