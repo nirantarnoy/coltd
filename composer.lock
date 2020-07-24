@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5f95c7e5435cb11582d2a5485eb2bcc",
+    "content-hash": "81da90d45364815ca166adb4efecdf1a",
     "packages": [
         {
             "name": "2amigos/yii2-date-picker-widget",
@@ -389,7 +389,7 @@
             "version": "3.5.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery-dist.git",
+                "url": "https://github.com/jquery/jquery-dist.git",
                 "reference": "4c0e4becb8263bb5b3e6dadc448d8e7305ef8215"
             },
             "dist": {
@@ -661,47 +661,6 @@
                 "yii2"
             ],
             "time": "2020-02-17T18:06:21+00:00"
-        },
-        {
-            "name": "ellera/yii2-backup",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/elleracompany/yii2-backup.git",
-                "reference": "8495be60588eaf821f04efb9477844fe4a34b800"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/elleracompany/yii2-backup/zipball/8495be60588eaf821f04efb9477844fe4a34b800",
-                "reference": "8495be60588eaf821f04efb9477844fe4a34b800",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": "~2.0.0"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "ellera\\backup\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jørgen Ellingsen",
-                    "email": "jorgen@ellera.no"
-                }
-            ],
-            "description": "Console backup for yii2 applications ",
-            "keywords": [
-                "backup",
-                "console",
-                "yii2"
-            ],
-            "time": "2019-01-08T14:21:14+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -1174,12 +1133,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-date-range.git",
-                "reference": "1858909f184f1dd86db245f22b6fa9210d464625"
+                "reference": "22617574272ba01750428bbdf5f42c23bdc8387e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-date-range/zipball/1858909f184f1dd86db245f22b6fa9210d464625",
-                "reference": "1858909f184f1dd86db245f22b6fa9210d464625",
+                "url": "https://api.github.com/repos/kartik-v/yii2-date-range/zipball/22617574272ba01750428bbdf5f42c23bdc8387e",
+                "reference": "22617574272ba01750428bbdf5f42c23bdc8387e",
                 "shasum": ""
             },
             "require": {
@@ -1220,7 +1179,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2020-07-12T05:15:34+00:00"
+            "time": "2020-07-20T09:51:58+00:00"
         },
         {
             "name": "kartik-v/yii2-dialog",
@@ -1929,12 +1888,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "d44105a4cbb5f69737a5c9a02d4456e1037b8ad3"
+                "reference": "78efbcd1ae87b87803f9beb5e692acf790106cfb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/d44105a4cbb5f69737a5c9a02d4456e1037b8ad3",
-                "reference": "d44105a4cbb5f69737a5c9a02d4456e1037b8ad3",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/78efbcd1ae87b87803f9beb5e692acf790106cfb",
+                "reference": "78efbcd1ae87b87803f9beb5e692acf790106cfb",
                 "shasum": ""
             },
             "require": {
@@ -1975,7 +1934,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2020-05-23T11:50:39+00:00"
+            "time": "2020-07-22T10:40:59+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-timepicker",
@@ -2138,12 +2097,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "11003337245c4626bbe849f221c2f9e5ca604e83"
+                "reference": "279e0fbe70dbf577a73694a42db731f548905842"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/11003337245c4626bbe849f221c2f9e5ca604e83",
-                "reference": "11003337245c4626bbe849f221c2f9e5ca604e83",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/279e0fbe70dbf577a73694a42db731f548905842",
+                "reference": "279e0fbe70dbf577a73694a42db731f548905842",
                 "shasum": ""
             },
             "require": {
@@ -2154,7 +2113,7 @@
                 "league/flysystem-sftp": "<1.0.6"
             },
             "require-dev": {
-                "phpspec/phpspec": "^3.4",
+                "phpspec/phpspec": "^3.4 || ^4.0 || ^5.0 || ^6.0",
                 "phpunit/phpunit": "^5.7.26"
             },
             "suggest": {
@@ -2214,7 +2173,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-07-12T20:47:33+00:00"
+            "time": "2020-07-22T19:35:04+00:00"
         },
         {
             "name": "liyunfang/yii2-contextmenu",
@@ -3074,12 +3033,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "721cceb4b2d3137c3bc953c159dc5f36f7698831"
+                "reference": "af8d812d75fcdf2eae30928b42396fe17df137e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/721cceb4b2d3137c3bc953c159dc5f36f7698831",
-                "reference": "721cceb4b2d3137c3bc953c159dc5f36f7698831",
+                "url": "https://api.github.com/repos/symfony/process/zipball/af8d812d75fcdf2eae30928b42396fe17df137e4",
+                "reference": "af8d812d75fcdf2eae30928b42396fe17df137e4",
                 "shasum": ""
             },
             "require": {
@@ -3115,7 +3074,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2020-07-06T13:15:13+00:00"
+            "time": "2020-07-16T09:41:49+00:00"
         },
         {
             "name": "toxor88/yii2-widget-switchery",
@@ -3317,12 +3276,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "5c110a03379f51a9e0df5a4a4fb3c4f9e3957b12"
+                "reference": "c177268a344d48435f610aa11be6f5b9cdcb3a17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/5c110a03379f51a9e0df5a4a4fb3c4f9e3957b12",
-                "reference": "5c110a03379f51a9e0df5a4a4fb3c4f9e3957b12",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/c177268a344d48435f610aa11be6f5b9cdcb3a17",
+                "reference": "c177268a344d48435f610aa11be6f5b9cdcb3a17",
                 "shasum": ""
             },
             "require": {
@@ -3409,7 +3368,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2020-07-15T19:25:24+00:00"
+            "time": "2020-07-22T13:49:49+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -5631,12 +5590,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "f34d2bf035609cd85ba62f6365274dab016ac44e"
+                "reference": "7ce874f4432d8b11cc45a80cc5130a6e2609728d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/f34d2bf035609cd85ba62f6365274dab016ac44e",
-                "reference": "f34d2bf035609cd85ba62f6365274dab016ac44e",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/7ce874f4432d8b11cc45a80cc5130a6e2609728d",
+                "reference": "7ce874f4432d8b11cc45a80cc5130a6e2609728d",
                 "shasum": ""
             },
             "require": {
@@ -5679,7 +5638,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2020-06-30T17:28:29+00:00"
+            "time": "2020-07-16T09:41:49+00:00"
         },
         {
             "name": "symfony/dom-crawler",
@@ -5687,12 +5646,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "c3086a58a66b2a519c0b7ac80539a3727609ea9c"
+                "reference": "fc66039e3138db2fc54ee9ad30646d99c4495691"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/c3086a58a66b2a519c0b7ac80539a3727609ea9c",
-                "reference": "c3086a58a66b2a519c0b7ac80539a3727609ea9c",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/fc66039e3138db2fc54ee9ad30646d99c4495691",
+                "reference": "fc66039e3138db2fc54ee9ad30646d99c4495691",
                 "shasum": ""
             },
             "require": {
@@ -5736,7 +5695,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2020-05-22T19:35:43+00:00"
+            "time": "2020-07-16T09:41:49+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -5981,12 +5940,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "7233ac2bfdde24d672f5305f2b3f6b5d741ef8eb"
+                "reference": "e7fa05917ae931332a42d65b577ece4d497aad81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/7233ac2bfdde24d672f5305f2b3f6b5d741ef8eb",
-                "reference": "7233ac2bfdde24d672f5305f2b3f6b5d741ef8eb",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/e7fa05917ae931332a42d65b577ece4d497aad81",
+                "reference": "e7fa05917ae931332a42d65b577ece4d497aad81",
                 "shasum": ""
             },
             "require": {
@@ -6032,7 +5991,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2020-05-11T07:51:54+00:00"
+            "time": "2020-07-23T09:37:51+00:00"
         },
         {
             "name": "webmozart/assert",
