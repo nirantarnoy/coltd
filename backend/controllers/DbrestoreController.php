@@ -218,7 +218,7 @@ class DbrestoreController extends Controller
     public function actionExrestore(){
         $host = "localhost";
         $username = "root";
-        $password = "Coltd!1234";
+        $password = "'"."Coltd!1234"."'";
         $database_name = "coltd";
         $date_string = time();
 
@@ -230,7 +230,7 @@ class DbrestoreController extends Controller
 
         }else{
         //    $cmd ='/usr/bin/';
-            $cmd = "/usr/bin/mysqldump -u {$username} -p 'Coltd!1234' {$database_name} > " . '../web/uploads/backup/' . "web_{$date_string}_{$database_name}.sql";
+            $cmd = "/usr/bin/mysqldump -u {$username} -p {$password} {$database_name} > " . '../web/uploads/backup/' . "web_{$date_string}_{$database_name}.sql";
         }
 
 
