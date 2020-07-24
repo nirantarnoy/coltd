@@ -226,11 +226,11 @@ class DbrestoreController extends Controller
         $os = php_uname();
         if(strpos($os,'ndow') > 0){
             $cmd ='D:/xampp/mysql/bin/';
-            $cmd.= "mysqldump -h {$host} -u {$username} {$database_name} > " . '../web/uploads/backup/' . "{$date_string}_{$database_name}.sql";
+            $cmd.= "mysqldump -h {$host} -u {$username} {$database_name} > " . '../web/uploads/backup/' . "pc_{$date_string}_{$database_name}.sql";
 
         }else{
         //    $cmd ='/usr/bin/';
-            $cmd = "mysqldump -u {$username} -p 'Coltd!1234' {$database_name} > " . '../web/uploads/backup/' . "web_{$date_string}_{$database_name}.sql";
+            $cmd = "/usr/bin/mysqldump -u {$username} -p 'Coltd!1234' {$database_name} > " . '../web/uploads/backup/' . "web_{$date_string}_{$database_name}.sql";
         }
 
 
