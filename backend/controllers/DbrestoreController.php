@@ -32,6 +32,23 @@ class DbrestoreController extends Controller
         ];
     }
 
+    public function actionIndex2(){
+//        $os = php_uname();
+//        if(strpos($os,'ndow') > 0){
+//            echo $os;
+//        }
+
+//        foreach (glob("../web/uploads/backup/*.sql") as $file) {
+//            $file_handle = fopen($file, "r");
+//            echo basename($file);
+////            while (!feof($file_handle)) {
+////                $line = fgets($file_handle);
+////                echo $line;
+////            }
+//            fclose($file_handle);
+//        }
+    }
+
     public function actionBak()
     {
 
@@ -195,16 +212,31 @@ class DbrestoreController extends Controller
         } // end if file exists
         return $response;
     }
+    public function actionBackuplist(){
+        return $this->render('_backuplist');
+    }
     public function actionExrestore(){
         $host = "localhost";
         $username = "root";
         $password = "";
         $database_name = "coltd";
-        $date_string = date('dmY');
+        $date_string = time();
 
-        $cmd = "mysqldump -h {$host} -u {$username} -p {$password} -databases {$database_name} > " . '../web/uploads/backup/' . "{$date_string}_{$database_name}.sql";
+        $cmd = '';
+        $os = php_uname();
+        if(strpos($os,'ndow') > 0){
+            $cmd ='D:/xampp/mysql/bin/';
+            $cmd.= "mysqldump -h {$host} -u {$username} {$database_name} > " . '../web/uploads/backup/' . "{$date_string}_{$database_name}.sql";
+
+        }else{
+            $cmd = "mysqldump -h {$host} -u {$username} {$database_name} > " . '../web/uploads/backup/' . "{$date_string}_{$database_name}.sql";
+        }
+
 
         exec($cmd);
+
+        return $this->redirect(['dbrestore/backuplist']);
+
     }
     public function backup_tables($host, $user, $pass, $name, $tables = '*')
     {
@@ -284,11 +316,35 @@ class DbrestoreController extends Controller
     }
 
 
-    /**
-     * Displays a single Picking model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    public function actionDownloadbak($id){
+       if($id != ''){
+           $filepath = "../web/uploads/backup/" . $id;
+
+           // Process download
+           if(file_exists($filepath)) {
+               header('Content-Description: File Transfer');
+               header('Content-Type: application/octet-stream');
+               header('Content-Disposition: attachment; filename="'.basename($filepath).'"');
+               header('Expires: 0');
+               header('Cache-Control: must-revalidate');
+               header('Pragma: public');
+               header('Content-Length: ' . filesize($filepath));
+               flush(); // Flush system output buffer
+               readfile($filepath);
+               die();
+           } else {
+              // echo "no";return;
+               http_response_code(404);
+               die();
+           }
+       }
+        return $this->redirect(['dbrestore/backuplist']);
+    }
+    public function actionDeletebak($id){
+        if($id != ''){
+            unlink('../web/uploads/backup/'.$id);
+        }
+        return $this->redirect(['dbrestore/backuplist']);
+    }
 
 }
