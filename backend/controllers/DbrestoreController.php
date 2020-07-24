@@ -218,7 +218,7 @@ class DbrestoreController extends Controller
     public function actionExrestore(){
         $host = "localhost";
         $username = "root";
-        $password = "Coltd!1234";
+        $password = "'Coltd!1234'";
         $database_name = "coltd";
         $date_string = time();
 
