@@ -214,6 +214,8 @@ $last_message = null;
                                 <li><a href="index.php?r=productstock/index" class="report">รายงานยอดคงคลัง</a></li>
                                 <li><a href="index.php?r=report/inbound" class="report">รายงานสรุปนำเข้า</a></li>
                                 <li><a href="index.php?r=report/sale" class="report">รายงานสรุปส่งออก</a></li>
+                                <li><a href="index.php?r=report/apsummary" class="report">รายงานสรุปเจ้าหนี้</a></li>
+                                <li><a href="index.php?r=report/arsummary" class="report">รายงานสรุปลูกหนี้</a></li>
                             </ul>
                         </div>
                     </li>
