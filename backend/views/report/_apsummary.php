@@ -15,6 +15,13 @@ $dateval = date('d-m-Y') . ' ถึง ' . date('d-m-Y');
 if ($from_date != '' && $to_date != '') {
     $dateval = $from_date . ' ถึง ' . $to_date;
 }
+
+$view_type = [['id'=>0,'name'=>'ทั้งหมด'],['id'=>1,'name'=>'ชำระครบแล้ว'],['id'=>2,'name'=>'ค้างชำระ']];
+
+$select_view_type = '';
+if($selected_view_type!=''){
+    $select_view_type = $selected_view_type;
+}
 ?>
 <div class="x_panel">
     <div class="x_title">
@@ -105,6 +112,16 @@ if ($from_date != '' && $to_date != '') {
                     ?>
                 </form>
             </div>
+            <div class="col-lg-3">
+                <select name="view_type" class="form-control view-type" id="">
+                    <?php for($i=0;$i<=count($view_type)-1;$i++):?>
+                        <?php $selected = '';
+                        if($select_view_type == $view_type[$i]['id'])$selected='selected';
+                        ?>
+                        <option value="<?=$view_type[$i]['id']?>" <?=$selected?>><?=$view_type[$i]['name']?></option>
+                    <?php endfor;?>
+                </select>
+            </div>
         </div>
         <br>
         <div class="panel panel-body">
@@ -184,13 +201,14 @@ if ($from_date != '' && $to_date != '') {
 <?php
 $url_to_ap = Url::to(['report/apsummary'],true);
 $js=<<<JS
-   $(".date_select").change(function() {
-      // alert();
+   $(".date_select, .view-type").change(function() {
+       var view_type = $('.view-type').val();
+       var fdate = $('.dete_select').val();
        $.ajax({
            type: 'post',
            dataType: 'html',
            url: '$url_to_ap',
-           data: {'find_date': $(this).val()},
+           data: {'find_date': fdate,'view_type': view_type},
            success: function(data){
                //alert(data);
            }

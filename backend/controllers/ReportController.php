@@ -189,9 +189,11 @@ class ReportController extends Controller
     {
 
         $select_date = \Yii::$app->request->post('find_date');
+        $selected_view = \Yii::$app->request->post('view_type');
         $from_date = '';
         $to_date = '';
         $qty = null;
+        $selected_view_type = 0;
 
         if ($select_date != '') {
             $find_date = explode('ถึง', $select_date);
@@ -201,42 +203,76 @@ class ReportController extends Controller
             }
         }
 
-        if ($from_date == null && $to_date == null) {
-            $searchModel = new \backend\models\QueryArsummarySearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            if ($from_date != null && $to_date != null) {
-                $dataProvider->query->andFilterWhere(['AND', ['>=', 'require_date', strtotime($from_date)], ['<=', 'require_date', strtotime($to_date)]]);
-            }
-//        $dataProvider->query->andFilterWhere(['AND',['>=','trans_date',$from_date],['<=','trans_date',$to_date]]);
-//        if($qty != null){
-//            $dataProvider->query->andFilterWhere(['amount'=>$qty]);
-//        }
-
-            //   $dataProvider->setSort(['defaultOrder'=>['trans_date'=>SORT_ASC]]);
-            return $this->render('_arsummary', [
-                'dataProvider' => $dataProvider,
-                'from_date' => $from_date,
-                'to_date' => $to_date
-            ]);
-        } else {
-            return $this->redirect(['report/showar', 'from_date' => $from_date, 'to_date' => $to_date]);
+        if($selected_view != ''){
+            $selected_view_type = $selected_view;
         }
+
+//        if ($from_date == null && $to_date == null) {
+//            $searchModel = new \backend\models\QueryArsummarySearch();
+//            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//
+//            if($selected_view_type == 1){
+//                $dataProvider->query->andFilterWhere(['>=','amount','total_amount']);
+//            }else if($selected_view_type == 2){
+//                $dataProvider->query->andFilterWhere(['<','amount','total_amount']);
+//            }
+//
+////            if ($from_date != null && $to_date != null) {
+////                $dataProvider->query->andFilterWhere(['AND', ['>=', 'require_date', strtotime($from_date)], ['<=', 'require_date', strtotime($to_date)]]);
+////            }
+////        $dataProvider->query->andFilterWhere(['AND',['>=','trans_date',$from_date],['<=','trans_date',$to_date]]);
+////        if($qty != null){
+////            $dataProvider->query->andFilterWhere(['amount'=>$qty]);
+////        }
+//
+//            //   $dataProvider->setSort(['defaultOrder'=>['trans_date'=>SORT_ASC]]);
+//            return $this->render('_arsummary', [
+//                'dataProvider' => $dataProvider,
+//                'from_date' => $from_date,
+//                'to_date' => $to_date,
+//                'selected_view_type' => $selected_view_type
+//            ]);
+//        } else {
+            return $this->redirect(['report/showar', 'from_date' => $from_date, 'to_date' => $to_date,'selected_view_type'=>$selected_view_type]);
+      //  }
 
     }
 
-    public function actionShowar($from_date, $to_date)
+    public function actionShowar($from_date, $to_date, $selected_view_type)
     {
         if ($from_date != null && $to_date != null) {
             $searchModel = new \backend\models\QueryArsummarySearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             $dataProvider->query->andFilterWhere(['AND', ['>=', 'require_date', strtotime($from_date)], ['<=', 'require_date', strtotime($to_date)]]);
+            if($selected_view_type == 1){
+                $dataProvider->query->andFilterWhere(['>=','amount','total_amount']);
+            }else if($selected_view_type == 2){
+                $dataProvider->query->andFilterWhere(['<','amount','total_amount']);
+            }
 
             return $this->render('_arsummary', [
                 'dataProvider' => $dataProvider,
                 'from_date' => $from_date,
-                'to_date' => $to_date
+                'to_date' => $to_date,
+                'selected_view_type' =>$selected_view_type
             ]);
+        }else{
+            $searchModel = new \backend\models\QueryArsummarySearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            if($selected_view_type == 1){
+                $dataProvider->query->andFilterWhere(['>=','amount','total_amount']);
+            }else if($selected_view_type == 2){
+                $dataProvider->query->andFilterWhere(['<','amount','total_amount']);
+            }
+            return $this->render('_arsummary', [
+                'dataProvider' => $dataProvider,
+                'from_date' => $from_date,
+                'to_date' => $to_date,
+                'selected_view_type' => $selected_view_type
+            ]);
+
         }
     }
 
@@ -246,6 +282,12 @@ class ReportController extends Controller
         $from_date = '';
         $to_date = '';
         $qty = null;
+        $selected_view = \Yii::$app->request->post('view_type');
+        $selected_view_type = 0;
+
+        if($selected_view != ''){
+            $selected_view_type = $selected_view;
+        }
 
         if ($select_date != '') {
             $find_date = explode('ถึง', $select_date);
@@ -256,30 +298,29 @@ class ReportController extends Controller
         }
 
         // echo 'niran';return;
-        if ($from_date == null && $to_date == null) {
-            $searchModel = new \backend\models\QueryApsummarySearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            $dataProvider->query->andFilterWhere(['AND', ['>=', 'invoice_date', $from_date], ['<=', 'invoice_date', $to_date]]);
-//        if($qty != null){
-//            $dataProvider->query->andFilterWhere(['amount'=>$qty]);
-//        }
-
-            //   $dataProvider->setSort(['defaultOrder'=>['trans_date'=>SORT_ASC]]);
-            return $this->render('_apsummary', [
-                'dataProvider' => $dataProvider,
-                'from_date' => $from_date,
-                'to_date' => $to_date
-            ]);
-        } else {
+//        if ($from_date == null && $to_date == null) {
+//            $searchModel = new \backend\models\QueryApsummarySearch();
+//            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//            $dataProvider->query->andFilterWhere(['AND', ['>=', 'invoice_date', $from_date], ['<=', 'invoice_date', $to_date]]);
+////        if($qty != null){
+////            $dataProvider->query->andFilterWhere(['amount'=>$qty]);
+////        }
+//
+//            //   $dataProvider->setSort(['defaultOrder'=>['trans_date'=>SORT_ASC]]);
+//            return $this->render('_apsummary', [
+//                'dataProvider' => $dataProvider,
+//                'from_date' => $from_date,
+//                'to_date' => $to_date
+//            ]);
+//        } else {
             //echo "ok";return;
-            return $this->redirect(['report/showap', 'from_date' => $from_date, 'to_date' => $to_date]);
-        }
+            return $this->redirect(['report/showap', 'from_date' => $from_date, 'to_date' => $to_date, 'selected_view_type'=>$selected_view_type]);
+ //       }
     }
 
-    public function actionShowap($from_date, $to_date)
+    public function actionShowap($from_date, $to_date, $selected_view_type)
     {
         if ($from_date != null && $to_date != null) {
-
 
             $s_date = null;
             $n_date = null;
@@ -302,10 +343,33 @@ class ReportController extends Controller
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             $dataProvider->query->andFilterWhere(['AND', ['>=', 'invoice_date', $s_date], ['<=', 'invoice_date', $n_date]]);
 
+            if($selected_view_type == 1){
+                $dataProvider->query->andFilterWhere(['>=','amount','total_amount']);
+            }else if($selected_view_type == 2){
+                $dataProvider->query->andFilterWhere(['<','amount','total_amount']);
+            }
+
             return $this->render('_apsummary', [
                 'dataProvider' => $dataProvider,
                 'from_date' => $from_date,
-                'to_date' => $to_date
+                'to_date' => $to_date,
+                'selected_view_type' => $selected_view_type
+            ]);
+        }else{
+            $searchModel = new \backend\models\QueryApsummarySearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            if($selected_view_type == 1){
+                $dataProvider->query->andFilterWhere(['>=','amount','total_amount']);
+            }else if($selected_view_type == 2){
+                $dataProvider->query->andFilterWhere(['<','amount','total_amount']);
+            }
+
+            return $this->render('_apsummary', [
+                'dataProvider' => $dataProvider,
+                'from_date' => $from_date,
+                'to_date' => $to_date,
+                'selected_view_type' => $selected_view_type
             ]);
         }
     }
