@@ -22,7 +22,12 @@ $select_view_type = '';
 if($selected_view_type!=''){
     $select_view_type = $selected_view_type;
 }
+
+//echo $dateval;
+
 ?>
+
+
 <div class="x_panel">
     <div class="x_title">
         <h3><i class="fa fa-bar-chart-o"></i> <?= $this->title ?>
@@ -201,9 +206,11 @@ if($selected_view_type!=''){
 <?php
 $url_to_ap = Url::to(['report/apsummary'],true);
 $js=<<<JS
+   
    $(".date_select, .view-type").change(function() {
        var view_type = $('.view-type').val();
-       var fdate = $('.dete_select').val();
+       var fdate = $('.date_select').val();
+     //  alert(fdate);
        $.ajax({
            type: 'post',
            dataType: 'html',

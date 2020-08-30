@@ -245,7 +245,7 @@ $url_to_ar = Url::to(['report/arsummary'],true);
 $js=<<<JS
    $(".date_select, .view-type").change(function() {
        var view_type = $('.view-type').val();
-       var fdate = $('.dete_select').val();
+       var fdate = $('.date_select').val();
        //alert(fdate);
        $.ajax({
            type: 'post',
