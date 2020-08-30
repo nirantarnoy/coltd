@@ -247,10 +247,10 @@ class ReportController extends Controller
          //   $dataProvider->query->andFilterWhere(['AND', ['>=', 'require_date', strtotime($from_date)], ['<=', 'require_date', strtotime($to_date)]]);
 
             if($selected_view_type == 1){
-                $dataProvider->query->andFilterWhere(['>=','amount','total_amounts']);
+                $dataProvider->query->andFilterWhere(['>=','amount','total_amount']);
 
             }else if($selected_view_type == 2){
-                $dataProvider->query->andFilterWhere(['<','amount','total_amounts']);
+                $dataProvider->query->andFilterWhere(['<','amount','total_amount']);
             }
 
             $dataProvider->query->andFilterWhere(['AND', ['>=', 'require_date', strtotime($from_date)], ['<=', 'require_date', strtotime($to_date)]]);
