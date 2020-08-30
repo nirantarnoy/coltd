@@ -262,9 +262,9 @@ class ReportController extends Controller
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             if($selected_view_type == 1){
-                $dataProvider->query->andFilterWhere(['>=','amount','total_amount']);
+                $dataProvider->query->andFilterWhere(['>=','amount','total_amounts']);
             }else if($selected_view_type == 2){
-                $dataProvider->query->andFilterWhere(['<','amount','total_amount']);
+                $dataProvider->query->andFilterWhere(['<','amount','total_amounts']);
             }
             return $this->render('_arsummary', [
                 'dataProvider' => $dataProvider,
