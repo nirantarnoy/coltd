@@ -247,10 +247,10 @@ class ReportController extends Controller
          //   $dataProvider->query->andFilterWhere(['AND', ['>=', 'require_date', strtotime($from_date)], ['<=', 'require_date', strtotime($to_date)]]);
 
             if($selected_view_type == 1){
-                $dataProvider->query->andFilterWhere(['>=','amount','total_amount']);
+                $dataProvider->query->andFilterWhere(['>=','amount','`total_amount`']);
 
             }else if($selected_view_type == 2){
-                $dataProvider->query->andFilterWhere(['<','amount','total_amount']);
+                $dataProvider->query->andFilterWhere(['<','amount','`total_amount`']);
             }
 
             $dataProvider->query->andFilterWhere(['AND', ['>=', 'require_datex', strtotime($from_date)], ['<=', 'require_date', strtotime($to_date)]]);
@@ -266,9 +266,9 @@ class ReportController extends Controller
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             if($selected_view_type == 1){
-                $dataProvider->query->andFilterWhere(['>=','amount','total_amount']);
+                $dataProvider->query->andFilterWhere(['>=','amount','`total_amount`']);
             }else if($selected_view_type == 2){
-                $dataProvider->query->andFilterWhere(['<','amount','total_amount']);
+                $dataProvider->query->andFilterWhere(['<','amount','`total_amount`']);
             }
             return $this->render('_arsummary', [
                 'dataProvider' => $dataProvider,
