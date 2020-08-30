@@ -15,7 +15,7 @@ $this->title = 'รายงานสรุปลูกหนี้';
 $dateval = date('d-m-Y').' ถึง '.date('d-m-Y');
 if($from_date !='' && $to_date != ''){
     $dateval = '';
-    $dateval = $from_date.' ถึง '.$to_date;
+    $dateval = trim($from_date).' ถึง '.trim($to_date);
 }
 
 $view_type = [['id'=>0,'name'=>'ทั้งหมด'],['id'=>1,'name'=>'ชำระครบแล้ว'],['id'=>2,'name'=>'ค้างชำระ']];
