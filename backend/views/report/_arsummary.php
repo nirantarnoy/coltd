@@ -14,6 +14,7 @@ $this->title = 'รายงานสรุปลูกหนี้';
 
 $dateval = date('d-m-Y').' ถึง '.date('d-m-Y');
 if($from_date !='' && $to_date != ''){
+    $dateval = '';
     $dateval = $from_date.' ถึง '.$to_date;
 }
 
