@@ -344,9 +344,9 @@ class ReportController extends Controller
             $dataProvider->query->andFilterWhere(['AND', ['>=', 'invoice_date', $s_date], ['<=', 'invoice_date', $n_date]]);
 
             if($selected_view_type == 1){
-                $dataProvider->query->andFilterWhere(['>=','amount','total_amount']);
+                $dataProvider->query->andFilterWhere(['<=','amount','total_amount']);
             }else if($selected_view_type == 2){
-                $dataProvider->query->andFilterWhere(['<','amount','total_amount']);
+                $dataProvider->query->andFilterWhere(['>','amount','total_amount']);
             }
 
             return $this->render('_apsummary', [
@@ -360,9 +360,9 @@ class ReportController extends Controller
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             if($selected_view_type == 1){
-                $dataProvider->query->andFilterWhere(['>=','amount','total_amount']);
+                $dataProvider->query->andFilterWhere(['<=','amount','total_amount']);
             }else if($selected_view_type == 2){
-                $dataProvider->query->andFilterWhere(['<','amount','total_amount']);
+                $dataProvider->query->andFilterWhere(['>','amount','total_amount']);
             }
 
             return $this->render('_apsummary', [
